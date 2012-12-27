@@ -18,7 +18,6 @@
     NSImage *statusImageOn;
     NSImage *statusImageOff;
     AppleRemote* remote;
-    NSTimer* timer;
 }
 
 - (IBAction)reduceVolMenuAction:(id)sender;

@@ -9,7 +9,13 @@
 #import "AppDelegate.h"
 #import <IOKit/hidsystem/ev_keymap.h>
 
-static CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *refcon)
+@implementation AppDelegate
+
+bool previousKeyIsRepeat=false;
+bool keyIsRepeat;
+NSTimer* timer;
+
+CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *refcon)
 {
     NSEvent * sysEvent;
     
@@ -23,7 +29,7 @@ static CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CG
     int keyFlags = ([sysEvent data1] & 0x0000FFFF);
     int keyCode = (([sysEvent data1] & 0xFFFF0000) >> 16);
     int keyState = (((keyFlags & 0xFF00) >> 8)) == 0xA;
-    BOOL keyIsRepeat = (keyFlags & 0x1);
+    keyIsRepeat = (keyFlags & 0x1);
     // We probably won't care for repeating events
     // if (keyIsRepeat) return event;
     
@@ -31,26 +37,40 @@ static CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CG
 	{
 		case NX_KEYTYPE_SOUND_UP:
         case NX_KEYTYPE_SOUND_DOWN:
-            NSLog(@"%d",keyIsRepeat);
             if( (([sysEvent modifierFlags]&NX_COMMANDMASK)==NX_COMMANDMASK) && ([sysEvent modifierFlags]&NX_SHIFTMASK)!=NX_SHIFTMASK)
             {
                 if( keyState == 1 )
                 {
                     if( keyCode == NX_KEYTYPE_SOUND_UP )
-                        [[NSNotificationCenter defaultCenter] postNotificationName:@"IncreaseITunesVolume" object:NULL];
+                    {
+                        if (!keyIsRepeat||!previousKeyIsRepeat)
+                            [[NSNotificationCenter defaultCenter] postNotificationName:@"IncreaseITunesVolume" object:NULL];
+                    }
                     else
-                        [[NSNotificationCenter defaultCenter] postNotificationName:@"DecreaseITunesVolume" object:NULL];
+                    {
+                        if (!keyIsRepeat||!previousKeyIsRepeat)
+                            [[NSNotificationCenter defaultCenter] postNotificationName:@"DecreaseITunesVolume" object:NULL];
+                    }
                 }
+                else
+                {
+                    [timer invalidate];
+                    timer=nil;
+                }
+                previousKeyIsRepeat=keyIsRepeat;
                 return NULL;
             }
             break;
     }
     
-    
     return event;
 }
 
-@implementation AppDelegate
+- (void)stopTimer
+{
+    [timer invalidate];
+    timer=nil;
+}
 
 - (void)rampVolumeUp:(NSTimer*)theTimer
 {
@@ -104,6 +124,28 @@ static CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CG
     }
 }
 
+- (void)increaseITunesVolume:(NSNotification *)aNotification
+{
+    if( keyIsRepeat&&!previousKeyIsRepeat )
+        timer=[NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(rampVolumeUp:) userInfo:nil repeats:YES];
+    else
+    {
+        // [self stopTimer];
+        [self changeVol:+2];
+    }
+}
+
+- (void)decreaseITunesVolume:(NSNotification *)aNotification
+{
+    if( keyIsRepeat&&!previousKeyIsRepeat )
+        timer=[NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(rampVolumeDown:) userInfo:nil repeats:YES];
+    else
+    {
+        // [self stopTimer];
+        [self changeVol:-2];
+    }
+}
+
 - (void) appleRemoteButton: (AppleRemoteEventIdentifier)buttonIdentifier pressedDown: (BOOL) pressedDown clickCount: (unsigned int) count {
     switch (buttonIdentifier)
     {
@@ -111,10 +153,7 @@ static CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CG
             if(timer==nil)
                 timer=[NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(rampVolumeUp:) userInfo:nil repeats:YES];
             else
-            {
-                [timer invalidate];
-                timer=nil;
-            }
+                [self stopTimer];
             break;
         case kRemoteButtonVolume_Plus:
             [[NSNotificationCenter defaultCenter] postNotificationName:@"IncreaseITunesVolume" object:NULL];
@@ -124,10 +163,7 @@ static CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CG
             if(timer==nil)
                 timer=[NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(rampVolumeDown:) userInfo:nil repeats:YES];
             else
-            {
-                [timer invalidate];
-                timer=nil;
-            }
+                [self stopTimer];
             break;
         case kRemoteButtonVolume_Minus:
             [[NSNotificationCenter defaultCenter] postNotificationName:@"DecreaseITunesVolume" object:NULL];
@@ -161,18 +197,6 @@ static CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CG
         default:
             break;
     }
-}
-
-- (void)increaseITunesVolume:(NSNotification *)aNotification
-{
-    //NSLog(@"Increase");
-    [self changeVol:+2];
-}
-
-- (void)decreaseITunesVolume:(NSNotification *)aNotification
-{
-    // NSLog(@"Decrease");
-    [self changeVol:-2];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
