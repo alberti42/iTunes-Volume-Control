@@ -66,19 +66,22 @@ const NSTimeInterval HOLD_RECOGNITION_TIME_INTERVAL=0.4;
 
 #pragma public interface
 
-static AppleRemote *_o_sharedInstance = nil;
-
 + (AppleRemote *)sharedInstance
 {
-    return _o_sharedInstance ? _o_sharedInstance : [[self alloc] init];
+    static AppleRemote *sharedInstance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [[AppleRemote alloc] init];
+        // Do any other initialisation stuff here
+    });
+    return sharedInstance;
 }
 
 - (id)init
 {
-    if (_o_sharedInstance) {
-        self=nil;
-    } else {
-        _o_sharedInstance = [super init];
+    self = [super init];
+    if(self)
+    {
         openInExclusiveMode = YES;
         queue = NULL;
         hidDeviceInterface = NULL;
@@ -142,7 +145,7 @@ static AppleRemote *_o_sharedInstance = nil;
         maxClickTimeDifference = DEFAULT_MAXIMUM_CLICK_TIME_DIFFERENCE;
     }
 
-    return _o_sharedInstance;
+    return self;
 }
 
 - (void) dealloc {
@@ -329,17 +332,17 @@ static AppleRemote* sharedInstance=nil;
     }
     return sharedInstance;
 }
-+ (id)allocWithZone:(NSZone *)zone {
-    @synchronized(self) {
-        if (sharedInstance == nil) {
-            return [super allocWithZone:zone];
-        }
-    }
-    return sharedInstance;
-}
-- (id)copyWithZone:(NSZone *)zone {
-    return self;
-}
+//+ (id)allocWithZone:(NSZone *)zone {
+//    @synchronized(self) {
+//        if (sharedInstance == nil) {
+//            return [super allocWithZone:zone];
+//        }
+//    }
+//    return sharedInstance;
+//}
+//- (id)copyWithZone:(NSZone *)zone {
+//    return self;
+//}
 
 @end
 
@@ -592,8 +595,8 @@ static void QueueCallbackFunction(void* target,  IOReturn result, void* refcon, 
 - (BOOL) initializeCookies {
     IOHIDDeviceInterface122** handle = (IOHIDDeviceInterface122**)hidDeviceInterface;
     IOHIDElementCookie      cookie;
-    long                    usage;
-    long                    usagePage;
+    // long                    usage;
+    // long                    usagePage;
     id                      object;
     CFArrayRef              CFelements = NULL;
     NSDictionary*           element;
@@ -627,14 +630,14 @@ static void QueueCallbackFunction(void* target,  IOReturn result, void* refcon, 
             cookie = (IOHIDElementCookie) [object longValue];
 
             //Get usage
-            object = [element valueForKey: (NSString*)CFSTR(kIOHIDElementUsageKey) ];
-            if (object == nil || ![object isKindOfClass:[NSNumber class]]) continue;
-            usage = [object longValue];
+            //object = [element valueForKey: (NSString*)CFSTR(kIOHIDElementUsageKey) ];
+            //if (object == nil || ![object isKindOfClass:[NSNumber class]]) continue;
+            //usage = [object longValue];
 
             //Get usage page
-            object = [element valueForKey: (NSString*)CFSTR(kIOHIDElementUsagePageKey) ];
-            if (object == nil || ![object isKindOfClass:[NSNumber class]]) continue;
-            usagePage = [object longValue];
+            //object = [element valueForKey: (NSString*)CFSTR(kIOHIDElementUsagePageKey) ];
+            //if (object == nil || ![object isKindOfClass:[NSNumber class]]) continue;
+            //usagePage = [object longValue];
 
             [allCookies addObject: [NSNumber numberWithInt:(int)cookie]];
         }
@@ -646,8 +649,6 @@ static void QueueCallbackFunction(void* target,  IOReturn result, void* refcon, 
 }
 
 - (BOOL) openDevice {
-    HRESULT  result;
-
     IOHIDOptionsType openMode = kIOHIDOptionsTypeNone;
     if ([self isOpenInExclusiveMode]) openMode = kIOHIDOptionsTypeSeizeDevice;
     IOReturn ioReturnValue = (*hidDeviceInterface)->open(hidDeviceInterface, openMode);
@@ -655,7 +656,7 @@ static void QueueCallbackFunction(void* target,  IOReturn result, void* refcon, 
     if (ioReturnValue == KERN_SUCCESS) {
         queue = (*hidDeviceInterface)->allocQueue(hidDeviceInterface);
         if (queue) {
-            result = (*queue)->create(queue, 0, 12);    //depth: maximum number of elements in queue before oldest elements in queue begin to be lost.
+            (*queue)->create(queue, 0, 12);    //depth: maximum number of elements in queue before oldest elements in queue begin to be lost.
 
             NSUInteger cookieCount = [allCookies count];
             for(NSUInteger i=0; i<cookieCount; i++) {

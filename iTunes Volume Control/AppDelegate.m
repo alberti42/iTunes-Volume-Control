@@ -87,7 +87,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     CGEventMask eventMask = (/*(1 << kCGEventKeyDown) | (1 << kCGEventKeyUp) |*/CGEventMaskBit(NX_SYSDEFINED));
     eventTap = CGEventTapCreate(kCGSessionEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault,
                                 eventMask, event_tap_callback, NULL); // Create an event tap. We are interested in SYS key presses.
-    CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0); // Create a run loop source.
+    runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0); // Create a run loop source.
     CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes); // Add to the current run loop.
     CGEventTapEnable(eventTap, true); // Enable the event tap.
 }
@@ -261,8 +261,14 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 
 - (void) dealloc
 {
+    if(CFMachPortIsValid(eventTap)) {
+		CFMachPortInvalidate(eventTap);
+		CFRunLoopSourceInvalidate(runLoopSource);
+		CFRelease(eventTap);
+		CFRelease(runLoopSource);
+	}
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    CGEventTapEnable(eventTap, false);
 }
 
 - (void)changeVol:(int)vol

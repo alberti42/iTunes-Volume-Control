@@ -15,6 +15,7 @@
     NSStatusItem *statusItem;
     iTunesApplication *iTunes;
     CFMachPortRef eventTap;
+    CFRunLoopSourceRef runLoopSource;
     NSImage *statusImageOn;
     NSImage *statusImageOff;
     AppleRemote* remote;
