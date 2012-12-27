@@ -10,7 +10,6 @@
 		656C6C6C168A2A0B00ECA482 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 656C6C6B168A2A0B00ECA482 /* Cocoa.framework */; };
 		656C6C76168A2A0B00ECA482 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 656C6C74168A2A0B00ECA482 /* InfoPlist.strings */; };
 		656C6C78168A2A0B00ECA482 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 656C6C77168A2A0B00ECA482 /* main.m */; };
-		656C6C7C168A2A0B00ECA482 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 656C6C7A168A2A0B00ECA482 /* Credits.rtf */; };
 		656C6C7F168A2A0B00ECA482 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 656C6C7E168A2A0B00ECA482 /* AppDelegate.m */; };
 		656C6C82168A2A0C00ECA482 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 656C6C80168A2A0C00ECA482 /* MainMenu.xib */; };
 		656C6CA3168A456900ECA482 /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 656C6CA2168A456900ECA482 /* ScriptingBridge.framework */; };
@@ -29,7 +28,6 @@
 		656C6C75168A2A0B00ECA482 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		656C6C77168A2A0B00ECA482 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		656C6C79168A2A0B00ECA482 /* iTunes Volume Control-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iTunes Volume Control-Prefix.pch"; sourceTree = "<group>"; };
-		656C6C7B168A2A0B00ECA482 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		656C6C7D168A2A0B00ECA482 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		656C6C7E168A2A0B00ECA482 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		656C6C81168A2A0C00ECA482 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -112,7 +110,6 @@
 				656C6C74168A2A0B00ECA482 /* InfoPlist.strings */,
 				656C6C77168A2A0B00ECA482 /* main.m */,
 				656C6C79168A2A0B00ECA482 /* iTunes Volume Control-Prefix.pch */,
-				656C6C7A168A2A0B00ECA482 /* Credits.rtf */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -187,7 +184,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				656C6C76168A2A0B00ECA482 /* InfoPlist.strings in Resources */,
-				656C6C7C168A2A0B00ECA482 /* Credits.rtf in Resources */,
 				656C6C82168A2A0C00ECA482 /* MainMenu.xib in Resources */,
 				65C24BFB168CB0750000BFC2 /* icon.icns in Resources */,
 				65C24BFC168CB0750000BFC2 /* statusbar-item-off.png in Resources */,
@@ -216,14 +212,6 @@
 				656C6C75168A2A0B00ECA482 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		656C6C7A168A2A0B00ECA482 /* Credits.rtf */ = {
-			isa = PBXVariantGroup;
-			children = (
-				656C6C7B168A2A0B00ECA482 /* en */,
-			);
-			name = Credits.rtf;
 			sourceTree = "<group>";
 		};
 		656C6C80168A2A0C00ECA482 /* MainMenu.xib */ = {

@@ -31,20 +31,20 @@ static CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CG
 	{
 		case NX_KEYTYPE_SOUND_UP:
         case NX_KEYTYPE_SOUND_DOWN:
-                if(([sysEvent modifierFlags]&NX_COMMANDMASK)==NX_COMMANDMASK)
+            if(([sysEvent modifierFlags]&NX_COMMANDMASK)==NX_COMMANDMASK)
+            {
+                if( keyState == 1 )
                 {
-                    if( keyState == 1 )
-                    {
-                        if( keyCode == NX_KEYTYPE_SOUND_UP )
-                            [[NSNotificationCenter defaultCenter] postNotificationName:@"IncreaseITunesVolume" object:NULL];
-                        else
-                            [[NSNotificationCenter defaultCenter] postNotificationName:@"DecreaseITunesVolume" object:NULL];
-                    }
-                    return NULL;
+                    if( keyCode == NX_KEYTYPE_SOUND_UP )
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"IncreaseITunesVolume" object:NULL];
+                    else
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"DecreaseITunesVolume" object:NULL];
                 }
+                return NULL;
+            }
             break;
     }
-
+    
     
     return event;
 }
@@ -53,12 +53,12 @@ static CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CG
 
 - (void)createEventTap
 {
-    CGEventMask eventMask = (/*(1 << kCGEventKeyDown) | (1 << kCGEventKeyUp) |*/ CGEventMaskBit(NX_SYSDEFINED));
-    CFMachPortRef eventTap = CGEventTapCreate(kCGSessionEventTap, kCGHeadInsertEventTap, 0, eventMask, event_tap_callback, NULL); // Create an event tap. We are interested in SYS key presses.
+    CGEventMask eventMask = (/*(1 << kCGEventKeyDown) | (1 << kCGEventKeyUp) |*/CGEventMaskBit(NX_SYSDEFINED));
+    eventTap = CGEventTapCreate(kCGSessionEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault,
+                                eventMask, event_tap_callback, NULL); // Create an event tap. We are interested in SYS key presses.
     CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0); // Create a run loop source.
     CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes); // Add to the current run loop.
     CGEventTapEnable(eventTap, true); // Enable the event tap.
-	CFRunLoopRun(); // Set it all running.
 }
 
 - (void)increaseITunesVolume:(NSNotification *)aNotification
@@ -80,18 +80,17 @@ static CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CG
     [statusItem setMenu:statusMenu];
     [statusItem setHighlightMode:YES];
     
-    NSImage *statusImage = [NSImage imageNamed:@"statusbar-item-on.png"];
-    [statusItem setImage:statusImage];
-    //    - (void)setImage:(NSImage *)image
-    //    -(void)setAlternateImage:(NSImage *)image
-
+    statusImageOn = [NSImage imageNamed:@"statusbar-item-on.png"];
+    statusImageOff = [NSImage imageNamed:@"statusbar-item-on.png"];
+    
+    [statusItem setImage:statusImageOn];
+    
     iTunes = [SBApplication applicationWithBundleIdentifier:@"com.apple.iTunes"];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(increaseITunesVolume:) name:@"IncreaseITunesVolume" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(decreaseITunesVolume:) name:@"DecreaseITunesVolume" object:nil];
-
-    [self createEventTap];
     
+    [self createEventTap];
 }
 
 - (IBAction)reduceVolMenuAction:(id)sender
@@ -104,22 +103,35 @@ static CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CG
     [self changeVol:+2];
 }
 
+- (IBAction)toggleTapStatus:(id)sender
+{
+    NSMenuItem* changeStatusItem=[statusMenu itemWithTag:1];
+    if(CGEventTapIsEnabled(eventTap))
+    {
+        CGEventTapEnable(eventTap, false);
+        [changeStatusItem setState:0];
+        [statusItem setImage:statusImageOff];
+    }
+    else
+    {
+        CGEventTapEnable(eventTap, true);
+        [changeStatusItem setState:1];
+        [statusItem setImage:statusImageOn];
+    }
+}
+
 - (void)changeVol:(int)vol
 {
     // check if iTunes is running (Q1)
     if ([iTunes isRunning])
     {
-        // if (iTunesEPlSPlaying == [iTunes playerState])
-        // NSLog(@"Current song is %@", [[iTunes currentTrack] name]);
-        // [iTunes playpause];
-        
         NSInteger volume = [iTunes soundVolume]+vol;
         if (volume<0) volume=0;
         if (volume>100) volume=100;
         
         [iTunes setSoundVolume:volume];
         
-        NSLog(@"The new volume is: %ld",[iTunes soundVolume]);
+        // NSLog(@"The new volume is: %ld",[iTunes soundVolume]);
     }
 }
 

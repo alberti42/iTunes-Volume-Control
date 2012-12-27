@@ -13,10 +13,15 @@
     IBOutlet NSMenu *statusMenu;
     NSStatusItem *statusItem;
     iTunesApplication *iTunes;
+    CFMachPortRef eventTap;
+    NSImage *statusImageOn;
+    NSImage *statusImageOff;
 }
 
 - (IBAction)reduceVolMenuAction:(id)sender;
 - (IBAction)increaseVolMenuAction:(id)sender;
+- (IBAction)toggleTapStatus:(id)sender;
+
 - (void)changeVol:(int)vol;
 
 //@property (assign) IBOutlet NSWindow *window;
