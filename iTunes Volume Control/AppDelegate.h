@@ -7,9 +7,20 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "iTunes.h"
 
-@interface AppDelegate : NSObject <NSApplicationDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate> {
+    IBOutlet NSMenu *statusMenu;
+    NSStatusItem *statusItem;
+    iTunesApplication *iTunes;
+}
 
-@property (assign) IBOutlet NSWindow *window;
+- (IBAction)reduceVolMenuAction:(id)sender;
+- (IBAction)increaseVolMenuAction:(id)sender;
+- (void)changeVol:(int)vol;
+
+//@property (assign) IBOutlet NSWindow *window;
 
 @end
+
+
