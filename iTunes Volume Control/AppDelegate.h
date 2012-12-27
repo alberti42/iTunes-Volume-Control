@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "iTunes.h"
+#import "AppleRemote.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
     IBOutlet NSMenu *statusMenu;
@@ -16,6 +17,8 @@
     CFMachPortRef eventTap;
     NSImage *statusImageOn;
     NSImage *statusImageOff;
+    AppleRemote* remote;
+    NSTimer* timer;
 }
 
 - (IBAction)reduceVolMenuAction:(id)sender;

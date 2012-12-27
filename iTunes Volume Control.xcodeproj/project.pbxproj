@@ -17,6 +17,8 @@
 		65C24BFC168CB0750000BFC2 /* statusbar-item-off.png in Resources */ = {isa = PBXBuildFile; fileRef = 65C24BF9168CB0750000BFC2 /* statusbar-item-off.png */; };
 		65C24BFD168CB0750000BFC2 /* statusbar-item-on.png in Resources */ = {isa = PBXBuildFile; fileRef = 65C24BFA168CB0750000BFC2 /* statusbar-item-on.png */; };
 		65C24C01168CBC7E0000BFC2 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 65C24C00168CBC7E0000BFC2 /* Credits.rtf */; };
+		65C24C67168CEB130000BFC2 /* AppleRemote.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C24C65168CEB130000BFC2 /* AppleRemote.m */; };
+		65C24C6C168CEB9D0000BFC2 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65C24C6B168CEB9D0000BFC2 /* IOKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,13 +34,16 @@
 		656C6C7D168A2A0B00ECA482 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		656C6C7E168A2A0B00ECA482 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		656C6C81168A2A0C00ECA482 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		656C6C89168A2A0C00ECA482 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		656C6CA1168A447000ECA482 /* iTunes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iTunes.h; sourceTree = "<group>"; };
 		656C6CA2168A456900ECA482 /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
 		65C24BF8168CB0750000BFC2 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = icon.icns; path = "iTunes Volume Control/icon.icns"; sourceTree = "<group>"; };
 		65C24BF9168CB0750000BFC2 /* statusbar-item-off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "statusbar-item-off.png"; path = "iTunes Volume Control/statusbar-item-off.png"; sourceTree = "<group>"; };
 		65C24BFA168CB0750000BFC2 /* statusbar-item-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "statusbar-item-on.png"; path = "iTunes Volume Control/statusbar-item-on.png"; sourceTree = "<group>"; };
 		65C24C00168CBC7E0000BFC2 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; name = Credits.rtf; path = "iTunes Volume Control/Credits.rtf"; sourceTree = "<group>"; };
+		65C24C64168CEB130000BFC2 /* AppleRemote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppleRemote.h; sourceTree = "<group>"; };
+		65C24C65168CEB130000BFC2 /* AppleRemote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppleRemote.m; sourceTree = "<group>"; };
+		65C24C66168CEB130000BFC2 /* CompatibilityFixes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompatibilityFixes.h; sourceTree = "<group>"; };
+		65C24C6B168CEB9D0000BFC2 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +53,7 @@
 			files = (
 				656C6CA3168A456900ECA482 /* ScriptingBridge.framework in Frameworks */,
 				656C6C6C168A2A0B00ECA482 /* Cocoa.framework in Frameworks */,
+				65C24C6C168CEB9D0000BFC2 /* IOKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,9 +81,9 @@
 		656C6C6A168A2A0B00ECA482 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				65C24C6B168CEB9D0000BFC2 /* IOKit.framework */,
 				656C6CA2168A456900ECA482 /* ScriptingBridge.framework */,
 				656C6C6B168A2A0B00ECA482 /* Cocoa.framework */,
-				656C6C89168A2A0C00ECA482 /* SenTestingKit.framework */,
 				656C6C6D168A2A0B00ECA482 /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -96,6 +102,7 @@
 		656C6C71168A2A0B00ECA482 /* iTunes Volume Control */ = {
 			isa = PBXGroup;
 			children = (
+				65C24C68168CEB190000BFC2 /* AppleRemote */,
 				656C6CA1168A447000ECA482 /* iTunes.h */,
 				656C6C7D168A2A0B00ECA482 /* AppDelegate.h */,
 				656C6C7E168A2A0B00ECA482 /* AppDelegate.m */,
@@ -133,6 +140,16 @@
 				65C24BFA168CB0750000BFC2 /* statusbar-item-on.png */,
 			);
 			name = Images;
+			sourceTree = "<group>";
+		};
+		65C24C68168CEB190000BFC2 /* AppleRemote */ = {
+			isa = PBXGroup;
+			children = (
+				65C24C64168CEB130000BFC2 /* AppleRemote.h */,
+				65C24C65168CEB130000BFC2 /* AppleRemote.m */,
+				65C24C66168CEB130000BFC2 /* CompatibilityFixes.h */,
+			);
+			name = AppleRemote;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -204,6 +221,7 @@
 			files = (
 				656C6C78168A2A0B00ECA482 /* main.m in Sources */,
 				656C6C7F168A2A0B00ECA482 /* AppDelegate.m in Sources */,
+				65C24C67168CEB130000BFC2 /* AppleRemote.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
