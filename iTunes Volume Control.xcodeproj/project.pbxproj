@@ -16,6 +16,7 @@
 		65C24BFB168CB0750000BFC2 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 65C24BF8168CB0750000BFC2 /* icon.icns */; };
 		65C24BFC168CB0750000BFC2 /* statusbar-item-off.png in Resources */ = {isa = PBXBuildFile; fileRef = 65C24BF9168CB0750000BFC2 /* statusbar-item-off.png */; };
 		65C24BFD168CB0750000BFC2 /* statusbar-item-on.png in Resources */ = {isa = PBXBuildFile; fileRef = 65C24BFA168CB0750000BFC2 /* statusbar-item-on.png */; };
+		65C24C01168CBC7E0000BFC2 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 65C24C00168CBC7E0000BFC2 /* Credits.rtf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		65C24BF8168CB0750000BFC2 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = icon.icns; path = "iTunes Volume Control/icon.icns"; sourceTree = "<group>"; };
 		65C24BF9168CB0750000BFC2 /* statusbar-item-off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "statusbar-item-off.png"; path = "iTunes Volume Control/statusbar-item-off.png"; sourceTree = "<group>"; };
 		65C24BFA168CB0750000BFC2 /* statusbar-item-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "statusbar-item-on.png"; path = "iTunes Volume Control/statusbar-item-on.png"; sourceTree = "<group>"; };
+		65C24C00168CBC7E0000BFC2 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; name = Credits.rtf; path = "iTunes Volume Control/Credits.rtf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +119,7 @@
 		65C24BEA168CA8B10000BFC2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				65C24C00168CBC7E0000BFC2 /* Credits.rtf */,
 				65C24BEB168CA8B50000BFC2 /* Images */,
 			);
 			name = Resources;
@@ -188,6 +191,7 @@
 				65C24BFB168CB0750000BFC2 /* icon.icns in Resources */,
 				65C24BFC168CB0750000BFC2 /* statusbar-item-off.png in Resources */,
 				65C24BFD168CB0750000BFC2 /* statusbar-item-on.png in Resources */,
+				65C24C01168CBC7E0000BFC2 /* Credits.rtf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

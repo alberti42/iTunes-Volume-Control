@@ -120,6 +120,11 @@ static CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CG
     }
 }
 
+- (IBAction)aboutPanel:(id)sender
+{
+
+}
+
 - (void)changeVol:(int)vol
 {
     // check if iTunes is running (Q1)

@@ -21,6 +21,7 @@
 - (IBAction)reduceVolMenuAction:(id)sender;
 - (IBAction)increaseVolMenuAction:(id)sender;
 - (IBAction)toggleTapStatus:(id)sender;
+- (IBAction)aboutPanel:(id)sender;
 
 - (void)changeVol:(int)vol;
 
