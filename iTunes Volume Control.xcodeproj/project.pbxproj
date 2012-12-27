@@ -14,8 +14,9 @@
 		656C6C7F168A2A0B00ECA482 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 656C6C7E168A2A0B00ECA482 /* AppDelegate.m */; };
 		656C6C82168A2A0C00ECA482 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 656C6C80168A2A0C00ECA482 /* MainMenu.xib */; };
 		656C6CA3168A456900ECA482 /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 656C6CA2168A456900ECA482 /* ScriptingBridge.framework */; };
-		65C24BF4168CACCD0000BFC2 /* statusbar-item-on.png in Resources */ = {isa = PBXBuildFile; fileRef = 65C24BF2168CACCD0000BFC2 /* statusbar-item-on.png */; };
-		65C24BF5168CACCD0000BFC2 /* statusbar-item-off.png in Resources */ = {isa = PBXBuildFile; fileRef = 65C24BF3168CACCD0000BFC2 /* statusbar-item-off.png */; };
+		65C24BFB168CB0750000BFC2 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 65C24BF8168CB0750000BFC2 /* icon.icns */; };
+		65C24BFC168CB0750000BFC2 /* statusbar-item-off.png in Resources */ = {isa = PBXBuildFile; fileRef = 65C24BF9168CB0750000BFC2 /* statusbar-item-off.png */; };
+		65C24BFD168CB0750000BFC2 /* statusbar-item-on.png in Resources */ = {isa = PBXBuildFile; fileRef = 65C24BFA168CB0750000BFC2 /* statusbar-item-on.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,8 +36,9 @@
 		656C6C89168A2A0C00ECA482 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		656C6CA1168A447000ECA482 /* iTunes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iTunes.h; sourceTree = "<group>"; };
 		656C6CA2168A456900ECA482 /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
-		65C24BF2168CACCD0000BFC2 /* statusbar-item-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "statusbar-item-on.png"; sourceTree = "<group>"; };
-		65C24BF3168CACCD0000BFC2 /* statusbar-item-off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "statusbar-item-off.png"; sourceTree = "<group>"; };
+		65C24BF8168CB0750000BFC2 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = icon.icns; path = "iTunes Volume Control/icon.icns"; sourceTree = "<group>"; };
+		65C24BF9168CB0750000BFC2 /* statusbar-item-off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "statusbar-item-off.png"; path = "iTunes Volume Control/statusbar-item-off.png"; sourceTree = "<group>"; };
+		65C24BFA168CB0750000BFC2 /* statusbar-item-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "statusbar-item-on.png"; path = "iTunes Volume Control/statusbar-item-on.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,8 +128,9 @@
 		65C24BEB168CA8B50000BFC2 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				65C24BF2168CACCD0000BFC2 /* statusbar-item-on.png */,
-				65C24BF3168CACCD0000BFC2 /* statusbar-item-off.png */,
+				65C24BF8168CB0750000BFC2 /* icon.icns */,
+				65C24BF9168CB0750000BFC2 /* statusbar-item-off.png */,
+				65C24BFA168CB0750000BFC2 /* statusbar-item-on.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -186,8 +189,9 @@
 				656C6C76168A2A0B00ECA482 /* InfoPlist.strings in Resources */,
 				656C6C7C168A2A0B00ECA482 /* Credits.rtf in Resources */,
 				656C6C82168A2A0C00ECA482 /* MainMenu.xib in Resources */,
-				65C24BF4168CACCD0000BFC2 /* statusbar-item-on.png in Resources */,
-				65C24BF5168CACCD0000BFC2 /* statusbar-item-off.png in Resources */,
+				65C24BFB168CB0750000BFC2 /* icon.icns in Resources */,
+				65C24BFC168CB0750000BFC2 /* statusbar-item-off.png in Resources */,
+				65C24BFD168CB0750000BFC2 /* statusbar-item-on.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

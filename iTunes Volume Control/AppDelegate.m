@@ -80,7 +80,7 @@ static CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CG
     [statusItem setMenu:statusMenu];
     [statusItem setHighlightMode:YES];
     
-    NSImage *statusImage = [NSImage imageNamed:@"iTunes.png"];
+    NSImage *statusImage = [NSImage imageNamed:@"statusbar-item-on.png"];
     [statusItem setImage:statusImage];
     //    - (void)setImage:(NSImage *)image
     //    -(void)setAlternateImage:(NSImage *)image
