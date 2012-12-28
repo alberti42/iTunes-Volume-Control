@@ -14,6 +14,7 @@
     bool StartAtLogin;
 
     IBOutlet NSMenu *statusMenu;
+    NSUserDefaults *preferences;
     
     NSStatusItem *statusItem;
     iTunesApplication *iTunes;
@@ -54,6 +55,8 @@
 - (void)stopTimer;
 
 - (void)changeVol:(int)vol;
+
+- (void)initializePreferences;
 
 //@property (assign) IBOutlet NSWindow *window;
 

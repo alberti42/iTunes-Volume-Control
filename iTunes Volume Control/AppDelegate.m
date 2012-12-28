@@ -73,9 +73,9 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     NSURL *appURL=[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
     
     LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
-
+    
     bool found=false;
-
+    
 	if (loginItems) {
         UInt32 seedValue;
         //Retrieve the list of Login Items and cast them to a NSArray so that it will be easier to iterate.
@@ -316,7 +316,28 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     
     [self appleRemoteInit];
     
+    [self initializePreferences];
+    
     if(AppleRemoteConnected) [remote startListening:self];
+}
+
+- (void)initializePreferences
+{
+    preferences = [NSUserDefaults standardUserDefaults];
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
+                          [NSNumber numberWithBool:false] ,@"AppleRemoteConnected",
+                          [NSNumber numberWithBool:false] ,@"UseAppleCMDModifier",
+                          nil ]; // terminate the list
+    [preferences registerDefaults:dict];
+    
+    AppleRemoteConnected=[preferences boolForKey:@"AppleRemoteConnected"];
+    UseAppleCMDModifier=[preferences boolForKey:@"UseAppleCMDModifier"];
+    
+    NSMenuItem* menuItem;
+    menuItem=[statusMenu itemWithTag:2];
+    [menuItem setState:AppleRemoteConnected];
+    menuItem=[statusMenu itemWithTag:3];
+    [menuItem setState:UseAppleCMDModifier];
 }
 
 - (IBAction)toggleStartAtLogin:(id)sender
@@ -352,6 +373,9 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
         [remote startListening:self];
     }
     AppleRemoteConnected=!AppleRemoteConnected;
+    
+    [preferences setBool:AppleRemoteConnected forKey:@"AppleRemoteConnected"];
+    [preferences synchronize];
 }
 
 - (IBAction)toggleModifierUse:(id)sender
@@ -366,6 +390,9 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
         [changeStatusItem setState:1];
     }
     UseAppleCMDModifier=!UseAppleCMDModifier;
+
+    [preferences setBool:UseAppleCMDModifier forKey:@"UseAppleCMDModifier"];
+    [preferences synchronize];
 }
 
 - (IBAction)toggleTapStatus:(id)sender
