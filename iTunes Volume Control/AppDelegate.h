@@ -27,6 +27,12 @@
     
     bool _AppleRemoteConnected;
     bool _Tapping;
+    bool _UseAppleCMDModifier;
+    
+@public
+    bool previousKeyIsRepeat;
+    bool keyIsRepeat;
+    NSTimer* timer;
 }
 
 @property (readwrite, nonatomic) bool AppleRemoteConnected;

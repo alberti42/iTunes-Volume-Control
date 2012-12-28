@@ -9,18 +9,6 @@
 #import "AppDelegate.h"
 #import <IOKit/hidsystem/ev_keymap.h>
 
-@implementation AppDelegate
-
-@synthesize AppleRemoteConnected=_AppleRemoteConnected;
-@synthesize StartAtLogin=_StartAtLogin;
-@synthesize Tapping=_Tapping;
-@synthesize UseAppleCMDModifier=_UseAppleCMDModifier;
-
-bool previousKeyIsRepeat=false;
-bool keyIsRepeat;
-bool _UseAppleCMDModifier;
-NSTimer* timer;
-
 CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *refcon)
 {
     NSEvent * sysEvent;
@@ -36,9 +24,10 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     int keyCode = (([sysEvent data1] & 0xFFFF0000) >> 16);
     int keyState = (((keyFlags & 0xFF00) >> 8)) == 0xA;
     CGEventFlags keyModifier = [sysEvent modifierFlags]|0xFFFF;
-    keyIsRepeat = (keyFlags & 0x1);
+    AppDelegate* app=(__bridge AppDelegate *)(refcon);
+    app->keyIsRepeat = (keyFlags & 0x1);
     
-    CGEventFlags mask=(_UseAppleCMDModifier ? NX_COMMANDMASK:0)|0xFFFF;
+    CGEventFlags mask=([app UseAppleCMDModifier] ? NX_COMMANDMASK:0)|0xFFFF;
     
     switch( keyCode )
 	{
@@ -50,21 +39,21 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
                 {
                     if( keyCode == NX_KEYTYPE_SOUND_UP )
                     {
-                        if (!keyIsRepeat||!previousKeyIsRepeat)
+                        if (!app->keyIsRepeat||!app->previousKeyIsRepeat)
                             [[NSNotificationCenter defaultCenter] postNotificationName:@"IncreaseITunesVolume" object:NULL];
                     }
                     else
                     {
-                        if (!keyIsRepeat||!previousKeyIsRepeat)
+                        if (!app->keyIsRepeat||!app->previousKeyIsRepeat)
                             [[NSNotificationCenter defaultCenter] postNotificationName:@"DecreaseITunesVolume" object:NULL];
                     }
                 }
                 else
                 {
-                    [timer invalidate];
-                    timer=nil;
+                    [app->timer invalidate];
+                    app->timer=nil;
                 }
-                previousKeyIsRepeat=keyIsRepeat;
+                app->previousKeyIsRepeat=app->keyIsRepeat;
                 return NULL;
             }
             break;
@@ -72,6 +61,13 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     
     return event;
 }
+
+@implementation AppDelegate
+
+@synthesize AppleRemoteConnected=_AppleRemoteConnected;
+@synthesize StartAtLogin=_StartAtLogin;
+@synthesize Tapping=_Tapping;
+@synthesize UseAppleCMDModifier=_UseAppleCMDModifier;
 
 - (bool) StartAtLogin
 {
@@ -185,7 +181,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 {
     CGEventMask eventMask = (/*(1 << kCGEventKeyDown) | (1 << kCGEventKeyUp) |*/CGEventMaskBit(NX_SYSDEFINED));
     eventTap = CGEventTapCreate(kCGSessionEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault,
-                                eventMask, event_tap_callback, NULL); // Create an event tap. We are interested in SYS key presses.
+                                eventMask, event_tap_callback, (__bridge void *)(self)); // Create an event tap. We are interested in SYS key presses.
     runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0); // Create a run loop source.
     CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes); // Add to the current run loop.
 }
@@ -294,6 +290,16 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
         default:
             break;
     }
+}
+
+- (id)init
+{
+    self = [super init];
+    if(self)
+    {
+        previousKeyIsRepeat=false;
+    }
+    return self;
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
