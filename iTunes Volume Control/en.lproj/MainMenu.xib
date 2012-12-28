@@ -57,6 +57,15 @@
 						</object>
 						<int key="NSTag">1</int>
 					</object>
+					<object class="NSMenuItem" id="512041263">
+						<reference key="NSMenu" ref="448222193"/>
+						<string key="NSTitle">Apple Remote connected</string>
+						<string key="NSKeyEquiv"/>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<reference key="NSOnImage" ref="391895889"/>
+						<reference key="NSMixedImage" ref="54118271"/>
+						<int key="NSTag">2</int>
+					</object>
 					<object class="NSMenuItem" id="19870624">
 						<reference key="NSMenu" ref="448222193"/>
 						<bool key="NSIsDisabled">YES</bool>
@@ -69,20 +78,21 @@
 					</object>
 					<object class="NSMenuItem" id="1013409876">
 						<reference key="NSMenu" ref="448222193"/>
-						<string key="NSTitle">Increase volume</string>
+						<string key="NSTitle">Use ⌘ modifier</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="391895889"/>
 						<reference key="NSMixedImage" ref="54118271"/>
-						<int key="NSTag">1</int>
+						<int key="NSTag">3</int>
 					</object>
-					<object class="NSMenuItem" id="606189478">
+					<object class="NSMenuItem" id="269060074">
 						<reference key="NSMenu" ref="448222193"/>
-						<string key="NSTitle">Reduce volume</string>
+						<string key="NSTitle">Start at login</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="391895889"/>
 						<reference key="NSMixedImage" ref="54118271"/>
+						<int key="NSTag">4</int>
 					</object>
 					<object class="NSMenuItem" id="50514064">
 						<reference key="NSMenu" ref="448222193"/>
@@ -133,22 +143,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">reduceVolMenuAction:</string>
-						<reference key="source" ref="1014"/>
-						<reference key="destination" ref="606189478"/>
-					</object>
-					<int key="connectionID">578</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">increaseVolMenuAction:</string>
-						<reference key="source" ref="1014"/>
-						<reference key="destination" ref="1013409876"/>
-					</object>
-					<int key="connectionID">580</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">toggleTapStatus:</string>
 						<reference key="source" ref="1014"/>
 						<reference key="destination" ref="740603313"/>
@@ -162,6 +156,30 @@
 						<reference key="destination" ref="8464835"/>
 					</object>
 					<int key="connectionID">589</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">toggleAppleRemote:</string>
+						<reference key="source" ref="1014"/>
+						<reference key="destination" ref="512041263"/>
+					</object>
+					<int key="connectionID">669</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">toggleModifierUse:</string>
+						<reference key="source" ref="1014"/>
+						<reference key="destination" ref="1013409876"/>
+					</object>
+					<int key="connectionID">670</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">toggleStartAtLogin:</string>
+						<reference key="source" ref="1014"/>
+						<reference key="destination" ref="269060074"/>
+					</object>
+					<int key="connectionID">672</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -213,19 +231,15 @@
 						<reference key="object" ref="448222193"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="327016024"/>
-							<reference ref="606189478"/>
 							<reference ref="1013409876"/>
 							<reference ref="50514064"/>
 							<reference ref="19870624"/>
 							<reference ref="740603313"/>
 							<reference ref="8464835"/>
+							<reference ref="512041263"/>
+							<reference ref="269060074"/>
 						</array>
 						<reference key="parent" ref="0"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">555</int>
-						<reference key="object" ref="606189478"/>
-						<reference key="parent" ref="448222193"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">557</int>
@@ -257,6 +271,16 @@
 						<reference key="object" ref="8464835"/>
 						<reference key="parent" ref="448222193"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">668</int>
+						<reference key="object" ref="512041263"/>
+						<reference key="parent" ref="448222193"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">671</int>
+						<reference key="object" ref="269060074"/>
+						<reference key="parent" ref="448222193"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -266,67 +290,22 @@
 				<string key="420.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="494.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="554.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="555.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="557.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="579.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="583.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="584.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="585.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="587.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="668.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="671.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">589</int>
+			<int key="maxID">672</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes">
-			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
-				<object class="IBPartialClassDescription">
-					<string key="className">AppDelegate</string>
-					<string key="superclassName">NSObject</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="aboutPanel:">id</string>
-						<string key="increaseVolMenuAction:">id</string>
-						<string key="reduceVolMenuAction:">id</string>
-						<string key="toggleTapStatus:">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="aboutPanel:">
-							<string key="name">aboutPanel:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="increaseVolMenuAction:">
-							<string key="name">increaseVolMenuAction:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="reduceVolMenuAction:">
-							<string key="name">reduceVolMenuAction:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="toggleTapStatus:">
-							<string key="name">toggleTapStatus:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</dictionary>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">statusMenu</string>
-						<string key="NS.object.0">NSMenu</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">statusMenu</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">statusMenu</string>
-							<string key="candidateClassName">NSMenu</string>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/AppDelegate.h</string>
-					</object>
-				</object>
-			</array>
-		</object>
+		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
