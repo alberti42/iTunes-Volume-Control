@@ -11,9 +11,14 @@
 
 @implementation AppDelegate
 
+@synthesize AppleRemoteConnected=_AppleRemoteConnected;
+@synthesize StartAtLogin=_StartAtLogin;
+@synthesize Tapping=_Tapping;
+@synthesize UseAppleCMDModifier=_UseAppleCMDModifier;
+
 bool previousKeyIsRepeat=false;
 bool keyIsRepeat;
-bool UseAppleCMDModifier;
+bool _UseAppleCMDModifier;
 NSTimer* timer;
 
 CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *refcon)
@@ -33,7 +38,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     CGEventFlags keyModifier = [sysEvent modifierFlags]|0xFFFF;
     keyIsRepeat = (keyFlags & 0x1);
     
-    CGEventFlags mask=(UseAppleCMDModifier ? NX_COMMANDMASK:0)|0xFFFF;
+    CGEventFlags mask=(_UseAppleCMDModifier ? NX_COMMANDMASK:0)|0xFFFF;
     
     switch( keyCode )
 	{
@@ -68,7 +73,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     return event;
 }
 
-- (bool) willStartAtLogin
+- (bool) StartAtLogin
 {
     NSURL *appURL=[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
     
@@ -106,52 +111,58 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     return found;
 }
 
-- (void) setStartAtLogin:(BOOL)enabled
+- (void)setStartAtLogin:(bool)enabled savePreferences:(bool)savePreferences
 {
-    NSURL *appURL=[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
+    NSMenuItem* menuItem=[statusMenu itemWithTag:4];
+    [menuItem setState:enabled];
     
-    LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
-    
-	if (loginItems) {
-        if(enabled)
-        {
-            // Insert the item at the bottom of Login Items list.
-            LSSharedFileListItemRef loginItemRef = LSSharedFileListInsertItemURL(loginItems,
-                                                                                 kLSSharedFileListItemLast,
-                                                                                 NULL,
-                                                                                 NULL,
-                                                                                 (__bridge CFURLRef)appURL,
-                                                                                 NULL,
-                                                                                 NULL);
-            if (loginItemRef) {
-                CFRelease(loginItemRef);
-            }
-        }
-        else
-        {
-            UInt32 seedValue;
-            //Retrieve the list of Login Items and cast them to a NSArray so that it will be easier to iterate.
-            NSArray  *loginItemsArray = (__bridge NSArray *)LSSharedFileListCopySnapshot(loginItems, &seedValue);
-            for(int i=0; i<[loginItemsArray count]; i++)
+    if(savePreferences)
+    {
+        NSURL *appURL=[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
+        
+        LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
+        
+        if (loginItems) {
+            if(enabled)
             {
-                LSSharedFileListItemRef itemRef = (__bridge LSSharedFileListItemRef)[loginItemsArray objectAtIndex:i];
-                //Resolve the item with URL
-                CFURLRef URL = NULL;
-                if (LSSharedFileListItemResolve(itemRef, 0, &URL, NULL) == noErr) {
-                    if ( CFEqual(URL, (__bridge CFTypeRef)(appURL)) ) // found it
-                    {
-                        LSSharedFileListItemRemove(loginItems,itemRef);
-                    }
-                    CFRelease(URL);
-                }
-                if (itemRef) {
-                    CFRelease(itemRef);
+                // Insert the item at the bottom of Login Items list.
+                LSSharedFileListItemRef loginItemRef = LSSharedFileListInsertItemURL(loginItems,
+                                                                                     kLSSharedFileListItemLast,
+                                                                                     NULL,
+                                                                                     NULL,
+                                                                                     (__bridge CFURLRef)appURL,
+                                                                                     NULL,
+                                                                                     NULL);
+                if (loginItemRef) {
+                    CFRelease(loginItemRef);
                 }
             }
-            
+            else
+            {
+                UInt32 seedValue;
+                //Retrieve the list of Login Items and cast them to a NSArray so that it will be easier to iterate.
+                NSArray  *loginItemsArray = (__bridge NSArray *)LSSharedFileListCopySnapshot(loginItems, &seedValue);
+                for(int i=0; i<[loginItemsArray count]; i++)
+                {
+                    LSSharedFileListItemRef itemRef = (__bridge LSSharedFileListItemRef)[loginItemsArray objectAtIndex:i];
+                    //Resolve the item with URL
+                    CFURLRef URL = NULL;
+                    if (LSSharedFileListItemResolve(itemRef, 0, &URL, NULL) == noErr) {
+                        if ( CFEqual(URL, (__bridge CFTypeRef)(appURL)) ) // found it
+                        {
+                            LSSharedFileListItemRemove(loginItems,itemRef);
+                        }
+                        CFRelease(URL);
+                    }
+                    if (itemRef) {
+                        CFRelease(itemRef);
+                    }
+                }
+                
+            }
+            CFRelease(loginItems);
         }
-		CFRelease(loginItems);
-	}
+    }
 }
 
 - (void)stopTimer
@@ -177,7 +188,6 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
                                 eventMask, event_tap_callback, NULL); // Create an event tap. We are interested in SYS key presses.
     runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0); // Create a run loop source.
     CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes); // Add to the current run loop.
-    CGEventTapEnable(eventTap, true); // Enable the event tap.
 }
 
 - (void) appleRemoteInit
@@ -288,12 +298,6 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    UseAppleCMDModifier=false;
-    AppleRemoteConnected=false;
-    StartAtLogin=[self willStartAtLogin];
-    NSMenuItem* menuItem=[statusMenu itemWithTag:4];
-    [menuItem setState:StartAtLogin];
-    
     statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
     // [statusItem setTitle:@"iTunes Volume Control"];
     [statusItem setMenu:statusMenu];
@@ -318,101 +322,93 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     
     [self initializePreferences];
     
-    if(AppleRemoteConnected) [remote startListening:self];
+    [self setStartAtLogin:[self StartAtLogin] savePreferences:false];
 }
 
 - (void)initializePreferences
 {
     preferences = [NSUserDefaults standardUserDefaults];
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
+                          [NSNumber numberWithBool:false] ,@"TappingEnabled",
                           [NSNumber numberWithBool:false] ,@"AppleRemoteConnected",
                           [NSNumber numberWithBool:false] ,@"UseAppleCMDModifier",
                           nil ]; // terminate the list
     [preferences registerDefaults:dict];
-    
-    AppleRemoteConnected=[preferences boolForKey:@"AppleRemoteConnected"];
-    UseAppleCMDModifier=[preferences boolForKey:@"UseAppleCMDModifier"];
-    
-    NSMenuItem* menuItem;
-    menuItem=[statusMenu itemWithTag:2];
-    [menuItem setState:AppleRemoteConnected];
-    menuItem=[statusMenu itemWithTag:3];
-    [menuItem setState:UseAppleCMDModifier];
+        
+    [self setAppleRemoteConnected:[preferences boolForKey:@"AppleRemoteConnected"]];
+    [self setTapping:[preferences boolForKey:@"TappingEnabled"]];
+    [self setUseAppleCMDModifier:[preferences boolForKey:@"UseAppleCMDModifier"]];
 }
 
 - (IBAction)toggleStartAtLogin:(id)sender
 {
-    NSMenuItem* changeStatusItem=[statusMenu itemWithTag:4];
-    if(StartAtLogin)
-    {
-        [self setStartAtLogin:false];
-        [changeStatusItem setState:0];
-    }
-    else
-    {
-        [self setStartAtLogin:true];
-        [changeStatusItem setState:1];
-    }
-    StartAtLogin=!StartAtLogin;
+    [self setStartAtLogin:![self StartAtLogin] savePreferences:true];
+}
+
+- (void)setAppleRemoteConnected:(bool)enabled
+{
+    NSMenuItem* menuItem=[statusMenu itemWithTag:2];
+    [menuItem setState:enabled];
     
+    if(enabled && CGEventTapIsEnabled(eventTap))
+        [remote startListening:self];
+    else
+        [remote stopListening:self];
+    
+    [preferences setBool:enabled forKey:@"AppleRemoteConnected"];
+    [preferences synchronize];
+    
+    _AppleRemoteConnected=enabled;
 }
 
 - (IBAction)toggleAppleRemote:(id)sender
 {
-    NSMenuItem* changeStatusItem=[statusMenu itemWithTag:2];
-    if(AppleRemoteConnected)
-    {
-        [remote stopListening:self];
-        [changeStatusItem setState:0];
-        [remote stopListening:self];
-    }
-    else
-    {
-        [remote startListening:self];
-        [changeStatusItem setState:1];
-        [remote startListening:self];
-    }
-    AppleRemoteConnected=!AppleRemoteConnected;
+    [self setAppleRemoteConnected:![self AppleRemoteConnected]];
+}
+
+- (void) setUseAppleCMDModifier:(bool)enabled
+{
+    NSMenuItem* menuItem=[statusMenu itemWithTag:3];
+    [menuItem setState:enabled];
+
+    [preferences setBool:enabled forKey:@"UseAppleCMDModifier"];
+    [preferences synchronize];
     
-    [preferences setBool:AppleRemoteConnected forKey:@"AppleRemoteConnected"];
-    [preferences synchronize];
+    _UseAppleCMDModifier=enabled;
 }
 
-- (IBAction)toggleModifierUse:(id)sender
+- (IBAction)toggleUseAppleCMDModifier:(id)sender
 {
-    NSMenuItem* changeStatusItem=[statusMenu itemWithTag:3];
-    if(UseAppleCMDModifier)
+    [self setUseAppleCMDModifier:![self UseAppleCMDModifier]];
+}
+
+- (void) setTapping:(bool)enabled
+{
+    NSMenuItem* menuItem=[statusMenu itemWithTag:1];
+    [menuItem setState:enabled];
+    
+    CGEventTapEnable(eventTap, enabled);
+    
+    if(enabled)
     {
-        [changeStatusItem setState:0];
+        [statusItem setImage:statusImageOn];
+        if([self AppleRemoteConnected]) [remote startListening:self];
     }
     else
     {
-        [changeStatusItem setState:1];
-    }
-    UseAppleCMDModifier=!UseAppleCMDModifier;
-
-    [preferences setBool:UseAppleCMDModifier forKey:@"UseAppleCMDModifier"];
-    [preferences synchronize];
-}
-
-- (IBAction)toggleTapStatus:(id)sender
-{
-    NSMenuItem* changeStatusItem=[statusMenu itemWithTag:1];
-    if(CGEventTapIsEnabled(eventTap))
-    {
-        CGEventTapEnable(eventTap, false);
-        [changeStatusItem setState:0];
         [statusItem setImage:statusImageOff];
         [remote stopListening:self];
     }
-    else
-    {
-        CGEventTapEnable(eventTap, true);
-        [changeStatusItem setState:1];
-        [statusItem setImage:statusImageOn];
-        if(AppleRemoteConnected) [remote startListening:self];
-    }
     
+    [preferences setBool:CGEventTapIsEnabled(eventTap) forKey:@"TappingEnabled"];
+    [preferences synchronize];
+    
+    _Tapping=enabled;
+}
+
+- (IBAction)toggleTapping:(id)sender
+{
+    [self setTapping:![self Tapping]];
 }
 
 - (IBAction)aboutPanel:(id)sender

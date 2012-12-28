@@ -11,8 +11,6 @@
 #import "AppleRemote.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
-    bool StartAtLogin;
-
     IBOutlet NSMenu *statusMenu;
     NSUserDefaults *preferences;
     
@@ -26,14 +24,30 @@
     NSImage *statusImageOff;
     
     AppleRemote* remote;
-    bool AppleRemoteConnected;
+    
+    bool _AppleRemoteConnected;
+    bool _Tapping;
 }
 
-- (IBAction)toggleModifierUse:(id)sender;
+@property (readwrite, nonatomic) bool AppleRemoteConnected;
+@property (readwrite, nonatomic) bool StartAtLogin;
+@property (readwrite, nonatomic) bool Tapping;
+@property (readwrite, nonatomic) bool UseAppleCMDModifier;
+
+- (IBAction)toggleUseAppleCMDModifier:(id)sender;
+- (void) setUseAppleCMDModifier:(bool)enabled;
+
 - (IBAction)toggleStartAtLogin:(id)sender;
-- (IBAction)toggleTapStatus:(id)sender;
-- (IBAction)aboutPanel:(id)sender;
+- (bool) StartAtLogin;
+- (void) setStartAtLogin:(bool)enabled savePreferences:(bool)savePreferences;
+
+- (IBAction)toggleTapping:(id)sender;
+- (void) setTapping:(bool)enabled;
+
 - (IBAction)toggleAppleRemote:(id)sender;
+- (void)setAppleRemoteConnected:(bool)enabled;
+
+- (IBAction)aboutPanel:(id)sender;
 
 - (void) appleRemoteButton: (AppleRemoteEventIdentifier)buttonIdentifier pressedDown: (BOOL) pressedDown clickCount: (unsigned int) count;
 - (void) appleRemoteInit;
@@ -48,9 +62,6 @@
 
 - (void)rampVolumeUp:(NSTimer*)theTimer;
 - (void)rampVolumeDown:(NSTimer*)theTimer;
-
-- (void) setStartAtLogin:(BOOL)enabled;
-- (bool) willStartAtLogin;
 
 - (void)stopTimer;
 

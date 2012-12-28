@@ -59,7 +59,7 @@
 					</object>
 					<object class="NSMenuItem" id="512041263">
 						<reference key="NSMenu" ref="448222193"/>
-						<string key="NSTitle">Apple Remote connected</string>
+						<string key="NSTitle">Apple Remote intercepted</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="391895889"/>
@@ -143,14 +143,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">toggleTapStatus:</string>
-						<reference key="source" ref="1014"/>
-						<reference key="destination" ref="740603313"/>
-					</object>
-					<int key="connectionID">586</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">aboutPanel:</string>
 						<reference key="source" ref="1014"/>
 						<reference key="destination" ref="8464835"/>
@@ -167,19 +159,27 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">toggleModifierUse:</string>
-						<reference key="source" ref="1014"/>
-						<reference key="destination" ref="1013409876"/>
-					</object>
-					<int key="connectionID">670</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">toggleStartAtLogin:</string>
 						<reference key="source" ref="1014"/>
 						<reference key="destination" ref="269060074"/>
 					</object>
 					<int key="connectionID">672</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">toggleTapping:</string>
+						<reference key="source" ref="1014"/>
+						<reference key="destination" ref="740603313"/>
+					</object>
+					<int key="connectionID">673</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">toggleUseAppleCMDModifier:</string>
+						<reference key="source" ref="1014"/>
+						<reference key="destination" ref="1013409876"/>
+					</object>
+					<int key="connectionID">674</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -303,7 +303,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">672</int>
+			<int key="maxID">674</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>
