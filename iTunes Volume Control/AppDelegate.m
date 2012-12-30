@@ -101,13 +101,14 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
                 }
                 CFRelease(URL);
             }
-            if (itemRef) {
-                CFRelease(itemRef);
-            }
+//            if (itemRef) {
+//                CFRelease(itemRef);
+//            }
             
             if(found)break;
         }
         
+        CFRelease((__bridge CFTypeRef)(loginItemsArray));
         CFRelease(loginItems);
     }
     
@@ -157,11 +158,11 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
                         }
                         CFRelease(URL);
                     }
-                    if (itemRef) {
-                        CFRelease(itemRef);
-                    }
+//                    if (itemRef) {
+//                        CFRelease(itemRef);
+//                    }
                 }
-                
+                CFRelease((__bridge CFTypeRef)(loginItemsArray));
             }
             CFRelease(loginItems);
         }
@@ -357,7 +358,9 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     [_window setFrame:[_window frame]/*[[NSScreen mainScreen] frame]*/ display:NO animate:NO];
     
     mainLayer = [[_window contentView] layer];
-    [mainLayer setBackgroundColor:CGColorCreateGenericRGB(0.459f, 0.459f, 0.459f, 0.30f)];
+    CGColorRef backgroundColor=CGColorCreateGenericRGB(0.459f, 0.459f, 0.459f, 0.30f);
+    [mainLayer setBackgroundColor:backgroundColor];
+    CFRelease(backgroundColor);
     //mainLayer.borderColor=CGColorCreateGenericRGB(0.0f,0.0f,0.0f,1.0f);
     //mainLayer.borderWidth=4.0;
     [mainLayer setCornerRadius:22];
@@ -507,7 +510,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 }
 
 - (void) dealloc
-{
+{    
     if(CFMachPortIsValid(eventTap)) {
         CFMachPortInvalidate(eventTap);
         CFRunLoopSourceInvalidate(runLoopSource);
@@ -558,7 +561,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     {
         background = [CALayer layer];
         [background setFrame:CGRectMake(9*i+32, 29.0, 7.0, 9.0)];
-        [background setBackgroundColor:CGColorCreateGenericRGB(0.f, 0.f, 0.f, 0.4f)];
+        [background setBackgroundColor:CGColorCreateGenericRGB(0.f, 0.f, 0.f, 0.5f)];
         
         [background setShadowOffset:CGSizeMake(-1, -2)];
         [background setShadowRadius:2.0];
@@ -593,7 +596,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     {
         [volumeBar[i] setHidden:NO];
     }
-    for(NSInteger i=fullRectangles+1; i<16; i++)
+    for(NSInteger i=fullRectangles; i<16; i++)
     {
         [volumeBar[i] setHidden:YES];
     }

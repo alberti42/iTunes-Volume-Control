@@ -7,7 +7,8 @@
                    backing: (NSBackingStoreType) bufferingType
                      defer: (BOOL) flag
 {
-    if (![super initWithContentRect: contentRect styleMask: NSBorderlessWindowMask backing: bufferingType defer: flag]) return nil;
+    self = [super initWithContentRect: contentRect styleMask: NSBorderlessWindowMask backing: bufferingType defer: flag];
+    if (!self) return nil;
 	[self setBackgroundColor: [NSColor clearColor]];
 	[self setOpaque:NO];
     [self orderOut:nil];

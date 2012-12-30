@@ -59,8 +59,6 @@
 - (void) createVolumeBar;
 - (void) displayVolumeBar;
 
-- (void)animationDidStop:(CABasicAnimation *)theAnimation finished:(BOOL)flag;
-
 - (IBAction)toggleUseAppleCMDModifier:(id)sender;
 - (void) setUseAppleCMDModifier:(bool)enabled;
 
