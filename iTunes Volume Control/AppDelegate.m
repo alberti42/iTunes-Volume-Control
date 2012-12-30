@@ -101,9 +101,9 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
                 }
                 CFRelease(URL);
             }
-//            if (itemRef) {
-//                CFRelease(itemRef);
-//            }
+            //            if (itemRef) {
+            //                CFRelease(itemRef);
+            //            }
             
             if(found)break;
         }
@@ -158,9 +158,9 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
                         }
                         CFRelease(URL);
                     }
-//                    if (itemRef) {
-//                        CFRelease(itemRef);
-//                    }
+                    //                    if (itemRef) {
+                    //                        CFRelease(itemRef);
+                    //                    }
                 }
                 CFRelease((__bridge CFTypeRef)(loginItemsArray));
             }
@@ -177,12 +177,12 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 
 - (void)rampVolumeUp:(NSTimer*)theTimer
 {
-    [self changeVol:2];
+    [self changeVol:true];
 }
 
 - (void)rampVolumeDown:(NSTimer*)theTimer
 {
-    [self changeVol:-2];
+    [self changeVol:false];
 }
 
 - (void)createEventTap
@@ -235,7 +235,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     else
     {
         [self displayVolumeBar];
-        [self changeVol:+2];
+        [self changeVol:true];
     }
 }
 
@@ -249,7 +249,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     else
     {
         [self displayVolumeBar];
-        [self changeVol:-2];
+        [self changeVol:false];
     }
 }
 
@@ -358,7 +358,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     [_window setFrame:[_window frame]/*[[NSScreen mainScreen] frame]*/ display:NO animate:NO];
     
     mainLayer = [[_window contentView] layer];
-    CGColorRef backgroundColor=CGColorCreateGenericRGB(0.459f, 0.459f, 0.459f, 0.30f);
+    CGColorRef backgroundColor=CGColorCreateGenericRGB(0.f, 0.f, 0.f, 0.16f);
     [mainLayer setBackgroundColor:backgroundColor];
     CFRelease(backgroundColor);
     //mainLayer.borderColor=CGColorCreateGenericRGB(0.0f,0.0f,0.0f,1.0f);
@@ -510,7 +510,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 }
 
 - (void) dealloc
-{    
+{
     if(CFMachPortIsValid(eventTap)) {
         CFMachPortInvalidate(eventTap);
         CFRunLoopSourceInvalidate(runLoopSource);
@@ -538,12 +538,13 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     [mainLayer addAnimation:fadeOutAnimation forKey:@"decreaseOpacity"];
 }
 
-- (void)changeVol:(int)vol
+- (void)changeVol:(bool)increase
 {
     // check if iTunes is running (Q1)
     if ([iTunes isRunning])
     {
-        NSInteger volume = [iTunes soundVolume]+vol;
+        //        NSInteger volume = (((float)[iTunes soundVolume]+(increase?3.125f:-3.=125f))/3.125);
+        NSInteger volume = [iTunes soundVolume]+(increase?3:-3);
         if (volume<0) volume=0;
         if (volume>100) volume=100;
         
@@ -591,7 +592,12 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 - (void) refreshVolumeBar:(NSInteger)volume
 {
     NSInteger i;
-    NSInteger fullRectangles=(NSInteger)(16.0f*volume/100.0f);
+    NSInteger doubleFullRectangles=(NSInteger)round(16.0f*volume/50.0f);
+    NSInteger fullRectangles=doubleFullRectangles>>1;
+    [CATransaction begin];
+    [CATransaction setAnimationDuration: 0.0];
+    [CATransaction setDisableActions: TRUE];
+    
     for(i=0; i<fullRectangles; i++)
     {
         [volumeBar[i] setHidden:NO];
@@ -601,27 +607,25 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
         [volumeBar[i] setHidden:YES];
     }
     
-    //    CGRect frame;
-    //
-    //    if(fullRectangles!=0)
-    //    {
-    //        frame = [volumeBar[fullRectangles-1] frame];
-    //        frame.size.width=7;
-    //        [volumeBar[fullRectangles-1] setFrame:frame];
-    //    }
-    //
-    //    if(fullRectangles!=16)
-    //    {
-    //        NSInteger partialRectangle = (NSInteger)(16.f*volume/50.f)%2;
-    //
-    //        frame = [volumeBar[fullRectangles] frame];
-    //        frame.size.width=round(3.5f*partialRectangle);
-    //
-    //        [volumeBar[fullRectangles] setFrame:frame];
-    //        [volumeBar[fullRectangles] setHidden:NO];
-    //    }
+    CGRect frame;
     
+    if(fullRectangles!=0)
+    {
+        frame = [volumeBar[fullRectangles-1] frame];
+        frame.size.width=7;
+        [volumeBar[fullRectangles-1] setFrame:frame];
+    }
     
+    if(fullRectangles!=16&&doubleFullRectangles%2)
+    {
+        frame = [volumeBar[fullRectangles] frame];
+        frame.size.width=4;
+        
+        [volumeBar[fullRectangles] setFrame:frame];
+        [volumeBar[fullRectangles] setHidden:NO];
+    }
+    
+    [CATransaction commit];
 }
 
 - (void) displayVolumeBar

@@ -90,7 +90,7 @@
 
 - (void)stopTimer;
 
-- (void)changeVol:(int)vol;
+- (void)changeVol:(bool)increase;
 
 - (void)initializePreferences;
 
