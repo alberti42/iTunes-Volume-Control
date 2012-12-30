@@ -7,11 +7,19 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <QuartzCore/CoreAnimation.h>
+#import <ScreenSaver/ScreenSaver.h>
 #import "iTunes.h"
 #import "AppleRemote.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
-    IBOutlet NSMenu *statusMenu;
+    CALayer *mainLayer;
+    CALayer *volumeBar[16];
+    
+    CABasicAnimation *fadeOutAnimation;
+    CABasicAnimation *fadeInAnimation;
+    bool fadeInAnimationReady;
+    
     NSUserDefaults *preferences;
     
     NSStatusItem *statusItem;
@@ -33,12 +41,25 @@
     bool previousKeyIsRepeat;
     bool keyIsRepeat;
     NSTimer* timer;
+    NSTimer* timerImgSpeaker;
 }
 
-@property (readwrite, nonatomic) bool AppleRemoteConnected;
-@property (readwrite, nonatomic) bool StartAtLogin;
-@property (readwrite, nonatomic) bool Tapping;
-@property (readwrite, nonatomic) bool UseAppleCMDModifier;
+@property (assign, nonatomic) IBOutlet NSWindow* window;
+@property (assign, nonatomic) IBOutlet NSMenu* statusMenu;
+
+@property (assign, nonatomic) bool AppleRemoteConnected;
+@property (assign, nonatomic) bool StartAtLogin;
+@property (assign, nonatomic) bool Tapping;
+@property (assign, nonatomic) bool UseAppleCMDModifier;
+
+- (void)showSpeakerImg:(NSTimer*)theTimer;
+- (void)hideSpeakerImg:(NSTimer*)theTimer;
+
+- (void)refreshVolumeBar:(NSInteger)volume;
+- (void) createVolumeBar;
+- (void) displayVolumeBar;
+
+- (void)animationDidStop:(CABasicAnimation *)theAnimation finished:(BOOL)flag;
 
 - (IBAction)toggleUseAppleCMDModifier:(id)sender;
 - (void) setUseAppleCMDModifier:(bool)enabled;
@@ -74,8 +95,6 @@
 - (void)changeVol:(int)vol;
 
 - (void)initializePreferences;
-
-//@property (assign) IBOutlet NSWindow *window;
 
 @end
 

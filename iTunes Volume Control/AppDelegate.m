@@ -50,8 +50,12 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
                 }
                 else
                 {
-                    [app->timer invalidate];
-                    app->timer=nil;
+                    if(app->previousKeyIsRepeat)
+                    {
+                        app->timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:0.7 target:app selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
+                        [app->timer invalidate];
+                        app->timer=nil;
+                    }
                 }
                 app->previousKeyIsRepeat=app->keyIsRepeat;
                 return NULL;
@@ -68,6 +72,9 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 @synthesize StartAtLogin=_StartAtLogin;
 @synthesize Tapping=_Tapping;
 @synthesize UseAppleCMDModifier=_UseAppleCMDModifier;
+
+@synthesize window=_window;
+@synthesize statusMenu=_statusMenu;
 
 - (bool) StartAtLogin
 {
@@ -109,7 +116,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 
 - (void)setStartAtLogin:(bool)enabled savePreferences:(bool)savePreferences
 {
-    NSMenuItem* menuItem=[statusMenu itemWithTag:4];
+    NSMenuItem* menuItem=[_statusMenu itemWithTag:4];
     [menuItem setState:enabled];
     
     if(savePreferences)
@@ -220,10 +227,13 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 - (void)increaseITunesVolume:(NSNotification *)aNotification
 {
     if( keyIsRepeat&&!previousKeyIsRepeat )
+    {
         timer=[NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(rampVolumeUp:) userInfo:nil repeats:YES];
+        if(timerImgSpeaker) [timerImgSpeaker invalidate];
+    }
     else
     {
-        // [self stopTimer];
+        [self displayVolumeBar];
         [self changeVol:+2];
     }
 }
@@ -231,10 +241,13 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 - (void)decreaseITunesVolume:(NSNotification *)aNotification
 {
     if( keyIsRepeat&&!previousKeyIsRepeat )
+    {
         timer=[NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(rampVolumeDown:) userInfo:nil repeats:YES];
+        if(timerImgSpeaker) [timerImgSpeaker invalidate];
+    }
     else
     {
-        // [self stopTimer];
+        [self displayVolumeBar];
         [self changeVol:-2];
     }
 }
@@ -244,9 +257,15 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     {
         case kRemoteButtonVolume_Plus_Hold:
             if(timer==nil)
+            {
+                if(timerImgSpeaker) [timerImgSpeaker invalidate];
                 timer=[NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(rampVolumeUp:) userInfo:nil repeats:YES];
+            }
             else
+            {
+                timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:0.7 target:self selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
                 [self stopTimer];
+            }
             break;
         case kRemoteButtonVolume_Plus:
             [[NSNotificationCenter defaultCenter] postNotificationName:@"IncreaseITunesVolume" object:NULL];
@@ -254,9 +273,15 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
             
         case kRemoteButtonVolume_Minus_Hold:
             if(timer==nil)
+            {
+                if(timerImgSpeaker) [timerImgSpeaker invalidate];
                 timer=[NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(rampVolumeDown:) userInfo:nil repeats:YES];
+            }
             else
+            {
+                timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:0.7 target:self selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
                 [self stopTimer];
+            }
             break;
         case kRemoteButtonVolume_Minus:
             [[NSNotificationCenter defaultCenter] postNotificationName:@"DecreaseITunesVolume" object:NULL];
@@ -298,15 +323,73 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     if(self)
     {
         previousKeyIsRepeat=false;
+        
+        fadeOutAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+        [fadeOutAnimation setDuration:0.7f];
+        [fadeOutAnimation setRemovedOnCompletion:NO];
+        [fadeOutAnimation setFillMode:kCAFillModeForwards];
+        [fadeOutAnimation setFromValue:[NSNumber numberWithFloat:1.0f]];
+        [fadeOutAnimation setToValue:[NSNumber numberWithFloat:0.0f]];
+        // [fadeOutAnimation setDelegate:self];
+        
+        fadeInAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+        [fadeInAnimation setDuration:0.2f];
+        [fadeInAnimation setRemovedOnCompletion:NO];
+        [fadeInAnimation setFillMode:kCAFillModeForwards];
+        [fadeInAnimation setFromValue:[NSNumber numberWithFloat:0.0f]];
+        [fadeInAnimation setToValue:[NSNumber numberWithFloat:1.0f]];
+        // [fadeInAnimation setDelegate:self];
+        fadeInAnimationReady=true;
+        
     }
     return self;
 }
 
+
+// http://cocoadevcentral.com/d/intro_to_quartz/
+
+-(void)awakeFromNib
+{
+    //[[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
+    //[_window makeKeyAndOrderFront:self];
+    
+    [[_window contentView] setWantsLayer:YES];
+    [_window setFrame:[_window frame]/*[[NSScreen mainScreen] frame]*/ display:NO animate:NO];
+    
+    mainLayer = [[_window contentView] layer];
+    [mainLayer setBackgroundColor:CGColorCreateGenericRGB(0.459f, 0.459f, 0.459f, 0.30f)];
+    //mainLayer.borderColor=CGColorCreateGenericRGB(0.0f,0.0f,0.0f,1.0f);
+    //mainLayer.borderWidth=4.0;
+    [mainLayer setCornerRadius:22];
+    [mainLayer setOpacity:0.0f];
+    
+    //[root insertSublayer:mainLayer above:0];
+    
+    NSImage *img=[NSImage imageNamed:@"volume"];
+    NSRect rect = NSZeroRect;
+	rect.size = img.size;
+    
+    CALayer* imageLayer = [CALayer layer];
+    [imageLayer setFrame:NSRectToCGRect(rect)];
+    [imageLayer setContents:img];
+    [imageLayer setPosition:CGPointMake([[_window contentView] frame].size.width/2-1, [[_window contentView]frame].size.height/2+12)];
+    
+	[mainLayer addSublayer:imageLayer];
+    
+    [self createVolumeBar];
+    
+    //    volumeBar = [CALayer layer];
+    //    [volumeBar setFrame:[[_window contentView] frame]];
+    //    [mainLayer addSublayer:volumeBar];
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    [_window orderOut:nil];
+    
     statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
     // [statusItem setTitle:@"iTunes Volume Control"];
-    [statusItem setMenu:statusMenu];
+    [statusItem setMenu:_statusMenu];
     [statusItem setHighlightMode:YES];
     
     statusImageOn = [NSImage imageNamed:@"statusbar-item-on.png"];
@@ -340,7 +423,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
                           [NSNumber numberWithBool:false] ,@"UseAppleCMDModifier",
                           nil ]; // terminate the list
     [preferences registerDefaults:dict];
-        
+    
     [self setAppleRemoteConnected:[preferences boolForKey:@"AppleRemoteConnected"]];
     [self setTapping:[preferences boolForKey:@"TappingEnabled"]];
     [self setUseAppleCMDModifier:[preferences boolForKey:@"UseAppleCMDModifier"]];
@@ -353,7 +436,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 
 - (void)setAppleRemoteConnected:(bool)enabled
 {
-    NSMenuItem* menuItem=[statusMenu itemWithTag:2];
+    NSMenuItem* menuItem=[_statusMenu itemWithTag:2];
     [menuItem setState:enabled];
     
     if(enabled && CGEventTapIsEnabled(eventTap))
@@ -374,9 +457,9 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 
 - (void) setUseAppleCMDModifier:(bool)enabled
 {
-    NSMenuItem* menuItem=[statusMenu itemWithTag:3];
+    NSMenuItem* menuItem=[_statusMenu itemWithTag:3];
     [menuItem setState:enabled];
-
+    
     [preferences setBool:enabled forKey:@"UseAppleCMDModifier"];
     [preferences synchronize];
     
@@ -390,7 +473,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 
 - (void) setTapping:(bool)enabled
 {
-    NSMenuItem* menuItem=[statusMenu itemWithTag:1];
+    NSMenuItem* menuItem=[_statusMenu itemWithTag:1];
     [menuItem setState:enabled];
     
     CGEventTapEnable(eventTap, enabled);
@@ -435,6 +518,23 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (void) showSpeakerImg:(NSTimer*)theTimer
+{
+    [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
+    [_window makeKeyAndOrderFront:self];
+    
+    //[fadeInAnimation setFromValue:[NSNumber numberWithFloat:0.0f /*mainLayer.opacity*/]];
+    //[fadeInAnimation setDuration:0.2f];//*(1.0f-mainLayer.opacity);
+    fadeInAnimationReady=false;
+    [mainLayer addAnimation:fadeInAnimation forKey:@"increaseOpacity"];
+}
+
+- (void) hideSpeakerImg:(NSTimer*)theTimer
+{
+    fadeInAnimationReady=true;
+    [mainLayer addAnimation:fadeOutAnimation forKey:@"decreaseOpacity"];
+}
+
 - (void)changeVol:(int)vol
 {
     // check if iTunes is running (Q1)
@@ -446,8 +546,86 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
         
         [iTunes setSoundVolume:volume];
         
-        // NSLog(@"The new volume is: %ld",[iTunes soundVolume]);
+        [self refreshVolumeBar:(int)volume];
     }
+}
+
+- (void) createVolumeBar
+{
+    CALayer* background;
+    int i;
+    for(i=0; i<16; i++)
+    {
+        background = [CALayer layer];
+        [background setFrame:CGRectMake(9*i+32, 29.0, 7.0, 9.0)];
+        [background setBackgroundColor:CGColorCreateGenericRGB(0.f, 0.f, 0.f, 0.4f)];
+        
+        [background setShadowOffset:CGSizeMake(-1, -2)];
+        [background setShadowRadius:2.0];
+        [background setShadowColor:CGColorCreateGenericRGB(0.3f, 0.3f, 0.3f, 1.0f)];
+        [background setShadowOpacity:0.5];
+        
+        [mainLayer addSublayer:background];
+    }
+    
+    for(i=0; i<16; i++)
+    {
+        volumeBar[i] = [CALayer layer];
+        [volumeBar[i] setFrame:CGRectMake(9*i+32, 29.0, 7.0, 9.0)];
+        [volumeBar[i] setBackgroundColor:CGColorCreateGenericRGB(1.0f, 1.0f, 1.0f, 1.0f)];
+        
+        /*[volumeBar[i] setShadowOffset:CGSizeMake(-1, -2)];
+         [volumeBar[i] setShadowRadius:1.0];
+         [volumeBar[i] setShadowColor:CGColorCreateGenericRGB(0.3f, 0.3f, 0.3f, 1.0f)];
+         [volumeBar[i] setShadowOpacity:0.5];*/
+        
+        [volumeBar[i] setHidden:YES];
+        
+        [mainLayer addSublayer:volumeBar[i]];
+    }
+}
+
+- (void) refreshVolumeBar:(NSInteger)volume
+{
+    NSInteger i;
+    NSInteger fullRectangles=(NSInteger)(16.0f*volume/100.0f);
+    for(i=0; i<fullRectangles; i++)
+    {
+        [volumeBar[i] setHidden:NO];
+    }
+    for(NSInteger i=fullRectangles+1; i<16; i++)
+    {
+        [volumeBar[i] setHidden:YES];
+    }
+    
+    //    CGRect frame;
+    //
+    //    if(fullRectangles!=0)
+    //    {
+    //        frame = [volumeBar[fullRectangles-1] frame];
+    //        frame.size.width=7;
+    //        [volumeBar[fullRectangles-1] setFrame:frame];
+    //    }
+    //
+    //    if(fullRectangles!=16)
+    //    {
+    //        NSInteger partialRectangle = (NSInteger)(16.f*volume/50.f)%2;
+    //
+    //        frame = [volumeBar[fullRectangles] frame];
+    //        frame.size.width=round(3.5f*partialRectangle);
+    //
+    //        [volumeBar[fullRectangles] setFrame:frame];
+    //        [volumeBar[fullRectangles] setHidden:NO];
+    //    }
+    
+    
+}
+
+- (void) displayVolumeBar
+{
+    if(fadeInAnimationReady) [self showSpeakerImg:nil];
+    if(timerImgSpeaker) [timerImgSpeaker invalidate];
+    timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:0.7 target:self selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
 }
 
 @end

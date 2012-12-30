@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		651A7EEF168F1F4C00A76288 /* BorderlessWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 651A7EED168F1F4C00A76288 /* BorderlessWindow.m */; };
+		651A7EF2168F226300A76288 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 651A7EF1168F226300A76288 /* QuartzCore.framework */; };
 		653A4A6D168D1EE600E0A88E /* statusbar-item-off.png in Resources */ = {isa = PBXBuildFile; fileRef = 653A4A6C168D1EE600E0A88E /* statusbar-item-off.png */; };
 		656C6C6C168A2A0B00ECA482 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 656C6C6B168A2A0B00ECA482 /* Cocoa.framework */; };
 		656C6C76168A2A0B00ECA482 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 656C6C74168A2A0B00ECA482 /* InfoPlist.strings */; };
@@ -14,6 +16,7 @@
 		656C6C7F168A2A0B00ECA482 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 656C6C7E168A2A0B00ECA482 /* AppDelegate.m */; };
 		656C6C82168A2A0C00ECA482 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 656C6C80168A2A0C00ECA482 /* MainMenu.xib */; };
 		656C6CA3168A456900ECA482 /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 656C6CA2168A456900ECA482 /* ScriptingBridge.framework */; };
+		657F9C4F168F349100818384 /* volume.png in Resources */ = {isa = PBXBuildFile; fileRef = 657F9C4E168F349100818384 /* volume.png */; };
 		65C24BFB168CB0750000BFC2 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 65C24BF8168CB0750000BFC2 /* icon.icns */; };
 		65C24BFD168CB0750000BFC2 /* statusbar-item-on.png in Resources */ = {isa = PBXBuildFile; fileRef = 65C24BFA168CB0750000BFC2 /* statusbar-item-on.png */; };
 		65C24C01168CBC7E0000BFC2 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 65C24C00168CBC7E0000BFC2 /* Credits.rtf */; };
@@ -22,6 +25,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		651A7EED168F1F4C00A76288 /* BorderlessWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BorderlessWindow.m; sourceTree = "<group>"; };
+		651A7EEE168F1F4C00A76288 /* BorderlessWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BorderlessWindow.h; sourceTree = "<group>"; };
+		651A7EF1168F226300A76288 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = ../../../../../System/Library/Frameworks/QuartzCore.framework; sourceTree = "<group>"; };
+		653492751690ACD300B73CA3 /* volume.ai */ = {isa = PBXFileReference; lastKnownFileType = text; name = volume.ai; path = "iTunes Volume Control/Images/volume.ai"; sourceTree = "<group>"; };
 		653A4A6C168D1EE600E0A88E /* statusbar-item-off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "statusbar-item-off.png"; path = "iTunes Volume Control/statusbar-item-off.png"; sourceTree = "<group>"; };
 		653A4A6E168D1EF100E0A88E /* statusbar-item-off.ai */ = {isa = PBXFileReference; lastKnownFileType = text; name = "statusbar-item-off.ai"; path = "iTunes Volume Control/statusbar-item-off.ai"; sourceTree = "<group>"; };
 		653A4A6F168D1EF100E0A88E /* statusbar-item-on.ai */ = {isa = PBXFileReference; lastKnownFileType = text; name = "statusbar-item-on.ai"; path = "iTunes Volume Control/statusbar-item-on.ai"; sourceTree = "<group>"; };
@@ -39,6 +46,7 @@
 		656C6C81168A2A0C00ECA482 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		656C6CA1168A447000ECA482 /* iTunes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iTunes.h; sourceTree = "<group>"; };
 		656C6CA2168A456900ECA482 /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
+		657F9C4E168F349100818384 /* volume.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = volume.png; path = "iTunes Volume Control/Images/volume.png"; sourceTree = "<group>"; };
 		65C24BF8168CB0750000BFC2 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = icon.icns; path = "iTunes Volume Control/icon.icns"; sourceTree = "<group>"; };
 		65C24BFA168CB0750000BFC2 /* statusbar-item-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "statusbar-item-on.png"; path = "iTunes Volume Control/statusbar-item-on.png"; sourceTree = "<group>"; };
 		65C24C00168CBC7E0000BFC2 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; name = Credits.rtf; path = "iTunes Volume Control/Credits.rtf"; sourceTree = "<group>"; };
@@ -56,6 +64,7 @@
 				656C6CA3168A456900ECA482 /* ScriptingBridge.framework in Frameworks */,
 				656C6C6C168A2A0B00ECA482 /* Cocoa.framework in Frameworks */,
 				65C24C6C168CEB9D0000BFC2 /* IOKit.framework in Frameworks */,
+				651A7EF2168F226300A76288 /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +92,7 @@
 		656C6C6A168A2A0B00ECA482 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				651A7EF1168F226300A76288 /* QuartzCore.framework */,
 				65C24C6B168CEB9D0000BFC2 /* IOKit.framework */,
 				656C6CA2168A456900ECA482 /* ScriptingBridge.framework */,
 				656C6C6B168A2A0B00ECA482 /* Cocoa.framework */,
@@ -108,6 +118,8 @@
 				656C6CA1168A447000ECA482 /* iTunes.h */,
 				656C6C7D168A2A0B00ECA482 /* AppDelegate.h */,
 				656C6C7E168A2A0B00ECA482 /* AppDelegate.m */,
+				651A7EEE168F1F4C00A76288 /* BorderlessWindow.h */,
+				651A7EED168F1F4C00A76288 /* BorderlessWindow.m */,
 				656C6C80168A2A0C00ECA482 /* MainMenu.xib */,
 				656C6C72168A2A0B00ECA482 /* Supporting Files */,
 			);
@@ -137,6 +149,8 @@
 		65C24BEB168CA8B50000BFC2 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				653492751690ACD300B73CA3 /* volume.ai */,
+				657F9C4E168F349100818384 /* volume.png */,
 				653A4A6E168D1EF100E0A88E /* statusbar-item-off.ai */,
 				653A4A6F168D1EF100E0A88E /* statusbar-item-on.ai */,
 				653A4A6C168D1EE600E0A88E /* statusbar-item-off.png */,
@@ -213,6 +227,7 @@
 				65C24BFD168CB0750000BFC2 /* statusbar-item-on.png in Resources */,
 				65C24C01168CBC7E0000BFC2 /* Credits.rtf in Resources */,
 				653A4A6D168D1EE600E0A88E /* statusbar-item-off.png in Resources */,
+				657F9C4F168F349100818384 /* volume.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -226,6 +241,7 @@
 				656C6C78168A2A0B00ECA482 /* main.m in Sources */,
 				656C6C7F168A2A0B00ECA482 /* AppDelegate.m in Sources */,
 				65C24C67168CEB130000BFC2 /* AppleRemote.m in Sources */,
+				651A7EEF168F1F4C00A76288 /* BorderlessWindow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
