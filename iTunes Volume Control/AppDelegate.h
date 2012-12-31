@@ -23,7 +23,6 @@
     NSUserDefaults *preferences;
     
     NSStatusItem *statusItem;
-    iTunesApplication *iTunes;
     
     CFMachPortRef eventTap;
     CFRunLoopSourceRef runLoopSource;
@@ -38,6 +37,7 @@
     bool _UseAppleCMDModifier;
     
 @public
+    iTunesApplication *iTunes;
     bool previousKeyIsRepeat;
     bool keyIsRepeat;
     NSTimer* timer;
