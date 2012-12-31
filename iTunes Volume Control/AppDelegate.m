@@ -105,9 +105,6 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
                 }
                 CFRelease(URL);
             }
-            //            if (itemRef) {
-            //                CFRelease(itemRef);
-            //            }
             
             if(found)break;
         }
@@ -162,9 +159,6 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
                         }
                         CFRelease(URL);
                     }
-                    //                    if (itemRef) {
-                    //                        CFRelease(itemRef);
-                    //                    }
                 }
                 CFRelease((__bridge CFTypeRef)(loginItemsArray));
             }
