@@ -394,9 +394,6 @@ static CFTimeInterval fadeOutDuration=0.7;
 
 -(void)awakeFromNib
 {
-    //[[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
-    //[_window makeKeyAndOrderFront:self];
-    
     [[_window contentView] setWantsLayer:YES];
     [_window setFrame:[_window frame]/*[[NSScreen mainScreen] frame]*/ display:NO animate:NO];
     
@@ -425,6 +422,7 @@ static CFTimeInterval fadeOutDuration=0.7;
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     [_window orderOut:nil];
+    [_window setLevel:NSFloatingWindowLevel];
     
     statusBar = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
     // [statusBar setTitle:@"iTunes Volume Control"];
