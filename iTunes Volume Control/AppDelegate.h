@@ -17,6 +17,8 @@
     CALayer *volumeImageLayer;
     CALayer *volumeBar[16];
     
+    NSTimeInterval waitOverlayPanel;
+    
     NSImage *imgVolOn,*imgVolOff;
     
     CABasicAnimation *fadeOutAnimation;

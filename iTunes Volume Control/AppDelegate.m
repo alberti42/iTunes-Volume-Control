@@ -95,6 +95,9 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 @synthesize window=_window;
 @synthesize statusMenu=_statusMenu;
 
+static CFTimeInterval fadeInDuration=0.2;
+static CFTimeInterval fadeOutDuration=0.7;
+
 - (bool) StartAtLogin
 {
     NSURL *appURL=[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
@@ -295,7 +298,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
                 }
                 else
                 {
-                    timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
+                    timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:waitOverlayPanel target:self selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
                     [self stopTimer];
                 }
                 break;
@@ -312,7 +315,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
                 }
                 else
                 {
-                    timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
+                    timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:waitOverlayPanel target:self selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
                     [self stopTimer];
                 }
                 break;
@@ -367,7 +370,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
         previousKeyIsRepeat=false;
         
         fadeOutAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
-        [fadeOutAnimation setDuration:0.7f];
+        [fadeOutAnimation setDuration:fadeOutDuration];
         [fadeOutAnimation setRemovedOnCompletion:NO];
         [fadeOutAnimation setFillMode:kCAFillModeForwards];
         [fadeOutAnimation setFromValue:[NSNumber numberWithFloat:1.0f]];
@@ -375,7 +378,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
         // [fadeOutAnimation setDelegate:self];
         
         fadeInAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
-        [fadeInAnimation setDuration:0.2f];
+        [fadeInAnimation setDuration:fadeInDuration];
         [fadeInAnimation setRemovedOnCompletion:NO];
         [fadeInAnimation setFillMode:kCAFillModeForwards];
         [fadeInAnimation setFromValue:[NSNumber numberWithFloat:0.0f]];
@@ -477,9 +480,15 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     [menuItem setState:enabled];
     
     if(enabled && CGEventTapIsEnabled(eventTap))
+    {
         [remote startListening:self];
+        waitOverlayPanel=1.0;
+    }
     else
+    {
         [remote stopListening:self];
+        waitOverlayPanel=1.2;
+    }
     
     [preferences setBool:enabled forKey:@"AppleRemoteConnected"];
     [preferences synchronize];
@@ -554,6 +563,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
+    [remote stopListening:self];
     remote=nil;
     
     imgVolOn=nil;
@@ -580,8 +590,6 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
     [_window makeKeyAndOrderFront:self];
     
-    //[fadeInAnimation setFromValue:[NSNumber numberWithFloat:0.0f /*mainLayer.opacity*/]];
-    //[fadeInAnimation setDuration:0.2f];//*(1.0f-mainLayer.opacity);
     fadeInAnimationReady=false;
     [mainLayer addAnimation:fadeInAnimation forKey:@"increaseOpacity"];
 }
@@ -594,8 +602,6 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 
 - (void)changeVol:(bool)increase
 {
-    // check if iTunes is running (Q1)
-    //        NSInteger volume = (((float)[iTunes soundVolume]+(increase?3.125f:-3.=125f))/3.125);
     NSInteger volume;
     if(oldVolumeSetting<0)
     {
@@ -692,7 +698,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 {
     if(fadeInAnimationReady) [self showSpeakerImg:nil];
     if(timerImgSpeaker) {[timerImgSpeaker invalidate]; timerImgSpeaker=nil;}
-    timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
+    timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:waitOverlayPanel target:self selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
 }
 
 @end
