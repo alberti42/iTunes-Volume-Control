@@ -368,29 +368,22 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     CGColorRef backgroundColor=CGColorCreateGenericRGB(0.f, 0.f, 0.f, 0.16f);
     [mainLayer setBackgroundColor:backgroundColor];
     CFRelease(backgroundColor);
-    //mainLayer.borderColor=CGColorCreateGenericRGB(0.0f,0.0f,0.0f,1.0f);
-    //mainLayer.borderWidth=4.0;
     [mainLayer setCornerRadius:22];
     [mainLayer setOpacity:0.0f];
     
-    //[root insertSublayer:mainLayer above:0];
-    
-    NSImage *img=[NSImage imageNamed:@"volume"];
+    imgVolOn=[NSImage imageNamed:@"volume"];
+    imgVolOff=[NSImage imageNamed:@"volume-off"];
     NSRect rect = NSZeroRect;
-	rect.size = img.size;
+	rect.size = imgVolOff.size;
     
-    CALayer* imageLayer = [CALayer layer];
-    [imageLayer setFrame:NSRectToCGRect(rect)];
-    [imageLayer setContents:img];
-    [imageLayer setPosition:CGPointMake([[_window contentView] frame].size.width/2-1, [[_window contentView]frame].size.height/2+12)];
+    volumeImageLayer = [CALayer layer];
+    [volumeImageLayer setFrame:NSRectToCGRect(rect)];
+    [volumeImageLayer setPosition:CGPointMake([[_window contentView] frame].size.width/2-1, [[_window contentView]frame].size.height/2+12)];
+    [volumeImageLayer setContents:imgVolOn];
     
-	[mainLayer addSublayer:imageLayer];
+	[mainLayer addSublayer:volumeImageLayer];
     
     [self createVolumeBar];
-    
-    //    volumeBar = [CALayer layer];
-    //    [volumeBar setFrame:[[_window contentView] frame]];
-    //    [mainLayer addSublayer:volumeBar];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
@@ -525,6 +518,9 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
         CFRelease(runLoopSource);
     }
     
+    imgVolOn=nil;
+    imgVolOff=nil;
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -601,6 +597,9 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     [CATransaction begin];
     [CATransaction setAnimationDuration: 0.0];
     [CATransaction setDisableActions: TRUE];
+    
+    if(volume==0) [volumeImageLayer setContents:imgVolOff];
+    if(volume==3) [volumeImageLayer setContents:imgVolOn];
     
     for(i=0; i<fullRectangles; i++)
     {

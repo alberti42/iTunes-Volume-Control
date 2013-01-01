@@ -14,7 +14,10 @@
 
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
     CALayer *mainLayer;
+    CALayer *volumeImageLayer;
     CALayer *volumeBar[16];
+    
+    NSImage *imgVolOn,*imgVolOff;
     
     CABasicAnimation *fadeOutAnimation;
     CABasicAnimation *fadeInAnimation;
