@@ -334,6 +334,7 @@
 				GCC_PREFIX_HEADER = "iTunes Volume Control/iTunes Volume Control-Prefix.pch";
 				INFOPLIST_FILE = "iTunes Volume Control/iTunes Volume Control-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -346,6 +347,7 @@
 				GCC_PREFIX_HEADER = "iTunes Volume Control/iTunes Volume Control-Prefix.pch";
 				INFOPLIST_FILE = "iTunes Volume Control/iTunes Volume Control-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
