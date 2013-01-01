@@ -388,7 +388,6 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 }
 
 
-// http://cocoadevcentral.com/d/intro_to_quartz/
 
 -(void)awakeFromNib
 {
@@ -412,7 +411,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     
     volumeImageLayer = [CALayer layer];
     [volumeImageLayer setFrame:NSRectToCGRect(rect)];
-    [volumeImageLayer setPosition:CGPointMake([[_window contentView] frame].size.width/2-1, [[_window contentView]frame].size.height/2+12)];
+    [volumeImageLayer setPosition:CGPointMake([[_window contentView] frame].size.width/2, [[_window contentView]frame].size.height/2+12)];
     [volumeImageLayer setContents:imgVolOn];
     
 	[mainLayer addSublayer:volumeImageLayer];
@@ -618,6 +617,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 
 - (void) createVolumeBar
 {
+    
     CALayer* background;
     int i;
     for(i=0; i<16; i++)
@@ -625,11 +625,6 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
         background = [CALayer layer];
         [background setFrame:CGRectMake(9*i+32, 29.0, 7.0, 9.0)];
         [background setBackgroundColor:CGColorCreateGenericRGB(0.f, 0.f, 0.f, 0.5f)];
-        
-        [background setShadowOffset:CGSizeMake(-1, -2)];
-        [background setShadowRadius:2.0];
-        [background setShadowColor:CGColorCreateGenericRGB(0.3f, 0.3f, 0.3f, 1.0f)];
-        [background setShadowOpacity:0.5];
         
         [mainLayer addSublayer:background];
     }
@@ -640,10 +635,10 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
         [volumeBar[i] setFrame:CGRectMake(9*i+32, 29.0, 7.0, 9.0)];
         [volumeBar[i] setBackgroundColor:CGColorCreateGenericRGB(1.0f, 1.0f, 1.0f, 1.0f)];
         
-        /*[volumeBar[i] setShadowOffset:CGSizeMake(-1, -2)];
-         [volumeBar[i] setShadowRadius:1.0];
-         [volumeBar[i] setShadowColor:CGColorCreateGenericRGB(0.3f, 0.3f, 0.3f, 1.0f)];
-         [volumeBar[i] setShadowOpacity:0.5];*/
+        [volumeBar[i] setShadowOffset:CGSizeMake(-1, -1)];
+        [volumeBar[i] setShadowRadius:1.0];
+        [volumeBar[i] setShadowColor:CGColorCreateGenericRGB(0.f, 0.f, 0.f, 1.0f)];
+        [volumeBar[i] setShadowOpacity:0.5];
         
         [volumeBar[i] setHidden:YES];
         
