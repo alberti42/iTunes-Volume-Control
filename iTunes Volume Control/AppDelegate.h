@@ -25,7 +25,7 @@
     
     NSUserDefaults *preferences;
     
-    NSStatusItem *statusItem;
+    NSStatusItem *statusBar;
     
     CFMachPortRef eventTap;
     CFRunLoopSourceRef runLoopSource;
@@ -34,6 +34,8 @@
     NSImage *statusImageOff;
     
     AppleRemote* remote;
+    
+    NSInteger oldVolumeSetting;
     
     bool _AppleRemoteConnected;
     bool _Tapping;
@@ -85,6 +87,7 @@
 - (void)playPauseITunes:(NSNotification *)aNotification;
 - (void)decreaseITunesVolume:(NSNotification *)aNotification;
 - (void)increaseITunesVolume:(NSNotification *)aNotification;
+- (void)muteITunesVolume:(NSNotification *)aNotification;
 - (void)nextTrackITunes:(NSNotification *)aNotification;
 - (void)previousTrackITunes:(NSNotification *)aNotification;
 

@@ -31,6 +31,21 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     
     switch( keyCode )
 	{
+        case NX_KEYTYPE_MUTE:
+            if ([app->iTunes isRunning])
+            {
+                if( keyModifier==mask )
+                {
+                    if( keyState == 1 )
+                    {
+                        if (!app->keyIsRepeat)
+                            [[NSNotificationCenter defaultCenter] postNotificationName:@"MuteITunesVolume" object:NULL];
+                    }
+                    app->previousKeyIsRepeat=app->keyIsRepeat;
+                    return NULL;
+                }
+            }
+            break;
 		case NX_KEYTYPE_SOUND_UP:
         case NX_KEYTYPE_SOUND_DOWN:
             // check if iTunes is running (Q1)
@@ -220,6 +235,24 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     }
 }
 
+- (void)muteITunesVolume:(NSNotification *)aNotification
+{
+    [self displayVolumeBar];
+    if(oldVolumeSetting<0)
+    {
+        oldVolumeSetting=[iTunes soundVolume];
+        [iTunes setSoundVolume:0];
+        [self refreshVolumeBar:0];
+    }
+    else
+    {
+        [iTunes setSoundVolume:oldVolumeSetting];
+        [volumeImageLayer setContents:imgVolOn];
+        [self refreshVolumeBar:oldVolumeSetting];
+        oldVolumeSetting=-1;
+    }
+}
+
 - (void)increaseITunesVolume:(NSNotification *)aNotification
 {
     if( keyIsRepeat&&!previousKeyIsRepeat )
@@ -330,6 +363,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     self = [super init];
     if(self)
     {
+        oldVolumeSetting=-1;
         previousKeyIsRepeat=false;
         
         fadeOutAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
@@ -390,20 +424,21 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 {
     [_window orderOut:nil];
     
-    statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
-    // [statusItem setTitle:@"iTunes Volume Control"];
-    [statusItem setMenu:_statusMenu];
-    [statusItem setHighlightMode:YES];
+    statusBar = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
+    // [statusBar setTitle:@"iTunes Volume Control"];
+    [statusBar setMenu:_statusMenu];
+    [statusBar setHighlightMode:YES];
     
     statusImageOn = [NSImage imageNamed:@"statusbar-item-on.png"];
     statusImageOff = [NSImage imageNamed:@"statusbar-item-off.png"];
     
-    [statusItem setImage:statusImageOn];
+    [statusBar setImage:statusImageOn];
     
     iTunes = [SBApplication applicationWithBundleIdentifier:@"com.apple.iTunes"];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(increaseITunesVolume:) name:@"IncreaseITunesVolume" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(decreaseITunesVolume:) name:@"DecreaseITunesVolume" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(muteITunesVolume:) name:@"MuteITunesVolume" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playPauseITunes:) name:@"PlayPauseITunes" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(nextTrackITunes:) name:@"NextTrackITunes" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(previousTrackITunes:) name:@"PreviousTrackITunes" object:nil];
@@ -483,12 +518,12 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     
     if(enabled)
     {
-        [statusItem setImage:statusImageOn];
+        [statusBar setImage:statusImageOn];
         if([self AppleRemoteConnected]) [remote startListening:self];
     }
     else
     {
-        [statusItem setImage:statusImageOff];
+        [statusBar setImage:statusImageOff];
         [remote stopListening:self];
     }
     
@@ -518,10 +553,27 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
         CFRelease(runLoopSource);
     }
     
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    remote=nil;
+    
     imgVolOn=nil;
     imgVolOff=nil;
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    volumeImageLayer=nil;
+    for(int i=0; i<16; i++)
+    {
+        volumeBar[i]=nil;
+    }
+    
+    imgVolOn=nil;
+    imgVolOff=nil;
+    
+    statusImageOn=nil;
+    statusImageOff=nil;
+    
+    fadeOutAnimation=nil;
+    fadeInAnimation=nil;
 }
 
 - (void) showSpeakerImg:(NSTimer*)theTimer
@@ -545,7 +597,17 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 {
     // check if iTunes is running (Q1)
     //        NSInteger volume = (((float)[iTunes soundVolume]+(increase?3.125f:-3.=125f))/3.125);
-    NSInteger volume = [iTunes soundVolume]+(increase?3:-3);
+    NSInteger volume;
+    if(oldVolumeSetting<0)
+    {
+        volume=[iTunes soundVolume]+(increase?3:-3);
+    }
+    else
+    {
+        [volumeImageLayer setContents:imgVolOn];
+        volume=oldVolumeSetting;
+        oldVolumeSetting=-1;
+    }
     if (volume<0) volume=0;
     if (volume>100) volume=100;
     
