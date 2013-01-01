@@ -56,6 +56,7 @@
 		65CC785C1692FC1300BFD4AD /* statusbar-item-off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "statusbar-item-off.png"; path = "iTunes Volume Control/Images/statusbar-item-off.png"; sourceTree = "<group>"; };
 		65CC785D1692FC1300BFD4AD /* statusbar-item-on.ai */ = {isa = PBXFileReference; lastKnownFileType = text; name = "statusbar-item-on.ai"; path = "iTunes Volume Control/Images/statusbar-item-on.ai"; sourceTree = "<group>"; };
 		65CC785E1692FC1300BFD4AD /* statusbar-item-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "statusbar-item-on.png"; path = "iTunes Volume Control/Images/statusbar-item-on.png"; sourceTree = "<group>"; };
+		65CC786A169305C700BFD4AD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +143,7 @@
 		65C24BEA168CA8B10000BFC2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				65CC786A169305C700BFD4AD /* README.md */,
 				65C24C00168CBC7E0000BFC2 /* Credits.rtf */,
 				65C24BEB168CA8B50000BFC2 /* Images */,
 			);

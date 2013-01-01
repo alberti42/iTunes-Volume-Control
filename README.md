@@ -24,3 +24,12 @@ Contacts
 --------
 
 If you have any questions, you can contact me at a.alberti82@gmail.com.
+
+Versions
+--------
+
+* 1.0: Controlling iTunes volume using keyboard "volume up"/"volume down".
+* 1.1: Controlling iTunes volume using Apple Remote.
+* 1.2: Added options, load at login, use CMD modifier.
+* 1.3: Added graphic overlay panel indicating the volume level.
+* 1.4: Added "mute" control.
