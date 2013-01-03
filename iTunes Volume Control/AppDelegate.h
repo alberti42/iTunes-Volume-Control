@@ -17,13 +17,10 @@
     CALayer *volumeImageLayer;
     CALayer *volumeBar[16];
     
-    NSTimeInterval waitOverlayPanel;
-    
     NSImage *imgVolOn,*imgVolOff;
     
     CABasicAnimation *fadeOutAnimation;
     CABasicAnimation *fadeInAnimation;
-    bool fadeInAnimationReady;
     
     NSUserDefaults *preferences;
     
@@ -45,10 +42,11 @@
     
 @public
     iTunesApplication *iTunes;
-    bool previousKeyIsRepeat;
     bool keyIsRepeat;
     NSTimer* timer;
     NSTimer* timerImgSpeaker;
+    NSTimeInterval waitOverlayPanel;
+    bool fadeInAnimationReady;
 }
 
 @property (assign, nonatomic) IBOutlet NSWindow* window;

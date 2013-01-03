@@ -11,6 +11,7 @@
 
 CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *refcon)
 {
+    static int previousKeyCode = 0;
     NSEvent * sysEvent;
     
     // No event we care for? return ASAP
@@ -25,23 +26,32 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     int keyState = (((keyFlags & 0xFF00) >> 8)) == 0xA;
     CGEventFlags keyModifier = [sysEvent modifierFlags]|0xFFFF;
     AppDelegate* app=(__bridge AppDelegate *)(refcon);
-    app->keyIsRepeat = (keyFlags & 0x1);
+    bool keyIsRepeat = (keyFlags & 0x1);
+    bool iTunesRunning=[app->iTunes isRunning];
     
     CGEventFlags mask=([app UseAppleCMDModifier] ? NX_COMMANDMASK:0)|0xFFFF;
+    
+    if(app->timer&&previousKeyCode!=keyCode)
+    {
+        [app stopTimer];
+        
+        if(!app->timerImgSpeaker&&!app->fadeInAnimationReady) app->timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:app->waitOverlayPanel target:app selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
+    }
+    previousKeyCode=keyCode;
     
     switch( keyCode )
 	{
         case NX_KEYTYPE_MUTE:
-            if ([app->iTunes isRunning])
+            if (iTunesRunning)
             {
                 if( keyModifier==mask )
                 {
                     if( keyState == 1 )
                     {
-                        if (!app->keyIsRepeat)
+                        if (!keyIsRepeat)
                             [[NSNotificationCenter defaultCenter] postNotificationName:@"MuteITunesVolume" object:NULL];
                     }
-                    app->previousKeyIsRepeat=app->keyIsRepeat;
+                    //app->previousKeyIsRepeat=app->keyIsRepeat;
                     return NULL;
                 }
             }
@@ -49,36 +59,49 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 		case NX_KEYTYPE_SOUND_UP:
         case NX_KEYTYPE_SOUND_DOWN:
             // check if iTunes is running (Q1)
-            if ([app->iTunes isRunning])
+            if(iTunesRunning)
             {
                 if( keyModifier==mask )
                 {
                     if( keyState == 1 )
                     {
-                        if( keyCode == NX_KEYTYPE_SOUND_UP )
+                        if( !app->timer )
                         {
-                            if (!app->keyIsRepeat||!app->previousKeyIsRepeat)
-                                [[NSNotificationCenter defaultCenter] postNotificationName:@"IncreaseITunesVolume" object:NULL];
-                        }
-                        else
-                        {
-                            if (!app->keyIsRepeat||!app->previousKeyIsRepeat)
-                                [[NSNotificationCenter defaultCenter] postNotificationName:@"DecreaseITunesVolume" object:NULL];
+                            if( keyCode == NX_KEYTYPE_SOUND_UP )
+                            {
+                                //                            if (!app->keyIsRepeat||!app->previousKeyIsRepeat)
+                                
+                                [[NSNotificationCenter defaultCenter]
+                                 postNotificationName:(keyIsRepeat?@"IncreaseITunesVolumeRamp":@"IncreaseITunesVolume") object:NULL];
+                            }
+                            else
+                            {                                
+                                [[NSNotificationCenter defaultCenter]
+                                 postNotificationName:(keyIsRepeat?@"DecreaseITunesVolumeRamp":@"DecreaseITunesVolume") object:NULL];
+                            }
                         }
                     }
                     else
                     {
-                        if(app->previousKeyIsRepeat)
+                        if(app->timer)
                         {
-                            app->timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:1.0 target:app selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
-                            [app->timer invalidate];
-                            app->timer=nil;
+                            [app stopTimer];
+                            
+                            if(!app->timerImgSpeaker&&!app->fadeInAnimationReady) app->timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:app->waitOverlayPanel target:app selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
                         }
                     }
-                    app->previousKeyIsRepeat=app->keyIsRepeat;
                     return NULL;
                 }
             }
+//            else
+//            {
+//                if(app->timer)
+//                {
+//                    [app stopTimer];
+//                    
+//                    if(!app->timerImgSpeaker&&!app->fadeInAnimationReady) app->timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:app->waitOverlayPanel target:app selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
+//                }
+//            }
             break;
     }
     
@@ -97,6 +120,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 
 static CFTimeInterval fadeInDuration=0.2;
 static CFTimeInterval fadeOutDuration=0.7;
+static NSTimeInterval volumeRampTimeInterval=0.025;
 
 - (bool) StartAtLogin
 {
@@ -197,7 +221,7 @@ static CFTimeInterval fadeOutDuration=0.7;
 }
 
 - (void)rampVolumeDown:(NSTimer*)theTimer
-{
+{    
     [self changeVol:false];
 }
 
@@ -258,9 +282,9 @@ static CFTimeInterval fadeOutDuration=0.7;
 
 - (void)increaseITunesVolume:(NSNotification *)aNotification
 {
-    if( keyIsRepeat&&!previousKeyIsRepeat )
+    if( [[aNotification name] isEqualToString:@"IncreaseITunesVolumeRamp"] )
     {
-        timer=[NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(rampVolumeUp:) userInfo:nil repeats:YES];
+        timer=[NSTimer scheduledTimerWithTimeInterval:volumeRampTimeInterval target:self selector:@selector(rampVolumeUp:) userInfo:nil repeats:YES];
         if(timerImgSpeaker) {[timerImgSpeaker invalidate]; timerImgSpeaker=nil;}
     }
     else
@@ -272,9 +296,9 @@ static CFTimeInterval fadeOutDuration=0.7;
 
 - (void)decreaseITunesVolume:(NSNotification *)aNotification
 {
-    if( keyIsRepeat&&!previousKeyIsRepeat )
+    if( [[aNotification name] isEqualToString:@"DecreaseITunesVolumeRamp"] )
     {
-        timer=[NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(rampVolumeDown:) userInfo:nil repeats:YES];
+        timer=[NSTimer scheduledTimerWithTimeInterval:volumeRampTimeInterval target:self selector:@selector(rampVolumeDown:) userInfo:nil repeats:YES];        
         if(timerImgSpeaker) {[timerImgSpeaker invalidate]; timerImgSpeaker=nil;}
     }
     else
@@ -290,16 +314,18 @@ static CFTimeInterval fadeOutDuration=0.7;
         switch (buttonIdentifier)
         {
             case kRemoteButtonVolume_Plus_Hold:
-                if(timer==nil)
+                if(timer)
                 {
-                    if(fadeInAnimationReady) [self showSpeakerImg:nil];
-                    if(timerImgSpeaker) {[timerImgSpeaker invalidate]; timerImgSpeaker=nil;}
-                    timer=[NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(rampVolumeUp:) userInfo:nil repeats:YES];
+                    [self stopTimer];
+                    
+                    if(!timerImgSpeaker&&!fadeInAnimationReady) timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:waitOverlayPanel target:self selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
                 }
                 else
                 {
-                    timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:waitOverlayPanel target:self selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
-                    [self stopTimer];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"IncreaseITunesVolumeRamp" object:NULL];
+                    //                    if(fadeInAnimationReady) [self showSpeakerImg:nil];
+                    //                    if(timerImgSpeaker) {[timerImgSpeaker invalidate]; timerImgSpeaker=nil;}
+                    //                    timer=[NSTimer scheduledTimerWithTimeInterval:volumeRampTimeInterval target:self selector:@selector(rampVolumeUp:) userInfo:nil repeats:YES];
                 }
                 break;
             case kRemoteButtonVolume_Plus:
@@ -307,16 +333,19 @@ static CFTimeInterval fadeOutDuration=0.7;
                 break;
                 
             case kRemoteButtonVolume_Minus_Hold:
-                if(timer==nil)
+                if(timer)
                 {
-                    if(fadeInAnimationReady) [self showSpeakerImg:nil];
-                    if(timerImgSpeaker) {[timerImgSpeaker invalidate]; timerImgSpeaker=nil;}
-                    timer=[NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(rampVolumeDown:) userInfo:nil repeats:YES];
+                    [self stopTimer];
+                    
+                    if(!timerImgSpeaker&&!fadeInAnimationReady) timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:waitOverlayPanel target:self selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
                 }
                 else
                 {
-                    timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:waitOverlayPanel target:self selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
-                    [self stopTimer];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"DecreaseITunesVolumeRamp" object:NULL];
+                    
+                    //                    if(fadeInAnimationReady) [self showSpeakerImg:nil];
+                    //                    if(timerImgSpeaker) {[timerImgSpeaker invalidate]; timerImgSpeaker=nil;}
+                    //                    timer=[NSTimer scheduledTimerWithTimeInterval:volumeRampTimeInterval target:self selector:@selector(rampVolumeDown:) userInfo:nil repeats:YES];
                 }
                 break;
             case kRemoteButtonVolume_Minus:
@@ -367,7 +396,6 @@ static CFTimeInterval fadeOutDuration=0.7;
     if(self)
     {
         oldVolumeSetting=-1;
-        previousKeyIsRepeat=false;
         
         fadeOutAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
         [fadeOutAnimation setDuration:fadeOutDuration];
@@ -437,7 +465,9 @@ static CFTimeInterval fadeOutDuration=0.7;
     iTunes = [SBApplication applicationWithBundleIdentifier:@"com.apple.iTunes"];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(increaseITunesVolume:) name:@"IncreaseITunesVolume" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(increaseITunesVolume:) name:@"IncreaseITunesVolumeRamp" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(decreaseITunesVolume:) name:@"DecreaseITunesVolume" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(decreaseITunesVolume:) name:@"DecreaseITunesVolumeRamp" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(muteITunesVolume:) name:@"MuteITunesVolume" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playPauseITunes:) name:@"PlayPauseITunes" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(nextTrackITunes:) name:@"NextTrackITunes" object:nil];
