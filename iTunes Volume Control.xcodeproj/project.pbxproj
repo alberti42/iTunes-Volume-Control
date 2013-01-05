@@ -334,6 +334,7 @@
 		656C6C9A168A2A0C00ECA482 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Andrea Alberti";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -343,9 +344,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iTunes Volume Control/iTunes Volume Control-Prefix.pch";
 				INFOPLIST_FILE = "iTunes Volume Control/iTunes Volume Control-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "${TARGET_NAME}";
-				SDKROOT = "";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = macosx10.7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -353,6 +355,7 @@
 		656C6C9B168A2A0C00ECA482 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Andrea Alberti";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -362,9 +365,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iTunes Volume Control/iTunes Volume Control-Prefix.pch";
 				INFOPLIST_FILE = "iTunes Volume Control/iTunes Volume Control-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "${TARGET_NAME}";
-				SDKROOT = "";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = macosx10.7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

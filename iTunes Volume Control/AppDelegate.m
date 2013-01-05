@@ -30,9 +30,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     bool iTunesRunning=[app->iTunes isRunning];
     
     CGEventFlags mask=([app UseAppleCMDModifier] ? NX_COMMANDMASK:0)|0xFFFF;
-    
-    NSLog(@"key");
-    
+        
     if(app->timer&&previousKeyCode!=keyCode)
     {
         [app stopTimer];
