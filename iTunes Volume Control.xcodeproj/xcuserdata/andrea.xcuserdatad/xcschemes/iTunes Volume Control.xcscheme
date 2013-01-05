@@ -20,6 +20,20 @@
                ReferencedContainer = "container:iTunes Volume Control.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "657ADCA316975A470072402A"
+               BuildableName = "iTunes Volume Control copy.app"
+               BlueprintName = "iTunes Volume Control - Lion"
+               ReferencedContainer = "container:iTunes Volume Control.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
