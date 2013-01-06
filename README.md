@@ -28,8 +28,14 @@ If you have any questions, you can contact me at a.alberti82@gmail.com.
 Versions
 --------
 
-* 1.0: Controlling iTunes volume using keyboard "volume up"/"volume down".
-* 1.1: Controlling iTunes volume using Apple Remote.
-* 1.2: Added options, load at login, use CMD modifier.
-* 1.3: Added graphic overlay panel indicating the volume level.
+* 1.4.1: Added automatic upgrade capability.
 * 1.4: Added "mute" control.
+* 1.3: Added graphic overlay panel indicating the volume level.
+* 1.2: Added options, load at login, use CMD modifier.
+* 1.1: Controlling iTunes volume using Apple Remote.
+* 1.0: Controlling iTunes volume using keyboard "volume up"/"volume down".
+
+Requirements
+------------
+
+It is required Mac OS X 10.7 (Lion). The app has been tested with Mac OS X 10.7, 10.8.
