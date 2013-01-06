@@ -82,6 +82,7 @@
 - (void) appleRemoteButton: (AppleRemoteEventIdentifier)buttonIdentifier pressedDown: (BOOL) pressedDown clickCount: (unsigned int) count;
 - (void) appleRemoteInit;
 
+- (bool)checkEventTap;
 - (void)createEventTap;
 
 - (void)playPauseITunes:(NSNotification *)aNotification;

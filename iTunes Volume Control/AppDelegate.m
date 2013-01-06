@@ -30,7 +30,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     bool iTunesRunning=[app->iTunes isRunning];
     
     CGEventFlags mask=([app UseAppleCMDModifier] ? NX_COMMANDMASK:0)|0xFFFF;
-        
+    
     if(app->timer&&previousKeyCode!=keyCode)
     {
         [app stopTimer];
@@ -42,6 +42,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     switch( keyCode )
 	{
         case NX_KEYTYPE_MUTE:
+
             if (iTunesRunning)
             {
                 if( keyModifier==mask )
@@ -51,14 +52,16 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
                         if (!keyIsRepeat)
                             [[NSNotificationCenter defaultCenter] postNotificationName:@"MuteITunesVolume" object:NULL];
                     }
-                    //app->previousKeyIsRepeat=app->keyIsRepeat;
+                    else
+                    {
+                        [app checkEventTap];
+                    }
                     return NULL;
                 }
             }
             break;
 		case NX_KEYTYPE_SOUND_UP:
         case NX_KEYTYPE_SOUND_DOWN:
-            // check if iTunes is running (Q1)
             if(iTunesRunning)
             {
                 if( keyModifier==mask )
@@ -69,13 +72,11 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
                         {
                             if( keyCode == NX_KEYTYPE_SOUND_UP )
                             {
-                                //                            if (!app->keyIsRepeat||!app->previousKeyIsRepeat)
-                                
                                 [[NSNotificationCenter defaultCenter]
                                  postNotificationName:(keyIsRepeat?@"IncreaseITunesVolumeRamp":@"IncreaseITunesVolume") object:NULL];
                             }
                             else
-                            {                                
+                            {
                                 [[NSNotificationCenter defaultCenter]
                                  postNotificationName:(keyIsRepeat?@"DecreaseITunesVolumeRamp":@"DecreaseITunesVolume") object:NULL];
                             }
@@ -83,6 +84,8 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
                     }
                     else
                     {
+                        [app checkEventTap];
+                        
                         if(app->timer)
                         {
                             [app stopTimer];
@@ -93,15 +96,6 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
                     return NULL;
                 }
             }
-//            else
-//            {
-//                if(app->timer)
-//                {
-//                    [app stopTimer];
-//                    
-//                    if(!app->timerImgSpeaker&&!app->fadeInAnimationReady) app->timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:app->waitOverlayPanel target:app selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
-//                }
-//            }
             break;
     }
     
@@ -221,7 +215,7 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
 }
 
 - (void)rampVolumeDown:(NSTimer*)theTimer
-{    
+{
     [self changeVol:false];
 }
 
@@ -263,7 +257,7 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
 }
 
 - (void)muteITunesVolume:(NSNotification *)aNotification
-{
+{    
     [self displayVolumeBar];
     if(oldVolumeSetting<0)
     {
@@ -298,7 +292,7 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
 {
     if( [[aNotification name] isEqualToString:@"DecreaseITunesVolumeRamp"] )
     {
-        timer=[NSTimer scheduledTimerWithTimeInterval:volumeRampTimeInterval target:self selector:@selector(rampVolumeDown:) userInfo:nil repeats:YES];        
+        timer=[NSTimer scheduledTimerWithTimeInterval:volumeRampTimeInterval target:self selector:@selector(rampVolumeDown:) userInfo:nil repeats:YES];
         if(timerImgSpeaker) {[timerImgSpeaker invalidate]; timerImgSpeaker=nil;}
     }
     else
@@ -323,9 +317,6 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
                 else
                 {
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"IncreaseITunesVolumeRamp" object:NULL];
-                    //                    if(fadeInAnimationReady) [self showSpeakerImg:nil];
-                    //                    if(timerImgSpeaker) {[timerImgSpeaker invalidate]; timerImgSpeaker=nil;}
-                    //                    timer=[NSTimer scheduledTimerWithTimeInterval:volumeRampTimeInterval target:self selector:@selector(rampVolumeUp:) userInfo:nil repeats:YES];
                 }
                 break;
             case kRemoteButtonVolume_Plus:
@@ -342,10 +333,6 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
                 else
                 {
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"DecreaseITunesVolumeRamp" object:NULL];
-                    
-                    //                    if(fadeInAnimationReady) [self showSpeakerImg:nil];
-                    //                    if(timerImgSpeaker) {[timerImgSpeaker invalidate]; timerImgSpeaker=nil;}
-                    //                    timer=[NSTimer scheduledTimerWithTimeInterval:volumeRampTimeInterval target:self selector:@selector(rampVolumeDown:) userInfo:nil repeats:YES];
                 }
                 break;
             case kRemoteButtonVolume_Minus:
@@ -432,8 +419,8 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     [mainLayer setCornerRadius:22];
     [mainLayer setOpacity:0.0f];
     
-    imgVolOn=[NSImage imageNamed:@"volume"];
-    imgVolOff=[NSImage imageNamed:@"volume-off"];
+    imgVolOn=[NSImage imageNamed:@"volume.png"];
+    imgVolOff=[NSImage imageNamed:@"volume-off.png"];
     NSRect rect = NSZeroRect;
 	rect.size = imgVolOff.size;
     
@@ -444,6 +431,17 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     
 	[mainLayer addSublayer:volumeImageLayer];
     
+    /*NSImage* iTunesIcon=[NSImage imageNamed:@"iTunesIcon.png"];
+    rect = NSZeroRect;
+	rect.size = iTunesIcon.size;
+    
+    CALayer* iTunesIconLayer = [CALayer layer];
+    [iTunesIconLayer setFrame:NSRectToCGRect(rect)];
+    [iTunesIconLayer setPosition:CGPointMake([[_window contentView] frame].size.width/2-21, [[_window contentView]frame].size.height/2+12)];
+    [iTunesIconLayer setContents:iTunesIcon];
+
+	[mainLayer addSublayer:iTunesIconLayer];*/
+    
     [self createVolumeBar];
 }
 
@@ -453,7 +451,6 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     [_window setLevel:NSFloatingWindowLevel];
     
     statusBar = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
-    // [statusBar setTitle:@"iTunes Volume Control"];
     [statusBar setMenu:_statusMenu];
     [statusBar setHighlightMode:YES];
     
@@ -507,7 +504,7 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     NSMenuItem* menuItem=[_statusMenu itemWithTag:2];
     [menuItem setState:enabled];
     
-    if(enabled && CGEventTapIsEnabled(eventTap))
+    if(enabled && _Tapping)
     {
         [remote startListening:self];
         waitOverlayPanel=1.0;
@@ -563,7 +560,7 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
         [remote stopListening:self];
     }
     
-    [preferences setBool:CGEventTapIsEnabled(eventTap) forKey:@"TappingEnabled"];
+    [preferences setBool:enabled forKey:@"TappingEnabled"];
     [preferences synchronize];
     
     _Tapping=enabled;
@@ -582,8 +579,8 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     if(version>0) version=[version substringFromIndex:range.location+1];
     
     infoDict = [NSDictionary dictionaryWithObjectsAndKeys:
-                          version,@"Version",
-                          nil ]; // terminate the list
+                version,@"Version",
+                nil ]; // terminate the list
     
     [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
     [[NSApplication sharedApplication] orderFrontStandardAboutPanelWithOptions:infoDict];
@@ -637,25 +634,43 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     [mainLayer addAnimation:fadeOutAnimation forKey:@"decreaseOpacity"];
 }
 
+- (bool)checkEventTap
+{
+    bool ret=TRUE;
+    
+    if(CGEventTapIsEnabled(eventTap)!=_Tapping)
+    {
+        [self stopTimer];
+        [self hideSpeakerImg:nil];
+        [self setTapping:_Tapping];
+        
+        ret=FALSE;
+    }
+    
+    return ret;
+}
 - (void)changeVol:(bool)increase
 {
-    NSInteger volume;
-    if(oldVolumeSetting<0)
+    if([self checkEventTap])
     {
-        volume=[iTunes soundVolume]+(increase?3:-3);
+        NSInteger volume;
+        if(oldVolumeSetting<0)
+        {
+            volume=[iTunes soundVolume]+(increase?3:-3);
+        }
+        else
+        {
+            [volumeImageLayer setContents:imgVolOn];
+            volume=oldVolumeSetting;
+            oldVolumeSetting=-1;
+        }
+        if (volume<0) volume=0;
+        if (volume>100) volume=100;
+        
+        [iTunes setSoundVolume:volume];
+        
+        [self refreshVolumeBar:(int)volume];
     }
-    else
-    {
-        [volumeImageLayer setContents:imgVolOn];
-        volume=oldVolumeSetting;
-        oldVolumeSetting=-1;
-    }
-    if (volume<0) volume=0;
-    if (volume>100) volume=100;
-    
-    [iTunes setSoundVolume:volume];
-    
-    [self refreshVolumeBar:(int)volume];
 }
 
 - (void) createVolumeBar
