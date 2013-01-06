@@ -576,8 +576,17 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
 
 - (IBAction)aboutPanel:(id)sender
 {
+    NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
+    NSString* version = [infoDict objectForKey:@"CFBundleVersion"];
+    NSRange range=[version rangeOfString:@"." options:NSBackwardsSearch];
+    if(version>0) version=[version substringFromIndex:range.location+1];
+    
+    infoDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                          version,@"Version",
+                          nil ]; // terminate the list
+    
     [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
-    [[NSApplication sharedApplication] orderFrontStandardAboutPanel:sender];
+    [[NSApplication sharedApplication] orderFrontStandardAboutPanelWithOptions:infoDict];
 }
 
 - (void) dealloc

@@ -190,6 +190,7 @@
 				656C6C64168A2A0B00ECA482 /* Frameworks */,
 				656C6C65168A2A0B00ECA482 /* Resources */,
 				6597CCE21698B90D005F54C1 /* CopyFiles */,
+				6555F70416996E5800AC5A0B /* CFBundleVersion Update Script */,
 			);
 			buildRules = (
 			);
@@ -243,6 +244,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6555F70416996E5800AC5A0B /* CFBundleVersion Update Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "CFBundleVersion Update Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "echo \"Updating version/build number from git...\"\n\nversionnum=`git describe | sed  's/^v\\(.*\\)/\\1/'`\nbuildnum=`git rev-list HEAD | awk 'END{print NR}'`\nplist=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion ${versionnum}.$buildnum\" \"${plist}\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString ${versionnum}\" \"${plist}\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		656C6C63168A2A0B00ECA482 /* Sources */ = {
