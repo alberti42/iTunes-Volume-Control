@@ -35,7 +35,7 @@
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>SUFeedURL</key>
-	<string>https://dl.dropbox.com/u/3112358/iTunesVolumeControlCast.xml</string>
+	<string>https://dl.dropbox.com/u/3112358/iTunesVolumeControl/iTunesVolumeControlCast.xml</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 </dict>
