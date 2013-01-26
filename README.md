@@ -4,21 +4,21 @@ iTunes-Volume-Control
 Description
 -----------
 
-* This little app allows you to control the iTunes volume using volume-up and "volume-down hotkeys from keyboard.
-* It allows you also to control the same iTunes volume by means your Apple Remote.
+* This little app allows you to control the iTunes volume using ``volume-up and ``volume-down'' hotkeys from keyboard.
+* It allows you also to control the same iTunes volume by means of your Apple Remote.
 * This is particularly useful to control volumes of AirPlay devices.
 
 Without this little app
 -----------------------
 
-* iTunes volume would normally not be affected by changes of volumes from keyboard. This would affect only the general volume settings.
-* This is somehow undesired, especially when listening to musing on external speaker like AirPlay devices.
-* iTunes does not respond to volume change from your Apple Remote. Again, this would only change the general volume setting, leaving unaffected the volume of your AirPlay device.
+* iTunes volume is normally not affected by changes of volume from the keyboard. This would only affect the system volume settings.
+* This behavior is somehow undesired, especially when listening to musing on external speakers like AirPlay devices.
+* iTunes does not respond to volume change from your Apple Remote. Again, this would only change the system volume settings, leaving unaffected the volume of your AirPlay device.
 
 Credits
 -------
 
-This app has been inspired by "Volume for iTunes" by Yogi Patel. The icon has been designed by Alexandro Rei. The apple remote control has been adapted from iremotepipe by Steven Wittens.
+This app has been inspired by ``Volume for iTunes'' by Yogi Patel. The icon has been designed by Alexandro Rei. The apple remote control has been adapted from iremotepipe by Steven Wittens.
 
 Contacts
 --------
