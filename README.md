@@ -33,6 +33,7 @@ If you have any questions, you can contact me at a.alberti82@gmail.com.
 Versions
 --------
 
+* 1.4.3: Corrected bug: properly hide transparent panels when animations are completed (thanks to Justin Kerr Sheckler)
 * 1.4.2: Added iTunes icon to volume indicator. Corrected bug when iTunes is busy.
 * 1.4.1: Added automatic upgrade capability.
 * 1.4: Added "mute" control.
