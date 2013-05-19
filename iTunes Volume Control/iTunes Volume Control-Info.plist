@@ -34,9 +34,9 @@
 	<string>Copyright © 2012 Andrea Alberti. All rights reserved.</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
-	<key>NSPrincipalClass</key>
-	<string>NSApplication</string>
 	<key>SUFeedURL</key>
 	<string>https://dl.dropbox.com/u/3112358/iTunesVolumeControl/iTunesVolumeControlCast.xml</string>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
 </dict>
 </plist>
