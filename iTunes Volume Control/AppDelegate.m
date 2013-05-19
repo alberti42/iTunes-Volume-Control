@@ -630,8 +630,13 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
 
 - (void) hideSpeakerImg:(NSTimer*)theTimer
 {
-    fadeInAnimationReady=true;
-    [mainLayer addAnimation:fadeOutAnimation forKey:@"decreaseOpacity"];
+    [CATransaction begin]; {
+        [CATransaction setCompletionBlock:^{
+            [_window orderOut:self];
+            fadeInAnimationReady=true;
+        }];
+        [mainLayer addAnimation:fadeOutAnimation forKey:@"decreaseOpacity"];
+    } [CATransaction commit];
 }
 
 - (bool)checkEventTap
