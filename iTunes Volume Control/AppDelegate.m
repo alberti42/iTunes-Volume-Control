@@ -20,7 +20,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     sysEvent = [NSEvent eventWithCGEvent:event];
     // No need to test event type, we know it is NSSystemDefined, becuase that is the same as NX_SYSDEFINED
     if ([sysEvent subtype] != 8) return event;
-    
+  
     int keyFlags = ([sysEvent data1] & 0x0000FFFF);
     int keyCode = (([sysEvent data1] & 0xFFFF0000) >> 16);
     int keyState = (((keyFlags & 0xFF00) >> 8)) == 0xA;
@@ -28,9 +28,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     AppDelegate* app=(__bridge AppDelegate *)(refcon);
     bool keyIsRepeat = (keyFlags & 0x1);
     bool iTunesRunning=[app->iTunes isRunning];
-    
-    CGEventFlags mask=([app UseAppleCMDModifier] ? NX_COMMANDMASK:0)|0xFFFF;
-    
+        
     if(app->timer&&previousKeyCode!=keyCode)
     {
         [app stopTimer];
@@ -38,14 +36,15 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
         if(!app->timerImgSpeaker&&!app->fadeInAnimationReady) app->timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:app->waitOverlayPanel target:app selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
     }
     previousKeyCode=keyCode;
-    
-    switch( keyCode )
-	{
-        case NX_KEYTYPE_MUTE:
 
-            if (iTunesRunning)
-            {
-                if( keyModifier==mask )
+    // check that whether the Apple CMD modifier has been pressed or not
+    if(((keyModifier&NX_COMMANDMASK)==NX_COMMANDMASK)==[app UseAppleCMDModifier])
+    {
+        switch( keyCode )
+        {
+            case NX_KEYTYPE_MUTE:
+                
+                if (iTunesRunning)
                 {
                     if( keyState == 1 )
                     {
@@ -58,13 +57,10 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
                     }
                     return NULL;
                 }
-            }
-            break;
-		case NX_KEYTYPE_SOUND_UP:
-        case NX_KEYTYPE_SOUND_DOWN:
-            if(iTunesRunning)
-            {
-                if( keyModifier==mask )
+                break;
+            case NX_KEYTYPE_SOUND_UP:
+            case NX_KEYTYPE_SOUND_DOWN:
+                if(iTunesRunning)
                 {
                     if( keyState == 1 )
                     {
@@ -93,10 +89,10 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
                             if(!app->timerImgSpeaker&&!app->fadeInAnimationReady) app->timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:app->waitOverlayPanel target:app selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
                         }
                     }
-                    return NULL;
+                    return NULL;                    
                 }
-            }
-            break;
+                break;
+        }
     }
     
     return event;
@@ -405,8 +401,6 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     return self;
 }
 
-
-
 -(void)awakeFromNib
 {
     [[_window contentView] setWantsLayer:YES];
@@ -447,7 +441,7 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    [_window orderOut:nil];
+    [_window orderOut:self];
     [_window setLevel:NSFloatingWindowLevel];
     
     statusBar = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
@@ -621,9 +615,9 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
 
 - (void) showSpeakerImg:(NSTimer*)theTimer
 {
-    [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
-    [_window makeKeyAndOrderFront:self];
-    
+    // [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
+    [_window orderFront:self];
+
     fadeInAnimationReady=false;
     [mainLayer addAnimation:fadeInAnimation forKey:@"increaseOpacity"];
 }
@@ -636,7 +630,7 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
             fadeInAnimationReady=true;
         }];
         [mainLayer addAnimation:fadeOutAnimation forKey:@"decreaseOpacity"];
-    } [CATransaction commit];
+    } [CATransaction commit];    
 }
 
 - (bool)checkEventTap
