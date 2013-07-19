@@ -9,6 +9,9 @@
 #import "AppDelegate.h"
 #import <IOKit/hidsystem/ev_keymap.h>
 
+#define hideFromStatusBarPreferenceKey @"hideFromStatusBarPreferenceKey"
+#define STATUS_BAR_HIDE_DELAY 10
+
 CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *refcon)
 {
     static int previousKeyCode = 0;
@@ -108,6 +111,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 @synthesize StartAtLogin=_StartAtLogin;
 @synthesize Tapping=_Tapping;
 @synthesize UseAppleCMDModifier=_UseAppleCMDModifier;
+@synthesize hideFromStatusBar = _hideFromStatusBar;
 
 @synthesize window=_window;
 @synthesize statusMenu=_statusMenu;
@@ -450,14 +454,10 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     [_window orderOut:nil];
     [_window setLevel:NSFloatingWindowLevel];
     
-    statusBar = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
-    [statusBar setMenu:_statusMenu];
-    [statusBar setHighlightMode:YES];
-    
     statusImageOn = [NSImage imageNamed:@"statusbar-item-on.png"];
     statusImageOff = [NSImage imageNamed:@"statusbar-item-off.png"];
-    
-    [statusBar setImage:statusImageOn];
+
+    [self showInStatusBar];
     
     iTunes = [SBApplication applicationWithBundleIdentifier:@"com.apple.iTunes"];
     
@@ -479,6 +479,21 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     [self setStartAtLogin:[self StartAtLogin] savePreferences:false];
 }
 
+- (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
+{
+    [self showInStatusBar];
+    self.hideFromStatusBar = self.hideFromStatusBar;
+    return YES;
+}
+
+- (void)showInStatusBar
+{
+    statusBar = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
+    [statusBar setMenu:_statusMenu];
+    [statusBar setHighlightMode:YES];
+    [statusBar setImage:statusImageOn];
+}
+
 - (void)initializePreferences
 {
     preferences = [NSUserDefaults standardUserDefaults];
@@ -486,12 +501,14 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
                           [NSNumber numberWithBool:false] ,@"TappingEnabled",
                           [NSNumber numberWithBool:false] ,@"AppleRemoteConnected",
                           [NSNumber numberWithBool:false] ,@"UseAppleCMDModifier",
+                          [NSNumber numberWithBool:NO], hideFromStatusBarPreferenceKey,
                           nil ]; // terminate the list
     [preferences registerDefaults:dict];
     
     [self setAppleRemoteConnected:[preferences boolForKey:@"AppleRemoteConnected"]];
     [self setTapping:[preferences boolForKey:@"TappingEnabled"]];
     [self setUseAppleCMDModifier:[preferences boolForKey:@"UseAppleCMDModifier"]];
+    self.hideFromStatusBar = [preferences boolForKey:hideFromStatusBarPreferenceKey];
 }
 
 - (IBAction)toggleStartAtLogin:(id)sender
@@ -540,6 +557,45 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
 - (IBAction)toggleUseAppleCMDModifier:(id)sender
 {
     [self setUseAppleCMDModifier:![self UseAppleCMDModifier]];
+}
+
+- (IBAction)toggleHideFromStatusBar:(id)sender
+{
+    self.hideFromStatusBar = ! self.hideFromStatusBar;
+}
+
+- (void)setHideFromStatusBar:(bool)enabled
+{
+    NSMenuItem* menuItem=[_statusMenu itemWithTag:5];
+    [menuItem setState:enabled];
+    
+    [preferences setBool:enabled forKey:hideFromStatusBarPreferenceKey];
+    [preferences synchronize];
+    
+    if (enabled)
+    {
+        if (! [_statusBarHideTimer isValid] && statusBar)
+        {
+            _statusBarHideTimer = [NSTimer scheduledTimerWithTimeInterval:(NSTimeInterval)STATUS_BAR_HIDE_DELAY
+                                                                   target:self
+                                                                 selector:@selector(hideFromStatusBar:)
+                                                                 userInfo:nil
+                                                                  repeats:NO];
+        }
+    } else {
+        [_statusBarHideTimer invalidate];
+        if (! statusBar)
+            [self showInStatusBar];
+    }
+    
+    _hideFromStatusBar = enabled;
+}
+
+- (void)hideFromStatusBar:(NSTimer*)aTimer
+{
+    [aTimer invalidate];
+    [[NSStatusBar systemStatusBar] removeStatusItem:statusBar];
+    statusBar = nil;
 }
 
 - (void) setTapping:(bool)enabled
