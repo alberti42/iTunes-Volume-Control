@@ -8,6 +8,8 @@ Description
 * It allows you also to control the same iTunes volume by means of your Apple Remote control.
 * This is particularly useful to control the volume of AirPlay devices.
 
+![alt tag](https://raw.github.com/alberti42/iTunes-Volume-Control/master/screenshot.png)
+
 Why do I need this app?
 -----------------------
 
@@ -18,7 +20,12 @@ Why do I need this app?
 How to install it?
 ------------------
 
-It is very simple. There is no need of any installation. Just download this [dmg package](https://github.com/alberti42/iTunes-Volume-Control/blob/master/iTunes%20Volume%20Control.dmg?raw=true) , open it, and drag the *iTunes Volume Control* app into your *Application* folder, or any other folder of your choice. 
+It is very simple. There is no need of any installation.
+
+* Just download this [dmg package](https://github.com/alberti42/iTunes-Volume-Control/blob/master/iTunes%20Volume%20Control.dmg?raw=true).
+* Open it.
+* Drag the *iTunes Volume Control* app into your *Application* folder, or any other folder of your choice.
+* Run the *iTunes Volume Control* app and a "music note" symbol will appear in your status bar.
 
 Credits
 -------
