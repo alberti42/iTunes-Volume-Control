@@ -33,6 +33,7 @@ If you have any questions, you can contact me at a.alberti82@gmail.com.
 Versions
 --------
 
+* 1.4.5: Added the option to enable/disable automatic updates occurring once a week
 * 1.4.4: Corrected two bugs: the focus remains correctly on the selected application after changing the volume; cap lock does not prevent anymore the volume to be changed.
 * 1.4.3: Corrected bug: properly hide transparent panels when animations are completed (thanks to Justin Kerr Sheckler)
 * 1.4.2: Added iTunes icon to volume indicator. Corrected bug when iTunes is busy.

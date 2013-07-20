@@ -39,6 +39,7 @@
     bool _AppleRemoteConnected;
     bool _Tapping;
     bool _UseAppleCMDModifier;
+    bool _AutomaticUpdates;
     
 @public
     iTunesApplication *iTunes;
@@ -56,6 +57,7 @@
 @property (assign, nonatomic) bool StartAtLogin;
 @property (assign, nonatomic) bool Tapping;
 @property (assign, nonatomic) bool UseAppleCMDModifier;
+@property (assign, nonatomic) bool AutomaticUpdates;
 
 - (void)showSpeakerImg:(NSTimer*)theTimer;
 - (void)hideSpeakerImg:(NSTimer*)theTimer;
@@ -66,6 +68,10 @@
 
 - (IBAction)toggleUseAppleCMDModifier:(id)sender;
 - (void) setUseAppleCMDModifier:(bool)enabled;
+
+- (IBAction)toggleAutomaticUpdates:(id)sender;
+- (bool) AutomaticUpdates;
+- (void) setAutomaticUpdates:(bool)enabled;
 
 - (IBAction)toggleStartAtLogin:(id)sender;
 - (bool) StartAtLogin;

@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import <IOKit/hidsystem/ev_keymap.h>
+#import <Sparkle/SUUpdater.h>
 
 CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *refcon)
 {
@@ -28,7 +29,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     AppDelegate* app=(__bridge AppDelegate *)(refcon);
     bool keyIsRepeat = (keyFlags & 0x1);
     bool iTunesRunning=[app->iTunes isRunning];
-        
+
     if(app->timer&&previousKeyCode!=keyCode)
     {
         [app stopTimer];
@@ -36,7 +37,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
         if(!app->timerImgSpeaker&&!app->fadeInAnimationReady) app->timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:app->waitOverlayPanel target:app selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
     }
     previousKeyCode=keyCode;
-
+    
     // check that whether the Apple CMD modifier has been pressed or not
     if(((keyModifier&NX_COMMANDMASK)==NX_COMMANDMASK)==[app UseAppleCMDModifier])
     {
@@ -104,6 +105,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 @synthesize StartAtLogin=_StartAtLogin;
 @synthesize Tapping=_Tapping;
 @synthesize UseAppleCMDModifier=_UseAppleCMDModifier;
+@synthesize AutomaticUpdates=_AutomaticUpdates;
 
 @synthesize window=_window;
 @synthesize statusMenu=_statusMenu;
@@ -439,8 +441,12 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     [self createVolumeBar];
 }
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+- (void)applicationWillFinishLaunching:(NSNotification *)aNotification
 {
+    [[SUUpdater sharedUpdater] setFeedURL:[NSURL URLWithString:@"https://dl.dropbox.com/u/3112358/iTunesVolumeControl/iTunesVolumeControlCast.xml"]];
+    
+    [[SUUpdater sharedUpdater] setUpdateCheckInterval:60*60*24*7]; // look for new updates every 7 days
+
     [_window orderOut:self];
     [_window setLevel:NSFloatingWindowLevel];
     
@@ -471,21 +477,42 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     [self initializePreferences];
     
     [self setStartAtLogin:[self StartAtLogin] savePreferences:false];
+    
 }
 
 - (void)initializePreferences
 {
     preferences = [NSUserDefaults standardUserDefaults];
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
-                          [NSNumber numberWithBool:false] ,@"TappingEnabled",
+                          [NSNumber numberWithBool:true] ,@"TappingEnabled",
                           [NSNumber numberWithBool:false] ,@"AppleRemoteConnected",
                           [NSNumber numberWithBool:false] ,@"UseAppleCMDModifier",
+                          [NSNumber numberWithBool:true] ,@"AutomaticUpdates",
                           nil ]; // terminate the list
     [preferences registerDefaults:dict];
     
-    [self setAppleRemoteConnected:[preferences boolForKey:@"AppleRemoteConnected"]];
-    [self setTapping:[preferences boolForKey:@"TappingEnabled"]];
-    [self setUseAppleCMDModifier:[preferences boolForKey:@"UseAppleCMDModifier"]];
+    [self setAppleRemoteConnected:[preferences boolForKey: @"AppleRemoteConnected"]];
+    [self setTapping:[preferences boolForKey:              @"TappingEnabled"]];
+    [self setUseAppleCMDModifier:[preferences boolForKey:  @"UseAppleCMDModifier"]];
+    [self setAutomaticUpdates:[preferences boolForKey:     @"AutomaticUpdates"]];
+}
+
+- (IBAction)toggleAutomaticUpdates:(id)sender
+{
+   [self setAutomaticUpdates:![self AutomaticUpdates]];
+}
+
+- (void) setAutomaticUpdates:(bool)enabled
+{
+    NSMenuItem* menuItem=[_statusMenu itemWithTag:5];
+    [menuItem setState:enabled];
+    
+    [preferences setBool:enabled forKey:@"AutomaticUpdates"];
+    [preferences synchronize];
+    
+    _AutomaticUpdates=enabled;
+    
+    [[SUUpdater sharedUpdater] setAutomaticallyChecksForUpdates:enabled];
 }
 
 - (IBAction)toggleStartAtLogin:(id)sender

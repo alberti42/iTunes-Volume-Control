@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1070</int>
-		<string key="IBDocument.SystemVersion">12C2034</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2844</string>
-		<string key="IBDocument.AppKitVersion">1187.34</string>
-		<string key="IBDocument.HIToolboxVersion">625.00</string>
+		<string key="IBDocument.SystemVersion">12E55</string>
+		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
+		<string key="IBDocument.AppKitVersion">1187.39</string>
+		<string key="IBDocument.HIToolboxVersion">626.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">2844</string>
+			<string key="NS.object.0">3084</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>NSCustomObject</string>
@@ -117,6 +117,16 @@
 						<reference key="NSOnImage" ref="391895889"/>
 						<reference key="NSMixedImage" ref="54118271"/>
 					</object>
+					<object class="NSMenuItem" id="996688565">
+						<reference key="NSMenu" ref="448222193"/>
+						<string key="NSTitle">Automatic weekly updates</string>
+						<string key="NSKeyEquiv"/>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<int key="NSState">1</int>
+						<reference key="NSOnImage" ref="391895889"/>
+						<reference key="NSMixedImage" ref="54118271"/>
+						<int key="NSTag">5</int>
+					</object>
 					<object class="NSMenuItem" id="8464835">
 						<reference key="NSMenu" ref="448222193"/>
 						<string key="NSTitle">About</string>
@@ -160,7 +170,6 @@
 					<string key="NSFrameSize">{210, 206}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
-					<reference key="NSNextKeyView"/>
 					<string key="NSReuseIdentifierKey">_NS:20</string>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1920, 1058}}</string>
@@ -244,11 +253,19 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
+						<string key="label">toggleAutomaticUpdates:</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="996688565"/>
+					</object>
+					<int key="connectionID">692</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
 						<string key="label">checkForUpdates:</string>
 						<reference key="source" ref="954156553"/>
 						<reference key="destination" ref="169561876"/>
 					</object>
-					<int key="connectionID">685</int>
+					<int key="connectionID">694</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -301,6 +318,7 @@
 							<reference ref="269060074"/>
 							<reference ref="169561876"/>
 							<reference ref="935555051"/>
+							<reference ref="996688565"/>
 						</array>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Status Menu</string>
@@ -366,11 +384,17 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">684</int>
 						<reference key="object" ref="169561876"/>
+						<array class="NSMutableArray" key="children"/>
 						<reference key="parent" ref="448222193"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">686</int>
 						<reference key="object" ref="935555051"/>
+						<reference key="parent" ref="448222193"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">691</int>
+						<reference key="object" ref="996688565"/>
 						<reference key="parent" ref="448222193"/>
 					</object>
 				</array>
@@ -398,12 +422,13 @@
 				<string key="683.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="684.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="686.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="691.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">686</int>
+			<int key="maxID">694</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -413,6 +438,7 @@
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="aboutPanel:">id</string>
 						<string key="toggleAppleRemote:">id</string>
+						<string key="toggleAutomaticUpdates:">id</string>
 						<string key="toggleStartAtLogin:">id</string>
 						<string key="toggleTapping:">id</string>
 						<string key="toggleUseAppleCMDModifier:">id</string>
@@ -424,6 +450,10 @@
 						</object>
 						<object class="IBActionInfo" key="toggleAppleRemote:">
 							<string key="name">toggleAppleRemote:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="toggleAutomaticUpdates:">
+							<string key="name">toggleAutomaticUpdates:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="toggleStartAtLogin:">

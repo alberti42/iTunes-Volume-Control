@@ -36,7 +36,5 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
-	<key>SUFeedURL</key>
-	<string>https://dl.dropbox.com/u/3112358/iTunesVolumeControl/iTunesVolumeControlCast.xml</string>
 </dict>
 </plist>
