@@ -15,8 +15,8 @@
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
-    if (! appDelegate.menuIsVisible)
-        [appDelegate.statusBar popUpStatusItemMenu:appDelegate.statusBar.menu];
+    if (! [appDelegate menuIsVisible])
+        [[appDelegate statusBar] popUpStatusItemMenu:[[appDelegate statusBar] menu]];
 }
 
 @end

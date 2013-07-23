@@ -11,7 +11,6 @@
 #import <Sparkle/SUUpdater.h>
 #import "StatusItemView.h"
 
-#define hideFromStatusBarPreferenceKey @"hideFromStatusBarPreferenceKey"
 #define STATUS_BAR_HIDE_DELAY 10
 
 CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *refcon)
@@ -25,7 +24,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     sysEvent = [NSEvent eventWithCGEvent:event];
     // No need to test event type, we know it is NSSystemDefined, becuase that is the same as NX_SYSDEFINED
     if ([sysEvent subtype] != 8) return event;
-  
+    
     int keyFlags = ([sysEvent data1] & 0x0000FFFF);
     int keyCode = (([sysEvent data1] & 0xFFFF0000) >> 16);
     int keyState = (((keyFlags & 0xFF00) >> 8)) == 0xA;
@@ -33,7 +32,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     AppDelegate* app=(__bridge AppDelegate *)(refcon);
     bool keyIsRepeat = (keyFlags & 0x1);
     bool iTunesRunning=[app->iTunes isRunning];
-
+    
     if(app->timer&&previousKeyCode!=keyCode)
     {
         [app stopTimer];
@@ -94,7 +93,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
                             if(!app->timerImgSpeaker&&!app->fadeInAnimationReady) app->timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:app->waitOverlayPanel target:app selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
                         }
                     }
-                    return NULL;                    
+                    return NULL;
                 }
                 break;
         }
@@ -142,7 +141,7 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     
     bool found=false;
     
-	if (loginItems) {
+    if (loginItems) {
         UInt32 seedValue;
         //Retrieve the list of Login Items and cast them to a NSArray so that it will be easier to iterate.
         NSArray  *loginItemsArray = (__bridge NSArray *)LSSharedFileListCopySnapshot(loginItems, &seedValue);
@@ -275,7 +274,7 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
 }
 
 - (void)muteITunesVolume:(NSNotification *)aNotification
-{    
+{
     [self displayVolumeBar];
     if(oldVolumeSetting<0)
     {
@@ -438,25 +437,25 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     imgVolOn=[NSImage imageNamed:@"volume.png"];
     imgVolOff=[NSImage imageNamed:@"volume-off.png"];
     NSRect rect = NSZeroRect;
-	rect.size = imgVolOff.size;
+    rect.size = imgVolOff.size;
     
     volumeImageLayer = [CALayer layer];
     [volumeImageLayer setFrame:NSRectToCGRect(rect)];
     [volumeImageLayer setPosition:CGPointMake([[_window contentView] frame].size.width/2, [[_window contentView]frame].size.height/2+12)];
     [volumeImageLayer setContents:imgVolOn];
     
-	[mainLayer addSublayer:volumeImageLayer];
+    [mainLayer addSublayer:volumeImageLayer];
     
     /*NSImage* iTunesIcon=[NSImage imageNamed:@"iTunesIcon.png"];
-    rect = NSZeroRect;
-	rect.size = iTunesIcon.size;
-    
-    CALayer* iTunesIconLayer = [CALayer layer];
-    [iTunesIconLayer setFrame:NSRectToCGRect(rect)];
-    [iTunesIconLayer setPosition:CGPointMake([[_window contentView] frame].size.width/2-21, [[_window contentView]frame].size.height/2+12)];
-    [iTunesIconLayer setContents:iTunesIcon];
-
-	[mainLayer addSublayer:iTunesIconLayer];*/
+     rect = NSZeroRect;
+     rect.size = iTunesIcon.size;
+     
+     CALayer* iTunesIconLayer = [CALayer layer];
+     [iTunesIconLayer setFrame:NSRectToCGRect(rect)];
+     [iTunesIconLayer setPosition:CGPointMake([[_window contentView] frame].size.width/2-21, [[_window contentView]frame].size.height/2+12)];
+     [iTunesIconLayer setContents:iTunesIcon];
+     
+     [mainLayer addSublayer:iTunesIconLayer];*/
     
     [self createVolumeBar];
 }
@@ -466,13 +465,13 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     [[SUUpdater sharedUpdater] setFeedURL:[NSURL URLWithString:@"https://dl.dropbox.com/u/3112358/iTunesVolumeControl/iTunesVolumeControlCast.xml"]];
     
     [[SUUpdater sharedUpdater] setUpdateCheckInterval:60*60*24*7]; // look for new updates every 7 days
-
+    
     [_window orderOut:self];
     [_window setLevel:NSFloatingWindowLevel];
     
     statusImageOn = [NSImage imageNamed:@"statusbar-item-on.png"];
     statusImageOff = [NSImage imageNamed:@"statusbar-item-off.png"];
-
+    
     [self showInStatusBar];
     
     iTunes = [SBApplication applicationWithBundleIdentifier:@"com.apple.iTunes"];
@@ -497,9 +496,10 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
 {
+    [self setHideFromStatusBar:[self hideFromStatusBar]];
     [self showInStatusBar];
-    self.hideFromStatusBar = self.hideFromStatusBar;
-    return YES;
+    
+    return true;
 }
 
 - (void)applicationWillResignActive:(NSNotification *)notification
@@ -537,11 +537,11 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
 {
     preferences = [NSUserDefaults standardUserDefaults];
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
-                          [NSNumber numberWithBool:true] ,@"TappingEnabled",
-                          [NSNumber numberWithBool:false] ,@"AppleRemoteConnected",
-                          [NSNumber numberWithBool:false] ,@"UseAppleCMDModifier",
-                          [NSNumber numberWithBool:true] ,@"AutomaticUpdates",
-						  [NSNumber numberWithBool:NO], hideFromStatusBarPreferenceKey,
+                          [NSNumber numberWithBool:true] , @"TappingEnabled",
+                          [NSNumber numberWithBool:false], @"AppleRemoteConnected",
+                          [NSNumber numberWithBool:false], @"UseAppleCMDModifier",
+                          [NSNumber numberWithBool:true],  @"AutomaticUpdates",
+                          [NSNumber numberWithBool:false], @"hideFromStatusBarPreference",
                           nil ]; // terminate the list
     [preferences registerDefaults:dict];
     
@@ -549,17 +549,17 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     [self setTapping:[preferences boolForKey:              @"TappingEnabled"]];
     [self setUseAppleCMDModifier:[preferences boolForKey:  @"UseAppleCMDModifier"]];
     [self setAutomaticUpdates:[preferences boolForKey:     @"AutomaticUpdates"]];
-    self.hideFromStatusBar = [preferences boolForKey:hideFromStatusBarPreferenceKey];
+    [self setHideFromStatusBar:[preferences boolForKey:    @"hideFromStatusBarPreference"]];
 }
 
 - (IBAction)toggleAutomaticUpdates:(id)sender
 {
-   [self setAutomaticUpdates:![self AutomaticUpdates]];
+    [self setAutomaticUpdates:![self AutomaticUpdates]];
 }
 
 - (void) setAutomaticUpdates:(bool)enabled
 {
-    NSMenuItem* menuItem=[_statusMenu itemWithTag:5];
+    NSMenuItem* menuItem=[_statusMenu itemWithTag:6];
     [menuItem setState:enabled];
     
     [preferences setBool:enabled forKey:@"AutomaticUpdates"];
@@ -699,7 +699,7 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
 {
     // [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
     [_window orderFront:self];
-
+    
     fadeInAnimationReady=false;
     [mainLayer addAnimation:fadeInAnimation forKey:@"increaseOpacity"];
 }
@@ -712,7 +712,7 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
             fadeInAnimationReady=true;
         }];
         [mainLayer addAnimation:fadeOutAnimation forKey:@"decreaseOpacity"];
-    } [CATransaction commit];    
+    } [CATransaction commit];
 }
 
 - (bool)checkEventTap
@@ -850,8 +850,11 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     NSMenuItem* menuItem=[_statusMenu itemWithTag:5];
     [menuItem setState:self.hideFromStatusBar];
     
-    [preferences setBool:self.hideFromStatusBar forKey:hideFromStatusBarPreferenceKey];
+    [preferences setBool:enabled forKey:@"hideFromStatusBarPreference"];
     [preferences synchronize];
+    
+    _AutomaticUpdates=enabled;
+    
     
     if (self.hideFromStatusBar)
     {
@@ -938,14 +941,14 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
 
 - (void)menuWillOpen:(NSMenu *)menu
 {
-    self.menuIsVisible = YES;
+    [self setMenuIsVisible:true];
     [_hideFromStatusBarHintPopover close];
 }
 
 - (void)menuDidClose:(NSMenu *)menu
 {
-    self.menuIsVisible = NO;
-    if (self.hideFromStatusBar)
+    [self setMenuIsVisible:false];
+    if ([self hideFromStatusBar])
         [self showHideFromStatusBarHintPopover];
 }
 
