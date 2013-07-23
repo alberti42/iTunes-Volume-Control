@@ -40,6 +40,7 @@ If you have any questions, you can contact me at a.alberti82@gmail.com.
 Versions
 --------
 
+* 1.4.6: Added the option to hide the icon from status bar. The icon reappears temporarily (for 10 seconds) by simply restarting the application. This gives the time to change the hide behavior as desired.
 * 1.4.5: Added the option to enable/disable automatic updates occurring once a week
 * 1.4.4: Corrected two bugs: the focus remains correctly on the selected application after changing the volume; cap lock does not prevent anymore the volume to be changed.
 * 1.4.3: Corrected bug: properly hide transparent panels when animations are completed (thanks to Justin Kerr Sheckler)
