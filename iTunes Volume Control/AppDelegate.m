@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import <IOKit/hidsystem/ev_keymap.h>
+#import <Sparkle/SUUpdater.h>
 
 #define hideFromStatusBarPreferenceKey @"hideFromStatusBarPreferenceKey"
 #define STATUS_BAR_HIDE_DELAY 10
@@ -23,7 +24,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     sysEvent = [NSEvent eventWithCGEvent:event];
     // No need to test event type, we know it is NSSystemDefined, becuase that is the same as NX_SYSDEFINED
     if ([sysEvent subtype] != 8) return event;
-    
+  
     int keyFlags = ([sysEvent data1] & 0x0000FFFF);
     int keyCode = (([sysEvent data1] & 0xFFFF0000) >> 16);
     int keyState = (((keyFlags & 0xFF00) >> 8)) == 0xA;
@@ -31,9 +32,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     AppDelegate* app=(__bridge AppDelegate *)(refcon);
     bool keyIsRepeat = (keyFlags & 0x1);
     bool iTunesRunning=[app->iTunes isRunning];
-    
-    CGEventFlags mask=([app UseAppleCMDModifier] ? NX_COMMANDMASK:0)|0xFFFF;
-    
+
     if(app->timer&&previousKeyCode!=keyCode)
     {
         [app stopTimer];
@@ -42,13 +41,14 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     }
     previousKeyCode=keyCode;
     
-    switch( keyCode )
-	{
-        case NX_KEYTYPE_MUTE:
-
-            if (iTunesRunning)
-            {
-                if( keyModifier==mask )
+    // check that whether the Apple CMD modifier has been pressed or not
+    if(((keyModifier&NX_COMMANDMASK)==NX_COMMANDMASK)==[app UseAppleCMDModifier])
+    {
+        switch( keyCode )
+        {
+            case NX_KEYTYPE_MUTE:
+                
+                if (iTunesRunning)
                 {
                     if( keyState == 1 )
                     {
@@ -61,13 +61,10 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
                     }
                     return NULL;
                 }
-            }
-            break;
-		case NX_KEYTYPE_SOUND_UP:
-        case NX_KEYTYPE_SOUND_DOWN:
-            if(iTunesRunning)
-            {
-                if( keyModifier==mask )
+                break;
+            case NX_KEYTYPE_SOUND_UP:
+            case NX_KEYTYPE_SOUND_DOWN:
+                if(iTunesRunning)
                 {
                     if( keyState == 1 )
                     {
@@ -96,10 +93,10 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
                             if(!app->timerImgSpeaker&&!app->fadeInAnimationReady) app->timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:app->waitOverlayPanel target:app selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
                         }
                     }
-                    return NULL;
+                    return NULL;                    
                 }
-            }
-            break;
+                break;
+        }
     }
     
     return event;
@@ -111,6 +108,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 @synthesize StartAtLogin=_StartAtLogin;
 @synthesize Tapping=_Tapping;
 @synthesize UseAppleCMDModifier=_UseAppleCMDModifier;
+@synthesize AutomaticUpdates=_AutomaticUpdates;
 @synthesize hideFromStatusBar = _hideFromStatusBar;
 
 @synthesize window=_window;
@@ -409,8 +407,6 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     return self;
 }
 
-
-
 -(void)awakeFromNib
 {
     [[_window contentView] setWantsLayer:YES];
@@ -449,9 +445,13 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     [self createVolumeBar];
 }
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+- (void)applicationWillFinishLaunching:(NSNotification *)aNotification
 {
-    [_window orderOut:nil];
+    [[SUUpdater sharedUpdater] setFeedURL:[NSURL URLWithString:@"https://dl.dropbox.com/u/3112358/iTunesVolumeControl/iTunesVolumeControlCast.xml"]];
+    
+    [[SUUpdater sharedUpdater] setUpdateCheckInterval:60*60*24*7]; // look for new updates every 7 days
+
+    [_window orderOut:self];
     [_window setLevel:NSFloatingWindowLevel];
     
     statusImageOn = [NSImage imageNamed:@"statusbar-item-on.png"];
@@ -477,6 +477,7 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     [self initializePreferences];
     
     [self setStartAtLogin:[self StartAtLogin] savePreferences:false];
+    
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
@@ -498,17 +499,37 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
 {
     preferences = [NSUserDefaults standardUserDefaults];
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
-                          [NSNumber numberWithBool:false] ,@"TappingEnabled",
+                          [NSNumber numberWithBool:true] ,@"TappingEnabled",
                           [NSNumber numberWithBool:false] ,@"AppleRemoteConnected",
                           [NSNumber numberWithBool:false] ,@"UseAppleCMDModifier",
-                          [NSNumber numberWithBool:NO], hideFromStatusBarPreferenceKey,
+                          [NSNumber numberWithBool:true] ,@"AutomaticUpdates",
+						  [NSNumber numberWithBool:NO], hideFromStatusBarPreferenceKey,
                           nil ]; // terminate the list
     [preferences registerDefaults:dict];
     
-    [self setAppleRemoteConnected:[preferences boolForKey:@"AppleRemoteConnected"]];
-    [self setTapping:[preferences boolForKey:@"TappingEnabled"]];
-    [self setUseAppleCMDModifier:[preferences boolForKey:@"UseAppleCMDModifier"]];
+    [self setAppleRemoteConnected:[preferences boolForKey: @"AppleRemoteConnected"]];
+    [self setTapping:[preferences boolForKey:              @"TappingEnabled"]];
+    [self setUseAppleCMDModifier:[preferences boolForKey:  @"UseAppleCMDModifier"]];
+    [self setAutomaticUpdates:[preferences boolForKey:     @"AutomaticUpdates"]];
     self.hideFromStatusBar = [preferences boolForKey:hideFromStatusBarPreferenceKey];
+}
+
+- (IBAction)toggleAutomaticUpdates:(id)sender
+{
+   [self setAutomaticUpdates:![self AutomaticUpdates]];
+}
+
+- (void) setAutomaticUpdates:(bool)enabled
+{
+    NSMenuItem* menuItem=[_statusMenu itemWithTag:5];
+    [menuItem setState:enabled];
+    
+    [preferences setBool:enabled forKey:@"AutomaticUpdates"];
+    [preferences synchronize];
+    
+    _AutomaticUpdates=enabled;
+    
+    [[SUUpdater sharedUpdater] setAutomaticallyChecksForUpdates:enabled];
 }
 
 - (IBAction)toggleStartAtLogin:(id)sender
@@ -677,9 +698,9 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
 
 - (void) showSpeakerImg:(NSTimer*)theTimer
 {
-    [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
-    [_window makeKeyAndOrderFront:self];
-    
+    // [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
+    [_window orderFront:self];
+
     fadeInAnimationReady=false;
     [mainLayer addAnimation:fadeInAnimation forKey:@"increaseOpacity"];
 }
@@ -692,7 +713,7 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
             fadeInAnimationReady=true;
         }];
         [mainLayer addAnimation:fadeOutAnimation forKey:@"decreaseOpacity"];
-    } [CATransaction commit];
+    } [CATransaction commit];    
 }
 
 - (bool)checkEventTap
