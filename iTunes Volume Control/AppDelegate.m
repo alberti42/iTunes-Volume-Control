@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import <IOKit/hidsystem/ev_keymap.h>
 #import <Sparkle/SUUpdater.h>
+#import "StatusItemView.h"
 
 #define hideFromStatusBarPreferenceKey @"hideFromStatusBarPreferenceKey"
 #define STATUS_BAR_HIDE_DELAY 10
@@ -101,6 +102,21 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     
     return event;
 }
+
+@interface AppDelegate () <NSMenuDelegate>
+{
+    StatusItemView* _statusBarItemView;
+    NSTimer* _statusBarHideTimer;
+    NSPopover* _hideFromStatusBarHintPopover;
+    NSTextField* _hideFromStatusBarHintLabel;
+    NSTimer *_hideFromStatusBarHintPopoverUpdateTimer;
+    BOOL _applicationDidBecomeActiveInitially;
+}
+
+@property (nonatomic, readwrite, strong) NSStatusItem* statusBar;
+@property (nonatomic, readwrite, assign) BOOL menuIsVisible;
+
+@end
 
 @implementation AppDelegate
 
@@ -477,7 +493,6 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     [self initializePreferences];
     
     [self setStartAtLogin:[self StartAtLogin] savePreferences:false];
-    
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
@@ -487,12 +502,35 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     return YES;
 }
 
+- (void)applicationWillResignActive:(NSNotification *)notification
+{
+    [_hideFromStatusBarHintPopover close];
+}
+
+- (void)applicationDidBecomeActive:(NSNotification *)notification
+{
+    if (! _applicationDidBecomeActiveInitially)
+    {
+        _applicationDidBecomeActiveInitially = YES;
+        return;
+    }
+    
+    if (self.hideFromStatusBar)
+        [self showHideFromStatusBarHintPopover];
+}
+
 - (void)showInStatusBar
 {
-    statusBar = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
-    [statusBar setMenu:_statusMenu];
-    [statusBar setHighlightMode:YES];
-    [statusBar setImage:statusImageOn];
+    // the status bar item needs a custom view so that we can show a NSPopover for the hide-from-status-bar hint
+    // the view now reacts to the mouseDown event to show the menu
+    CGFloat thickness = [[NSStatusBar systemStatusBar] thickness];
+    self.statusBar = [[NSStatusBar systemStatusBar] statusItemWithLength:thickness];
+    _statusBarItemView = [[StatusItemView alloc] initWithFrame:(NSRect){.size={thickness, thickness}}];
+    _statusBarItemView.image = statusImageOn;
+    self.statusBar.view = _statusBarItemView;
+    [self.statusBar setMenu:_statusMenu];
+    _statusMenu.delegate = self;
+    [self.statusBar setHighlightMode:YES];
 }
 
 - (void)initializePreferences
@@ -580,45 +618,6 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     [self setUseAppleCMDModifier:![self UseAppleCMDModifier]];
 }
 
-- (IBAction)toggleHideFromStatusBar:(id)sender
-{
-    self.hideFromStatusBar = ! self.hideFromStatusBar;
-}
-
-- (void)setHideFromStatusBar:(bool)enabled
-{
-    NSMenuItem* menuItem=[_statusMenu itemWithTag:5];
-    [menuItem setState:enabled];
-    
-    [preferences setBool:enabled forKey:hideFromStatusBarPreferenceKey];
-    [preferences synchronize];
-    
-    if (enabled)
-    {
-        if (! [_statusBarHideTimer isValid] && statusBar)
-        {
-            _statusBarHideTimer = [NSTimer scheduledTimerWithTimeInterval:(NSTimeInterval)STATUS_BAR_HIDE_DELAY
-                                                                   target:self
-                                                                 selector:@selector(hideFromStatusBar:)
-                                                                 userInfo:nil
-                                                                  repeats:NO];
-        }
-    } else {
-        [_statusBarHideTimer invalidate];
-        if (! statusBar)
-            [self showInStatusBar];
-    }
-    
-    _hideFromStatusBar = enabled;
-}
-
-- (void)hideFromStatusBar:(NSTimer*)aTimer
-{
-    [aTimer invalidate];
-    [[NSStatusBar systemStatusBar] removeStatusItem:statusBar];
-    statusBar = nil;
-}
-
 - (void) setTapping:(bool)enabled
 {
     NSMenuItem* menuItem=[_statusMenu itemWithTag:1];
@@ -628,12 +627,12 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     
     if(enabled)
     {
-        [statusBar setImage:statusImageOn];
+        _statusBarItemView.image = statusImageOn;
         if([self AppleRemoteConnected]) [remote startListening:self];
     }
     else
     {
-        [statusBar setImage:statusImageOff];
+        _statusBarItemView.image = statusImageOff;
         [remote stopListening:self];
     }
     
@@ -833,6 +832,121 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     if(fadeInAnimationReady) [self showSpeakerImg:nil];
     if(timerImgSpeaker) {[timerImgSpeaker invalidate]; timerImgSpeaker=nil;}
     timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:waitOverlayPanel target:self selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
+}
+
+#pragma mark - Hide From Status Bar
+
+- (IBAction)toggleHideFromStatusBar:(id)sender
+{
+    self.hideFromStatusBar = ! self.hideFromStatusBar;
+    if (self.hideFromStatusBar)
+        [self showHideFromStatusBarHintPopover];
+}
+
+- (void)setHideFromStatusBar:(bool)enabled
+{
+    _hideFromStatusBar = enabled;    
+    
+    NSMenuItem* menuItem=[_statusMenu itemWithTag:5];
+    [menuItem setState:self.hideFromStatusBar];
+    
+    [preferences setBool:self.hideFromStatusBar forKey:hideFromStatusBarPreferenceKey];
+    [preferences synchronize];
+    
+    if (self.hideFromStatusBar)
+    {
+        if (! [_statusBarHideTimer isValid] && self.statusBar)
+        {
+            _statusBarHideTimer = [NSTimer scheduledTimerWithTimeInterval:(NSTimeInterval)STATUS_BAR_HIDE_DELAY
+                                                                   target:self
+                                                                 selector:@selector(doHideFromStatusBar:)
+                                                                 userInfo:nil
+                                                                  repeats:NO];
+            _hideFromStatusBarHintPopoverUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:0.5
+                                                                                        target:self
+                                                                                      selector:@selector(updateHideFromStatusBarHintPopover:)
+                                                                                      userInfo:nil
+                                                                                       repeats:YES];
+        }
+    } else {
+        [_hideFromStatusBarHintPopover close];
+        [_statusBarHideTimer invalidate];
+        [_hideFromStatusBarHintPopoverUpdateTimer invalidate];
+        if (! self.statusBar)
+            [self showInStatusBar];
+    }
+}
+
+- (void)doHideFromStatusBar:(NSTimer*)aTimer
+{
+    [aTimer invalidate];
+    [_hideFromStatusBarHintPopoverUpdateTimer invalidate];
+    [_hideFromStatusBarHintPopover close];
+    [[NSStatusBar systemStatusBar] removeStatusItem:self.statusBar];
+    self.statusBar = nil;
+}
+
+- (void)showHideFromStatusBarHintPopover
+{
+    if (_hideFromStatusBarHintPopover.isShown) return;
+    
+    if (! _hideFromStatusBarHintPopover)
+    {
+        CGRect popoverRect = (CGRect) {
+            .size.width = 225,
+            .size.height = 75
+        };
+        
+        _hideFromStatusBarHintLabel = [[NSTextField alloc] initWithFrame:CGRectInset(popoverRect, 10, 10)];
+        _hideFromStatusBarHintLabel.font = [NSFont systemFontOfSize:[NSFont smallSystemFontSize]];
+        _hideFromStatusBarHintLabel.editable = NO;
+        _hideFromStatusBarHintLabel.selectable = NO;
+        _hideFromStatusBarHintLabel.bezeled = NO;
+        _hideFromStatusBarHintLabel.backgroundColor = [NSColor clearColor];
+        _hideFromStatusBarHintLabel.alignment = NSCenterTextAlignment;
+        
+        NSView* hintView = [[NSView alloc] initWithFrame:popoverRect];
+        [hintView addSubview:_hideFromStatusBarHintLabel];
+        
+        NSViewController* hintVC = [[NSViewController alloc] init];
+        hintVC.view = hintView;
+        
+        _hideFromStatusBarHintPopover = [[NSPopover alloc] init];
+        _hideFromStatusBarHintPopover.contentViewController = hintVC;
+    }
+    
+    [self setHideFromStatusBarHintLabelWithSeconds:STATUS_BAR_HIDE_DELAY];
+    [_hideFromStatusBarHintPopover showRelativeToRect:_statusBarItemView.frame
+                                               ofView:_statusBarItemView
+                                        preferredEdge:NSMinYEdge];
+}
+
+- (void)updateHideFromStatusBarHintPopover:(NSTimer*)aTimer
+{
+    NSDate* now = [NSDate date];
+    [self setHideFromStatusBarHintLabelWithSeconds:[[_statusBarHideTimer fireDate] timeIntervalSinceDate:now]];
+}
+
+- (void)setHideFromStatusBarHintLabelWithSeconds:(NSUInteger)seconds
+{
+    _hideFromStatusBarHintLabel.stringValue =
+    [NSString stringWithFormat:@"%@ will hide after %ld seconds.\n\nLaunch it again to re-show the icon.",
+     @"iTunes Volume Control", (unsigned long)seconds];
+}
+
+#pragma mark - NSMenuDelegate
+
+- (void)menuWillOpen:(NSMenu *)menu
+{
+    self.menuIsVisible = YES;
+    [_hideFromStatusBarHintPopover close];
+}
+
+- (void)menuDidClose:(NSMenu *)menu
+{
+    self.menuIsVisible = NO;
+    if (self.hideFromStatusBar)
+        [self showHideFromStatusBarHintPopover];
 }
 
 @end

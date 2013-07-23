@@ -24,8 +24,6 @@
     
     NSUserDefaults *preferences;
     
-    NSStatusItem *statusBar;
-    
     CFMachPortRef eventTap;
     CFRunLoopSourceRef runLoopSource;
     
@@ -41,9 +39,7 @@
     bool _UseAppleCMDModifier;
     bool _AutomaticUpdates;
     bool _hideFromStatusBar;
-    
-    NSTimer *_statusBarHideTimer;
-    
+        
 @public
     iTunesApplication *iTunes;
     bool keyIsRepeat;
@@ -55,6 +51,9 @@
 
 @property (assign, nonatomic) IBOutlet NSWindow* window;
 @property (assign, nonatomic) IBOutlet NSMenu* statusMenu;
+
+@property (nonatomic, readonly, strong) NSStatusItem *statusBar;
+@property (nonatomic, readonly, assign) BOOL menuIsVisible;
 
 @property (assign, nonatomic) bool AppleRemoteConnected;
 @property (assign, nonatomic) bool StartAtLogin;
