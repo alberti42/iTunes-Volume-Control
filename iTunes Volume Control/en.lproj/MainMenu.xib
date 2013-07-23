@@ -90,6 +90,15 @@
 						<reference key="NSMixedImage" ref="54118271"/>
 						<int key="NSTag">3</int>
 					</object>
+					<object class="NSMenuItem" id="624853508">
+						<reference key="NSMenu" ref="448222193"/>
+						<string key="NSTitle">Hide from Status Bar</string>
+						<string key="NSKeyEquiv"/>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<reference key="NSOnImage" ref="391895889"/>
+						<reference key="NSMixedImage" ref="54118271"/>
+						<int key="NSTag">5</int>
+					</object>
 					<object class="NSMenuItem" id="269060074">
 						<reference key="NSMenu" ref="448222193"/>
 						<string key="NSTitle">Start at login</string>
@@ -165,14 +174,14 @@
 				<nil key="NSViewClass"/>
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<object class="NSView" key="NSWindowView" id="715615776">
-					<reference key="NSNextResponder"/>
+					<nil key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<string key="NSFrameSize">{210, 206}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
 					<string key="NSReuseIdentifierKey">_NS:20</string>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1920, 1058}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1680, 1028}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>
@@ -234,6 +243,14 @@
 						<reference key="destination" ref="1013409876"/>
 					</object>
 					<int key="connectionID">674</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">toggleHideFromStatusBar:</string>
+						<reference key="source" ref="1014"/>
+						<reference key="destination" ref="624853508"/>
+					</object>
+					<int key="connectionID">688</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -318,6 +335,7 @@
 							<reference ref="269060074"/>
 							<reference ref="169561876"/>
 							<reference ref="935555051"/>
+							<reference ref="624853508"/>
 							<reference ref="996688565"/>
 						</array>
 						<reference key="parent" ref="0"/>
@@ -393,6 +411,11 @@
 						<reference key="parent" ref="448222193"/>
 					</object>
 					<object class="IBObjectRecord">
+						<int key="objectID">687</int>
+						<reference key="object" ref="624853508"/>
+						<reference key="parent" ref="448222193"/>
+					</object>
+					<object class="IBObjectRecord">
 						<int key="objectID">691</int>
 						<reference key="object" ref="996688565"/>
 						<reference key="parent" ref="448222193"/>
@@ -422,6 +445,7 @@
 				<string key="683.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="684.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="686.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="687.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="691.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
@@ -527,7 +551,9 @@
 					</object>
 				</object>
 			</array>
+>>>>>>> 98c1f75c98c376434bdbdd1f6cb725b4e59c4513
 		</object>
+		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
