@@ -9,12 +9,12 @@
 #import "StatusItemView.h"
 #import "AppDelegate.h"
 
-#define appDelegate ((AppDelegate*)([[NSApplication sharedApplication] delegate]))
-
 @implementation StatusItemView
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
+    AppDelegate* appDelegate = [[NSApplication sharedApplication] delegate];
+    
     if (! [appDelegate menuIsVisible])
         [[appDelegate statusBar] popUpStatusItemMenu:[[appDelegate statusBar] menu]];
 }

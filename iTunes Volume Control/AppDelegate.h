@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/CoreAnimation.h>
-#import <ScreenSaver/ScreenSaver.h>
+//#import <ScreenSaver/ScreenSaver.h>
 #import "iTunes.h"
 #import "AppleRemote.h"
 
@@ -33,7 +33,7 @@
     AppleRemote* remote;
     
     NSInteger oldVolumeSetting;
-    
+
     bool _AppleRemoteConnected;
     bool _Tapping;
     bool _UseAppleCMDModifier;
@@ -49,8 +49,8 @@
     bool fadeInAnimationReady;
 }
 
-@property (assign, nonatomic) IBOutlet NSWindow* window;
-@property (assign, nonatomic) IBOutlet NSMenu* statusMenu;
+@property (nonatomic, assign) IBOutlet NSWindow* window;
+@property (nonatomic, weak) IBOutlet NSMenu* statusMenu;
 
 @property (nonatomic, readonly, strong) NSStatusItem *statusBar;
 @property (nonatomic, readonly, assign) BOOL menuIsVisible;
