@@ -515,7 +515,7 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
         return;
     }
     
-    if (self.hideFromStatusBar)
+    if ([self hideFromStatusBar])
         [self showHideFromStatusBarHintPopover];
 }
 
@@ -719,7 +719,7 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
 
 - (bool)checkEventTap
 {
-    bool ret=TRUE;
+    bool ret=true;
     
     if(CGEventTapIsEnabled(eventTap)!=_Tapping)
     {
@@ -727,11 +727,12 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
         [self hideSpeakerImg:nil];
         [self setTapping:_Tapping];
         
-        ret=FALSE;
+        ret=false;
     }
     
     return ret;
 }
+
 - (void)changeVol:(bool)increase
 {
     if([self checkEventTap])
@@ -840,27 +841,25 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
 
 - (IBAction)toggleHideFromStatusBar:(id)sender
 {
-    self.hideFromStatusBar = ! self.hideFromStatusBar;
+    
+    [self setHideFromStatusBar:![self hideFromStatusBar]];
     if (self.hideFromStatusBar)
         [self showHideFromStatusBarHintPopover];
 }
 
 - (void)setHideFromStatusBar:(bool)enabled
 {
-    _hideFromStatusBar = enabled;    
+    _hideFromStatusBar=enabled;
     
     NSMenuItem* menuItem=[_statusMenu itemWithTag:5];
-    [menuItem setState:self.hideFromStatusBar];
+    [menuItem setState:[self hideFromStatusBar]];
     
     [preferences setBool:enabled forKey:@"hideFromStatusBarPreference"];
     [preferences synchronize];
     
-    _AutomaticUpdates=enabled;
-    
-    
-    if (self.hideFromStatusBar)
+    if (enabled)
     {
-        if (! [_statusBarHideTimer isValid] && self.statusBar)
+        if (![_statusBarHideTimer isValid] && [self statusBar])
         {
             _statusBarHideTimer = [NSTimer scheduledTimerWithTimeInterval:
                                    (NSTimeInterval)STATUS_BAR_HIDE_DELAY target:self selector:@selector(doHideFromStatusBar:) userInfo:nil repeats:NO];
@@ -873,7 +872,7 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
         [_hideFromStatusBarHintPopover close];
         [_statusBarHideTimer invalidate];
         [_hideFromStatusBarHintPopoverUpdateTimer invalidate];
-        if (! [self statusBar])
+        if (![self statusBar])
             [self showInStatusBar];
     }
 }
