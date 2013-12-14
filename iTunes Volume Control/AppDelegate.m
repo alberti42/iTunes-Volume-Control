@@ -434,8 +434,8 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     [mainLayer setCornerRadius:22];
     [mainLayer setOpacity:0.0f];
     
-    imgVolOn=[NSImage imageNamed:@"volume.png"];
-    imgVolOff=[NSImage imageNamed:@"volume-off.png"];
+    imgVolOn=[NSImage imageNamed:@"volume"];
+    imgVolOff=[NSImage imageNamed:@"volume-off"];
     NSRect rect = NSZeroRect;
     rect.size = [imgVolOff size];
     
@@ -469,8 +469,8 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     [_window orderOut:self];
     [_window setLevel:NSFloatingWindowLevel];
     
-    statusImageOn = [NSImage imageNamed:@"statusbar-item-on.png"];
-    statusImageOff = [NSImage imageNamed:@"statusbar-item-off.png"];
+    statusImageOn = [NSImage imageNamed:@"statusbar-item-on"];
+    statusImageOff = [NSImage imageNamed:@"statusbar-item-off"];
     
     [self showInStatusBar];
     

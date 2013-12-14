@@ -8,23 +8,27 @@
 
 /* Begin PBXBuildFile section */
 		651A7EEF168F1F4C00A76288 /* BorderlessWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 651A7EED168F1F4C00A76288 /* BorderlessWindow.m */; };
-		6563BFD71692EAB500C1271D /* volume-off.png in Resources */ = {isa = PBXBuildFile; fileRef = 6563BFD61692EAB500C1271D /* volume-off.png */; };
 		656C6C76168A2A0B00ECA482 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 656C6C74168A2A0B00ECA482 /* InfoPlist.strings */; };
 		656C6C78168A2A0B00ECA482 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 656C6C77168A2A0B00ECA482 /* main.m */; };
 		656C6C7F168A2A0B00ECA482 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 656C6C7E168A2A0B00ECA482 /* AppDelegate.m */; };
 		656C6C82168A2A0C00ECA482 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 656C6C80168A2A0C00ECA482 /* MainMenu.xib */; };
 		656C6CA3168A456900ECA482 /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 656C6CA2168A456900ECA482 /* ScriptingBridge.framework */; };
-		657F9C4F168F349100818384 /* volume.png in Resources */ = {isa = PBXBuildFile; fileRef = 657F9C4E168F349100818384 /* volume.png */; };
 		6597CCE71698BA05005F54C1 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6597CCE61698BA05005F54C1 /* Sparkle.framework */; };
 		6597CCE81698BA0C005F54C1 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6597CCE61698BA05005F54C1 /* Sparkle.framework */; };
 		659CCFDE185CAAA7006958AD /* appicon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 659CCFDD185CAAA7006958AD /* appicon.icns */; };
+		659CCFED185CBEF7006958AD /* statusbar-item-off.png in Resources */ = {isa = PBXBuildFile; fileRef = 65CC785C1692FC1300BFD4AD /* statusbar-item-off.png */; };
+		659CCFEE185CBEF7006958AD /* statusbar-item-off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 659CCFEB185CBE40006958AD /* statusbar-item-off@2x.png */; };
+		659CCFEF185CBEF7006958AD /* statusbar-item-on.png in Resources */ = {isa = PBXBuildFile; fileRef = 65CC785E1692FC1300BFD4AD /* statusbar-item-on.png */; };
+		659CCFF0185CBEF7006958AD /* statusbar-item-on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 659CCFEC185CBE40006958AD /* statusbar-item-on@2x.png */; };
+		659CCFF2185CBF04006958AD /* volume-off.png in Resources */ = {isa = PBXBuildFile; fileRef = 6563BFD61692EAB500C1271D /* volume-off.png */; };
+		659CCFF3185CBF04006958AD /* volume-off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 659CCFE7185CAD9D006958AD /* volume-off@2x.png */; };
+		659CCFF4185CBF0F006958AD /* volume.png in Resources */ = {isa = PBXBuildFile; fileRef = 657F9C4E168F349100818384 /* volume.png */; };
+		659CCFF5185CBF0F006958AD /* volume@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 659CCFE6185CAC93006958AD /* volume@2x.png */; };
 		65C24C01168CBC7E0000BFC2 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 65C24C00168CBC7E0000BFC2 /* Credits.rtf */; };
 		65C24C67168CEB130000BFC2 /* AppleRemote.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C24C65168CEB130000BFC2 /* AppleRemote.m */; };
 		65CC33B81698B3CC0049AF82 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65C24C6B168CEB9D0000BFC2 /* IOKit.framework */; };
 		65CC33BA1698B3D60049AF82 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 651A7EF1168F226300A76288 /* QuartzCore.framework */; };
 		65CC33BC1698B3E20049AF82 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 656C6C6B168A2A0B00ECA482 /* Cocoa.framework */; };
-		65CC78601692FC1D00BFD4AD /* statusbar-item-off.png in Resources */ = {isa = PBXBuildFile; fileRef = 65CC785C1692FC1300BFD4AD /* statusbar-item-off.png */; };
-		65CC78611692FC2000BFD4AD /* statusbar-item-on.png in Resources */ = {isa = PBXBuildFile; fileRef = 65CC785E1692FC1300BFD4AD /* statusbar-item-on.png */; };
 		E2F254C6179EA2B600DD3C66 /* StatusItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F254C5179EA2B600DD3C66 /* StatusItemView.m */; };
 /* End PBXBuildFile section */
 
@@ -68,14 +72,17 @@
 		659CCFE1185CAACD006958AD /* icon_32x32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_32x32.png; path = "iTunes Volume Control/Images/appicon.iconset/icon_32x32.png"; sourceTree = "<group>"; };
 		659CCFE2185CAACD006958AD /* icon_32x32@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon_32x32@2x.png"; path = "iTunes Volume Control/Images/appicon.iconset/icon_32x32@2x.png"; sourceTree = "<group>"; };
 		659CCFE3185CAACD006958AD /* icon_128x128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_128x128.png; path = "iTunes Volume Control/Images/appicon.iconset/icon_128x128.png"; sourceTree = "<group>"; };
+		659CCFE6185CAC93006958AD /* volume@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "volume@2x.png"; path = "iTunes Volume Control/Images/volume@2x.png"; sourceTree = "<group>"; };
+		659CCFE7185CAD9D006958AD /* volume-off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "volume-off@2x.png"; path = "iTunes Volume Control/Images/volume-off@2x.png"; sourceTree = "<group>"; };
+		659CCFEB185CBE40006958AD /* statusbar-item-off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "statusbar-item-off@2x.png"; path = "iTunes Volume Control/Images/statusbar-item-off@2x.png"; sourceTree = "<group>"; };
+		659CCFEC185CBE40006958AD /* statusbar-item-on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "statusbar-item-on@2x.png"; path = "iTunes Volume Control/Images/statusbar-item-on@2x.png"; sourceTree = "<group>"; };
 		65C24C00168CBC7E0000BFC2 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; name = Credits.rtf; path = "iTunes Volume Control/Credits.rtf"; sourceTree = "<group>"; };
 		65C24C64168CEB130000BFC2 /* AppleRemote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppleRemote.h; sourceTree = "<group>"; };
 		65C24C65168CEB130000BFC2 /* AppleRemote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppleRemote.m; sourceTree = "<group>"; };
 		65C24C66168CEB130000BFC2 /* CompatibilityFixes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompatibilityFixes.h; sourceTree = "<group>"; };
 		65C24C6B168CEB9D0000BFC2 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
-		65CC785B1692FC1300BFD4AD /* statusbar-item-off.ai */ = {isa = PBXFileReference; lastKnownFileType = text; name = "statusbar-item-off.ai"; path = "iTunes Volume Control/Images/statusbar-item-off.ai"; sourceTree = "<group>"; };
 		65CC785C1692FC1300BFD4AD /* statusbar-item-off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "statusbar-item-off.png"; path = "iTunes Volume Control/Images/statusbar-item-off.png"; sourceTree = "<group>"; };
-		65CC785D1692FC1300BFD4AD /* statusbar-item-on.ai */ = {isa = PBXFileReference; lastKnownFileType = text; name = "statusbar-item-on.ai"; path = "iTunes Volume Control/Images/statusbar-item-on.ai"; sourceTree = "<group>"; };
+		65CC785D1692FC1300BFD4AD /* statusbar-item.ai */ = {isa = PBXFileReference; lastKnownFileType = text; name = "statusbar-item.ai"; path = "iTunes Volume Control/Images/statusbar-item.ai"; sourceTree = "<group>"; };
 		65CC785E1692FC1300BFD4AD /* statusbar-item-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "statusbar-item-on.png"; path = "iTunes Volume Control/Images/statusbar-item-on.png"; sourceTree = "<group>"; };
 		65CC786A169305C700BFD4AD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		E2F254C4179EA2B600DD3C66 /* StatusItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusItemView.h; sourceTree = "<group>"; };
@@ -183,15 +190,18 @@
 			children = (
 				659CCFE4185CAAD2006958AD /* appicon */,
 				659CCFDD185CAAA7006958AD /* appicon.icns */,
-				658BE2C0169A0160009623A7 /* iTunesIcon.psd */,
 				658BE2BD1699FF89009623A7 /* iTunesIcon.png */,
-				65CC785B1692FC1300BFD4AD /* statusbar-item-off.ai */,
+				658BE2C0169A0160009623A7 /* iTunesIcon.psd */,
 				65CC785C1692FC1300BFD4AD /* statusbar-item-off.png */,
-				65CC785D1692FC1300BFD4AD /* statusbar-item-on.ai */,
+				659CCFEB185CBE40006958AD /* statusbar-item-off@2x.png */,
 				65CC785E1692FC1300BFD4AD /* statusbar-item-on.png */,
+				659CCFEC185CBE40006958AD /* statusbar-item-on@2x.png */,
+				65CC785D1692FC1300BFD4AD /* statusbar-item.ai */,
+				6563BFD61692EAB500C1271D /* volume-off.png */,
+				659CCFE7185CAD9D006958AD /* volume-off@2x.png */,
 				653492751690ACD300B73CA3 /* volume.ai */,
 				657F9C4E168F349100818384 /* volume.png */,
-				6563BFD61692EAB500C1271D /* volume-off.png */,
+				659CCFE6185CAC93006958AD /* volume@2x.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -259,14 +269,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				659CCFEF185CBEF7006958AD /* statusbar-item-on.png in Resources */,
+				659CCFED185CBEF7006958AD /* statusbar-item-off.png in Resources */,
+				659CCFF5185CBF0F006958AD /* volume@2x.png in Resources */,
 				656C6C76168A2A0B00ECA482 /* InfoPlist.strings in Resources */,
+				659CCFEE185CBEF7006958AD /* statusbar-item-off@2x.png in Resources */,
+				659CCFF3185CBF04006958AD /* volume-off@2x.png in Resources */,
 				659CCFDE185CAAA7006958AD /* appicon.icns in Resources */,
+				659CCFF4185CBF0F006958AD /* volume.png in Resources */,
 				656C6C82168A2A0C00ECA482 /* MainMenu.xib in Resources */,
+				659CCFF2185CBF04006958AD /* volume-off.png in Resources */,
+				659CCFF0185CBEF7006958AD /* statusbar-item-on@2x.png in Resources */,
 				65C24C01168CBC7E0000BFC2 /* Credits.rtf in Resources */,
-				657F9C4F168F349100818384 /* volume.png in Resources */,
-				6563BFD71692EAB500C1271D /* volume-off.png in Resources */,
-				65CC78601692FC1D00BFD4AD /* statusbar-item-off.png in Resources */,
-				65CC78611692FC2000BFD4AD /* statusbar-item-on.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
