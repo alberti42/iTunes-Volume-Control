@@ -63,8 +63,6 @@
 		656C6CA1168A447000ECA482 /* iTunes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iTunes.h; sourceTree = "<group>"; };
 		656C6CA2168A456900ECA482 /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
 		657F9C4E168F349100818384 /* volume.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = volume.png; path = "iTunes Volume Control/Images/volume.png"; sourceTree = "<group>"; };
-		658BE2BD1699FF89009623A7 /* iTunesIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iTunesIcon.png; path = "iTunes Volume Control/Images/iTunesIcon.png"; sourceTree = "<group>"; };
-		658BE2C0169A0160009623A7 /* iTunesIcon.psd */ = {isa = PBXFileReference; lastKnownFileType = file; name = iTunesIcon.psd; path = "iTunes Volume Control/Images/iTunesIcon.psd"; sourceTree = "<group>"; };
 		6597CCE61698BA05005F54C1 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = "iTunes Volume Control/Sparkle.framework"; sourceTree = "<group>"; };
 		659CCFDD185CAAA7006958AD /* appicon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = appicon.icns; path = "iTunes Volume Control/Images/appicon.icns"; sourceTree = "<group>"; };
 		659CCFDF185CAACD006958AD /* icon_16x16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_16x16.png; path = "iTunes Volume Control/Images/appicon.iconset/icon_16x16.png"; sourceTree = "<group>"; };
@@ -190,8 +188,6 @@
 			children = (
 				659CCFE4185CAAD2006958AD /* appicon */,
 				659CCFDD185CAAA7006958AD /* appicon.icns */,
-				658BE2BD1699FF89009623A7 /* iTunesIcon.png */,
-				658BE2C0169A0160009623A7 /* iTunesIcon.psd */,
 				65CC785C1692FC1300BFD4AD /* statusbar-item-off.png */,
 				659CCFEB185CBE40006958AD /* statusbar-item-off@2x.png */,
 				65CC785E1692FC1300BFD4AD /* statusbar-item-on.png */,
@@ -404,12 +400,12 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iTunes Volume Control/iTunes Volume Control-Prefix.pch";
 				INFOPLIST_FILE = "iTunes Volume Control/iTunes Volume Control-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE = "";
-				SDKROOT = macosx;
+				SDKROOT = macosx10.8;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -427,12 +423,12 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iTunes Volume Control/iTunes Volume Control-Prefix.pch";
 				INFOPLIST_FILE = "iTunes Volume Control/iTunes Volume Control-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE = "";
-				SDKROOT = macosx;
+				SDKROOT = macosx10.8;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
