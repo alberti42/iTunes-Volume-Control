@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		651A7EEF168F1F4C00A76288 /* BorderlessWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 651A7EED168F1F4C00A76288 /* BorderlessWindow.m */; };
+		652E9270185D18660088ADCE /* IntroWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 652E926F185D18660088ADCE /* IntroWindow.m */; };
 		656C6C76168A2A0B00ECA482 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 656C6C74168A2A0B00ECA482 /* InfoPlist.strings */; };
 		656C6C78168A2A0B00ECA482 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 656C6C77168A2A0B00ECA482 /* main.m */; };
 		656C6C7F168A2A0B00ECA482 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 656C6C7E168A2A0B00ECA482 /* AppDelegate.m */; };
@@ -49,6 +50,8 @@
 		651A7EED168F1F4C00A76288 /* BorderlessWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BorderlessWindow.m; sourceTree = "<group>"; };
 		651A7EEE168F1F4C00A76288 /* BorderlessWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BorderlessWindow.h; sourceTree = "<group>"; };
 		651A7EF1168F226300A76288 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = ../../../../../System/Library/Frameworks/QuartzCore.framework; sourceTree = "<group>"; };
+		652E926E185D18660088ADCE /* IntroWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroWindow.h; sourceTree = "<group>"; };
+		652E926F185D18660088ADCE /* IntroWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroWindow.m; sourceTree = "<group>"; };
 		653492751690ACD300B73CA3 /* volume.ai */ = {isa = PBXFileReference; lastKnownFileType = text; name = volume.ai; path = "iTunes Volume Control/Images/volume.ai"; sourceTree = "<group>"; };
 		6563BFD61692EAB500C1271D /* volume-off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "volume-off.png"; path = "iTunes Volume Control/Images/volume-off.png"; sourceTree = "<group>"; };
 		656C6C67168A2A0B00ECA482 /* iTunes Volume Control.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iTunes Volume Control.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -142,6 +145,8 @@
 				651A7EEE168F1F4C00A76288 /* BorderlessWindow.h */,
 				651A7EED168F1F4C00A76288 /* BorderlessWindow.m */,
 				656C6CA1168A447000ECA482 /* iTunes.h */,
+				652E926E185D18660088ADCE /* IntroWindow.h */,
+				652E926F185D18660088ADCE /* IntroWindow.m */,
 				656C6C80168A2A0C00ECA482 /* MainMenu.xib */,
 				E2F254C4179EA2B600DD3C66 /* StatusItemView.h */,
 				E2F254C5179EA2B600DD3C66 /* StatusItemView.m */,
@@ -306,6 +311,7 @@
 			files = (
 				656C6C78168A2A0B00ECA482 /* main.m in Sources */,
 				656C6C7F168A2A0B00ECA482 /* AppDelegate.m in Sources */,
+				652E9270185D18660088ADCE /* IntroWindow.m in Sources */,
 				65C24C67168CEB130000BFC2 /* AppleRemote.m in Sources */,
 				651A7EEF168F1F4C00A76288 /* BorderlessWindow.m in Sources */,
 				E2F254C6179EA2B600DD3C66 /* StatusItemView.m in Sources */,
