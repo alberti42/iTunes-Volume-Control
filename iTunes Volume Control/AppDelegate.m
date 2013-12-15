@@ -126,7 +126,8 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 @synthesize AutomaticUpdates=_AutomaticUpdates;
 @synthesize hideFromStatusBar = _hideFromStatusBar;
 
-@synthesize window=_window;
+@synthesize volumeWindow=_volumeWindow;
+@synthesize introWindow=_introWindow;
 @synthesize statusMenu=_statusMenu;
 
 static CFTimeInterval fadeInDuration=0.2;
@@ -424,10 +425,10 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
 
 -(void)awakeFromNib
 {
-    [[_window contentView] setWantsLayer:YES];
-    [_window setFrame:[_window frame]/*[[NSScreen mainScreen] frame]*/ display:NO animate:NO];
+    [[_volumeWindow contentView] setWantsLayer:YES];
+    [_volumeWindow setFrame:[_volumeWindow frame]/*[[NSScreen mainScreen] frame]*/ display:NO animate:NO];
     
-    mainLayer = [[_window contentView] layer];
+    mainLayer = [[_volumeWindow contentView] layer];
     CGColorRef backgroundColor=CGColorCreateGenericRGB(0.f, 0.f, 0.f, 0.16f);
     [mainLayer setBackgroundColor:backgroundColor];
     CFRelease(backgroundColor);
@@ -441,7 +442,7 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     
     volumeImageLayer = [CALayer layer];
     [volumeImageLayer setFrame:NSRectToCGRect(rect)];
-    [volumeImageLayer setPosition:CGPointMake([[_window contentView] frame].size.width/2, [[_window contentView]frame].size.height/2+12)];
+    [volumeImageLayer setPosition:CGPointMake([[_volumeWindow contentView] frame].size.width/2, [[_volumeWindow contentView]frame].size.height/2+12)];
     [volumeImageLayer setContents:imgVolOn];
     
     [mainLayer addSublayer:volumeImageLayer];
@@ -458,8 +459,8 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     
     [[SUUpdater sharedUpdater] setUpdateCheckInterval:60*60*24*7]; // look for new updates every 7 days
         
-    [_window orderOut:self];
-    [_window setLevel:NSFloatingWindowLevel];
+    [_volumeWindow orderOut:self];
+    [_volumeWindow setLevel:NSFloatingWindowLevel];
     
     statusImageOn = [NSImage imageNamed:@"statusbar-item-on"];
     statusImageOff = [NSImage imageNamed:@"statusbar-item-off"];
@@ -640,7 +641,7 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
 }
 
 - (IBAction)aboutPanel:(id)sender
-{    
+{
     NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
     NSString* version = [infoDict objectForKey:@"CFBundleVersion"];
     NSRange range=[version rangeOfString:@"." options:NSBackwardsSearch];
@@ -692,7 +693,7 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
 - (void) showSpeakerImg:(NSTimer*)theTimer
 {
     // [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
-    [_window orderFront:self];
+    [_volumeWindow orderFront:self];
     
     fadeInAnimationReady=false;
     [mainLayer addAnimation:fadeInAnimation forKey:@"increaseOpacity"];
@@ -702,7 +703,7 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
 {
     [CATransaction begin]; {
         [CATransaction setCompletionBlock:^{
-            [_window orderOut:self];
+            [_volumeWindow orderOut:self];
             fadeInAnimationReady=true;
         }];
         [mainLayer addAnimation:fadeOutAnimation forKey:@"decreaseOpacity"];
@@ -922,6 +923,13 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     [_hideFromStatusBarHintLabel setStringValue:
     [NSString stringWithFormat:@"%@ will hide after %ld seconds.\n\nLaunch it again to re-show the icon.",
      @"iTunes Volume Control", (unsigned long)seconds]];
+}
+
+#pragma mark - Intro window
+
+- (IBAction)showIntroWindow:(id)sender
+{
+    [_introWindow setIsVisible:true];
 }
 
 #pragma mark - NSMenuDelegate

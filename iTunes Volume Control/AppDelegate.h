@@ -49,8 +49,9 @@
     bool fadeInAnimationReady;
 }
 
-@property (nonatomic, assign) IBOutlet NSWindow* window;
-@property (nonatomic, weak) IBOutlet NSMenu* statusMenu;
+@property (nonatomic, assign) IBOutlet NSWindow* volumeWindow;
+@property (nonatomic, assign) IBOutlet NSWindow* introWindow;
+@property (nonatomic, assign) IBOutlet NSMenu* statusMenu;
 
 @property (nonatomic, readonly, strong) NSStatusItem *statusBar;
 @property (nonatomic, readonly, assign) BOOL menuIsVisible;
