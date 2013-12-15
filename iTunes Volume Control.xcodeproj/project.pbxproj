@@ -78,8 +78,8 @@
 		659CCFE7185CAD9D006958AD /* volume-off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "volume-off@2x.png"; path = "iTunes Volume Control/Images/volume-off@2x.png"; sourceTree = "<group>"; };
 		659CCFEB185CBE40006958AD /* statusbar-item-off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "statusbar-item-off@2x.png"; path = "iTunes Volume Control/Images/statusbar-item-off@2x.png"; sourceTree = "<group>"; };
 		659CCFEC185CBE40006958AD /* statusbar-item-on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "statusbar-item-on@2x.png"; path = "iTunes Volume Control/Images/statusbar-item-on@2x.png"; sourceTree = "<group>"; };
-		65B8596F185E2C0D00D8C851 /* iTunes-screenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunes-screenshot.png"; sourceTree = "<group>"; };
-		65B85971185E2C6A00D8C851 /* iTunes-screenshot.ai */ = {isa = PBXFileReference; lastKnownFileType = text; path = "iTunes-screenshot.ai"; sourceTree = "<group>"; };
+		65B85972185E389400D8C851 /* iTunes-screenshot.ai */ = {isa = PBXFileReference; lastKnownFileType = text; name = "iTunes-screenshot.ai"; path = "iTunes Volume Control/Images/iTunes-screenshot.ai"; sourceTree = "<group>"; };
+		65B85973185E389400D8C851 /* iTunes-screenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iTunes-screenshot.png"; path = "iTunes Volume Control/Images/iTunes-screenshot.png"; sourceTree = "<group>"; };
 		65C24C00168CBC7E0000BFC2 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; name = Credits.rtf; path = "iTunes Volume Control/Credits.rtf"; sourceTree = "<group>"; };
 		65C24C64168CEB130000BFC2 /* AppleRemote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppleRemote.h; sourceTree = "<group>"; };
 		65C24C65168CEB130000BFC2 /* AppleRemote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppleRemote.m; sourceTree = "<group>"; };
@@ -191,8 +191,8 @@
 		65B85970185E2C1700D8C851 /* Intro window */ = {
 			isa = PBXGroup;
 			children = (
-				65B85971185E2C6A00D8C851 /* iTunes-screenshot.ai */,
-				65B8596F185E2C0D00D8C851 /* iTunes-screenshot.png */,
+				65B85972185E389400D8C851 /* iTunes-screenshot.ai */,
+				65B85973185E389400D8C851 /* iTunes-screenshot.png */,
 			);
 			name = "Intro window";
 			sourceTree = "<group>";
