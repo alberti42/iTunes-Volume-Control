@@ -446,26 +446,18 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     
     [mainLayer addSublayer:volumeImageLayer];
     
-    /*NSImage* iTunesIcon=[NSImage imageNamed:@"iTunesIcon.png"];
-     rect = NSZeroRect;
-     rect.size = iTunesIcon.size;
-     
-     CALayer* iTunesIconLayer = [CALayer layer];
-     [iTunesIconLayer setFrame:NSRectToCGRect(rect)];
-     [iTunesIconLayer setPosition:CGPointMake([[_window contentView] frame].size.width/2-21, [[_window contentView]frame].size.height/2+12)];
-     [iTunesIconLayer setContents:iTunesIcon];
-     
-     [mainLayer addSublayer:iTunesIconLayer];*/
-    
     [self createVolumeBar];
 }
 
 - (void)applicationWillFinishLaunching:(NSNotification *)aNotification
 {
-    [[SUUpdater sharedUpdater] setFeedURL:[NSURL URLWithString:@"https://dl.dropbox.com/u/3112358/iTunesVolumeControl/iTunesVolumeControlCast.xml"]];
+    NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
+    NSString* version = [infoDict objectForKey:@"CFBundleShortVersionString"];
+
+    [[SUUpdater sharedUpdater] setFeedURL:[NSURL URLWithString:[NSString stringWithFormat: @"http://quantum-technologies.iap.uni-bonn.de/alberti/iTunesVolumeControl/iTunesVolumeControlCast.xml.php?version=%@",version]]];
     
     [[SUUpdater sharedUpdater] setUpdateCheckInterval:60*60*24*7]; // look for new updates every 7 days
-    
+        
     [_window orderOut:self];
     [_window setLevel:NSFloatingWindowLevel];
     
@@ -524,13 +516,13 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     // the status bar item needs a custom view so that we can show a NSPopover for the hide-from-status-bar hint
     // the view now reacts to the mouseDown event to show the menu
     CGFloat thickness = [[NSStatusBar systemStatusBar] thickness];
-    self.statusBar = [[NSStatusBar systemStatusBar] statusItemWithLength:thickness];
+    _statusBar = [[NSStatusBar systemStatusBar] statusItemWithLength:thickness];
     _statusBarItemView = [[StatusItemView alloc] initWithFrame:(NSRect){.size={thickness, thickness}}];
-    _statusBarItemView.image = statusImageOn;
-    self.statusBar.view = _statusBarItemView;
-    [self.statusBar setMenu:_statusMenu];
-    _statusMenu.delegate = self;
-    [self.statusBar setHighlightMode:YES];
+    [_statusBarItemView setImage:statusImageOn];
+    [_statusBar setView:_statusBarItemView];
+    [_statusBar setMenu:_statusMenu];
+    [_statusMenu setDelegate:self];
+    [_statusBar setHighlightMode:YES];
 }
 
 - (void)initializePreferences

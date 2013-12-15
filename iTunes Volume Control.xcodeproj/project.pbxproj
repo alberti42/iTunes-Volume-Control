@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		651A7EEF168F1F4C00A76288 /* BorderlessWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 651A7EED168F1F4C00A76288 /* BorderlessWindow.m */; };
 		65382399185D288700A8F424 /* IntroWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 65382398185D288700A8F424 /* IntroWindow.m */; };
+		654DDC65185DDD510095AA66 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 654DDC64185DDD510095AA66 /* dsa_pub.pem */; };
 		656C6C76168A2A0B00ECA482 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 656C6C74168A2A0B00ECA482 /* InfoPlist.strings */; };
 		656C6C78168A2A0B00ECA482 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 656C6C77168A2A0B00ECA482 /* main.m */; };
 		656C6C7F168A2A0B00ECA482 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 656C6C7E168A2A0B00ECA482 /* AppDelegate.m */; };
@@ -53,6 +54,9 @@
 		653492751690ACD300B73CA3 /* volume.ai */ = {isa = PBXFileReference; lastKnownFileType = text; name = volume.ai; path = "iTunes Volume Control/Images/volume.ai"; sourceTree = "<group>"; };
 		65382397185D288700A8F424 /* IntroWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroWindow.h; sourceTree = "<group>"; };
 		65382398185D288700A8F424 /* IntroWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroWindow.m; sourceTree = "<group>"; };
+		654DDC61185DD4C00095AA66 /* generate_keys.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = generate_keys.rb; sourceTree = "<group>"; };
+		654DDC62185DD4C00095AA66 /* sign_update.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = sign_update.rb; sourceTree = "<group>"; };
+		654DDC64185DDD510095AA66 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 		6563BFD61692EAB500C1271D /* volume-off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "volume-off.png"; path = "iTunes Volume Control/Images/volume-off.png"; sourceTree = "<group>"; };
 		656C6C67168A2A0B00ECA482 /* iTunes Volume Control.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iTunes Volume Control.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		656C6C6B168A2A0B00ECA482 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -106,6 +110,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		654DDC63185DD4C70095AA66 /* Signing tools */ = {
+			isa = PBXGroup;
+			children = (
+				654DDC61185DD4C00095AA66 /* generate_keys.rb */,
+				654DDC62185DD4C00095AA66 /* sign_update.rb */,
+			);
+			name = "Signing tools";
+			sourceTree = "<group>";
+		};
 		656C6C5C168A2A0B00ECA482 = {
 			isa = PBXGroup;
 			children = (
@@ -181,6 +194,8 @@
 		65C24BEA168CA8B10000BFC2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				654DDC63185DD4C70095AA66 /* Signing tools */,
+				654DDC64185DDD510095AA66 /* dsa_pub.pem */,
 				65CC786A169305C700BFD4AD /* README.md */,
 				65C24C00168CBC7E0000BFC2 /* Credits.rtf */,
 				65C24BEB168CA8B50000BFC2 /* Images */,
@@ -277,6 +292,7 @@
 				659CCFEE185CBEF7006958AD /* statusbar-item-off@2x.png in Resources */,
 				659CCFF3185CBF04006958AD /* volume-off@2x.png in Resources */,
 				659CCFDE185CAAA7006958AD /* appicon.icns in Resources */,
+				654DDC65185DDD510095AA66 /* dsa_pub.pem in Resources */,
 				659CCFF4185CBF0F006958AD /* volume.png in Resources */,
 				656C6C82168A2A0C00ECA482 /* MainMenu.xib in Resources */,
 				659CCFF2185CBF04006958AD /* volume-off.png in Resources */,
@@ -300,7 +316,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "echo \"Updating version/build number from git...\"\n\nversionnum=`git tag | tail -n1 | sed  's/^v\\(.*\\)/\\1/'`\nbuildnum=`git rev-list HEAD | awk 'END{print NR}'`\nplist=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion ${versionnum}.$buildnum\" \"${plist}\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString ${versionnum}\" \"${plist}\"";
+			shellScript = "echo \"Updating version/build number from git...\"\n\nversionnum=`git tag | tail -n1 | sed  's/^v\\(.*\\)/\\1/'`\nbuildnum=`git rev-list HEAD | awk 'END{print NR}'`\nplist=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n\n# versionnum='1.4.8'\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion ${versionnum}.$buildnum\" \"${plist}\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString ${versionnum}\" \"${plist}\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
