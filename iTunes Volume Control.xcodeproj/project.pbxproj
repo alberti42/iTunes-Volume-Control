@@ -14,6 +14,9 @@
 		656C6C7F168A2A0B00ECA482 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 656C6C7E168A2A0B00ECA482 /* AppDelegate.m */; };
 		656C6C82168A2A0C00ECA482 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 656C6C80168A2A0C00ECA482 /* MainMenu.xib */; };
 		656C6CA3168A456900ECA482 /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 656C6CA2168A456900ECA482 /* ScriptingBridge.framework */; };
+		658B93C4185E4823007BEBEF /* IntroWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658B93C3185E4823007BEBEF /* IntroWindow.xib */; };
+		658B93C7185E48B2007BEBEF /* IntroWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 658B93C6185E48B2007BEBEF /* IntroWindowController.m */; };
+		658B93C8185E6A51007BEBEF /* iTunes-screenshot.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B85973185E389400D8C851 /* iTunes-screenshot.png */; };
 		6597CCE71698BA05005F54C1 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6597CCE61698BA05005F54C1 /* Sparkle.framework */; };
 		6597CCE81698BA0C005F54C1 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6597CCE61698BA05005F54C1 /* Sparkle.framework */; };
 		659CCFDE185CAAA7006958AD /* appicon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 659CCFDD185CAAA7006958AD /* appicon.icns */; };
@@ -67,6 +70,9 @@
 		656C6CA1168A447000ECA482 /* iTunes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iTunes.h; sourceTree = "<group>"; };
 		656C6CA2168A456900ECA482 /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
 		657F9C4E168F349100818384 /* volume.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = volume.png; path = "iTunes Volume Control/Images/volume.png"; sourceTree = "<group>"; };
+		658B93C3185E4823007BEBEF /* IntroWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IntroWindow.xib; sourceTree = "<group>"; };
+		658B93C5185E48B2007BEBEF /* IntroWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroWindowController.h; sourceTree = "<group>"; };
+		658B93C6185E48B2007BEBEF /* IntroWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroWindowController.m; sourceTree = "<group>"; };
 		659356A3185E3A1800CF6E89 /* Statusbar-screenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Statusbar-screenshot.png"; sourceTree = "<group>"; };
 		6597CCE61698BA05005F54C1 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = "iTunes Volume Control/Sparkle.framework"; sourceTree = "<group>"; };
 		659CCFDD185CAAA7006958AD /* appicon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = appicon.icns; path = "iTunes Volume Control/Images/appicon.icns"; sourceTree = "<group>"; };
@@ -162,6 +168,9 @@
 				E2F254C4179EA2B600DD3C66 /* StatusItemView.h */,
 				E2F254C5179EA2B600DD3C66 /* StatusItemView.m */,
 				656C6C72168A2A0B00ECA482 /* Supporting Files */,
+				658B93C3185E4823007BEBEF /* IntroWindow.xib */,
+				658B93C5185E48B2007BEBEF /* IntroWindowController.h */,
+				658B93C6185E48B2007BEBEF /* IntroWindowController.m */,
 			);
 			path = "iTunes Volume Control";
 			sourceTree = "<group>";
@@ -297,7 +306,9 @@
 				659CCFEF185CBEF7006958AD /* statusbar-item-on.png in Resources */,
 				659CCFED185CBEF7006958AD /* statusbar-item-off.png in Resources */,
 				659CCFF5185CBF0F006958AD /* volume@2x.png in Resources */,
+				658B93C8185E6A51007BEBEF /* iTunes-screenshot.png in Resources */,
 				656C6C76168A2A0B00ECA482 /* InfoPlist.strings in Resources */,
+				658B93C4185E4823007BEBEF /* IntroWindow.xib in Resources */,
 				659CCFEE185CBEF7006958AD /* statusbar-item-off@2x.png in Resources */,
 				659CCFF3185CBF04006958AD /* volume-off@2x.png in Resources */,
 				659CCFDE185CAAA7006958AD /* appicon.icns in Resources */,
@@ -334,6 +345,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				658B93C7185E48B2007BEBEF /* IntroWindowController.m in Sources */,
 				656C6C78168A2A0B00ECA482 /* main.m in Sources */,
 				656C6C7F168A2A0B00ECA482 /* AppDelegate.m in Sources */,
 				65C24C67168CEB130000BFC2 /* AppleRemote.m in Sources */,

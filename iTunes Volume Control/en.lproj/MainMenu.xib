@@ -14,12 +14,21 @@
         <customObject id="-3" userLabel="Application"/>
         <customObject id="494" customClass="AppDelegate">
             <connections>
-                <outlet property="introWindow" destination="nbj-x7-vbQ" id="q77-ga-PG3"/>
                 <outlet property="statusMenu" destination="554" id="680"/>
                 <outlet property="volumeWindow" destination="675" id="7x8-Wt-Xv8"/>
             </connections>
         </customObject>
         <customObject id="683" customClass="SUUpdater"/>
+        <window title="Volume window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" showsToolbarButton="NO" animationBehavior="default" id="675" customClass="BorderlessWindow">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowPositionMask key="initialPositionMask" bottomStrut="YES"/>
+            <rect key="contentRect" x="300" y="139" width="210" height="206"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
+            <view key="contentView" id="676">
+                <rect key="frame" x="0.0" y="0.0" width="210" height="206"/>
+                <autoresizingMask key="autoresizingMask"/>
+            </view>
+        </window>
         <menu id="554" userLabel="Status Menu">
             <items>
                 <menuItem title="Enabled" state="on" tag="1" id="585">
@@ -87,35 +96,5 @@
                 </menuItem>
             </items>
         </menu>
-        <window title="Volume window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" showsToolbarButton="NO" animationBehavior="default" id="675" customClass="BorderlessWindow">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
-            <windowPositionMask key="initialPositionMask" bottomStrut="YES"/>
-            <rect key="contentRect" x="300" y="139" width="210" height="206"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
-            <view key="contentView" id="676">
-                <rect key="frame" x="0.0" y="0.0" width="210" height="206"/>
-                <autoresizingMask key="autoresizingMask"/>
-            </view>
-        </window>
-        <window title="iTunes Volume Control" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="nbj-x7-vbQ">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
-            <rect key="contentRect" x="530" y="394" width="548" height="399"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
-            <view key="contentView" id="lWS-5j-WOK">
-                <rect key="frame" x="0.0" y="0.0" width="548" height="399"/>
-                <autoresizingMask key="autoresizingMask"/>
-                <subviews>
-                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WfI-nG-hau">
-                        <rect key="frame" x="18" y="6" width="183" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="check" title="Show this window at start" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="hGh-so-Ej0">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                    </button>
-                </subviews>
-            </view>
-            <contentBorderThickness minY="32"/>
-        </window>
     </objects>
 </document>

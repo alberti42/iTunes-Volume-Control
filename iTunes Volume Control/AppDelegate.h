@@ -12,6 +12,8 @@
 #import "iTunes.h"
 #import "AppleRemote.h"
 
+@class IntroWindowController;
+
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
     CALayer *mainLayer;
     CALayer *volumeImageLayer;
@@ -33,15 +35,16 @@
     AppleRemote* remote;
     
     NSInteger oldVolumeSetting;
-
+    
     bool _AppleRemoteConnected;
     bool _Tapping;
     bool _UseAppleCMDModifier;
     bool _AutomaticUpdates;
     bool _hideFromStatusBar;
-        
+    
 @public
     iTunesApplication *iTunes;
+    IntroWindowController *introWindowController;
     bool keyIsRepeat;
     NSTimer* timer;
     NSTimer* timerImgSpeaker;
@@ -50,7 +53,6 @@
 }
 
 @property (nonatomic, assign) IBOutlet NSWindow* volumeWindow;
-@property (nonatomic, assign) IBOutlet NSWindow* introWindow;
 @property (nonatomic, assign) IBOutlet NSMenu* statusMenu;
 
 @property (nonatomic, readonly, strong) NSStatusItem *statusBar;
@@ -91,6 +93,7 @@
 - (void)setAppleRemoteConnected:(bool)enabled;
 
 - (IBAction)aboutPanel:(id)sender;
+- (IBAction)showIntroWindow:(id)sender;
 
 - (void) appleRemoteButton: (AppleRemoteEventIdentifier)buttonIdentifier pressedDown: (BOOL) pressedDown clickCount: (unsigned int) count;
 - (void) appleRemoteInit;
@@ -98,6 +101,7 @@
 - (bool)checkEventTap;
 - (void)createEventTap;
 
+- (void)introWindowWillClose:(NSNotification *)aNotification;
 - (void)playPauseITunes:(NSNotification *)aNotification;
 - (void)decreaseITunesVolume:(NSNotification *)aNotification;
 - (void)increaseITunesVolume:(NSNotification *)aNotification;

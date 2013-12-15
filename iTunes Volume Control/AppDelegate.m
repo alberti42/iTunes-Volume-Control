@@ -10,6 +10,7 @@
 #import <IOKit/hidsystem/ev_keymap.h>
 #import <Sparkle/SUUpdater.h>
 #import "StatusItemView.h"
+#import "IntroWindowController.h"
 
 #define STATUS_BAR_HIDE_DELAY 10
 
@@ -127,7 +128,6 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 @synthesize hideFromStatusBar = _hideFromStatusBar;
 
 @synthesize volumeWindow=_volumeWindow;
-@synthesize introWindow=_introWindow;
 @synthesize statusMenu=_statusMenu;
 
 static CFTimeInterval fadeInDuration=0.2;
@@ -168,6 +168,11 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     }
     
     return found;
+}
+
+- (void)introWindowWillClose:(NSNotification *)aNotification{
+    introWindowController = nil;
+    //    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)setStartAtLogin:(bool)enabled savePreferences:(bool)savePreferences
@@ -640,6 +645,22 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     [self setTapping:![self Tapping]];
 }
 
+- (IBAction)showIntroWindow:(id)sender
+{
+    if(!introWindowController)
+    {
+        introWindowController = [[IntroWindowController alloc] initWithWindowNibName:@"IntroWindow"];
+    }
+    
+//    introWindowController
+    
+    [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
+    [introWindowController showWindow:self];
+    [[introWindowController window] makeKeyAndOrderFront:self];
+
+//    introWindowController=nil;
+}
+
 - (IBAction)aboutPanel:(id)sender
 {
     NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
@@ -671,6 +692,8 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     
     imgVolOn=nil;
     imgVolOff=nil;
+    
+    introWindowController = nil;
     
     volumeImageLayer=nil;
     for(int i=0; i<16; i++)
@@ -923,13 +946,6 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     [_hideFromStatusBarHintLabel setStringValue:
     [NSString stringWithFormat:@"%@ will hide after %ld seconds.\n\nLaunch it again to re-show the icon.",
      @"iTunes Volume Control", (unsigned long)seconds]];
-}
-
-#pragma mark - Intro window
-
-- (IBAction)showIntroWindow:(id)sender
-{
-    [_introWindow setIsVisible:true];
 }
 
 #pragma mark - NSMenuDelegate
