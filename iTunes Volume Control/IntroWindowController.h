@@ -10,11 +10,14 @@
 
 @interface IntroWindowController : NSWindowController
 {
-    NSImage *iTunesScreenshot;
+    CALayer* introLayer;
     
 @public
 }
 
-@property (nonatomic) IBOutlet NSImageView *IntroImage;
+@property (nonatomic,assign) IBOutlet NSButton *nextButton;
+@property (nonatomic,assign) IBOutlet NSButton *previousButton;
+
+- (IBAction)nextButtonClicked:(id)sender;
 
 @end

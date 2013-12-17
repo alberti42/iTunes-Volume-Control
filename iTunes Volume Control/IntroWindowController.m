@@ -7,6 +7,7 @@
 //
 
 #import "IntroWindowController.h"
+#import <QuartzCore/CoreAnimation.h>
 
 @interface IntroWindowController ()
 
@@ -14,7 +15,8 @@
 
 @implementation IntroWindowController
 
-@synthesize IntroImage;
+@synthesize nextButton;
+@synthesize previousButton;
 
 - (id)initWithWindow:(NSWindow *)window
 {
@@ -28,13 +30,68 @@
     return self;
 }
 
+- (IBAction)nextButtonClicked:(id)sender
+{
+    NSLog(@"clicked");
+//    CALayer* layer = [nextButton layer];
+//    [layer setOpacity:0];
+    
+    
+    CABasicAnimation* fadeOutAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    [fadeOutAnimation setDuration:1.f];
+    [fadeOutAnimation setRemovedOnCompletion:NO];
+    [fadeOutAnimation setFillMode:kCAFillModeForwards];
+    [fadeOutAnimation setFromValue:[NSNumber numberWithFloat:1.0f]];
+    [fadeOutAnimation setToValue:[NSNumber numberWithFloat:0.0f]];
+    
+    [introLayer addAnimation:fadeOutAnimation forKey:@"decreaseOpacity"];
+}
+
 -(void)awakeFromNib
 {
-    iTunesScreenshot=[NSImage imageNamed:@"iTunes-screenshot.png"];
-    NSRect rect = NSZeroRect;
-    rect.size = [iTunesScreenshot size];
+    NSImage *iTunesScreenshot=[NSImage imageNamed:@"iTunes-screenshot"];
+    NSRect imageRect = NSZeroRect;
+    imageRect.size = [iTunesScreenshot size];
     
-    [IntroImage setImage:iTunesScreenshot];
+//    [introImage setImage:iTunesScreenshot];
+//    [introImage setImageFrameStyle:NSImageFrameNone];
+//    [introImage setFrame:NSMakeRect(0,0,827,505)];
+
+//    NSSize introImageSize = [introImage frame].size;
+//
+    NSWindow* introWindow = [self window];
+    
+    CALayer* toplayer = [CALayer layer];
+    CGColorRef backgroundColor=CGColorCreateGenericRGB(1.f, 1.f, 1.f, 1.f);
+    [toplayer setBackgroundColor:backgroundColor];
+    CFRelease(backgroundColor);
+    
+    introLayer = [CALayer layer];
+    [introLayer setFrame:NSRectToCGRect(imageRect)];
+    [introLayer setPosition:CGPointMake(introWindow.frame.size.width/2,introWindow.frame.size.height-imageRect.size.height/2-30)];
+    [introLayer setContents:iTunesScreenshot];
+    [introLayer setBorderColor:CGColorCreateGenericRGB(1.f, 0.f, 0.f, 1.f)];
+    [introLayer setBorderWidth:1];
+
+    [toplayer addSublayer:introLayer];
+    
+    [[introWindow contentView] setWantsLayer:YES];
+    [[introWindow contentView] setLayer:toplayer];
+//
+//    CALayer* toplayer = [CALayer layer];
+//    [toplayer addSublayer:introLayer];
+//    [introImage setLayer:toplayer];
+//    [introImage setWantsLayer:YES];
+//
+//    
+//    NSImage *nextButtonImage=[NSImage imageNamed:@"introButtons-next"];
+//    NSImage *nextButtonImageHL=[NSImage imageNamed:@"introButtons-next-HL"];
+//
+//    [nextButton setImage: nextButtonImage];
+//    [nextButton setAlternateImage: nextButtonImageHL];
+//    [nextButton setBordered:NO];
+//    [[nextButton cell] setHighlightsBy:1];
+
 }
 
 - (void)windowDidLoad

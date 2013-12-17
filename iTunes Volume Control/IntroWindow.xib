@@ -7,7 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="IntroWindowController">
             <connections>
-                <outlet property="IntroImage" destination="0Pf-n3-aab" id="3qg-R8-dKZ"/>
+                <outlet property="nextButton" destination="Ps8-9u-lgn" id="JGs-uX-DGP"/>
                 <outlet property="window" destination="uRH-Ll-Xfi" id="JQJ-Ph-J4y"/>
             </connections>
         </customObject>
@@ -15,34 +15,52 @@
         <customObject id="-3" userLabel="Application"/>
         <window title="iTunes Volume Control" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="uRH-Ll-Xfi">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
-            <rect key="contentRect" x="530" y="394" width="907" height="613"/>
+            <rect key="contentRect" x="530" y="394" width="910" height="659"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
             <view key="contentView" id="P7d-L1-Puv">
-                <rect key="frame" x="0.0" y="0.0" width="907" height="613"/>
+                <rect key="frame" x="0.0" y="0.0" width="910" height="659"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NJC-yu-k8D">
-                        <rect key="frame" x="9" y="5" width="183" height="18"/>
+                        <rect key="frame" x="12" y="6" width="183" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Show this window at start" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="11e-D1-QzM">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                     </button>
-                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0Pf-n3-aab">
-                        <rect key="frame" x="16" y="52" width="875" height="540"/>
+                    <button focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6rY-Au-AJT">
+                        <rect key="frame" x="315" y="71" width="60" height="60"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="875" id="4Q5-g5-9tG"/>
-                            <constraint firstAttribute="height" constant="540" id="acV-JT-b5h"/>
-                        </constraints>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" id="CcK-a9-9Xx"/>
-                    </imageView>
+                        <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" alignment="center" state="on" borderStyle="border" focusRingType="none" inset="2" id="YqW-sB-oP5">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="nextButtonClicked:" target="-2" id="gTE-I3-8ee"/>
+                        </connections>
+                    </button>
+                    <button focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ps8-9u-lgn">
+                        <rect key="frame" x="479" y="71" width="60" height="60"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" alignment="center" state="on" borderStyle="border" focusRingType="none" inset="2" id="AI5-Xg-Abd">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="nextButtonClicked:" target="-2" id="pUZ-vE-kli"/>
+                        </connections>
+                    </button>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YFA-Hk-qRc">
+                        <rect key="frame" x="561" y="93" width="38" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="WjY-8z-HCm">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
-                <constraints>
-                    <constraint firstAttribute="centerY" secondItem="0Pf-n3-aab" secondAttribute="centerY" constant="15" id="pCK-4f-ZSk"/>
-                    <constraint firstAttribute="centerX" secondItem="0Pf-n3-aab" secondAttribute="centerX" id="wNY-wv-sV0"/>
-                </constraints>
             </view>
             <contentBorderThickness minY="32"/>
         </window>
