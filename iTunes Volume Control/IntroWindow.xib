@@ -18,7 +18,7 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application"/>
         <window title="iTunes Volume Control" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="uRH-Ll-Xfi">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
+            <windowStyleMask key="styleMask" titled="YES"/>
             <rect key="contentRect" x="530" y="394" width="1000" height="620"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
             <view key="contentView" id="P7d-L1-Puv">
@@ -43,6 +43,9 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="prevButtonClicked:" target="-2" id="rGM-hc-HRR"/>
+                        </connections>
                     </button>
                     <button focusRingType="none" verticalHuggingPriority="750" id="Ps8-9u-lgn">
                         <rect key="frame" x="503" y="57" width="60" height="60"/>

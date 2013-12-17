@@ -30,6 +30,7 @@
         
         [[NSNotificationCenter defaultCenter] addObserver:[[NSApplication sharedApplication] delegate] selector:@selector(introWindowWillClose:) name:NSWindowWillCloseNotification object:window];
         
+        step_number = 0;
     }
     return self;
 }
@@ -41,8 +42,6 @@
 
 - (IBAction)nextButtonClicked:(id)sender
 {
-    
-    static int step_number = 0;
     //    CABasicAnimation* fadeOutAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
     //    [fadeOutAnimation setDuration:1.f];
     //    [fadeOutAnimation setRemovedOnCompletion:NO];
@@ -56,22 +55,69 @@
             
             [previousButton setEnabled:YES];
             
-            [[NSAnimationContext currentContext] setDuration:1.3f];
+            [[NSAnimationContext currentContext] setDuration:1.0f];
             [NSAnimationContext beginGrouping];
             //    [introLayer addAnimation:fadeOutAnimation forKey:@"decreaseOpacity"];
             [[iTune_label_2 animator] setAlphaValue:1.f];
             [arrow_2_Layer setOpacity:1.f];
             [NSAnimationContext endGrouping];
-            
-            
             break;
         case 1:
+            [nextButton setEnabled:NO];
+            
+            [[NSAnimationContext currentContext] setDuration:0.8f];
+            [NSAnimationContext beginGrouping];
+            [[iTune_label_1 animator] setAlphaValue:0.f];
+            [[iTune_label_2 animator] setAlphaValue:0.f];
+            [arrow_1_Layer setOpacity:0.f];
+            [arrow_2_Layer setOpacity:0.f];
+            [statusbarScreenshotIntroLayer setOpacity:1.0f];
+            [iTunesScreenshotIntroLayer setOpacity:0.0f];
+            [NSAnimationContext endGrouping];
+
+            
             break;
     }
     
     step_number++;
     
 }
+
+- (IBAction)prevButtonClicked:(id)sender
+{
+    switch (step_number)
+    {
+        case 1:
+            [previousButton setEnabled:NO];
+            
+            [[NSAnimationContext currentContext] setDuration:0.4f];
+            [NSAnimationContext beginGrouping];
+            //    [introLayer addAnimation:fadeOutAnimation forKey:@"decreaseOpacity"];
+            [[iTune_label_2 animator] setAlphaValue:0.f];
+            [arrow_2_Layer setOpacity:0.f];
+            [NSAnimationContext endGrouping];
+            
+            
+            break;
+        case 2:
+            [nextButton setEnabled:YES];
+            
+            [[NSAnimationContext currentContext] setDuration:0.4f];
+            [NSAnimationContext beginGrouping];
+            [[iTune_label_1 animator] setAlphaValue:1.f];
+            [[iTune_label_2 animator] setAlphaValue:1.f];
+            [arrow_1_Layer setOpacity:1.f];
+            [arrow_2_Layer setOpacity:1.f];
+            [statusbarScreenshotIntroLayer setOpacity:0.0f];
+            [iTunesScreenshotIntroLayer setOpacity:1.0f];
+            [NSAnimationContext endGrouping];
+            break;
+    }
+    
+    step_number--;
+    
+}
+
 
 -(void)showFirstMessage:(NSTimer*)theTimer
 {
@@ -94,6 +140,7 @@
     NSImage *iTunesScreenshot=[NSImage imageNamed:@"iTunes-screenshot"];
     NSImage *iTunes_arrow_1=[NSImage imageNamed:@"iTunes-arrow-1"];
     NSImage *iTunes_arrow_2=[NSImage imageNamed:@"iTunes-arrow-2"];
+    NSImage *statusbarScreenshot=[NSImage imageNamed:@"statusbar-screenshot"];
     
     //[introWindow setContentBorderThickness:36 forEdge:NSMinYEdge];
     
@@ -102,19 +149,29 @@
     //[toplayer setBackgroundColor:backgroundColor];
     //CFRelease(backgroundColor);
     
-    introLayer = [CALayer layer];
+    // iTunes screenshot
+    iTunesScreenshotIntroLayer = [CALayer layer];
     imageRect.size = [iTunesScreenshot size];
-    [introLayer setFrame:NSRectToCGRect(imageRect)];
-    [introLayer setPosition:CGPointMake(windowViewSize.width/2-16,windowViewSize.height-imageRect.size.height/2-60)];
-    [introLayer setContents:iTunesScreenshot];
+    [iTunesScreenshotIntroLayer setFrame:NSRectToCGRect(imageRect)];
+    [iTunesScreenshotIntroLayer setPosition:CGPointMake(windowViewSize.width/2-16,windowViewSize.height-imageRect.size.height/2-60)];
+    [iTunesScreenshotIntroLayer setContents:iTunesScreenshot];
     //[introLayer setBorderColor:CGColorCreateGenericRGB(1.f, 0.f, 0.f, 1.f)];
     //[introLayer setBorderWidth:1];
-    [toplayer addSublayer:introLayer];
+    [toplayer addSublayer:iTunesScreenshotIntroLayer];
+    
+    // Statusbar screenshot
+    statusbarScreenshotIntroLayer = [CALayer layer];
+    imageRect.size = [statusbarScreenshot size];
+    [statusbarScreenshotIntroLayer setFrame:NSRectToCGRect(imageRect)];
+    [statusbarScreenshotIntroLayer setPosition:CGPointMake(250,windowViewSize.height-250)];
+    [statusbarScreenshotIntroLayer setContents:statusbarScreenshot];
+    [statusbarScreenshotIntroLayer setOpacity:0.f];
+    [toplayer addSublayer:statusbarScreenshotIntroLayer];
     
     arrow_1_Layer = [CALayer layer];
     imageRect.size = [iTunes_arrow_1 size];
     [arrow_1_Layer setFrame:NSRectToCGRect(imageRect)];
-    [arrow_1_Layer setPosition:CGPointMake(312,windowViewSize.height-95)];
+    [arrow_1_Layer setPosition:CGPointMake(313,windowViewSize.height-95)];
     [arrow_1_Layer setContents:iTunes_arrow_1];
     [arrow_1_Layer setOpacity:0.f];
     [toplayer addSublayer:arrow_1_Layer];
@@ -124,7 +181,7 @@
     arrow_2_Layer = [CALayer layer];
     imageRect.size = [iTunes_arrow_2 size];
     [arrow_2_Layer setFrame:NSRectToCGRect(imageRect)];
-    [arrow_2_Layer setPosition:CGPointMake(242,windowViewSize.height-96)];
+    [arrow_2_Layer setPosition:CGPointMake(244,windowViewSize.height-96)];
     [arrow_2_Layer setContents:iTunes_arrow_2];
     [arrow_2_Layer setOpacity:0.f];
     [toplayer addSublayer:arrow_2_Layer];

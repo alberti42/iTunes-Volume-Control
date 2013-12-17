@@ -12,10 +12,12 @@
 
 @interface IntroWindowController : NSWindowController
 {
-    CALayer* introLayer;
+    CALayer* iTunesScreenshotIntroLayer;
+    CALayer* statusbarScreenshotIntroLayer;
     CALayer* arrow_1_Layer;
     CALayer* arrow_2_Layer;
     
+    int step_number;
 @public
 }
 
@@ -28,6 +30,7 @@
 @property (nonatomic, weak) AppDelegate *appDelegate;
 
 - (IBAction)nextButtonClicked:(id)sender;
+- (IBAction)prevButtonClicked:(id)sender;
 - (IBAction)loadIntroAtStartChanged:(id)sender;
 
 @end

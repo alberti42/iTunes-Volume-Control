@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		651A7EEF168F1F4C00A76288 /* BorderlessWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 651A7EED168F1F4C00A76288 /* BorderlessWindow.m */; };
+		652EC9201860BF6700D413E7 /* statusbar-screenshot.png in Resources */ = {isa = PBXBuildFile; fileRef = 6595D4E6185FB9E400924D66 /* statusbar-screenshot.png */; };
 		653FDD9A185F770000F9795D /* introButtons-next.png in Resources */ = {isa = PBXBuildFile; fileRef = 653FDD96185F770000F9795D /* introButtons-next.png */; };
 		653FDD9B185F770000F9795D /* introButtons-next@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 653FDD97185F770000F9795D /* introButtons-next@2x.png */; };
 		653FDD9C185F770000F9795D /* introButtons-prev.png in Resources */ = {isa = PBXBuildFile; fileRef = 653FDD98185F770000F9795D /* introButtons-prev.png */; };
@@ -95,7 +96,7 @@
 		658B93C3185E4823007BEBEF /* IntroWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IntroWindow.xib; sourceTree = "<group>"; };
 		658B93C5185E48B2007BEBEF /* IntroWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroWindowController.h; sourceTree = "<group>"; };
 		658B93C6185E48B2007BEBEF /* IntroWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroWindowController.m; sourceTree = "<group>"; };
-		6595D4E6185FB9E400924D66 /* Statusbar-screenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Statusbar-screenshot.png"; path = "iTunes Volume Control/Images/Statusbar-screenshot.png"; sourceTree = "<group>"; };
+		6595D4E6185FB9E400924D66 /* statusbar-screenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "statusbar-screenshot.png"; path = "iTunes Volume Control/Images/statusbar-screenshot.png"; sourceTree = "<group>"; };
 		6597CCE61698BA05005F54C1 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = "iTunes Volume Control/Sparkle.framework"; sourceTree = "<group>"; };
 		659CCFDD185CAAA7006958AD /* appicon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = appicon.icns; path = "iTunes Volume Control/Images/appicon.icns"; sourceTree = "<group>"; };
 		659CCFDF185CAACD006958AD /* icon_16x16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_16x16.png; path = "iTunes Volume Control/Images/appicon.iconset/icon_16x16.png"; sourceTree = "<group>"; };
@@ -231,7 +232,7 @@
 				65FCC05318607F2100193725 /* iTunes-arrow-1@2x.png */,
 				65FCC05418607F2100193725 /* iTunes-arrow-2.png */,
 				65FCC05518607F2100193725 /* iTunes-arrow-2@2x.png */,
-				6595D4E6185FB9E400924D66 /* Statusbar-screenshot.png */,
+				6595D4E6185FB9E400924D66 /* statusbar-screenshot.png */,
 				653FDD9E185F780000F9795D /* introButtons-next-HL.png */,
 				653FDD9F185F780000F9795D /* introButtons-next-HL@2x.png */,
 				653FDD96185F770000F9795D /* introButtons-next.png */,
@@ -370,6 +371,7 @@
 				6577E8B2186099DA0024A59C /* introButtons-prev-HL@2x.png in Resources */,
 				653FDDA0185F780000F9795D /* introButtons-next-HL.png in Resources */,
 				6577E8B1186099DA0024A59C /* introButtons-prev-HL.png in Resources */,
+				652EC9201860BF6700D413E7 /* statusbar-screenshot.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
