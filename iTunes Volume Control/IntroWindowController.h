@@ -17,6 +17,7 @@
 
 @property (nonatomic,assign) IBOutlet NSButton *nextButton;
 @property (nonatomic,assign) IBOutlet NSButton *previousButton;
+@property (nonatomic,assign) IBOutlet NSTextField *text;
 
 - (IBAction)nextButtonClicked:(id)sender;
 

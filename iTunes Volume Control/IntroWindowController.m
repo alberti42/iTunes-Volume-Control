@@ -17,6 +17,7 @@
 
 @synthesize nextButton;
 @synthesize previousButton;
+@synthesize text;
 
 - (id)initWithWindow:(NSWindow *)window
 {
@@ -44,7 +45,12 @@
     [fadeOutAnimation setFromValue:[NSNumber numberWithFloat:1.0f]];
     [fadeOutAnimation setToValue:[NSNumber numberWithFloat:0.0f]];
     
+    [[NSAnimationContext currentContext] setDuration:4.0];
+    [NSAnimationContext beginGrouping];
     [introLayer addAnimation:fadeOutAnimation forKey:@"decreaseOpacity"];
+    [[text animator] setAlphaValue:0.f];
+    [NSAnimationContext endGrouping];
+    
 }
 
 -(void)awakeFromNib
@@ -62,21 +68,22 @@
     NSWindow* introWindow = [self window];
     
     CALayer* toplayer = [CALayer layer];
-    CGColorRef backgroundColor=CGColorCreateGenericRGB(1.f, 1.f, 1.f, 1.f);
-    [toplayer setBackgroundColor:backgroundColor];
-    CFRelease(backgroundColor);
+//    CGColorRef backgroundColor=CGColorCreateGenericRGB(1.f, 1.f, 1.f, 1.f);
+//    [toplayer setBackgroundColor:backgroundColor];
+//    CFRelease(backgroundColor);
     
     introLayer = [CALayer layer];
     [introLayer setFrame:NSRectToCGRect(imageRect)];
     [introLayer setPosition:CGPointMake(introWindow.frame.size.width/2,introWindow.frame.size.height-imageRect.size.height/2-30)];
     [introLayer setContents:iTunesScreenshot];
-    [introLayer setBorderColor:CGColorCreateGenericRGB(1.f, 0.f, 0.f, 1.f)];
-    [introLayer setBorderWidth:1];
+//    [introLayer setBorderColor:CGColorCreateGenericRGB(1.f, 0.f, 0.f, 1.f)];
+//    [introLayer setBorderWidth:1];
 
     [toplayer addSublayer:introLayer];
     
-    [[introWindow contentView] setWantsLayer:YES];
     [[introWindow contentView] setLayer:toplayer];
+    [[introWindow contentView] setWantsLayer:YES];
+
 //
 //    CALayer* toplayer = [CALayer layer];
 //    [toplayer addSublayer:introLayer];
@@ -84,13 +91,13 @@
 //    [introImage setWantsLayer:YES];
 //
 //    
-//    NSImage *nextButtonImage=[NSImage imageNamed:@"introButtons-next"];
-//    NSImage *nextButtonImageHL=[NSImage imageNamed:@"introButtons-next-HL"];
-//
-//    [nextButton setImage: nextButtonImage];
-//    [nextButton setAlternateImage: nextButtonImageHL];
-//    [nextButton setBordered:NO];
-//    [[nextButton cell] setHighlightsBy:1];
+    NSImage *nextButtonImage=[NSImage imageNamed:@"introButtons-next"];
+    NSImage *nextButtonImageHL=[NSImage imageNamed:@"introButtons-next-HL"];
+
+    [nextButton setImage: nextButtonImage];
+    [nextButton setAlternateImage: nextButtonImageHL];
+    [nextButton setBordered:NO];
+    [[nextButton cell] setHighlightsBy:1];
 
 }
 
