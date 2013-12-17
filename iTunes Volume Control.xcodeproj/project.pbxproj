@@ -39,6 +39,10 @@
 		65CC33B81698B3CC0049AF82 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65C24C6B168CEB9D0000BFC2 /* IOKit.framework */; };
 		65CC33BA1698B3D60049AF82 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 651A7EF1168F226300A76288 /* QuartzCore.framework */; };
 		65CC33BC1698B3E20049AF82 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 656C6C6B168A2A0B00ECA482 /* Cocoa.framework */; };
+		65FCC05618607F2100193725 /* iTunes-arrow-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 65FCC05218607F2100193725 /* iTunes-arrow-1.png */; };
+		65FCC05718607F2100193725 /* iTunes-arrow-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65FCC05318607F2100193725 /* iTunes-arrow-1@2x.png */; };
+		65FCC05818607F2100193725 /* iTunes-arrow-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 65FCC05418607F2100193725 /* iTunes-arrow-2.png */; };
+		65FCC05918607F2100193725 /* iTunes-arrow-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65FCC05518607F2100193725 /* iTunes-arrow-2@2x.png */; };
 		E2F254C6179EA2B600DD3C66 /* StatusItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F254C5179EA2B600DD3C66 /* StatusItemView.m */; };
 /* End PBXBuildFile section */
 
@@ -110,6 +114,10 @@
 		65CC785D1692FC1300BFD4AD /* statusbar-item.ai */ = {isa = PBXFileReference; lastKnownFileType = text; name = "statusbar-item.ai"; path = "iTunes Volume Control/Images/statusbar-item.ai"; sourceTree = "<group>"; };
 		65CC785E1692FC1300BFD4AD /* statusbar-item-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "statusbar-item-on.png"; path = "iTunes Volume Control/Images/statusbar-item-on.png"; sourceTree = "<group>"; };
 		65CC786A169305C700BFD4AD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		65FCC05218607F2100193725 /* iTunes-arrow-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iTunes-arrow-1.png"; path = "iTunes Volume Control/Images/iTunes-arrow-1.png"; sourceTree = "<group>"; };
+		65FCC05318607F2100193725 /* iTunes-arrow-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iTunes-arrow-1@2x.png"; path = "iTunes Volume Control/Images/iTunes-arrow-1@2x.png"; sourceTree = "<group>"; };
+		65FCC05418607F2100193725 /* iTunes-arrow-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iTunes-arrow-2.png"; path = "iTunes Volume Control/Images/iTunes-arrow-2.png"; sourceTree = "<group>"; };
+		65FCC05518607F2100193725 /* iTunes-arrow-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iTunes-arrow-2@2x.png"; path = "iTunes Volume Control/Images/iTunes-arrow-2@2x.png"; sourceTree = "<group>"; };
 		E2F254C4179EA2B600DD3C66 /* StatusItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusItemView.h; sourceTree = "<group>"; };
 		E2F254C5179EA2B600DD3C66 /* StatusItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusItemView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -215,6 +223,10 @@
 		65B85970185E2C1700D8C851 /* Intro window */ = {
 			isa = PBXGroup;
 			children = (
+				65FCC05218607F2100193725 /* iTunes-arrow-1.png */,
+				65FCC05318607F2100193725 /* iTunes-arrow-1@2x.png */,
+				65FCC05418607F2100193725 /* iTunes-arrow-2.png */,
+				65FCC05518607F2100193725 /* iTunes-arrow-2@2x.png */,
 				6595D4E6185FB9E400924D66 /* Statusbar-screenshot.png */,
 				653FDD9E185F780000F9795D /* introButtons-next-HL.png */,
 				653FDD9F185F780000F9795D /* introButtons-next-HL@2x.png */,
@@ -326,12 +338,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				659CCFEF185CBEF7006958AD /* statusbar-item-on.png in Resources */,
+				65FCC05718607F2100193725 /* iTunes-arrow-1@2x.png in Resources */,
 				659CCFED185CBEF7006958AD /* statusbar-item-off.png in Resources */,
 				659CCFF5185CBF0F006958AD /* volume@2x.png in Resources */,
+				65FCC05818607F2100193725 /* iTunes-arrow-2.png in Resources */,
 				653FDD9C185F770000F9795D /* introButtons-prev.png in Resources */,
 				658B93C8185E6A51007BEBEF /* iTunes-screenshot.png in Resources */,
 				653FDD9B185F770000F9795D /* introButtons-next@2x.png in Resources */,
 				656C6C76168A2A0B00ECA482 /* InfoPlist.strings in Resources */,
+				65FCC05618607F2100193725 /* iTunes-arrow-1.png in Resources */,
 				658B93C4185E4823007BEBEF /* IntroWindow.xib in Resources */,
 				659CCFEE185CBEF7006958AD /* statusbar-item-off@2x.png in Resources */,
 				653FDD9D185F770000F9795D /* introButtons-prev@2x.png in Resources */,
@@ -343,6 +358,7 @@
 				659CCFF2185CBF04006958AD /* volume-off.png in Resources */,
 				659CCFF0185CBEF7006958AD /* statusbar-item-on@2x.png in Resources */,
 				65C24C01168CBC7E0000BFC2 /* Credits.rtf in Resources */,
+				65FCC05918607F2100193725 /* iTunes-arrow-2@2x.png in Resources */,
 				653FDDA1185F780000F9795D /* introButtons-next-HL@2x.png in Resources */,
 				653FDD9A185F770000F9795D /* introButtons-next.png in Resources */,
 				653FDDA0185F780000F9795D /* introButtons-next-HL.png in Resources */,

@@ -7,8 +7,9 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="IntroWindowController">
             <connections>
+                <outlet property="iTune_label_1" destination="xJB-YD-z6Y" id="SG1-mG-TCI"/>
+                <outlet property="iTune_label_2" destination="t10-o8-qkM" id="sPy-my-zDs"/>
                 <outlet property="nextButton" destination="Ps8-9u-lgn" id="JGs-uX-DGP"/>
-                <outlet property="text" destination="ULC-DJ-con" id="QFE-cU-FBY"/>
                 <outlet property="window" destination="uRH-Ll-Xfi" id="JQJ-Ph-J4y"/>
             </connections>
         </customObject>
@@ -16,14 +17,14 @@
         <customObject id="-3" userLabel="Application"/>
         <window title="iTunes Volume Control" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="uRH-Ll-Xfi">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
-            <rect key="contentRect" x="530" y="394" width="984" height="672"/>
+            <rect key="contentRect" x="530" y="394" width="1000" height="620"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
             <view key="contentView" id="P7d-L1-Puv">
-                <rect key="frame" x="0.0" y="0.0" width="984" height="672"/>
+                <rect key="frame" x="0.0" y="0.0" width="1000" height="620"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NJC-yu-k8D">
-                        <rect key="frame" x="12" y="7" width="183" height="18"/>
+                        <rect key="frame" x="15" y="7" width="183" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Show this window at start" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="11e-D1-QzM">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -31,7 +32,7 @@
                         </buttonCell>
                     </button>
                     <button focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6rY-Au-AJT">
-                        <rect key="frame" x="352" y="84" width="60" height="60"/>
+                        <rect key="frame" x="352" y="52" width="60" height="60"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" alignment="center" state="on" borderStyle="border" focusRingType="none" inset="2" id="YqW-sB-oP5">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -42,7 +43,7 @@
                         </connections>
                     </button>
                     <button focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ps8-9u-lgn">
-                        <rect key="frame" x="488" y="242" width="60" height="60"/>
+                        <rect key="frame" x="503" y="52" width="60" height="60"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" alignment="center" state="on" borderStyle="border" focusRingType="none" inset="2" id="AI5-Xg-Abd">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -53,7 +54,7 @@
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YFA-Hk-qRc">
-                        <rect key="frame" x="516" y="60" width="34" height="17"/>
+                        <rect key="frame" x="515" y="42" width="34" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Next" id="WjY-8z-HCm">
                             <font key="font" metaFont="system"/>
@@ -62,7 +63,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vsl-ra-GW2">
-                        <rect key="frame" x="354" y="60" width="57" height="17"/>
+                        <rect key="frame" x="353" y="42" width="57" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Previous" id="By2-hh-cDd">
                             <font key="font" metaFont="system"/>
@@ -70,10 +71,20 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ULC-DJ-con">
-                        <rect key="frame" x="129" y="520" width="200" height="53"/>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xJB-YD-z6Y">
+                        <rect key="frame" x="353" y="536" width="298" height="68"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" title="This is a test" bezelStyle="round" id="Oaq-fn-kMW">
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="oYe-ig-sZh">
+                            <font key="font" metaFont="system"/>
+                            <string key="title">If you own an AirPlay speaker, you might have noticed already that you cannot control it by tuning the master volume of the system.</string>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="t10-o8-qkM">
+                        <rect key="frame" x="17" y="519" width="213" height="92"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="The solution is provided by iTunes Volume Control which allows you to tune iTunes volume with keyboard shortcuts." id="Zdy-8U-fY7">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
