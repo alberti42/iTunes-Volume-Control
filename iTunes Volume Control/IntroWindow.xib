@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment defaultVersion="1070" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
@@ -9,7 +9,9 @@
             <connections>
                 <outlet property="iTune_label_1" destination="xJB-YD-z6Y" id="SG1-mG-TCI"/>
                 <outlet property="iTune_label_2" destination="t10-o8-qkM" id="sPy-my-zDs"/>
+                <outlet property="loadIntroAtStartButton" destination="NJC-yu-k8D" id="c6S-tB-aIa"/>
                 <outlet property="nextButton" destination="Ps8-9u-lgn" id="JGs-uX-DGP"/>
+                <outlet property="previousButton" destination="6rY-Au-AJT" id="MFo-eN-mej"/>
                 <outlet property="window" destination="uRH-Ll-Xfi" id="JQJ-Ph-J4y"/>
             </connections>
         </customObject>
@@ -23,27 +25,27 @@
                 <rect key="frame" x="0.0" y="0.0" width="1000" height="620"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NJC-yu-k8D">
+                    <button id="NJC-yu-k8D">
                         <rect key="frame" x="15" y="7" width="183" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="check" title="Show this window at start" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="11e-D1-QzM">
+                        <buttonCell key="cell" type="check" title="Show this window at start" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="11e-D1-QzM">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="loadIntroAtStartChanged:" target="-2" id="ZCd-IO-pOI"/>
+                        </connections>
                     </button>
-                    <button focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6rY-Au-AJT">
-                        <rect key="frame" x="352" y="52" width="60" height="60"/>
+                    <button focusRingType="none" verticalHuggingPriority="750" id="6rY-Au-AJT">
+                        <rect key="frame" x="427" y="57" width="60" height="60"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" alignment="center" state="on" borderStyle="border" focusRingType="none" inset="2" id="YqW-sB-oP5">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
-                        <connections>
-                            <action selector="nextButtonClicked:" target="-2" id="gTE-I3-8ee"/>
-                        </connections>
                     </button>
-                    <button focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ps8-9u-lgn">
-                        <rect key="frame" x="503" y="52" width="60" height="60"/>
+                    <button focusRingType="none" verticalHuggingPriority="750" id="Ps8-9u-lgn">
+                        <rect key="frame" x="503" y="57" width="60" height="60"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" alignment="center" state="on" borderStyle="border" focusRingType="none" inset="2" id="AI5-Xg-Abd">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -53,8 +55,8 @@
                             <action selector="nextButtonClicked:" target="-2" id="pUZ-vE-kli"/>
                         </connections>
                     </button>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YFA-Hk-qRc">
-                        <rect key="frame" x="515" y="42" width="34" height="17"/>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="YFA-Hk-qRc">
+                        <rect key="frame" x="515" y="47" width="34" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Next" id="WjY-8z-HCm">
                             <font key="font" metaFont="system"/>
@@ -62,8 +64,8 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vsl-ra-GW2">
-                        <rect key="frame" x="353" y="42" width="57" height="17"/>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Vsl-ra-GW2">
+                        <rect key="frame" x="428" y="47" width="57" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Previous" id="By2-hh-cDd">
                             <font key="font" metaFont="system"/>
@@ -71,7 +73,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xJB-YD-z6Y">
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="xJB-YD-z6Y">
                         <rect key="frame" x="353" y="536" width="298" height="68"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="oYe-ig-sZh">
@@ -81,7 +83,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="t10-o8-qkM">
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="t10-o8-qkM">
                         <rect key="frame" x="17" y="519" width="213" height="92"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="The solution is provided by iTunes Volume Control which allows you to tune iTunes volume with keyboard shortcuts." id="Zdy-8U-fY7">

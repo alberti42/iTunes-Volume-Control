@@ -21,10 +21,10 @@
     
     NSImage *imgVolOn,*imgVolOff;
     
+    NSUserDefaults *preferences;
+    
     CABasicAnimation *fadeOutAnimation;
     CABasicAnimation *fadeInAnimation;
-    
-    NSUserDefaults *preferences;
     
     CFMachPortRef eventTap;
     CFRunLoopSourceRef runLoopSource;
@@ -64,6 +64,7 @@
 @property (assign, nonatomic) bool UseAppleCMDModifier;
 @property (assign, nonatomic) bool AutomaticUpdates;
 @property (assign, nonatomic) bool hideFromStatusBar;
+@property (assign, nonatomic) bool loadIntroAtStart;
 
 - (void)showSpeakerImg:(NSTimer*)theTimer;
 - (void)hideSpeakerImg:(NSTimer*)theTimer;
@@ -82,9 +83,11 @@
 - (IBAction)toggleHideFromStatusBar:(id)sender;
 - (void)setHideFromStatusBar:(bool)enabled;
 
-- (IBAction)toggleStartAtLogin:(id)sender;
 - (bool) StartAtLogin;
 - (void) setStartAtLogin:(bool)enabled savePreferences:(bool)savePreferences;
+
+- (IBAction)toggleStartAtLogin:(id)sender;
+- (void) setLoadIntroAtStart:(bool)enabled;
 
 - (IBAction)toggleTapping:(id)sender;
 - (void) setTapping:(bool)enabled;

@@ -8,6 +8,7 @@
 
 #import "IntroWindowController.h"
 #import <QuartzCore/CoreAnimation.h>
+#import "AppDelegate.h"
 
 @interface IntroWindowController ()
 
@@ -19,6 +20,7 @@
 @synthesize previousButton;
 @synthesize iTune_label_1;
 @synthesize iTune_label_2;
+@synthesize loadIntroAtStartButton;
 
 - (id)initWithWindow:(NSWindow *)window
 {
@@ -32,28 +34,36 @@
     return self;
 }
 
+- (IBAction)loadIntroAtStartChanged:(id)sender
+{
+    [[self appDelegate] setLoadIntroAtStart:[loadIntroAtStartButton state]];
+}
+
 - (IBAction)nextButtonClicked:(id)sender
 {
-   
+    
     static int step_number = 0;
-//    CABasicAnimation* fadeOutAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
-//    [fadeOutAnimation setDuration:1.f];
-//    [fadeOutAnimation setRemovedOnCompletion:NO];
-//    [fadeOutAnimation setFillMode:kCAFillModeForwards];
-//    [fadeOutAnimation setFromValue:[NSNumber numberWithFloat:1.0f]];
-//    [fadeOutAnimation setToValue:[NSNumber numberWithFloat:0.0f]];
+    //    CABasicAnimation* fadeOutAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    //    [fadeOutAnimation setDuration:1.f];
+    //    [fadeOutAnimation setRemovedOnCompletion:NO];
+    //    [fadeOutAnimation setFillMode:kCAFillModeForwards];
+    //    [fadeOutAnimation setFromValue:[NSNumber numberWithFloat:1.0f]];
+    //    [fadeOutAnimation setToValue:[NSNumber numberWithFloat:0.0f]];
     
     switch (step_number)
     {
         case 0:
-
-    [[NSAnimationContext currentContext] setDuration:1.0f];
-    [NSAnimationContext beginGrouping];
-//    [introLayer addAnimation:fadeOutAnimation forKey:@"decreaseOpacity"];
-    [[iTune_label_2 animator] setAlphaValue:1.f];
-    [arrow_2_Layer setOpacity:1.f];
-    [NSAnimationContext endGrouping];
-
+            
+            [previousButton setEnabled:YES];
+            
+            [[NSAnimationContext currentContext] setDuration:1.3f];
+            [NSAnimationContext beginGrouping];
+            //    [introLayer addAnimation:fadeOutAnimation forKey:@"decreaseOpacity"];
+            [[iTune_label_2 animator] setAlphaValue:1.f];
+            [arrow_2_Layer setOpacity:1.f];
+            [NSAnimationContext endGrouping];
+            
+            
             break;
         case 1:
             break;
@@ -61,6 +71,15 @@
     
     step_number++;
     
+}
+
+-(void)showFirstMessage:(NSTimer*)theTimer
+{
+    [[NSAnimationContext currentContext] setDuration:1.3f];
+    [NSAnimationContext beginGrouping];
+    [[iTune_label_1 animator] setAlphaValue:1.f];
+    [arrow_1_Layer setOpacity:1.f];
+    [NSAnimationContext endGrouping];
 }
 
 -(void)awakeFromNib
@@ -97,7 +116,10 @@
     [arrow_1_Layer setFrame:NSRectToCGRect(imageRect)];
     [arrow_1_Layer setPosition:CGPointMake(312,windowViewSize.height-95)];
     [arrow_1_Layer setContents:iTunes_arrow_1];
+    [arrow_1_Layer setOpacity:0.f];
     [toplayer addSublayer:arrow_1_Layer];
+    
+    [iTune_label_1 setAlphaValue:0.f];
     
     arrow_2_Layer = [CALayer layer];
     imageRect.size = [iTunes_arrow_2 size];
@@ -114,12 +136,22 @@
     
     NSImage *nextButtonImage=[NSImage imageNamed:@"introButtons-next"];
     NSImage *nextButtonImageHL=[NSImage imageNamed:@"introButtons-next-HL"];
-    
     [nextButton setImage: nextButtonImage];
     [nextButton setAlternateImage: nextButtonImageHL];
     [nextButton setBordered:NO];
     [[nextButton cell] setHighlightsBy:1];
     
+    NSImage *prevButtonImage=[NSImage imageNamed:@"introButtons-prev"];
+    NSImage *prevButtonImageHL=[NSImage imageNamed:@"introButtons-prev-HL"];
+    [previousButton setImage: prevButtonImage];
+    [previousButton setAlternateImage: prevButtonImageHL];
+    [previousButton setBordered:NO];
+    [previousButton setEnabled:NO];
+    [[previousButton cell] setHighlightsBy:1];
+    
+    [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(showFirstMessage:) userInfo:nil repeats:NO];
+
+    [loadIntroAtStartButton setState: [[self appDelegate] loadIntroAtStart]];
 }
 
 - (void)windowDidLoad

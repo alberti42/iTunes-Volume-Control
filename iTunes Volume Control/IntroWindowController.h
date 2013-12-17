@@ -8,6 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class AppDelegate;
+
 @interface IntroWindowController : NSWindowController
 {
     CALayer* introLayer;
@@ -21,7 +23,11 @@
 @property (nonatomic,assign) IBOutlet NSButton *previousButton;
 @property (nonatomic,assign) IBOutlet NSTextField *iTune_label_1;
 @property (nonatomic,assign) IBOutlet NSTextField *iTune_label_2;
+@property (nonatomic,assign) IBOutlet NSButton *loadIntroAtStartButton;
+
+@property (nonatomic, weak) AppDelegate *appDelegate;
 
 - (IBAction)nextButtonClicked:(id)sender;
+- (IBAction)loadIntroAtStartChanged:(id)sender;
 
 @end

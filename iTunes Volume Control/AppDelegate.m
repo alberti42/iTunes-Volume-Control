@@ -126,6 +126,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 @synthesize UseAppleCMDModifier=_UseAppleCMDModifier;
 @synthesize AutomaticUpdates=_AutomaticUpdates;
 @synthesize hideFromStatusBar = _hideFromStatusBar;
+@synthesize loadIntroAtStart = _loadIntroAtStart;
 
 @synthesize volumeWindow=_volumeWindow;
 @synthesize statusMenu=_statusMenu;
@@ -490,6 +491,12 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     [self initializePreferences];
     
     [self setStartAtLogin:[self StartAtLogin] savePreferences:false];
+    
+    if([self loadIntroAtStart])
+    {
+        [self showIntroWindow:nil];
+    }
+    
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
@@ -540,6 +547,7 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
                           [NSNumber numberWithBool:false], @"UseAppleCMDModifier",
                           [NSNumber numberWithBool:true],  @"AutomaticUpdates",
                           [NSNumber numberWithBool:false], @"hideFromStatusBarPreference",
+                          [NSNumber numberWithBool:true], @"loadIntroAtStart",
                           nil ]; // terminate the list
     [preferences registerDefaults:dict];
     
@@ -548,6 +556,7 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     [self setUseAppleCMDModifier:[preferences boolForKey:  @"UseAppleCMDModifier"]];
     [self setAutomaticUpdates:[preferences boolForKey:     @"AutomaticUpdates"]];
     [self setHideFromStatusBar:[preferences boolForKey:    @"hideFromStatusBarPreference"]];
+    [self setLoadIntroAtStart:[preferences boolForKey:     @"loadIntroAtStart"]];
 }
 
 - (IBAction)toggleAutomaticUpdates:(id)sender
@@ -571,6 +580,19 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
 - (IBAction)toggleStartAtLogin:(id)sender
 {
     [self setStartAtLogin:![self StartAtLogin] savePreferences:true];
+}
+
+- (IBAction)toggleIntroAtStart:(id)sender
+{
+    [self setLoadIntroAtStart:![self loadIntroAtStart]];
+}
+
+- (void)setLoadIntroAtStart:(bool)enabled
+{
+    [preferences setBool:enabled forKey:@"loadIntroAtStart"];
+    [preferences synchronize];
+    
+    _loadIntroAtStart=enabled;
 }
 
 - (void)setAppleRemoteConnected:(bool)enabled
@@ -650,15 +672,12 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     if(!introWindowController)
     {
         introWindowController = [[IntroWindowController alloc] initWithWindowNibName:@"IntroWindow"];
+        [introWindowController setAppDelegate:self];
     }
-    
-//    introWindowController
     
     [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
     [introWindowController showWindow:self];
     [[introWindowController window] makeKeyAndOrderFront:self];
-
-//    introWindowController=nil;
 }
 
 - (IBAction)aboutPanel:(id)sender
