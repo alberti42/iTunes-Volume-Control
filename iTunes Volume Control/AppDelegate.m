@@ -534,7 +534,7 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     _statusBarItemView = [[StatusItemView alloc] initWithFrame:(NSRect){.size={thickness, thickness}}];
     [_statusBarItemView setImage:statusImageOn];
     [_statusBar setImage:statusImageOn];
-//    [_statusBar setView:_statusBarItemView];
+    [_statusBar setView:_statusBarItemView];
     [_statusBar setMenu:_statusMenu];
     [_statusBar setHighlightMode:YES];
 }
