@@ -18,6 +18,7 @@
 
 @synthesize nextButton;
 @synthesize previousButton;
+@synthesize closeButton;
 @synthesize iTune_label_1;
 @synthesize iTune_label_2;
 @synthesize loadIntroAtStartButton;
@@ -28,6 +29,8 @@
     if (self) {
         // Initialization code here.
         
+        appDelegate = [[NSApplication sharedApplication] delegate];
+        
         [[NSNotificationCenter defaultCenter] addObserver:[[NSApplication sharedApplication] delegate] selector:@selector(introWindowWillClose:) name:NSWindowWillCloseNotification object:window];
         
         step_number = 0;
@@ -35,9 +38,15 @@
     return self;
 }
 
+
 - (IBAction)loadIntroAtStartChanged:(id)sender
 {
-    [[self appDelegate] setLoadIntroAtStart:[loadIntroAtStartButton state]];
+    [appDelegate setLoadIntroAtStart:[loadIntroAtStartButton state]];
+}
+
+- (IBAction)closeButtonClicked:(id)sender
+{
+    [NSTimer scheduledTimerWithTimeInterval:0.2 target:[self window] selector:@selector(close) userInfo:nil repeats:NO];
 }
 
 - (IBAction)nextButtonClicked:(id)sender
@@ -64,6 +73,7 @@
             break;
         case 1:
             [nextButton setEnabled:NO];
+            [closeButton setEnabled:YES];
             
             [[NSAnimationContext currentContext] setDuration:0.8f];
             [NSAnimationContext beginGrouping];
@@ -101,6 +111,7 @@
             break;
         case 2:
             [nextButton setEnabled:YES];
+            [closeButton setEnabled:NO];
             
             [[NSAnimationContext currentContext] setDuration:0.4f];
             [NSAnimationContext beginGrouping];
@@ -140,7 +151,8 @@
     NSImage *iTunesScreenshot=[NSImage imageNamed:@"iTunes-screenshot"];
     NSImage *iTunes_arrow_1=[NSImage imageNamed:@"iTunes-arrow-1"];
     NSImage *iTunes_arrow_2=[NSImage imageNamed:@"iTunes-arrow-2"];
-    NSImage *statusbarScreenshot=[NSImage imageNamed:@"statusbar-screenshot"];
+//    NSImage *statusbarScreenshot=[NSImage imageNamed:@"statusbar-screenshot"];
+    NSImage *statusbarScreenshot=[NSImage imageNamed:@"keyboard"];
     
     //[introWindow setContentBorderThickness:36 forEdge:NSMinYEdge];
     
@@ -161,9 +173,11 @@
     
     // Statusbar screenshot
     statusbarScreenshotIntroLayer = [CALayer layer];
+    //  [statusbarScreenshotIntroLayer setCompositingFilter:[CIFilter filterWithName:@"CIAdditionCompositing"]];
+
     imageRect.size = [statusbarScreenshot size];
     [statusbarScreenshotIntroLayer setFrame:NSRectToCGRect(imageRect)];
-    [statusbarScreenshotIntroLayer setPosition:CGPointMake(250,windowViewSize.height-250)];
+    [statusbarScreenshotIntroLayer setPosition:CGPointMake(350,windowViewSize.height-250)];
     [statusbarScreenshotIntroLayer setContents:statusbarScreenshot];
     [statusbarScreenshotIntroLayer setOpacity:0.f];
     [toplayer addSublayer:statusbarScreenshotIntroLayer];
@@ -171,7 +185,7 @@
     arrow_1_Layer = [CALayer layer];
     imageRect.size = [iTunes_arrow_1 size];
     [arrow_1_Layer setFrame:NSRectToCGRect(imageRect)];
-    [arrow_1_Layer setPosition:CGPointMake(313,windowViewSize.height-95)];
+    [arrow_1_Layer setPosition:CGPointMake(313,windowViewSize.height-94)];
     [arrow_1_Layer setContents:iTunes_arrow_1];
     [arrow_1_Layer setOpacity:0.f];
     [toplayer addSublayer:arrow_1_Layer];
@@ -181,7 +195,7 @@
     arrow_2_Layer = [CALayer layer];
     imageRect.size = [iTunes_arrow_2 size];
     [arrow_2_Layer setFrame:NSRectToCGRect(imageRect)];
-    [arrow_2_Layer setPosition:CGPointMake(244,windowViewSize.height-96)];
+    [arrow_2_Layer setPosition:CGPointMake(240,windowViewSize.height-95)];
     [arrow_2_Layer setContents:iTunes_arrow_2];
     [arrow_2_Layer setOpacity:0.f];
     [toplayer addSublayer:arrow_2_Layer];
@@ -190,6 +204,14 @@
     
     [introContentView setLayer:toplayer];
     [introContentView setWantsLayer:YES];
+    
+    NSImage *closeButtonImage=[NSImage imageNamed:@"introButtons-close"];
+    NSImage *closeButtonImageHL=[NSImage imageNamed:@"introButtons-close-HL"];
+    [closeButton setImage: closeButtonImage];
+    [closeButton setAlternateImage: closeButtonImageHL];
+    [closeButton setBordered:NO];
+    [closeButton setEnabled:NO];
+    [[closeButton cell] setHighlightsBy:1];
     
     NSImage *nextButtonImage=[NSImage imageNamed:@"introButtons-next"];
     NSImage *nextButtonImageHL=[NSImage imageNamed:@"introButtons-next-HL"];
@@ -208,7 +230,7 @@
     
     [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(showFirstMessage:) userInfo:nil repeats:NO];
 
-    [loadIntroAtStartButton setState: [[self appDelegate] loadIntroAtStart]];
+    [loadIntroAtStartButton setState: [appDelegate loadIntroAtStart]];
 }
 
 - (void)windowDidLoad

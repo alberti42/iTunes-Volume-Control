@@ -127,6 +127,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 @synthesize AutomaticUpdates=_AutomaticUpdates;
 @synthesize hideFromStatusBar = _hideFromStatusBar;
 @synthesize loadIntroAtStart = _loadIntroAtStart;
+@synthesize statusBar = _statusBar;
 
 @synthesize volumeWindow=_volumeWindow;
 @synthesize statusMenu=_statusMenu;
@@ -532,9 +533,9 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     _statusBar = [[NSStatusBar systemStatusBar] statusItemWithLength:thickness];
     _statusBarItemView = [[StatusItemView alloc] initWithFrame:(NSRect){.size={thickness, thickness}}];
     [_statusBarItemView setImage:statusImageOn];
-    [_statusBar setView:_statusBarItemView];
+    [_statusBar setImage:statusImageOn];
+//    [_statusBar setView:_statusBarItemView];
     [_statusBar setMenu:_statusMenu];
-    [_statusMenu setDelegate:self];
     [_statusBar setHighlightMode:YES];
 }
 
@@ -672,7 +673,6 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     if(!introWindowController)
     {
         introWindowController = [[IntroWindowController alloc] initWithWindowNibName:@"IntroWindow"];
-        [introWindowController setAppDelegate:self];
     }
     
     [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
@@ -876,7 +876,6 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
 
 - (IBAction)toggleHideFromStatusBar:(id)sender
 {
-    
     [self setHideFromStatusBar:![self hideFromStatusBar]];
     if (self.hideFromStatusBar)
         [self showHideFromStatusBarHintPopover];
