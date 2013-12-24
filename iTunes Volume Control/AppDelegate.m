@@ -469,11 +469,15 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     [_volumeWindow orderOut:self];
     [_volumeWindow setLevel:NSFloatingWindowLevel];
     
+    // Install icon into the menu bar
+
+    // self.statusBarItemController = [[MenubarController alloc] init];
+    
     statusImageOn = [NSImage imageNamed:@"statusbar-item-on"];
     statusImageOff = [NSImage imageNamed:@"statusbar-item-off"];
     
     [self showInStatusBar];
-    
+
     iTunes = [SBApplication applicationWithBundleIdentifier:@"com.apple.iTunes"];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(increaseITunesVolume:) name:@"IncreaseITunesVolume" object:nil];
@@ -494,9 +498,7 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     [self setStartAtLogin:[self StartAtLogin] savePreferences:false];
     
     if([self loadIntroAtStart])
-    {
         [self showIntroWindow:nil];
-    }
     
 }
 
@@ -527,16 +529,17 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
 
 - (void)showInStatusBar
 {
-    // the status bar item needs a custom view so that we can show a NSPopover for the hide-from-status-bar hint
-    // the view now reacts to the mouseDown event to show the menu
-    CGFloat thickness = [[NSStatusBar systemStatusBar] thickness];
-    _statusBar = [[NSStatusBar systemStatusBar] statusItemWithLength:thickness];
-    _statusBarItemView = [[StatusItemView alloc] initWithFrame:(NSRect){.size={thickness, thickness}}];
-    [_statusBarItemView setImage:statusImageOn];
-    [_statusBar setImage:statusImageOn];
-    [_statusBar setView:_statusBarItemView];
-    [_statusBar setMenu:_statusMenu];
-    [_statusBar setHighlightMode:YES];
+    if (![self statusBar])
+    {
+        // the status bar item needs a custom view so that we can show a NSPopover for the hide-from-status-bar hint
+        // the view now reacts to the mouseDown event to show the menu
+        CGFloat thickness = [[NSStatusBar systemStatusBar] thickness];
+        _statusBar = [[NSStatusBar systemStatusBar] statusItemWithLength:thickness];
+        [_statusBar setMenu:_statusMenu];
+        _statusBarItemView = [[StatusItemView alloc] initWithStatusItem:_statusBar];
+        [_statusBarItemView setImage:statusImageOn];
+        [_statusBarItemView setAlternateImage:statusImageOff];
+    }
 }
 
 - (void)initializePreferences
@@ -648,12 +651,14 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     
     if(enabled)
     {
-        _statusBarItemView.image = statusImageOn;
+//        [_statusBarItemView setImage:statusImageOn];
+        [_statusBarItemView toggleIconStatusBar:true];
         if([self AppleRemoteConnected]) [remote startListening:self];
     }
     else
     {
-        _statusBarItemView.image = statusImageOff;
+//        [_statusBarItemView setImage:statusImageOff];
+        [_statusBarItemView toggleIconStatusBar:false];
         [remote stopListening:self];
     }
     
@@ -906,8 +911,7 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
         [_hideFromStatusBarHintPopover close];
         [_statusBarHideTimer invalidate];
         [_hideFromStatusBarHintPopoverUpdateTimer invalidate];
-        if (![self statusBar])
-            [self showInStatusBar];
+        [self showInStatusBar];
     }
 }
 
@@ -972,6 +976,8 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
 {
     [self setMenuIsVisible:true];
     [_hideFromStatusBarHintPopover close];
+    
+    
 }
 
 - (void)menuDidClose:(NSMenu *)menu
@@ -979,6 +985,7 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     [self setMenuIsVisible:false];
     if ([self hideFromStatusBar])
         [self showHideFromStatusBarHintPopover];
+
 }
 
 @end

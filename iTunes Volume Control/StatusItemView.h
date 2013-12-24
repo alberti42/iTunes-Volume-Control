@@ -8,6 +8,20 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface StatusItemView : NSImageView
+@interface StatusItemView : NSImageView{
+    
+@private
+
+}
+
+@property (nonatomic, strong, readonly) NSStatusItem *statusItem;
+
+@property (nonatomic, strong) NSImage *image;
+@property (nonatomic, strong) NSImage *alternateImage;
+@property (nonatomic, setter = setHighlighted:) BOOL isHighlighted;
+
+- (void)toggleIconStatusBar:(BOOL)status;
+
+- (id)initWithStatusItem:(NSStatusItem *)statusItem;
 
 @end

@@ -8,7 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/CoreAnimation.h>
-//#import <ScreenSaver/ScreenSaver.h>
 #import "iTunes.h"
 #import "AppleRemote.h"
 
