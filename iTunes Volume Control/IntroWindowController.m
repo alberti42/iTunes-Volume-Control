@@ -31,7 +31,7 @@
         
         appDelegate = [[NSApplication sharedApplication] delegate];
         
-        [[NSNotificationCenter defaultCenter] addObserver:[[NSApplication sharedApplication] delegate] selector:@selector(introWindowWillClose:) name:NSWindowWillCloseNotification object:window];
+        [[NSNotificationCenter defaultCenter] addObserver:appDelegate selector:@selector(introWindowWillClose:) name:NSWindowWillCloseNotification object:window];
         
         step_number = 0;
     }

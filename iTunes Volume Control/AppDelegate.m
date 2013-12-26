@@ -12,7 +12,7 @@
 #import "StatusItemView.h"
 #import "IntroWindowController.h"
 
-#define STATUS_BAR_HIDE_DELAY 10
+#pragma mark - Tapping key stroke events
 
 CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *refcon)
 {
@@ -103,6 +103,8 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     return event;
 }
 
+#pragma mark - Class extension for status menu
+
 @interface AppDelegate () <NSMenuDelegate>
 {
     StatusItemView* _statusBarItemView;
@@ -114,9 +116,10 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 }
 
 @property (nonatomic, readwrite, strong) NSStatusItem* statusBar;
-@property (nonatomic, readwrite, assign) BOOL menuIsVisible;
 
 @end
+
+#pragma mark - Implementation
 
 @implementation AppDelegate
 
@@ -135,6 +138,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 static CFTimeInterval fadeInDuration=0.2;
 static CFTimeInterval fadeOutDuration=0.7;
 static NSTimeInterval volumeRampTimeInterval=0.025;
+static NSTimeInterval statusBarHideDelay=10;
 
 - (bool) StartAtLogin
 {
@@ -174,7 +178,6 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
 
 - (void)introWindowWillClose:(NSNotification *)aNotification{
     introWindowController = nil;
-    //    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)setStartAtLogin:(bool)enabled savePreferences:(bool)savePreferences
@@ -472,10 +475,7 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     // Install icon into the menu bar
 
     // self.statusBarItemController = [[MenubarController alloc] init];
-    
-    statusImageOn = [NSImage imageNamed:@"statusbar-item-on"];
-    statusImageOff = [NSImage imageNamed:@"statusbar-item-off"];
-    
+        
     [self showInStatusBar];
 
     iTunes = [SBApplication applicationWithBundleIdentifier:@"com.apple.iTunes"];
@@ -533,12 +533,10 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     {
         // the status bar item needs a custom view so that we can show a NSPopover for the hide-from-status-bar hint
         // the view now reacts to the mouseDown event to show the menu
-        CGFloat thickness = [[NSStatusBar systemStatusBar] thickness];
-        _statusBar = [[NSStatusBar systemStatusBar] statusItemWithLength:thickness];
+        
+        _statusBar = [[NSStatusBar systemStatusBar] statusItemWithLength:26];
         [_statusBar setMenu:_statusMenu];
         _statusBarItemView = [[StatusItemView alloc] initWithStatusItem:_statusBar];
-        [_statusBarItemView setImage:statusImageOn];
-        [_statusBarItemView setAlternateImage:statusImageOff];
     }
 }
 
@@ -651,14 +649,14 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     
     if(enabled)
     {
-//        [_statusBarItemView setImage:statusImageOn];
-        [_statusBarItemView toggleIconStatusBar:true];
+        [_statusBarItemView setIconStatusBarIsGrayed:false];
+        [_statusBarItemView setIconStatusBarIsGrayed:NO];
         if([self AppleRemoteConnected]) [remote startListening:self];
     }
     else
     {
-//        [_statusBarItemView setImage:statusImageOff];
-        [_statusBarItemView toggleIconStatusBar:false];
+        [_statusBarItemView setIconStatusBarIsGrayed:true];
+        [_statusBarItemView setIconStatusBarIsGrayed:YES];
         [remote stopListening:self];
     }
     
@@ -727,10 +725,7 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
     
     imgVolOn=nil;
     imgVolOff=nil;
-    
-    statusImageOn=nil;
-    statusImageOff=nil;
-    
+        
     fadeOutAnimation=nil;
     fadeInAnimation=nil;
     
@@ -901,7 +896,7 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
         if (![_statusBarHideTimer isValid] && [self statusBar])
         {
             _statusBarHideTimer = [NSTimer scheduledTimerWithTimeInterval:
-                                   (NSTimeInterval)STATUS_BAR_HIDE_DELAY target:self selector:@selector(doHideFromStatusBar:) userInfo:nil repeats:NO];
+                                   statusBarHideDelay target:self selector:@selector(doHideFromStatusBar:) userInfo:nil repeats:NO];
 
             _hideFromStatusBarHintPopoverUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(updateHideFromStatusBarHintPopover:) userInfo:nil repeats:YES];
         }
@@ -953,7 +948,7 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
         [_hideFromStatusBarHintPopover setContentViewController:hintVC];
     }
     
-    [self setHideFromStatusBarHintLabelWithSeconds:STATUS_BAR_HIDE_DELAY];
+    [self setHideFromStatusBarHintLabelWithSeconds:statusBarHideDelay];
     [_hideFromStatusBarHintPopover showRelativeToRect:[_statusBarItemView frame] ofView:_statusBarItemView preferredEdge:NSMinYEdge];
 }
 
@@ -974,15 +969,13 @@ static NSTimeInterval volumeRampTimeInterval=0.025;
 
 - (void)menuWillOpen:(NSMenu *)menu
 {
-    [self setMenuIsVisible:true];
+    [_statusBarItemView setMenuIsVisible:true];
     [_hideFromStatusBarHintPopover close];
-    
-    
 }
 
 - (void)menuDidClose:(NSMenu *)menu
 {
-    [self setMenuIsVisible:false];
+    [_statusBarItemView setMenuIsVisible:false];
     if ([self hideFromStatusBar])
         [self showHideFromStatusBarHintPopover];
 

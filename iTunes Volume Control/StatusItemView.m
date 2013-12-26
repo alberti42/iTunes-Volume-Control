@@ -12,29 +12,42 @@
 @implementation StatusItemView
 
 @synthesize statusItem = _statusItem;
-@synthesize image = _image;
-@synthesize alternateImage = _alternateImage;
 @synthesize isHighlighted = _isHighlighted;
+@synthesize iconStatusBarIsGrayed = _iconStatusBarIsGrayed;
+@synthesize menuIsVisible = _menuIsVisible;
+@synthesize image = _image;
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
     AppDelegate* appDelegate = [[NSApplication sharedApplication] delegate];
     
-    if (! [appDelegate menuIsVisible])
+    if (! [self menuIsVisible])
         [[appDelegate statusBar] popUpStatusItemMenu:[[appDelegate statusBar] menu]];
 }
 
-- (void)toggleIconStatusBar:(BOOL)status
+- (void) setIconStatusBarIsGrayed:(bool)isGrayed
 {
-    NSLog(@"dfdfdfd");
+    [self setImage: isGrayed? statusImageOff : statusImageOn];
+    [self setNeedsDisplay:YES];
+}
+
+- (void)drawRect:(NSRect)rect
+{
+    if (_menuIsVisible)
+    {
+        NSRect bounds = [self bounds];
+        [_statusItem drawStatusBarBackgroundInRect:bounds withHighlight:YES];
+    }
+    
+	[[self image] drawAtPoint:iconPoint fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
 
 }
 
-- (void)drawRect:(NSRect)dirtyRect
+- (void) dealloc
 {
-    [_statusItem drawStatusBarBackgroundInRect:NSMakeRect(0,0,22,22) withHighlight:YES];
-    [super drawRect:dirtyRect];
-    NSLog(@"%f\t%f",dirtyRect.size.width,dirtyRect.origin.y);
+    statusImageClicked=nil;
+    statusImageOn=nil;
+    statusImageOff=nil;    
 }
 
 - (id)initWithStatusItem:(NSStatusItem *)statusItem
@@ -48,24 +61,29 @@
         _statusItem = statusItem;
         _statusItem.view = self;
     }
+    
+    statusImageClicked = [NSImage imageNamed:@"statusbar-item-clicked"];
+    statusImageOn = [NSImage imageNamed:@"statusbar-item-on"];
+    statusImageOff = [NSImage imageNamed:@"statusbar-item-off"];
+    
+    NSSize iconSize = [statusImageOn size];
+    NSRect bounds = self.bounds;
+    CGFloat iconX = roundf((NSWidth(bounds) - iconSize.width) / 2) - 1;
+    CGFloat iconY = roundf((NSHeight(bounds) - iconSize.height) / 2);
+    iconPoint = NSMakePoint(iconX, iconY);
+
     return self;
 }
 
-- (void)setImage:(NSImage *)newImage
+-(void)setMenuIsVisible:(BOOL)menuIsVisible
 {
-    if (_image != newImage) {
-        _image = newImage;
-        [self setNeedsDisplay:YES];
-    }
-}
+    if (_menuIsVisible!=menuIsVisible)
+    {
+        _menuIsVisible = menuIsVisible;
 
-- (void)setAlternateImage:(NSImage *)newImage
-{
-    if (_alternateImage != newImage) {
-        _alternateImage = newImage;
-        if (self.isHighlighted) {
-            [self setNeedsDisplay:YES];
-        }
+        [self setImage: menuIsVisible? statusImageClicked : ([self iconStatusBarIsGrayed]? statusImageOff : statusImageOn)];
+        
+        [self setNeedsDisplay:YES];
     }
 }
 

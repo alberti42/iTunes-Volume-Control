@@ -32,6 +32,8 @@
 		658B93C4185E4823007BEBEF /* IntroWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658B93C3185E4823007BEBEF /* IntroWindow.xib */; };
 		658B93C7185E48B2007BEBEF /* IntroWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 658B93C6185E48B2007BEBEF /* IntroWindowController.m */; };
 		658B93C8185E6A51007BEBEF /* iTunes-screenshot.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B85973185E389400D8C851 /* iTunes-screenshot.png */; };
+		658F835E186CB9DB005F5676 /* statusbar-item-clicked.png in Resources */ = {isa = PBXBuildFile; fileRef = 658F835C186CB9DB005F5676 /* statusbar-item-clicked.png */; };
+		658F835F186CB9DB005F5676 /* statusbar-item-clicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 658F835D186CB9DB005F5676 /* statusbar-item-clicked@2x.png */; };
 		6597CCE71698BA05005F54C1 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6597CCE61698BA05005F54C1 /* Sparkle.framework */; };
 		6597CCE81698BA0C005F54C1 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6597CCE61698BA05005F54C1 /* Sparkle.framework */; };
 		659CCFDE185CAAA7006958AD /* appicon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 659CCFDD185CAAA7006958AD /* appicon.icns */; };
@@ -48,7 +50,6 @@
 		65CC33B81698B3CC0049AF82 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65C24C6B168CEB9D0000BFC2 /* IOKit.framework */; };
 		65CC33BA1698B3D60049AF82 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 651A7EF1168F226300A76288 /* QuartzCore.framework */; };
 		65CC33BC1698B3E20049AF82 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 656C6C6B168A2A0B00ECA482 /* Cocoa.framework */; };
-		65E3519A1869A33A00B13257 /* StatusItemController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65E351991869A33A00B13257 /* StatusItemController.m */; };
 		65FCC05618607F2100193725 /* iTunes-arrow-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 65FCC05218607F2100193725 /* iTunes-arrow-1.png */; };
 		65FCC05718607F2100193725 /* iTunes-arrow-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65FCC05318607F2100193725 /* iTunes-arrow-1@2x.png */; };
 		65FCC05818607F2100193725 /* iTunes-arrow-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 65FCC05418607F2100193725 /* iTunes-arrow-2.png */; };
@@ -111,6 +112,8 @@
 		658B93C3185E4823007BEBEF /* IntroWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IntroWindow.xib; sourceTree = "<group>"; };
 		658B93C5185E48B2007BEBEF /* IntroWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroWindowController.h; sourceTree = "<group>"; };
 		658B93C6185E48B2007BEBEF /* IntroWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroWindowController.m; sourceTree = "<group>"; };
+		658F835C186CB9DB005F5676 /* statusbar-item-clicked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "statusbar-item-clicked.png"; path = "iTunes Volume Control/Images/statusbar-item-clicked.png"; sourceTree = "<group>"; };
+		658F835D186CB9DB005F5676 /* statusbar-item-clicked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "statusbar-item-clicked@2x.png"; path = "iTunes Volume Control/Images/statusbar-item-clicked@2x.png"; sourceTree = "<group>"; };
 		6597CCE61698BA05005F54C1 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = "iTunes Volume Control/Sparkle.framework"; sourceTree = "<group>"; };
 		659CCFDD185CAAA7006958AD /* appicon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = appicon.icns; path = "iTunes Volume Control/Images/appicon.icns"; sourceTree = "<group>"; };
 		659CCFDF185CAACD006958AD /* icon_16x16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_16x16.png; path = "iTunes Volume Control/Images/appicon.iconset/icon_16x16.png"; sourceTree = "<group>"; };
@@ -133,8 +136,6 @@
 		65CC785D1692FC1300BFD4AD /* statusbar-item.ai */ = {isa = PBXFileReference; lastKnownFileType = text; name = "statusbar-item.ai"; path = "iTunes Volume Control/Images/statusbar-item.ai"; sourceTree = "<group>"; };
 		65CC785E1692FC1300BFD4AD /* statusbar-item-on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "statusbar-item-on.png"; path = "iTunes Volume Control/Images/statusbar-item-on.png"; sourceTree = "<group>"; };
 		65CC786A169305C700BFD4AD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
-		65E351981869A33A00B13257 /* StatusItemController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusItemController.h; sourceTree = "<group>"; };
-		65E351991869A33A00B13257 /* StatusItemController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusItemController.m; sourceTree = "<group>"; };
 		65FCC05218607F2100193725 /* iTunes-arrow-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iTunes-arrow-1.png"; path = "iTunes Volume Control/Images/iTunes-arrow-1.png"; sourceTree = "<group>"; };
 		65FCC05318607F2100193725 /* iTunes-arrow-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iTunes-arrow-1@2x.png"; path = "iTunes Volume Control/Images/iTunes-arrow-1@2x.png"; sourceTree = "<group>"; };
 		65FCC05418607F2100193725 /* iTunes-arrow-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iTunes-arrow-2.png"; path = "iTunes Volume Control/Images/iTunes-arrow-2.png"; sourceTree = "<group>"; };
@@ -210,8 +211,6 @@
 				656C6C80168A2A0C00ECA482 /* MainMenu.xib */,
 				E2F254C4179EA2B600DD3C66 /* StatusItemView.h */,
 				E2F254C5179EA2B600DD3C66 /* StatusItemView.m */,
-				65E351981869A33A00B13257 /* StatusItemController.h */,
-				65E351991869A33A00B13257 /* StatusItemController.m */,
 				656C6C72168A2A0B00ECA482 /* Supporting Files */,
 				658B93C3185E4823007BEBEF /* IntroWindow.xib */,
 				658B93C5185E48B2007BEBEF /* IntroWindowController.h */,
@@ -296,6 +295,8 @@
 				659CCFEB185CBE40006958AD /* statusbar-item-off@2x.png */,
 				65CC785E1692FC1300BFD4AD /* statusbar-item-on.png */,
 				659CCFEC185CBE40006958AD /* statusbar-item-on@2x.png */,
+				658F835C186CB9DB005F5676 /* statusbar-item-clicked.png */,
+				658F835D186CB9DB005F5676 /* statusbar-item-clicked@2x.png */,
 				65CC785D1692FC1300BFD4AD /* statusbar-item.ai */,
 				6563BFD61692EAB500C1271D /* volume-off.png */,
 				659CCFE7185CAD9D006958AD /* volume-off@2x.png */,
@@ -378,6 +379,7 @@
 				653FDD9C185F770000F9795D /* introButtons-prev.png in Resources */,
 				652DE4D01861A5E100289C67 /* statusbar-screenshot.png in Resources */,
 				658B93C8185E6A51007BEBEF /* iTunes-screenshot.png in Resources */,
+				658F835E186CB9DB005F5676 /* statusbar-item-clicked.png in Resources */,
 				65133B6F1860ECE30040A373 /* introButtons-close.png in Resources */,
 				653FDD9B185F770000F9795D /* introButtons-next@2x.png in Resources */,
 				656C6C76168A2A0B00ECA482 /* InfoPlist.strings in Resources */,
@@ -399,6 +401,7 @@
 				653FDDA1185F780000F9795D /* introButtons-next-HL@2x.png in Resources */,
 				65133B6D1860ECE30040A373 /* introButtons-close-HL.png in Resources */,
 				653FDD9A185F770000F9795D /* introButtons-next.png in Resources */,
+				658F835F186CB9DB005F5676 /* statusbar-item-clicked@2x.png in Resources */,
 				65133B741860F0750040A373 /* keyboard@2x.png in Resources */,
 				6577E8B2186099DA0024A59C /* introButtons-prev-HL@2x.png in Resources */,
 				653FDDA0185F780000F9795D /* introButtons-next-HL.png in Resources */,
@@ -432,7 +435,6 @@
 			files = (
 				658B93C7185E48B2007BEBEF /* IntroWindowController.m in Sources */,
 				656C6C78168A2A0B00ECA482 /* main.m in Sources */,
-				65E3519A1869A33A00B13257 /* StatusItemController.m in Sources */,
 				656C6C7F168A2A0B00ECA482 /* AppDelegate.m in Sources */,
 				65C24C67168CEB130000BFC2 /* AppleRemote.m in Sources */,
 				651A7EEF168F1F4C00A76288 /* BorderlessWindow.m in Sources */,

@@ -8,19 +8,23 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface StatusItemView : NSImageView{
+@interface StatusItemView : NSView{
     
-@private
-
+    NSImage *statusImageClicked;
+    NSImage *statusImageOn;
+    NSImage *statusImageOff;
+    NSPoint iconPoint;
 }
+
+@property (nonatomic, readwrite, assign) BOOL menuIsVisible;
 
 @property (nonatomic, strong, readonly) NSStatusItem *statusItem;
 
-@property (nonatomic, strong) NSImage *image;
-@property (nonatomic, strong) NSImage *alternateImage;
+@property (nonatomic, assign) bool iconStatusBarIsGrayed;
+
 @property (nonatomic, setter = setHighlighted:) BOOL isHighlighted;
 
-- (void)toggleIconStatusBar:(BOOL)status;
+@property (nonatomic, assign) NSImage* image;
 
 - (id)initWithStatusItem:(NSStatusItem *)statusItem;
 
