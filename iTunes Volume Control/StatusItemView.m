@@ -27,6 +27,7 @@
 
 - (void) setIconStatusBarIsGrayed:(bool)isGrayed
 {
+    _iconStatusBarIsGrayed = isGrayed;
     [self setImage: isGrayed? statusImageOff : statusImageOn];
     [self setNeedsDisplay:YES];
 }
@@ -45,7 +46,7 @@
 
 - (void) dealloc
 {
-    statusImageClicked=nil;
+    statusImageOnClicked=nil;
     statusImageOn=nil;
     statusImageOff=nil;    
 }
@@ -62,7 +63,8 @@
         _statusItem.view = self;
     }
     
-    statusImageClicked = [NSImage imageNamed:@"statusbar-item-clicked"];
+    statusImageOnClicked = [NSImage imageNamed:@"statusbar-item-on-clicked"];
+    statusImageOffClicked = [NSImage imageNamed:@"statusbar-item-off-clicked"];
     statusImageOn = [NSImage imageNamed:@"statusbar-item-on"];
     statusImageOff = [NSImage imageNamed:@"statusbar-item-off"];
     
@@ -81,7 +83,7 @@
     {
         _menuIsVisible = menuIsVisible;
 
-        [self setImage: menuIsVisible? statusImageClicked : ([self iconStatusBarIsGrayed]? statusImageOff : statusImageOn)];
+        [self setImage: menuIsVisible? ([self iconStatusBarIsGrayed]? statusImageOffClicked : statusImageOnClicked) : ([self iconStatusBarIsGrayed]? statusImageOff : statusImageOn)];
         
         [self setNeedsDisplay:YES];
     }

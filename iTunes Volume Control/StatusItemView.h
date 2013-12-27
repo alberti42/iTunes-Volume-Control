@@ -10,7 +10,8 @@
 
 @interface StatusItemView : NSView{
     
-    NSImage *statusImageClicked;
+    NSImage *statusImageOnClicked;
+    NSImage *statusImageOffClicked;
     NSImage *statusImageOn;
     NSImage *statusImageOff;
     NSPoint iconPoint;

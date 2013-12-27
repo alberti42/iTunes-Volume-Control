@@ -649,13 +649,11 @@ static NSTimeInterval statusBarHideDelay=10;
     
     if(enabled)
     {
-        [_statusBarItemView setIconStatusBarIsGrayed:false];
         [_statusBarItemView setIconStatusBarIsGrayed:NO];
         if([self AppleRemoteConnected]) [remote startListening:self];
     }
     else
     {
-        [_statusBarItemView setIconStatusBarIsGrayed:true];
         [_statusBarItemView setIconStatusBarIsGrayed:YES];
         [remote stopListening:self];
     }
