@@ -8,8 +8,8 @@
         <customObject id="-2" userLabel="File's Owner" customClass="IntroWindowController">
             <connections>
                 <outlet property="closeButton" destination="m8i-Ej-XfG" id="Gic-Cc-n8z"/>
-                <outlet property="iTune_label_1" destination="xJB-YD-z6Y" id="SG1-mG-TCI"/>
-                <outlet property="iTune_label_2" destination="t10-o8-qkM" id="sPy-my-zDs"/>
+                <outlet property="iTune_label_1" destination="xJB-YD-z6Y" id="CS5-B6-Dxc"/>
+                <outlet property="iTune_label_2" destination="t10-o8-qkM" id="Mlr-Jl-fwj"/>
                 <outlet property="loadIntroAtStartButton" destination="NJC-yu-k8D" id="c6S-tB-aIa"/>
                 <outlet property="nextButton" destination="Ps8-9u-lgn" id="JGs-uX-DGP"/>
                 <outlet property="previousButton" destination="6rY-Au-AJT" id="MFo-eN-mej"/>

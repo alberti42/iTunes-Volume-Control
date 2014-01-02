@@ -18,13 +18,8 @@
 }
 
 @property (nonatomic, readwrite, assign) BOOL menuIsVisible;
-
 @property (nonatomic, strong, readonly) NSStatusItem *statusItem;
-
 @property (nonatomic, assign) bool iconStatusBarIsGrayed;
-
-@property (nonatomic, setter = setHighlighted:) BOOL isHighlighted;
-
 @property (nonatomic, assign) NSImage* image;
 
 - (id)initWithStatusItem:(NSStatusItem *)statusItem;

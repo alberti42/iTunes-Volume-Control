@@ -12,7 +12,6 @@
 @implementation StatusItemView
 
 @synthesize statusItem = _statusItem;
-@synthesize isHighlighted = _isHighlighted;
 @synthesize iconStatusBarIsGrayed = _iconStatusBarIsGrayed;
 @synthesize menuIsVisible = _menuIsVisible;
 @synthesize image = _image;
@@ -41,14 +40,15 @@
     }
     
 	[[self image] drawAtPoint:iconPoint fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
-
 }
 
 - (void) dealloc
 {
+    /*
     statusImageOnClicked=nil;
     statusImageOn=nil;
     statusImageOff=nil;    
+     */
 }
 
 - (id)initWithStatusItem:(NSStatusItem *)statusItem
@@ -60,20 +60,19 @@
     
     if (self != nil) {
         _statusItem = statusItem;
-        _statusItem.view = self;
+        
+        statusImageOnClicked = [NSImage imageNamed:@"statusbar-item-on-clicked"];
+        statusImageOffClicked = [NSImage imageNamed:@"statusbar-item-off-clicked"];
+        statusImageOn = [NSImage imageNamed:@"statusbar-item-on"];
+        statusImageOff = [NSImage imageNamed:@"statusbar-item-off"];
+        
+        NSSize iconSize = [statusImageOn size];
+        NSRect bounds = self.bounds;
+        CGFloat iconX = roundf((NSWidth(bounds) - iconSize.width) / 2) - 1;
+        CGFloat iconY = roundf((NSHeight(bounds) - iconSize.height) / 2);
+        iconPoint = NSMakePoint(iconX, iconY);
     }
     
-    statusImageOnClicked = [NSImage imageNamed:@"statusbar-item-on-clicked"];
-    statusImageOffClicked = [NSImage imageNamed:@"statusbar-item-off-clicked"];
-    statusImageOn = [NSImage imageNamed:@"statusbar-item-on"];
-    statusImageOff = [NSImage imageNamed:@"statusbar-item-off"];
-    
-    NSSize iconSize = [statusImageOn size];
-    NSRect bounds = self.bounds;
-    CGFloat iconX = roundf((NSWidth(bounds) - iconSize.width) / 2) - 1;
-    CGFloat iconY = roundf((NSHeight(bounds) - iconSize.height) / 2);
-    iconPoint = NSMakePoint(iconX, iconY);
-
     return self;
 }
 

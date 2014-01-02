@@ -112,10 +112,10 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     NSPopover* _hideFromStatusBarHintPopover;
     NSTextField* _hideFromStatusBarHintLabel;
     NSTimer *_hideFromStatusBarHintPopoverUpdateTimer;
-    BOOL _applicationDidBecomeActiveInitially;
+    
+    NSView* _hintView;
+    NSViewController* _hintVC;
 }
-
-@property (nonatomic, readwrite, strong) NSStatusItem* statusBar;
 
 @end
 
@@ -251,7 +251,7 @@ static NSTimeInterval statusBarHideDelay=10;
 {
     CGEventMask eventMask = (/*(1 << kCGEventKeyDown) | (1 << kCGEventKeyUp) |*/CGEventMaskBit(NX_SYSDEFINED));
     eventTap = CGEventTapCreate(kCGSessionEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault,
-                                eventMask, event_tap_callback, (__bridge void *)(self)); // Create an event tap. We are interested in SYS key presses.
+                                eventMask, event_tap_callback, (__bridge void *)self); // Create an event tap. We are interested in SYS key presses.
     runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0); // Create a run loop source.
     CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes); // Add to the current run loop.
 }
@@ -464,20 +464,16 @@ static NSTimeInterval statusBarHideDelay=10;
 {
     NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
     NSString* version = [infoDict objectForKey:@"CFBundleShortVersionString"];
-
+    
     [[SUUpdater sharedUpdater] setFeedURL:[NSURL URLWithString:[NSString stringWithFormat: @"http://quantum-technologies.iap.uni-bonn.de/alberti/iTunesVolumeControl/iTunesVolumeControlCast.xml.php?version=%@",version]]];
     
     [[SUUpdater sharedUpdater] setUpdateCheckInterval:60*60*24*7]; // look for new updates every 7 days
-        
+    
     [_volumeWindow orderOut:self];
     [_volumeWindow setLevel:NSFloatingWindowLevel];
     
-    // Install icon into the menu bar
-
-    // self.statusBarItemController = [[MenubarController alloc] init];
-        
-    [self showInStatusBar];
-
+    [self showInStatusBar];   // Install icon into the menu bar
+    
     iTunes = [SBApplication applicationWithBundleIdentifier:@"com.apple.iTunes"];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(increaseITunesVolume:) name:@"IncreaseITunesVolume" object:nil];
@@ -499,32 +495,18 @@ static NSTimeInterval statusBarHideDelay=10;
     
     if([self loadIntroAtStart])
         [self showIntroWindow:nil];
-    
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
 {
-    [self setHideFromStatusBar:[self hideFromStatusBar]];
     [self showInStatusBar];
-    
-    return true;
-}
-
-- (void)applicationWillResignActive:(NSNotification *)notification
-{
-    [_hideFromStatusBarHintPopover close];
-}
-
-- (void)applicationDidBecomeActive:(NSNotification *)notification
-{
-    if (! _applicationDidBecomeActiveInitially)
+    [self setHideFromStatusBar:[self hideFromStatusBar]];
+    if ([self hideFromStatusBar])
     {
-        _applicationDidBecomeActiveInitially = YES;
-        return;
+        [self showHideFromStatusBarHintPopover];
     }
     
-    if ([self hideFromStatusBar])
-        [self showHideFromStatusBarHintPopover];
+    return false;
 }
 
 - (void)showInStatusBar
@@ -534,10 +516,18 @@ static NSTimeInterval statusBarHideDelay=10;
         // the status bar item needs a custom view so that we can show a NSPopover for the hide-from-status-bar hint
         // the view now reacts to the mouseDown event to show the menu
         
-        _statusBar = [[NSStatusBar systemStatusBar] statusItemWithLength:26];
+        _statusBar =  [[NSStatusBar systemStatusBar] statusItemWithLength:26];
         [_statusBar setMenu:_statusMenu];
+    }
+    
+    if (!_statusBarItemView)
+    {
         _statusBarItemView = [[StatusItemView alloc] initWithStatusItem:_statusBar];
     }
+    
+    [_statusBar setView:_statusBarItemView];
+
+
 }
 
 - (void)initializePreferences
@@ -708,26 +698,29 @@ static NSTimeInterval statusBarHideDelay=10;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     [remote stopListening:self];
-    remote=nil;
-    
-    imgVolOn=nil;
-    imgVolOff=nil;
-    
-    introWindowController = nil;
-    
-    volumeImageLayer=nil;
-    for(int i=0; i<16; i++)
-    {
-        volumeBar[i]=nil;
-    }
-    
-    imgVolOn=nil;
-    imgVolOff=nil;
-        
-    fadeOutAnimation=nil;
-    fadeInAnimation=nil;
-    
-    _statusBar = nil;    
+
+    /*
+     remote=nil;
+     
+     imgVolOn=nil;
+     imgVolOff=nil;
+     
+     introWindowController = nil;
+     
+     volumeImageLayer=nil;
+     for(int i=0; i<16; i++)
+     {
+     volumeBar[i]=nil;
+     }
+     
+     imgVolOn=nil;
+     imgVolOff=nil;
+     
+     fadeOutAnimation=nil;
+     fadeInAnimation=nil;
+     
+     _statusBar = nil;
+     */
 }
 
 - (void) showSpeakerImg:(NSTimer*)theTimer
@@ -875,7 +868,7 @@ static NSTimeInterval statusBarHideDelay=10;
 - (IBAction)toggleHideFromStatusBar:(id)sender
 {
     [self setHideFromStatusBar:![self hideFromStatusBar]];
-    if (self.hideFromStatusBar)
+    if ([self hideFromStatusBar])
         [self showHideFromStatusBarHintPopover];
 }
 
@@ -889,13 +882,12 @@ static NSTimeInterval statusBarHideDelay=10;
     [preferences setBool:enabled forKey:@"hideFromStatusBarPreference"];
     [preferences synchronize];
     
-    if (enabled)
+    if(enabled)
     {
         if (![_statusBarHideTimer isValid] && [self statusBar])
         {
-            _statusBarHideTimer = [NSTimer scheduledTimerWithTimeInterval:
-                                   statusBarHideDelay target:self selector:@selector(doHideFromStatusBar:) userInfo:nil repeats:NO];
-
+            [self setHideFromStatusBarHintLabelWithSeconds:statusBarHideDelay];
+            _statusBarHideTimer = [NSTimer scheduledTimerWithTimeInterval:statusBarHideDelay target:self selector:@selector(doHideFromStatusBar:) userInfo:nil repeats:NO];
             _hideFromStatusBarHintPopoverUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(updateHideFromStatusBarHintPopover:) userInfo:nil repeats:YES];
         }
     }
@@ -903,18 +895,22 @@ static NSTimeInterval statusBarHideDelay=10;
     {
         [_hideFromStatusBarHintPopover close];
         [_statusBarHideTimer invalidate];
+        _statusBarHideTimer = nil;
         [_hideFromStatusBarHintPopoverUpdateTimer invalidate];
-        [self showInStatusBar];
+        _hideFromStatusBarHintPopoverUpdateTimer = nil;
     }
 }
 
 - (void)doHideFromStatusBar:(NSTimer*)aTimer
 {
-    [aTimer invalidate];
     [_hideFromStatusBarHintPopoverUpdateTimer invalidate];
+    _hideFromStatusBarHintPopoverUpdateTimer = nil;
+    _statusBarHideTimer = nil;
     [_hideFromStatusBarHintPopover close];
     [[NSStatusBar systemStatusBar] removeStatusItem:[self statusBar]];
-    [self setStatusBar:nil];
+    _statusBar = nil;
+    
+    [self setHideFromStatusBar:true];
 }
 
 - (void)showHideFromStatusBarHintPopover
@@ -936,17 +932,16 @@ static NSTimeInterval statusBarHideDelay=10;
         [_hideFromStatusBarHintLabel setBackgroundColor:[NSColor clearColor]];
         [_hideFromStatusBarHintLabel setAlignment:NSCenterTextAlignment];
         
-        NSView* hintView = [[NSView alloc] initWithFrame:popoverRect];
-        [hintView addSubview:_hideFromStatusBarHintLabel];
+        _hintView = [[NSView alloc] initWithFrame:popoverRect];
+        [_hintView addSubview:_hideFromStatusBarHintLabel];
         
-        NSViewController* hintVC = [[NSViewController alloc] init];
-        [hintVC setView:hintView];
+        _hintVC = [[NSViewController alloc] init];
+        [_hintVC setView:_hintView];
         
         _hideFromStatusBarHintPopover = [[NSPopover alloc] init];
-        [_hideFromStatusBarHintPopover setContentViewController:hintVC];
+        [_hideFromStatusBarHintPopover setContentViewController:_hintVC];
     }
     
-    [self setHideFromStatusBarHintLabelWithSeconds:statusBarHideDelay];
     [_hideFromStatusBarHintPopover showRelativeToRect:[_statusBarItemView frame] ofView:_statusBarItemView preferredEdge:NSMinYEdge];
 }
 
@@ -958,9 +953,7 @@ static NSTimeInterval statusBarHideDelay=10;
 
 - (void)setHideFromStatusBarHintLabelWithSeconds:(NSUInteger)seconds
 {
-    [_hideFromStatusBarHintLabel setStringValue:
-    [NSString stringWithFormat:@"%@ will hide after %ld seconds.\n\nLaunch it again to re-show the icon.",
-     @"iTunes Volume Control", (unsigned long)seconds]];
+    [_hideFromStatusBarHintLabel setStringValue:[NSString stringWithFormat:@"iTunes Volume Control will hide after %ld seconds.\n\nLaunch it again to re-show the icon.",seconds]];
 }
 
 #pragma mark - NSMenuDelegate
@@ -976,7 +969,7 @@ static NSTimeInterval statusBarHideDelay=10;
     [_statusBarItemView setMenuIsVisible:false];
     if ([self hideFromStatusBar])
         [self showHideFromStatusBarHintPopover];
-
 }
+
 
 @end

@@ -19,8 +19,6 @@
 @synthesize nextButton;
 @synthesize previousButton;
 @synthesize closeButton;
-@synthesize iTune_label_1;
-@synthesize iTune_label_2;
 @synthesize loadIntroAtStartButton;
 
 - (id)initWithWindow:(NSWindow *)window
@@ -200,6 +198,15 @@
     [toplayer addSublayer:arrow_2_Layer];
     
     [iTune_label_2 setAlphaValue:0.f];
+    
+    NSRect frameRect = NSMakeRect(20,20,40,40); // This will change based on the size you need
+    iTune_label_3 = [[NSTextField alloc] initWithFrame:frameRect];
+    [iTune_label_3 setStringValue:@"My Label"];
+    [iTune_label_3 setBezeled:NO];
+    [iTune_label_3 setDrawsBackground:NO];
+    [iTune_label_3 setEditable:NO];
+    [iTune_label_3 setSelectable:NO];
+    [introContentView addSubview:iTune_label_3];
     
     [introContentView setLayer:toplayer];
     [introContentView setWantsLayer:YES];

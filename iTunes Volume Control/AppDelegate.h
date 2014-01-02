@@ -12,6 +12,7 @@
 #import "AppleRemote.h"
 
 @class IntroWindowController;
+@class StatusBarItem;
 
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
     CALayer *mainLayer;
@@ -31,7 +32,6 @@
     AppleRemote* remote;
     
     NSInteger oldVolumeSetting;
-    
     
 @public
     iTunesApplication *iTunes;
@@ -63,7 +63,7 @@
 - (IBAction)toggleAppleRemote:(id)sender;
 - (IBAction)aboutPanel:(id)sender;
 
-- (void) appleRemoteButton: (AppleRemoteEventIdentifier)buttonIdentifier pressedDown: (BOOL) pressedDown clickCount: (unsigned int) count;
+- (void)appleRemoteButton: (AppleRemoteEventIdentifier)buttonIdentifier pressedDown: (BOOL) pressedDown clickCount: (unsigned int) count;
 
 - (bool)checkEventTap;
 

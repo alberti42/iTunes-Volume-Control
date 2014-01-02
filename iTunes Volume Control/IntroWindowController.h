@@ -18,6 +18,10 @@
     CALayer* statusbarScreenshotIntroLayer;
     CALayer* arrow_1_Layer;
     CALayer* arrow_2_Layer;
+
+    IBOutlet NSTextField *iTune_label_1;
+    IBOutlet NSTextField *iTune_label_2;
+    IBOutlet NSTextField *iTune_label_3;
     
     int step_number;
     
@@ -27,10 +31,7 @@
 @property (nonatomic,assign) IBOutlet NSButton *closeButton;
 @property (nonatomic,assign) IBOutlet NSButton *nextButton;
 @property (nonatomic,assign) IBOutlet NSButton *previousButton;
-@property (nonatomic,assign) IBOutlet NSTextField *iTune_label_1;
-@property (nonatomic,assign) IBOutlet NSTextField *iTune_label_2;
 @property (nonatomic,assign) IBOutlet NSButton *loadIntroAtStartButton;
-
 
 - (IBAction)nextButtonClicked:(id)sender;
 - (IBAction)prevButtonClicked:(id)sender;
