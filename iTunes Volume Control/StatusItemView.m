@@ -88,4 +88,13 @@
     }
 }
 
+#pragma mark -
+
+- (NSRect)globalRect
+{
+    NSRect frame = [self frame];
+    frame.origin = [self.window convertBaseToScreen:frame.origin];
+    return frame;
+}
+
 @end

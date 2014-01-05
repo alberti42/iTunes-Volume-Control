@@ -1,37 +1,37 @@
-#import "BackgroundView.h"
+#import "PopoverView.h"
 #import "StatusItemView.h"
 
-@class PanelController;
+@class PopoverController;
 
-@protocol PanelControllerDelegate <NSObject>
+@protocol PopoverControllerDelegate <NSObject>
 
 @optional
 
-- (StatusItemView *)statusItemViewForPanelController:(PanelController *)controller;
+- (StatusItemView *)statusItemViewForPanelController:(PopoverController *)controller;
 
 @end
 
 #pragma mark -
 
-@interface PanelController : NSWindowController <NSWindowDelegate>
+@interface PopoverController : NSWindowController <NSWindowDelegate>
 {
     BOOL _hasActivePanel;
-    __unsafe_unretained BackgroundView *_backgroundView;
-    __unsafe_unretained id<PanelControllerDelegate> _delegate;
+    __unsafe_unretained PopoverView *_popoverView;
+    __unsafe_unretained id<PopoverControllerDelegate> _delegate;
     __unsafe_unretained NSSearchField *_searchField;
     __unsafe_unretained NSTextField *_textField;
 }
 
-@property (nonatomic, unsafe_unretained) IBOutlet BackgroundView *backgroundView;
+@property (nonatomic, unsafe_unretained) IBOutlet PopoverView *popoverView;
 @property (nonatomic, unsafe_unretained) IBOutlet NSSearchField *searchField;
 @property (nonatomic, unsafe_unretained) IBOutlet NSTextField *textField;
 
 @property (nonatomic) BOOL hasActivePanel;
-@property (nonatomic, unsafe_unretained, readonly) id<PanelControllerDelegate> delegate;
+@property (nonatomic, unsafe_unretained, readonly) id<PopoverControllerDelegate> delegate;
 
-- (id)initWithDelegate:(id<PanelControllerDelegate>)delegate;
+- (id)initWithDelegate:(id<PopoverControllerDelegate>)delegate;
 
-- (void)openPanel;
-- (void)closePanel;
+- (void)openPopover;
+- (void)closePopover;
 
 @end

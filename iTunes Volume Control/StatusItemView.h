@@ -21,6 +21,7 @@
 @property (nonatomic, strong, readonly) NSStatusItem *statusItem;
 @property (nonatomic, assign) bool iconStatusBarIsGrayed;
 @property (nonatomic, assign) NSImage* image;
+@property (nonatomic, readonly) NSRect globalRect;
 
 - (id)initWithStatusItem:(NSStatusItem *)statusItem;
 

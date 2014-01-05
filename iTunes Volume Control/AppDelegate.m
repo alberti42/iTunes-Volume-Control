@@ -131,6 +131,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 @synthesize hideFromStatusBar = _hideFromStatusBar;
 @synthesize loadIntroAtStart = _loadIntroAtStart;
 @synthesize statusBar = _statusBar;
+@synthesize popoverController = _popoverController;
 
 @synthesize volumeWindow=_volumeWindow;
 @synthesize statusMenu=_statusMenu;
@@ -485,6 +486,10 @@ static NSTimeInterval statusBarHideDelay=10;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(nextTrackITunes:) name:@"NextTrackITunes" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(previousTrackITunes:) name:@"PreviousTrackITunes" object:nil];
     
+    [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver: self
+                                                           selector: @selector(receiveWakeNote:)
+                                                               name: NSWorkspaceDidWakeNotification object: NULL];
+
     [self createEventTap];
     
     [self appleRemoteInit];
@@ -673,6 +678,11 @@ static NSTimeInterval statusBarHideDelay=10;
 
 - (IBAction)aboutPanel:(id)sender
 {
+    
+//    self.popoverController.hasActivePanel = true;
+//
+//    return;
+    
     NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
     NSString* version = [infoDict objectForKey:@"CFBundleVersion"];
     NSRange range=[version rangeOfString:@"." options:NSBackwardsSearch];
@@ -684,6 +694,12 @@ static NSTimeInterval statusBarHideDelay=10;
     
     [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
     [[NSApplication sharedApplication] orderFrontStandardAboutPanelWithOptions:infoDict];
+}
+
+- (void) receiveWakeNote: (NSNotification*) note
+{
+    [self setTapping:[self Tapping]];
+    [self setAppleRemoteConnected:[self AppleRemoteConnected]];
 }
 
 - (void) dealloc

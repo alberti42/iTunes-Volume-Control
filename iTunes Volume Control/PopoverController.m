@@ -1,7 +1,7 @@
 #import "PopoverController.h"
-#import "BackgroundView.h"
+#import "PopoverView.h"
 #import "StatusItemView.h"
-#import "MenubarController.h"
+//#import "MenubarController.h"
 
 #define OPEN_DURATION .15
 #define CLOSE_DURATION .1
@@ -13,18 +13,18 @@
 
 #pragma mark -
 
-@implementation PanelController
+@implementation PopoverController
 
-@synthesize backgroundView = _backgroundView;
+@synthesize popoverView = _popoverView;
 @synthesize delegate = _delegate;
 @synthesize searchField = _searchField;
 @synthesize textField = _textField;
 
 #pragma mark -
 
-- (id)initWithDelegate:(id<PanelControllerDelegate>)delegate
+- (id)initWithDelegate:(id<PopoverControllerDelegate>)delegate
 {
-    self = [super initWithWindowNibName:@"Panel"];
+    self = [super initWithWindowNibName:@"Popover"];
     if (self != nil)
     {
         _delegate = delegate;
@@ -69,11 +69,11 @@
         
         if (_hasActivePanel)
         {
-            [self openPanel];
+            [self openPopover];
         }
         else
         {
-            [self closePanel];
+            [self closePopover];
         }
     }
 }
@@ -102,12 +102,12 @@
     CGFloat statusX = roundf(NSMidX(statusRect));
     CGFloat panelX = statusX - NSMinX(panelRect);
     
-    self.backgroundView.arrowX = panelX;
+    self.popoverView.arrowX = panelX;
     
     NSRect searchRect = [self.searchField frame];
-    searchRect.size.width = NSWidth([self.backgroundView bounds]) - SEARCH_INSET * 2;
+    searchRect.size.width = NSWidth([self.popoverView bounds]) - SEARCH_INSET * 2;
     searchRect.origin.x = SEARCH_INSET;
-    searchRect.origin.y = NSHeight([self.backgroundView bounds]) - ARROW_HEIGHT - SEARCH_INSET - NSHeight(searchRect);
+    searchRect.origin.y = NSHeight([self.popoverView bounds]) - ARROW_HEIGHT - SEARCH_INSET - NSHeight(searchRect);
     
     if (NSIsEmptyRect(searchRect))
     {
@@ -120,9 +120,9 @@
     }
     
     NSRect textRect = [self.textField frame];
-    textRect.size.width = NSWidth([self.backgroundView bounds]) - SEARCH_INSET * 2;
+    textRect.size.width = NSWidth([self.popoverView bounds]) - SEARCH_INSET * 2;
     textRect.origin.x = SEARCH_INSET;
-    textRect.size.height = NSHeight([self.backgroundView bounds]) - ARROW_HEIGHT - SEARCH_INSET * 3 - NSHeight(searchRect);
+    textRect.size.height = NSHeight([self.popoverView bounds]) - ARROW_HEIGHT - SEARCH_INSET * 3 - NSHeight(searchRect);
     textRect.origin.y = SEARCH_INSET;
     
     if (NSIsEmptyRect(textRect))
@@ -175,14 +175,14 @@
     }
     else
     {
-        statusRect.size = NSMakeSize(STATUS_ITEM_VIEW_WIDTH, [[NSStatusBar systemStatusBar] thickness]);
+        statusRect.size = NSMakeSize(26, [[NSStatusBar systemStatusBar] thickness]);
         statusRect.origin.x = roundf((NSWidth(screenRect) - NSWidth(statusRect)) / 2);
         statusRect.origin.y = NSHeight(screenRect) - NSHeight(statusRect) * 2;
     }
     return statusRect;
 }
 
-- (void)openPanel
+- (void)openPopover
 {
     NSWindow *panel = [self window];
     
@@ -230,7 +230,7 @@
     [panel performSelector:@selector(makeFirstResponder:) withObject:self.searchField afterDelay:openDuration];
 }
 
-- (void)closePanel
+- (void)closePopover
 {
     [NSAnimationContext beginGrouping];
     [[NSAnimationContext currentContext] setDuration:CLOSE_DURATION];
