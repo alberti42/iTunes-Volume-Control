@@ -119,6 +119,13 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 
 @end
 
+@interface AppDelegate () <PopoverControllerDelegate>
+{
+
+}
+
+@end
+
 #pragma mark - Implementation
 
 @implementation AppDelegate
@@ -679,9 +686,9 @@ static NSTimeInterval statusBarHideDelay=10;
 - (IBAction)aboutPanel:(id)sender
 {
     
-//    self.popoverController.hasActivePanel = true;
-//
-//    return;
+    self.popoverController.hasActivePanel = true;
+
+    return;
     
     NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
     NSString* version = [infoDict objectForKey:@"CFBundleVersion"];
@@ -715,6 +722,8 @@ static NSTimeInterval statusBarHideDelay=10;
     
     [remote stopListening:self];
 
+    [_popoverController removeObserver:self forKeyPath:@"hasActivePanel"];
+    
     /*
      remote=nil;
      
@@ -985,6 +994,31 @@ static NSTimeInterval statusBarHideDelay=10;
     [_statusBarItemView setMenuIsVisible:false];
     if ([self hideFromStatusBar])
         [self showHideFromStatusBarHintPopover];
+}
+
+#pragma mark -
+
+void *kContextActivePanel = &kContextActivePanel;
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if (context == kContextActivePanel) {
+//        self.menubarController.hasActiveIcon = self.panelController.hasActivePanel;
+    }
+    else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+}
+
+#pragma mark - Public accessors
+
+- (PopoverController *)popoverController
+{
+    if (_popoverController == nil) {
+        _popoverController = [[PopoverController alloc] initWithDelegate:self];
+        [_popoverController addObserver:self forKeyPath:@"hasActivePanel" options:0 context:kContextActivePanel];
+    }
+    return _popoverController;
 }
 
 

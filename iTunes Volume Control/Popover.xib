@@ -21,7 +21,7 @@
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="162" y="101" width="280" height="180"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
-            <view key="contentView" id="6" customClass="BackgroundView">
+            <view key="contentView" id="6" customClass="PopoverView">
                 <rect key="frame" x="0.0" y="0.0" width="280" height="180"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
