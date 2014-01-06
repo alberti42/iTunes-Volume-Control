@@ -8,8 +8,8 @@
         <customObject id="-2" userLabel="File's Owner" customClass="PopoverController">
             <connections>
                 <outlet property="backgroundView" destination="6" id="20"/>
-                <outlet property="searchField" destination="18" id="21"/>
-                <outlet property="textField" destination="34" id="37"/>
+                <outlet property="searchField" destination="18" id="Yx3-7F-1b4"/>
+                <outlet property="textField" destination="34" id="TlJ-XZ-2Nh"/>
                 <outlet property="window" destination="5" id="wRZ-NR-7oN"/>
             </connections>
         </customObject>
@@ -34,7 +34,7 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </searchFieldCell>
                         <connections>
-                            <outlet property="delegate" destination="-2" id="29"/>
+                            <outlet property="delegate" destination="-2" id="tO9-TE-nad"/>
                         </connections>
                     </searchField>
                     <textField verticalHuggingPriority="750" id="34">
