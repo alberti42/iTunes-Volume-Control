@@ -18,9 +18,10 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
+    _arrowX = 0;
     NSRect contentRect = NSInsetRect([self bounds], LINE_THICKNESS, LINE_THICKNESS);
     NSBezierPath *path = [NSBezierPath bezierPath];
-    
+
     [path moveToPoint:NSMakePoint(_arrowX, NSMaxY(contentRect))];
     [path lineToPoint:NSMakePoint(_arrowX + ARROW_WIDTH / 2, NSMaxY(contentRect) - ARROW_HEIGHT)];
     [path lineToPoint:NSMakePoint(NSMaxX(contentRect) - CORNER_RADIUS, NSMaxY(contentRect) - ARROW_HEIGHT)];

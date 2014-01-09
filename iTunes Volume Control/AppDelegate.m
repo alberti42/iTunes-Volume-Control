@@ -1021,5 +1021,11 @@ void *kContextActivePanel = &kContextActivePanel;
     return _popoverController;
 }
 
+#pragma mark - PanelControllerDelegate
+
+- (StatusItemView *)statusItemViewForPanelController:(PopoverController *)controller
+{
+    return _statusBarItemView;
+}
 
 @end

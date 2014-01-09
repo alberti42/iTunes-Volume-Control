@@ -102,7 +102,9 @@
     CGFloat statusX = roundf(NSMidX(statusRect));
     CGFloat panelX = statusX - NSMinX(panelRect);
     
-    self.popoverView.arrowX = panelX;
+    [[self popoverView] setArrowX:panelX];
+    NSLog(@"%f",panelX);
+    
     
     NSRect searchRect = [self.searchField frame];
     searchRect.size.width = NSWidth([self.popoverView bounds]) - SEARCH_INSET * 2;
