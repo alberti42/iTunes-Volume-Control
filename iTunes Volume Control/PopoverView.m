@@ -18,7 +18,6 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    _arrowX = 0;
     NSRect contentRect = NSInsetRect([self bounds], LINE_THICKNESS, LINE_THICKNESS);
     NSBezierPath *path = [NSBezierPath bezierPath];
 

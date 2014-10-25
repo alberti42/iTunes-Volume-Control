@@ -104,8 +104,7 @@
     
     [[self popoverView] setArrowX:panelX];
     NSLog(@"%f",panelX);
-    
-    
+
     NSRect searchRect = [self.searchField frame];
     searchRect.size.width = NSWidth([self.popoverView bounds]) - SEARCH_INSET * 2;
     searchRect.origin.x = SEARCH_INSET;
@@ -161,26 +160,15 @@
 
 - (NSRect)statusRectForWindow:(NSWindow *)window
 {
-    NSRect screenRect = [[[NSScreen screens] objectAtIndex:0] frame];
     NSRect statusRect = NSZeroRect;
     
     StatusItemView *statusItemView = nil;
     if ([self.delegate respondsToSelector:@selector(statusItemViewForPanelController:)])
-    {
         statusItemView = [self.delegate statusItemViewForPanelController:self];
-    }
     
-    if (statusItemView)
-    {
-        statusRect = statusItemView.globalRect;
-        statusRect.origin.y = NSMinY(statusRect) - NSHeight(statusRect);
-    }
-    else
-    {
-        statusRect.size = NSMakeSize(26, [[NSStatusBar systemStatusBar] thickness]);
-        statusRect.origin.x = roundf((NSWidth(screenRect) - NSWidth(statusRect)) / 2);
-        statusRect.origin.y = NSHeight(screenRect) - NSHeight(statusRect) * 2;
-    }
+    statusRect = statusItemView.globalRect;
+    statusRect.origin.y = NSMinY(statusRect) - NSHeight(statusRect);
+    
     return statusRect;
 }
 

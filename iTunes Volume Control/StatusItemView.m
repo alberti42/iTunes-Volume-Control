@@ -33,10 +33,14 @@
 
 - (void)drawRect:(NSRect)rect
 {
+    NSRect bounds = [self bounds];
     if (_menuIsVisible)
     {
-        NSRect bounds = [self bounds];
-        [_statusItem drawStatusBarBackgroundInRect:bounds withHighlight:YES];
+        [_statusItem drawStatusBarBackgroundInRect:bounds withHighlight:true];
+    }
+    else
+    {
+        [_statusItem drawStatusBarBackgroundInRect:bounds withHighlight:false];
     }
     
 	[[self image] drawAtPoint:iconPoint fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
@@ -62,9 +66,13 @@
         _statusItem = statusItem;
         
         statusImageOnClicked = [NSImage imageNamed:@"statusbar-item-on-clicked"];
+        [statusImageOnClicked setTemplate:true];
         statusImageOffClicked = [NSImage imageNamed:@"statusbar-item-off-clicked"];
+        [statusImageOffClicked setTemplate:true];
         statusImageOn = [NSImage imageNamed:@"statusbar-item-on"];
+        [statusImageOn setTemplate:true];
         statusImageOff = [NSImage imageNamed:@"statusbar-item-off"];
+        [statusImageOff setTemplate:true];
         
         NSSize iconSize = [statusImageOn size];
         NSRect bounds = self.bounds;
@@ -83,18 +91,9 @@
         _menuIsVisible = menuIsVisible;
 
         [self setImage: menuIsVisible? ([self iconStatusBarIsGrayed]? statusImageOffClicked : statusImageOnClicked) : ([self iconStatusBarIsGrayed]? statusImageOff : statusImageOn)];
-        
+
         [self setNeedsDisplay:YES];
     }
-}
-
-#pragma mark -
-
-- (NSRect)globalRect
-{
-    NSRect frame = [self frame];
-    frame.origin = [self.window convertBaseToScreen:frame.origin];
-    return frame;
 }
 
 @end

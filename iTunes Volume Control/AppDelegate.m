@@ -539,7 +539,6 @@ static NSTimeInterval statusBarHideDelay=10;
     
     [_statusBar setView:_statusBarItemView];
 
-
 }
 
 - (void)initializePreferences
@@ -1003,7 +1002,7 @@ void *kContextActivePanel = &kContextActivePanel;
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if (context == kContextActivePanel) {
-//        self.menubarController.hasActiveIcon = self.panelController.hasActivePanel;
+        //self.menubarController.hasActiveIcon = self.panelController.hasActivePanel;
     }
     else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];

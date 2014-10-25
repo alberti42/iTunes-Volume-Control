@@ -37,7 +37,7 @@
 		658F835E186CB9DB005F5676 /* statusbar-item-on-clicked.png in Resources */ = {isa = PBXBuildFile; fileRef = 658F835C186CB9DB005F5676 /* statusbar-item-on-clicked.png */; };
 		658F835F186CB9DB005F5676 /* statusbar-item-on-clicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 658F835D186CB9DB005F5676 /* statusbar-item-on-clicked@2x.png */; };
 		6597CCE71698BA05005F54C1 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6597CCE61698BA05005F54C1 /* Sparkle.framework */; };
-		6597CCE81698BA0C005F54C1 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6597CCE61698BA05005F54C1 /* Sparkle.framework */; };
+		6597CCE81698BA0C005F54C1 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6597CCE61698BA05005F54C1 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		659CCFDE185CAAA7006958AD /* appicon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 659CCFDD185CAAA7006958AD /* appicon.icns */; };
 		659CCFED185CBEF7006958AD /* statusbar-item-off.png in Resources */ = {isa = PBXBuildFile; fileRef = 65CC785C1692FC1300BFD4AD /* statusbar-item-off.png */; };
 		659CCFEE185CBEF7006958AD /* statusbar-item-off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 659CCFEB185CBE40006958AD /* statusbar-item-off@2x.png */; };
@@ -399,7 +399,7 @@
 		656C6C5E168A2A0B00ECA482 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "Andrea Alberti";
 			};
 			buildConfigurationList = 656C6C61168A2A0B00ECA482 /* Build configuration list for PBXProject "iTunes Volume Control" */;
