@@ -687,7 +687,7 @@ static NSTimeInterval statusBarHideDelay=10;
     
     self.popoverController.hasActivePanel = true;
 
-    return;
+//    return;
     
     NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
     NSString* version = [infoDict objectForKey:@"CFBundleVersion"];

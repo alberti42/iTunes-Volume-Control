@@ -66,13 +66,13 @@
         _statusItem = statusItem;
         
         statusImageOnClicked = [NSImage imageNamed:@"statusbar-item-on-clicked"];
-        [statusImageOnClicked setTemplate:true];
+//        [statusImageOnClicked setTemplate:true];
         statusImageOffClicked = [NSImage imageNamed:@"statusbar-item-off-clicked"];
-        [statusImageOffClicked setTemplate:true];
+//        [statusImageOffClicked setTemplate:true];
         statusImageOn = [NSImage imageNamed:@"statusbar-item-on"];
-        [statusImageOn setTemplate:true];
+//        [statusImageOn setTemplate:true];
         statusImageOff = [NSImage imageNamed:@"statusbar-item-off"];
-        [statusImageOff setTemplate:true];
+//        [statusImageOff setTemplate:true];
         
         NSSize iconSize = [statusImageOn size];
         NSRect bounds = self.bounds;
