@@ -504,9 +504,9 @@ static NSTimeInterval statusBarHideDelay=10;
     [self initializePreferences];
     
     [self setStartAtLogin:[self StartAtLogin] savePreferences:false];
-    
-    if([self loadIntroAtStart])
-        [self showIntroWindow:nil];
+
+//    if([self loadIntroAtStart])
+//        [self showIntroWindow:nil];
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
@@ -550,7 +550,7 @@ static NSTimeInterval statusBarHideDelay=10;
                           [NSNumber numberWithBool:false], @"UseAppleCMDModifier",
                           [NSNumber numberWithBool:true],  @"AutomaticUpdates",
                           [NSNumber numberWithBool:false], @"hideFromStatusBarPreference",
-                          [NSNumber numberWithBool:true], @"loadIntroAtStart",
+                          [NSNumber numberWithBool:true],  @"loadIntroAtStart",
                           nil ]; // terminate the list
     [preferences registerDefaults:dict];
     
@@ -560,6 +560,7 @@ static NSTimeInterval statusBarHideDelay=10;
     [self setAutomaticUpdates:[preferences boolForKey:     @"AutomaticUpdates"]];
     [self setHideFromStatusBar:[preferences boolForKey:    @"hideFromStatusBarPreference"]];
     [self setLoadIntroAtStart:[preferences boolForKey:     @"loadIntroAtStart"]];
+
 }
 
 - (IBAction)toggleAutomaticUpdates:(id)sender
