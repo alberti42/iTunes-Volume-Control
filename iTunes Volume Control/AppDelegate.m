@@ -14,6 +14,10 @@
 
 #pragma mark - Tapping key stroke events
 
+static void displayPreferencesChanged(CGDirectDisplayID displayID, CGDisplayChangeSummaryFlags flags, void *userInfo) {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"displayResolutionHasChanged" object:NULL];
+}
+
 CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *refcon)
 {
     static int previousKeyCode = 0;
@@ -444,10 +448,12 @@ static NSTimeInterval statusBarHideDelay=10;
 -(void)awakeFromNib
 {
     [[_volumeWindow contentView] setWantsLayer:YES];
-    [_volumeWindow setFrame:[_volumeWindow frame]/*[[NSScreen mainScreen] frame]*/ display:NO animate:NO];
+    NSRect screenFrame = [[NSScreen mainScreen] frame];
+    [_volumeWindow setFrame:CGRectMake(round((screenFrame.size.width-200)/2),140,200,200)/*[[NSScreen mainScreen] frame]*/ display:NO animate:NO];
     
     mainLayer = [[_volumeWindow contentView] layer];
-    CGColorRef backgroundColor=CGColorCreateGenericRGB(237.f/256.f, 236.f/256.f, 237.f/256.f, 1);
+    //CGColorRef backgroundColor=CGColorCreateGenericRGB(237.f/256.f, 236.f/256.f, 237.f/256.f, 1);
+    CGColorRef backgroundColor=CGColorCreateGenericRGB(0.f, 0.f, 0.f, 0.16f);
     [mainLayer setBackgroundColor:backgroundColor];
     CFRelease(backgroundColor);
     [mainLayer setCornerRadius:18];
@@ -492,11 +498,14 @@ static NSTimeInterval statusBarHideDelay=10;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playPauseITunes:) name:@"PlayPauseITunes" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(nextTrackITunes:) name:@"NextTrackITunes" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(previousTrackITunes:) name:@"PreviousTrackITunes" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(displayResolutionChanged:) name:@"displayResolutionHasChanged" object:nil];
     
     [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver: self
                                                            selector: @selector(receiveWakeNote:)
                                                                name: NSWorkspaceDidWakeNotification object: NULL];
-
+    
+    CGDisplayRegisterReconfigurationCallback(displayPreferencesChanged, NULL);
+    
     [self createEventTap];
     
     [self appleRemoteInit];
@@ -701,6 +710,12 @@ static NSTimeInterval statusBarHideDelay=10;
     
     [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
     [[NSApplication sharedApplication] orderFrontStandardAboutPanelWithOptions:infoDict];
+}
+
+- (void) displayResolutionChanged: (NSNotification*) note
+{
+    NSRect screenFrame = [[NSScreen mainScreen] frame];
+    [_volumeWindow setFrame:CGRectMake(round((screenFrame.size.width-200)/2),140,200,200)/*[[NSScreen mainScreen] frame]*/ display:NO animate:NO];
 }
 
 - (void) receiveWakeNote: (NSNotification*) note
