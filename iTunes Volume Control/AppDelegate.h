@@ -29,7 +29,7 @@
     
     CFMachPortRef eventTap;
     CFRunLoopSourceRef runLoopSource;
-        
+
     AppleRemote* remote;
     
     NSInteger oldVolumeSetting;

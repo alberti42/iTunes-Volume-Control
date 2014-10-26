@@ -447,10 +447,10 @@ static NSTimeInterval statusBarHideDelay=10;
     [_volumeWindow setFrame:[_volumeWindow frame]/*[[NSScreen mainScreen] frame]*/ display:NO animate:NO];
     
     mainLayer = [[_volumeWindow contentView] layer];
-    CGColorRef backgroundColor=CGColorCreateGenericRGB(0.f, 0.f, 0.f, 0.16f);
+    CGColorRef backgroundColor=CGColorCreateGenericRGB(237.f/256.f, 236.f/256.f, 237.f/256.f, 1);
     [mainLayer setBackgroundColor:backgroundColor];
     CFRelease(backgroundColor);
-    [mainLayer setCornerRadius:22];
+    [mainLayer setCornerRadius:18];
     [mainLayer setOpacity:0.0f];
     
     imgVolOn=[NSImage imageNamed:@"volume"];
@@ -460,7 +460,7 @@ static NSTimeInterval statusBarHideDelay=10;
     
     volumeImageLayer = [CALayer layer];
     [volumeImageLayer setFrame:NSRectToCGRect(rect)];
-    [volumeImageLayer setPosition:CGPointMake([[_volumeWindow contentView] frame].size.width/2, [[_volumeWindow contentView]frame].size.height/2+12)];
+    [volumeImageLayer setPosition:CGPointMake([[_volumeWindow contentView] frame].size.width/2, [[_volumeWindow contentView] frame].size.height/2+12)];
     [volumeImageLayer setContents:imgVolOn];
     
     [mainLayer addSublayer:volumeImageLayer];
@@ -750,7 +750,6 @@ static NSTimeInterval statusBarHideDelay=10;
 
 - (void) showSpeakerImg:(NSTimer*)theTimer
 {
-    // [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
     [_volumeWindow orderFront:self];
     
     fadeInAnimationReady=false;
