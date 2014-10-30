@@ -40,6 +40,7 @@ If you have any questions, you can contact me at a.alberti82@gmail.com. If you w
 Versions
 --------
 
+* 1.4.9: Corrected bug on repositioning the volume indicator on right position. Started to prepare the transition to Yosemite look.
 * 1.4.8: Updates are now signed with DSA. This improves the security, e.g., preventing man-in-the-middle attacks.
 * 1.4.7: Changed icons and graphics to be compatible with retina display.
 * 1.4.6: Added the option to hide the icon from status bar. The icon reappears temporarily (for 10 seconds) by simply restarting the application. This gives the time to change the hide behavior as desired.
