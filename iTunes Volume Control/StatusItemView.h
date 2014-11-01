@@ -9,6 +9,11 @@
 #import <Cocoa/Cocoa.h>
 
 @interface StatusItemView : NSView{
+
+    NSImage *statusImageWhite;
+    NSImage *statusImageBlack;
+    NSImage *statusImageGray;
+    NSImage *statusImageBlue;
     
     NSImage *statusImageOnClicked;
     NSImage *statusImageOffClicked;
@@ -24,5 +29,6 @@
 @property (nonatomic, readonly) NSRect globalRect;
 
 - (id)initWithStatusItem:(NSStatusItem *)statusItem;
+- (void)setAppropriateColorScheme;
 
 @end
