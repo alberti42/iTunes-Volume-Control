@@ -103,7 +103,6 @@
         statusImageOn = statusImageBlack;
         statusImageOff = statusImageGray;
     }
-    
 
 }
 
@@ -111,6 +110,8 @@
 {
     [self setAppropriateColorScheme];
 
+    [self setImage: _menuIsVisible? ([self iconStatusBarIsGrayed]? statusImageOffClicked : statusImageOnClicked) : ([self iconStatusBarIsGrayed]? statusImageOff : statusImageOn)];
+    
     [self setNeedsDisplay:YES];
  
 }

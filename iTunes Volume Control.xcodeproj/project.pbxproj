@@ -15,7 +15,6 @@
 		65133B741860F0750040A373 /* keyboard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65133B721860F0750040A373 /* keyboard@2x.png */; };
 		651A7EEF168F1F4C00A76288 /* BorderlessWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 651A7EED168F1F4C00A76288 /* BorderlessWindow.m */; };
 		6529CAB41879B062003D2B05 /* Popover.m in Sources */ = {isa = PBXBuildFile; fileRef = 6529CAB31879B060003D2B05 /* Popover.m */; };
-		652DE4D01861A5E100289C67 /* statusbar-screenshot.png in Resources */ = {isa = PBXBuildFile; fileRef = 652DE4CF1861A5E100289C67 /* statusbar-screenshot.png */; };
 		653FDD9A185F770000F9795D /* introButtons-next.png in Resources */ = {isa = PBXBuildFile; fileRef = 653FDD96185F770000F9795D /* introButtons-next.png */; };
 		653FDD9B185F770000F9795D /* introButtons-next@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 653FDD97185F770000F9795D /* introButtons-next@2x.png */; };
 		653FDD9C185F770000F9795D /* introButtons-prev.png in Resources */ = {isa = PBXBuildFile; fileRef = 653FDD98185F770000F9795D /* introButtons-prev.png */; };
@@ -430,7 +429,6 @@
 				65FCC05818607F2100193725 /* iTunes-arrow-2.png in Resources */,
 				65133B701860ECE30040A373 /* introButtons-close@2x.png in Resources */,
 				653FDD9C185F770000F9795D /* introButtons-prev.png in Resources */,
-				652DE4D01861A5E100289C67 /* statusbar-screenshot.png in Resources */,
 				658B93C8185E6A51007BEBEF /* iTunes-screenshot.png in Resources */,
 				65133B6F1860ECE30040A373 /* introButtons-close.png in Resources */,
 				65E2AE8C1A044F6C00FD15A1 /* statusbar-item-blue@2x.png in Resources */,

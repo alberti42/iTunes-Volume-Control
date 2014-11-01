@@ -319,6 +319,7 @@ static NSTimeInterval statusBarHideDelay=10;
     if( [[aNotification name] isEqualToString:@"IncreaseITunesVolumeRamp"] )
     {
         timer=[NSTimer scheduledTimerWithTimeInterval:volumeRampTimeInterval target:self selector:@selector(rampVolumeUp:) userInfo:nil repeats:YES];
+
         if(timerImgSpeaker) {[timerImgSpeaker invalidate]; timerImgSpeaker=nil;}
     }
     else
@@ -472,6 +473,7 @@ static NSTimeInterval statusBarHideDelay=10;
     [mainLayer addSublayer:volumeImageLayer];
     
     [self createVolumeBar];
+    
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
@@ -516,6 +518,7 @@ static NSTimeInterval statusBarHideDelay=10;
 
 //    if([self loadIntroAtStart])
 //        [self showIntroWindow:nil];
+    
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
@@ -560,6 +563,7 @@ static NSTimeInterval statusBarHideDelay=10;
                           [NSNumber numberWithBool:true],  @"AutomaticUpdates",
                           [NSNumber numberWithBool:false], @"hideFromStatusBarPreference",
                           [NSNumber numberWithBool:true],  @"loadIntroAtStart",
+                          [NSNumber numberWithInt:1],      @"volumeInc",
                           nil ]; // terminate the list
     [preferences registerDefaults:dict];
     
@@ -569,6 +573,11 @@ static NSTimeInterval statusBarHideDelay=10;
     [self setAutomaticUpdates:[preferences boolForKey:     @"AutomaticUpdates"]];
     [self setHideFromStatusBar:[preferences boolForKey:    @"hideFromStatusBarPreference"]];
     [self setLoadIntroAtStart:[preferences boolForKey:     @"loadIntroAtStart"]];
+    
+    NSInteger volumeIncSetting = [preferences integerForKey:@"volumeInc"];
+    [self setVolumeInc:volumeIncSetting];
+    
+    [[self volumeIncrementsSlider] setIntegerValue: volumeIncSetting];
 
 }
 
@@ -692,6 +701,45 @@ static NSTimeInterval statusBarHideDelay=10;
     [[introWindowController window] makeKeyAndOrderFront:self];
 }
 
+- (IBAction)sliderValueChanged:(NSSliderCell*)slider
+{
+    NSInteger volumeIncSetting = [[self volumeIncrementsSlider] integerValue];
+    
+    [self setVolumeInc:volumeIncSetting];
+    
+    [preferences setInteger:volumeIncSetting forKey:@"volumeInc"];
+    [preferences synchronize];
+
+}
+
+- (void) setVolumeInc:(NSInteger)volumeIncSetting
+{
+    switch(volumeIncSetting)
+    {
+        case 0:
+            _volumeInc = 1;
+            break;
+        case 1:
+            _volumeInc = 3;
+            break;
+        case 2:
+            _volumeInc = 6;
+            break;
+        case 3:
+            _volumeInc = 9;
+            break;
+        case 4:
+            _volumeInc = 12;
+            break;
+        case 5:
+            _volumeInc = 18;
+            break;
+        default:
+            _volumeInc = 2;
+            break;
+    }
+}
+
 - (IBAction)aboutPanel:(id)sender
 {
     
@@ -805,7 +853,7 @@ static NSTimeInterval statusBarHideDelay=10;
         NSInteger volume;
         if(oldVolumeSetting<0)
         {
-            volume=[iTunes soundVolume]+(increase?3:-3);
+            volume=[iTunes soundVolume]+_volumeInc*(increase?1:-1);
         }
         else
         {
@@ -817,7 +865,7 @@ static NSTimeInterval statusBarHideDelay=10;
         if (volume>100) volume=100;
         
         [iTunes setSoundVolume:volume];
-        
+
         [self refreshVolumeBar:(int)volume];
     }
 }

@@ -103,7 +103,7 @@
     CGFloat panelX = statusX - NSMinX(panelRect);
     
     [[self popoverView] setArrowX:panelX];
-    NSLog(@"%f",panelX);
+//    NSLog(@"%f",panelX);
 
     NSRect searchRect = [self.searchField frame];
     searchRect.size.width = NSWidth([self.popoverView bounds]) - SEARCH_INSET * 2;
@@ -205,9 +205,9 @@
         {
             openDuration *= 10;
             
-            if (shiftOptionPressed)
-                NSLog(@"Icon is at %@\n\tMenu is on screen %@\n\tWill be animated to %@",
-                      NSStringFromRect(statusRect), NSStringFromRect(screenRect), NSStringFromRect(panelRect));
+//            if (shiftOptionPressed)
+//                NSLog(@"Icon is at %@\n\tMenu is on screen %@\n\tWill be animated to %@",
+//                      NSStringFromRect(statusRect), NSStringFromRect(screenRect), NSStringFromRect(panelRect));
         }
     }
     

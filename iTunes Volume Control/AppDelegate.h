@@ -45,9 +45,11 @@
 
 @property (nonatomic, assign) IBOutlet NSWindow* volumeWindow;
 @property (nonatomic, assign) IBOutlet NSMenu* statusMenu;
+@property (nonatomic, assign) IBOutlet NSSliderCell* volumeIncrementsSlider;
 
 @property (nonatomic, readonly, strong) NSStatusItem* statusBar;
 
+@property (assign, nonatomic) NSInteger volumeInc;
 @property (assign, nonatomic) bool AppleRemoteConnected;
 @property (assign, nonatomic) bool StartAtLogin;
 @property (assign, nonatomic) bool Tapping;
@@ -64,6 +66,7 @@
 - (IBAction)toggleTapping:(id)sender;
 - (IBAction)toggleAppleRemote:(id)sender;
 - (IBAction)aboutPanel:(id)sender;
+- (IBAction)sliderValueChanged:(NSSliderCell*)slider;
 
 - (void)appleRemoteButton: (AppleRemoteEventIdentifier)buttonIdentifier pressedDown: (BOOL) pressedDown clickCount: (unsigned int) count;
 
