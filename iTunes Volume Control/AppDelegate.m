@@ -11,6 +11,7 @@
 #import <Sparkle/SUUpdater.h>
 #import "StatusItemView.h"
 #import "IntroWindowController.h"
+#import "VolumeView.h"
 
 #pragma mark - Tapping key stroke events
 
@@ -123,14 +124,60 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 
 @end
 
-@interface AppDelegate () <PopoverControllerDelegate>
-{
+#pragma mark - Class extension for NSString
 
+@implementation NSString (NSString_Extended)
+
+- (NSString *)urlencode {
+    NSMutableString *output = [NSMutableString string];
+    const unsigned char *source = (const unsigned char *)[self UTF8String];
+    unsigned long int sourceLen = strlen((const char *)source);
+    for (int i = 0; i < sourceLen; ++i) {
+        const unsigned char thisChar = source[i];
+        if (thisChar == ' '){
+            [output appendString:@"+"];
+        } else if (thisChar == '.' || thisChar == '-' || thisChar == '_' || thisChar == '~' ||
+                   (thisChar >= 'a' && thisChar <= 'z') ||
+                   (thisChar >= 'A' && thisChar <= 'Z') ||
+                   (thisChar >= '0' && thisChar <= '9')) {
+            [output appendFormat:@"%c", thisChar];
+        } else {
+            [output appendFormat:@"%%%02X", thisChar];
+        }
+    }
+    return output;
 }
 
 @end
 
 #pragma mark - Implementation
+
+@implementation NSView (HS)
+
+-(instancetype)insertVibrancyViewBlendingMode:(NSVisualEffectBlendingMode)mode
+{
+    Class vibrantClass=NSClassFromString(@"NSVisualEffectView");
+    if (vibrantClass)
+    {
+        NSVisualEffectView *vibrant=[[vibrantClass alloc] initWithFrame:self.bounds];
+        
+        [vibrant setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
+        [vibrant setBlendingMode:mode];
+        
+        [vibrant setMaterial:NSVisualEffectMaterialLight];
+        [vibrant setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
+        [vibrant setState:NSVisualEffectStateActive];
+
+        
+        [self addSubview:vibrant positioned:NSWindowBelow relativeTo:nil];
+        
+        return vibrant;
+    }
+    
+    return nil;
+}
+
+@end
 
 @implementation AppDelegate
 
@@ -142,7 +189,6 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 @synthesize hideFromStatusBar = _hideFromStatusBar;
 @synthesize loadIntroAtStart = _loadIntroAtStart;
 @synthesize statusBar = _statusBar;
-@synthesize popoverController = _popoverController;
 
 @synthesize volumeWindow=_volumeWindow;
 @synthesize statusMenu=_statusMenu;
@@ -169,13 +215,23 @@ static NSTimeInterval statusBarHideDelay=10;
         {
             LSSharedFileListItemRef itemRef = (__bridge LSSharedFileListItemRef)[loginItemsArray objectAtIndex:i];
             //Resolve the item with URL
-            CFURLRef URL = NULL;
-            if (LSSharedFileListItemResolve(itemRef, 0, &URL, NULL) == noErr) {
-                if ( CFEqual(URL, (__bridge CFTypeRef)(appURL)) ) // found it
+            CFURLRef url = NULL;
+            
+            // LSSharedFileListItemResolve is deprecated in Mac OS X 10.10
+            // Switch to LSSharedFileListItemCopyResolvedURL if possible
+#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_10
+            LSSharedFileListItemResolve(itemRef, 0, &url, NULL);
+#else
+            url = LSSharedFileListItemCopyResolvedURL(itemRef, 0, NULL);
+#endif
+            
+            
+            if ( url ) {
+                if ( CFEqual(url, (__bridge CFTypeRef)(appURL)) ) // found it
                 {
                     found=true;
                 }
-                CFRelease(URL);
+                CFRelease(url);
             }
             
             if(found)break;
@@ -228,7 +284,16 @@ static NSTimeInterval statusBarHideDelay=10;
                     LSSharedFileListItemRef itemRef = (__bridge LSSharedFileListItemRef)[loginItemsArray objectAtIndex:i];
                     //Resolve the item with URL
                     CFURLRef URL = NULL;
-                    if (LSSharedFileListItemResolve(itemRef, 0, &URL, NULL) == noErr) {
+                    
+                    // LSSharedFileListItemResolve is deprecated in Mac OS X 10.10
+                    // Switch to LSSharedFileListItemCopyResolvedURL if possible
+#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_10
+                    LSSharedFileListItemResolve(itemRef, 0, &URL, NULL);
+#else
+                    URL = LSSharedFileListItemCopyResolvedURL(itemRef, 0, NULL);
+#endif
+
+                    if ( URL ) {
                         if ( CFEqual(URL, (__bridge CFTypeRef)(appURL)) ) // found it
                         {
                             LSSharedFileListItemRemove(loginItems,itemRef);
@@ -449,15 +514,26 @@ static NSTimeInterval statusBarHideDelay=10;
 -(void)awakeFromNib
 {
     [[_volumeWindow contentView] setWantsLayer:YES];
-    NSRect screenFrame = [[NSScreen mainScreen] frame];
-    [_volumeWindow setFrame:CGRectMake(round((screenFrame.size.width-200)/2),140,200,200)/*[[NSScreen mainScreen] frame]*/ display:NO animate:NO];
+
+    // [view insertVibrancyViewBlendingMode:NSVisualEffectBlendingModeBehindWindow];
+    
+    //    [[_volumeWindow contentView] insertVibrancyViewBlendingMode:NSVisualEffectBlendingModeBehindWindow];
+    //    VolumeView* vv = [[VolumeView alloc] initWithFrame:rect];
+    //    [v addSubview:vv];
+    //    [vv setWantsLayer:YES];
+    //    [vv setMaterial:NSVisualEffectMaterialLight];
+    //    [vv setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
+    //    [vv setBlendingMode:NSVisualEffectBlendingModeBehindWindow];
+    //    [vv setState:NSVisualEffectStateActive];
     
     mainLayer = [[_volumeWindow contentView] layer];
-    //CGColorRef backgroundColor=CGColorCreateGenericRGB(237.f/256.f, 236.f/256.f, 237.f/256.f, 1);
     CGColorRef backgroundColor=CGColorCreateGenericRGB(0.f, 0.f, 0.f, 0.16f);
     [mainLayer setBackgroundColor:backgroundColor];
     CFRelease(backgroundColor);
     [mainLayer setCornerRadius:18];
+    [mainLayer setShouldRasterize:true];
+    [mainLayer setEdgeAntialiasingMask: kCALayerLeftEdge | kCALayerRightEdge | kCALayerBottomEdge | kCALayerTopEdge];
+    
     [mainLayer setOpacity:0.0f];
     
     imgVolOn=[NSImage imageNamed:@"volume"];
@@ -480,8 +556,9 @@ static NSTimeInterval statusBarHideDelay=10;
 {
     NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
     NSString* version = [infoDict objectForKey:@"CFBundleShortVersionString"];
+    NSString * operatingSystemVersionString = [[NSProcessInfo processInfo] operatingSystemVersionString];
     
-    [[SUUpdater sharedUpdater] setFeedURL:[NSURL URLWithString:[NSString stringWithFormat: @"http://quantum-technologies.iap.uni-bonn.de/alberti/iTunesVolumeControl/iTunesVolumeControlCast.xml.php?version=%@",version]]];
+    [[SUUpdater sharedUpdater] setFeedURL:[NSURL URLWithString:[NSString stringWithFormat: @"http://quantum-technologies.iap.uni-bonn.de/alberti/iTunesVolumeControl/iTunesVolumeControlCast.xml.php?version=%@&osxversion=%@",version,[operatingSystemVersionString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]]];
     
     [[SUUpdater sharedUpdater] setUpdateCheckInterval:60*60*24*7]; // look for new updates every 7 days
     
@@ -557,13 +634,13 @@ static NSTimeInterval statusBarHideDelay=10;
 {
     preferences = [NSUserDefaults standardUserDefaults];
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
+                          [NSNumber numberWithInt:1],      @"volumeInc",
                           [NSNumber numberWithBool:true] , @"TappingEnabled",
                           [NSNumber numberWithBool:false], @"AppleRemoteConnected",
                           [NSNumber numberWithBool:false], @"UseAppleCMDModifier",
                           [NSNumber numberWithBool:true],  @"AutomaticUpdates",
                           [NSNumber numberWithBool:false], @"hideFromStatusBarPreference",
                           [NSNumber numberWithBool:true],  @"loadIntroAtStart",
-                          [NSNumber numberWithInt:1],      @"volumeInc",
                           nil ]; // terminate the list
     [preferences registerDefaults:dict];
     
@@ -743,8 +820,6 @@ static NSTimeInterval statusBarHideDelay=10;
 - (IBAction)aboutPanel:(id)sender
 {
     
-    self.popoverController.hasActivePanel = true;
-
 //    return;
     
     NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
@@ -785,8 +860,6 @@ static NSTimeInterval statusBarHideDelay=10;
     
     [remote stopListening:self];
 
-    [_popoverController removeObserver:self forKeyPath:@"hasActivePanel"];
-    
     /*
      remote=nil;
      
@@ -911,7 +984,7 @@ static NSTimeInterval statusBarHideDelay=10;
     [CATransaction setDisableActions: TRUE];
     
     if(volume==0) [volumeImageLayer setContents:imgVolOff];
-    if(volume==3) [volumeImageLayer setContents:imgVolOn];
+    if(volume>0) [volumeImageLayer setContents:imgVolOn];
     
     for(i=0; i<fullRectangles; i++)
     {
@@ -1070,24 +1143,6 @@ void *kContextActivePanel = &kContextActivePanel;
     else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
-}
-
-#pragma mark - Public accessors
-
-- (PopoverController *)popoverController
-{
-    if (_popoverController == nil) {
-        _popoverController = [[PopoverController alloc] initWithDelegate:self];
-        [_popoverController addObserver:self forKeyPath:@"hasActivePanel" options:0 context:kContextActivePanel];
-    }
-    return _popoverController;
-}
-
-#pragma mark - PanelControllerDelegate
-
-- (StatusItemView *)statusItemViewForPanelController:(PopoverController *)controller
-{
-    return _statusBarItemView;
 }
 
 @end

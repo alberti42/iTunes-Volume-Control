@@ -1,2 +1,0 @@
-@interface Popover : NSPanel
-@end

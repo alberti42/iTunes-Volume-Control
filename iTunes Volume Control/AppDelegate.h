@@ -10,7 +10,6 @@
 #import <QuartzCore/CoreAnimation.h>
 #import "iTunes.h"
 #import "AppleRemote.h"
-#import "PopoverController.h"
 
 @class IntroWindowController;
 @class StatusBarItem;
@@ -57,7 +56,6 @@
 @property (assign, nonatomic) bool AutomaticUpdates;
 @property (assign, nonatomic) bool hideFromStatusBar;
 @property (assign, nonatomic) bool loadIntroAtStart;
-@property (nonatomic, strong, readonly) PopoverController* popoverController;
 
 - (IBAction)toggleUseAppleCMDModifier:(id)sender;
 - (IBAction)toggleAutomaticUpdates:(id)sender;

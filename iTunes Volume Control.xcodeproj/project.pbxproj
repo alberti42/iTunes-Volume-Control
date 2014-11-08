@@ -13,8 +13,7 @@
 		65133B701860ECE30040A373 /* introButtons-close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65133B6C1860ECE30040A373 /* introButtons-close@2x.png */; };
 		65133B731860F0750040A373 /* keyboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 65133B711860F0750040A373 /* keyboard.png */; };
 		65133B741860F0750040A373 /* keyboard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65133B721860F0750040A373 /* keyboard@2x.png */; };
-		651A7EEF168F1F4C00A76288 /* BorderlessWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 651A7EED168F1F4C00A76288 /* BorderlessWindow.m */; };
-		6529CAB41879B062003D2B05 /* Popover.m in Sources */ = {isa = PBXBuildFile; fileRef = 6529CAB31879B060003D2B05 /* Popover.m */; };
+		651A7EEF168F1F4C00A76288 /* VolumeWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 651A7EED168F1F4C00A76288 /* VolumeWindow.m */; };
 		653FDD9A185F770000F9795D /* introButtons-next.png in Resources */ = {isa = PBXBuildFile; fileRef = 653FDD96185F770000F9795D /* introButtons-next.png */; };
 		653FDD9B185F770000F9795D /* introButtons-next@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 653FDD97185F770000F9795D /* introButtons-next@2x.png */; };
 		653FDD9C185F770000F9795D /* introButtons-prev.png in Resources */ = {isa = PBXBuildFile; fileRef = 653FDD98185F770000F9795D /* introButtons-prev.png */; };
@@ -38,11 +37,9 @@
 		659CCFF3185CBF04006958AD /* volume-off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 659CCFE7185CAD9D006958AD /* volume-off@2x.png */; };
 		659CCFF4185CBF0F006958AD /* volume.png in Resources */ = {isa = PBXBuildFile; fileRef = 657F9C4E168F349100818384 /* volume.png */; };
 		659CCFF5185CBF0F006958AD /* volume@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 659CCFE6185CAC93006958AD /* volume@2x.png */; };
-		65A7F0B5187719EE005EF327 /* PopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 658AAA8B18754C7F00F0CF77 /* PopoverView.m */; };
-		65A7F0B6187719F1005EF327 /* PopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 658AAA88187548FE00F0CF77 /* PopoverController.m */; };
-		65A7F0B818771D21005EF327 /* Popover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65A7F0B718771D21005EF327 /* Popover.xib */; };
 		65C24C01168CBC7E0000BFC2 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 65C24C00168CBC7E0000BFC2 /* Credits.rtf */; };
 		65C24C67168CEB130000BFC2 /* AppleRemote.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C24C65168CEB130000BFC2 /* AppleRemote.m */; };
+		65CB28721A06A73C004E16A4 /* VolumeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CB28711A06A73C004E16A4 /* VolumeView.m */; };
 		65CC33B81698B3CC0049AF82 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65C24C6B168CEB9D0000BFC2 /* IOKit.framework */; };
 		65CC33BA1698B3D60049AF82 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 651A7EF1168F226300A76288 /* QuartzCore.framework */; };
 		65CC33BC1698B3E20049AF82 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 656C6C6B168A2A0B00ECA482 /* Cocoa.framework */; };
@@ -81,11 +78,9 @@
 		65133B6C1860ECE30040A373 /* introButtons-close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "introButtons-close@2x.png"; path = "iTunes Volume Control/Images/introButtons-close@2x.png"; sourceTree = "<group>"; };
 		65133B711860F0750040A373 /* keyboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = keyboard.png; path = "iTunes Volume Control/Images/keyboard.png"; sourceTree = "<group>"; };
 		65133B721860F0750040A373 /* keyboard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "keyboard@2x.png"; path = "iTunes Volume Control/Images/keyboard@2x.png"; sourceTree = "<group>"; };
-		651A7EED168F1F4C00A76288 /* BorderlessWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BorderlessWindow.m; path = "iTunes Volume Control/BorderlessWindow.m"; sourceTree = "<group>"; };
-		651A7EEE168F1F4C00A76288 /* BorderlessWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BorderlessWindow.h; path = "iTunes Volume Control/BorderlessWindow.h"; sourceTree = "<group>"; };
+		651A7EED168F1F4C00A76288 /* VolumeWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VolumeWindow.m; path = "iTunes Volume Control/VolumeWindow.m"; sourceTree = "<group>"; };
+		651A7EEE168F1F4C00A76288 /* VolumeWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VolumeWindow.h; path = "iTunes Volume Control/VolumeWindow.h"; sourceTree = "<group>"; };
 		651A7EF1168F226300A76288 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = ../../../../../System/Library/Frameworks/QuartzCore.framework; sourceTree = "<group>"; };
-		6529CAB21879B060003D2B05 /* Popover.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Popover.h; path = "iTunes Volume Control/Popover.h"; sourceTree = "<group>"; };
-		6529CAB31879B060003D2B05 /* Popover.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Popover.m; path = "iTunes Volume Control/Popover.m"; sourceTree = "<group>"; };
 		652DE4CF1861A5E100289C67 /* statusbar-screenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "statusbar-screenshot.png"; path = "iTunes Volume Control/Images/statusbar-screenshot.png"; sourceTree = "<group>"; };
 		652EC9251860CEF100D413E7 /* keyboard.psd */ = {isa = PBXFileReference; lastKnownFileType = file; name = keyboard.psd; path = "iTunes Volume Control/Images/keyboard.psd"; sourceTree = "<group>"; };
 		653492751690ACD300B73CA3 /* volume.ai */ = {isa = PBXFileReference; lastKnownFileType = text; name = volume.ai; path = "iTunes Volume Control/Images/volume.ai"; sourceTree = "<group>"; };
@@ -114,10 +109,6 @@
 		6577E8AF186099DA0024A59C /* introButtons-prev-HL.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "introButtons-prev-HL.png"; path = "iTunes Volume Control/Images/introButtons-prev-HL.png"; sourceTree = "<group>"; };
 		6577E8B0186099DA0024A59C /* introButtons-prev-HL@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "introButtons-prev-HL@2x.png"; path = "iTunes Volume Control/Images/introButtons-prev-HL@2x.png"; sourceTree = "<group>"; };
 		657F9C4E168F349100818384 /* volume.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = volume.png; path = "iTunes Volume Control/Images/volume.png"; sourceTree = "<group>"; };
-		658AAA87187548FE00F0CF77 /* PopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PopoverController.h; path = "iTunes Volume Control/PopoverController.h"; sourceTree = "<group>"; };
-		658AAA88187548FE00F0CF77 /* PopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PopoverController.m; path = "iTunes Volume Control/PopoverController.m"; sourceTree = "<group>"; };
-		658AAA8A18754C7F00F0CF77 /* PopoverView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PopoverView.h; path = "iTunes Volume Control/PopoverView.h"; sourceTree = "<group>"; };
-		658AAA8B18754C7F00F0CF77 /* PopoverView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = PopoverView.m; path = "iTunes Volume Control/PopoverView.m"; sourceTree = "<group>"; };
 		658B93C3185E4823007BEBEF /* IntroWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = IntroWindow.xib; path = "iTunes Volume Control/IntroWindow.xib"; sourceTree = "<group>"; };
 		658B93C5185E48B2007BEBEF /* IntroWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IntroWindowController.h; path = "iTunes Volume Control/IntroWindowController.h"; sourceTree = "<group>"; };
 		658B93C6185E48B2007BEBEF /* IntroWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IntroWindowController.m; path = "iTunes Volume Control/IntroWindowController.m"; sourceTree = "<group>"; };
@@ -130,7 +121,6 @@
 		659CCFE3185CAACD006958AD /* icon_128x128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_128x128.png; path = "iTunes Volume Control/Images/appicon.iconset/icon_128x128.png"; sourceTree = "<group>"; };
 		659CCFE6185CAC93006958AD /* volume@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "volume@2x.png"; path = "iTunes Volume Control/Images/volume@2x.png"; sourceTree = "<group>"; };
 		659CCFE7185CAD9D006958AD /* volume-off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "volume-off@2x.png"; path = "iTunes Volume Control/Images/volume-off@2x.png"; sourceTree = "<group>"; };
-		65A7F0B718771D21005EF327 /* Popover.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Popover.xib; path = "iTunes Volume Control/Popover.xib"; sourceTree = "<group>"; };
 		65B85972185E389400D8C851 /* iTunes-screenshot.ai */ = {isa = PBXFileReference; lastKnownFileType = text; name = "iTunes-screenshot.ai"; path = "iTunes Volume Control/Images/iTunes-screenshot.ai"; sourceTree = "<group>"; };
 		65B85973185E389400D8C851 /* iTunes-screenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iTunes-screenshot.png"; path = "iTunes Volume Control/Images/iTunes-screenshot.png"; sourceTree = "<group>"; };
 		65C24C00168CBC7E0000BFC2 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; name = Credits.rtf; path = "iTunes Volume Control/Credits.rtf"; sourceTree = "<group>"; };
@@ -138,6 +128,8 @@
 		65C24C65168CEB130000BFC2 /* AppleRemote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppleRemote.m; sourceTree = "<group>"; };
 		65C24C66168CEB130000BFC2 /* CompatibilityFixes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompatibilityFixes.h; sourceTree = "<group>"; };
 		65C24C6B168CEB9D0000BFC2 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		65CB28701A06A73C004E16A4 /* VolumeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VolumeView.h; path = "iTunes Volume Control/VolumeView.h"; sourceTree = "<group>"; };
+		65CB28711A06A73C004E16A4 /* VolumeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VolumeView.m; path = "iTunes Volume Control/VolumeView.m"; sourceTree = "<group>"; };
 		65CC785D1692FC1300BFD4AD /* statusbar-item.ai */ = {isa = PBXFileReference; lastKnownFileType = text; name = "statusbar-item.ai"; path = "iTunes Volume Control/Images/statusbar-item.ai"; sourceTree = "<group>"; };
 		65CC786A169305C700BFD4AD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		65E2AE811A044F6C00FD15A1 /* statusbar-item-black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "statusbar-item-black.png"; path = "iTunes Volume Control/Images/statusbar-item-black.png"; sourceTree = "<group>"; };
@@ -187,8 +179,6 @@
 			children = (
 				656C6C7D168A2A0B00ECA482 /* AppDelegate.h */,
 				656C6C7E168A2A0B00ECA482 /* AppDelegate.m */,
-				658AAA87187548FE00F0CF77 /* PopoverController.h */,
-				658AAA88187548FE00F0CF77 /* PopoverController.m */,
 				658B93C5185E48B2007BEBEF /* IntroWindowController.h */,
 				658B93C6185E48B2007BEBEF /* IntroWindowController.m */,
 			);
@@ -198,12 +188,10 @@
 		652D1144187AF06E00C8BD88 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				6529CAB21879B060003D2B05 /* Popover.h */,
-				6529CAB31879B060003D2B05 /* Popover.m */,
-				651A7EEE168F1F4C00A76288 /* BorderlessWindow.h */,
-				651A7EED168F1F4C00A76288 /* BorderlessWindow.m */,
-				658AAA8A18754C7F00F0CF77 /* PopoverView.h */,
-				658AAA8B18754C7F00F0CF77 /* PopoverView.m */,
+				65CB28701A06A73C004E16A4 /* VolumeView.h */,
+				65CB28711A06A73C004E16A4 /* VolumeView.m */,
+				651A7EEE168F1F4C00A76288 /* VolumeWindow.h */,
+				651A7EED168F1F4C00A76288 /* VolumeWindow.m */,
 				E2F254C4179EA2B600DD3C66 /* StatusItemView.h */,
 				E2F254C5179EA2B600DD3C66 /* StatusItemView.m */,
 			);
@@ -233,7 +221,6 @@
 		652D1147187AF12A00C8BD88 /* XIBs */ = {
 			isa = PBXGroup;
 			children = (
-				65A7F0B718771D21005EF327 /* Popover.xib */,
 				658B93C3185E4823007BEBEF /* IntroWindow.xib */,
 				656C6C80168A2A0C00ECA482 /* MainMenu.xib */,
 			);
@@ -448,7 +435,6 @@
 				65E2AE8A1A044F6C00FD15A1 /* statusbar-item-black@2x.png in Resources */,
 				65C24C01168CBC7E0000BFC2 /* Credits.rtf in Resources */,
 				65FCC05918607F2100193725 /* iTunes-arrow-2@2x.png in Resources */,
-				65A7F0B818771D21005EF327 /* Popover.xib in Resources */,
 				65E2AE8D1A044F6C00FD15A1 /* statusbar-item-gray.png in Resources */,
 				65133B6E1860ECE30040A373 /* introButtons-close-HL@2x.png in Resources */,
 				653FDDA1185F780000F9795D /* introButtons-next-HL@2x.png in Resources */,
@@ -490,11 +476,9 @@
 				658B93C7185E48B2007BEBEF /* IntroWindowController.m in Sources */,
 				656C6C78168A2A0B00ECA482 /* main.m in Sources */,
 				656C6C7F168A2A0B00ECA482 /* AppDelegate.m in Sources */,
-				6529CAB41879B062003D2B05 /* Popover.m in Sources */,
+				65CB28721A06A73C004E16A4 /* VolumeView.m in Sources */,
 				65C24C67168CEB130000BFC2 /* AppleRemote.m in Sources */,
-				65A7F0B5187719EE005EF327 /* PopoverView.m in Sources */,
-				65A7F0B6187719F1005EF327 /* PopoverController.m in Sources */,
-				651A7EEF168F1F4C00A76288 /* BorderlessWindow.m in Sources */,
+				651A7EEF168F1F4C00A76288 /* VolumeWindow.m in Sources */,
 				E2F254C6179EA2B600DD3C66 /* StatusItemView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -537,9 +521,9 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
+				SDKROOT = macosx10.9;
 			};
 			name = Debug;
 		};
@@ -560,8 +544,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = "";
-				SDKROOT = macosx;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx10.9;
 			};
 			name = Release;
 		};
