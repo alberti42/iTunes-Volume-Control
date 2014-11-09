@@ -43,7 +43,10 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     {
         [app stopTimer];
         
-        if(!app->timerImgSpeaker&&!app->fadeInAnimationReady) app->timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:app->waitOverlayPanel target:app selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
+        if(!app->timerImgSpeaker&&!app->fadeInAnimationReady){
+            app->timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:app->waitOverlayPanel target:app selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
+            [[NSRunLoop mainRunLoop] addTimer:app->timerImgSpeaker forMode:NSRunLoopCommonModes];
+        }
     }
     previousKeyCode=keyCode;
     
@@ -96,7 +99,10 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
                         {
                             [app stopTimer];
                             
-                            if(!app->timerImgSpeaker&&!app->fadeInAnimationReady) app->timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:app->waitOverlayPanel target:app selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
+                            if(!app->timerImgSpeaker&&!app->fadeInAnimationReady){
+                                app->timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:app->waitOverlayPanel target:app selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
+                                [[NSRunLoop mainRunLoop] addTimer:app->timerImgSpeaker forMode:NSRunLoopCommonModes];
+                            }
                         }
                     }
                     return NULL;
@@ -384,6 +390,8 @@ static NSTimeInterval statusBarHideDelay=10;
     if( [[aNotification name] isEqualToString:@"IncreaseITunesVolumeRamp"] )
     {
         timer=[NSTimer scheduledTimerWithTimeInterval:volumeRampTimeInterval target:self selector:@selector(rampVolumeUp:) userInfo:nil repeats:YES];
+    
+        [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
 
         if(timerImgSpeaker) {[timerImgSpeaker invalidate]; timerImgSpeaker=nil;}
     }
@@ -399,6 +407,9 @@ static NSTimeInterval statusBarHideDelay=10;
     if( [[aNotification name] isEqualToString:@"DecreaseITunesVolumeRamp"] )
     {
         timer=[NSTimer scheduledTimerWithTimeInterval:volumeRampTimeInterval target:self selector:@selector(rampVolumeDown:) userInfo:nil repeats:YES];
+        
+        [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+        
         if(timerImgSpeaker) {[timerImgSpeaker invalidate]; timerImgSpeaker=nil;}
     }
     else
@@ -418,7 +429,10 @@ static NSTimeInterval statusBarHideDelay=10;
                 {
                     [self stopTimer];
                     
-                    if(!timerImgSpeaker&&!fadeInAnimationReady) timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:waitOverlayPanel target:self selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
+                    if(!timerImgSpeaker&&!fadeInAnimationReady) {
+                        timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:waitOverlayPanel target:self selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
+                        [[NSRunLoop mainRunLoop] addTimer:timerImgSpeaker forMode:NSRunLoopCommonModes];
+                    }
                 }
                 else
                 {
@@ -434,7 +448,10 @@ static NSTimeInterval statusBarHideDelay=10;
                 {
                     [self stopTimer];
                     
-                    if(!timerImgSpeaker&&!fadeInAnimationReady) timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:waitOverlayPanel target:self selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
+                    if(!timerImgSpeaker&&!fadeInAnimationReady){
+                        timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:waitOverlayPanel target:self selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
+                        [[NSRunLoop mainRunLoop] addTimer:timerImgSpeaker forMode:NSRunLoopCommonModes];
+                    }
                 }
                 else
                 {
@@ -812,7 +829,7 @@ static NSTimeInterval statusBarHideDelay=10;
             _volumeInc = 18;
             break;
         default:
-            _volumeInc = 2;
+            _volumeInc = 3;
             break;
     }
 }
@@ -976,9 +993,9 @@ static NSTimeInterval statusBarHideDelay=10;
 
 - (void) refreshVolumeBar:(NSInteger)volume
 {
-    NSInteger i;
-    NSInteger doubleFullRectangles=(NSInteger)round(16.0f*volume/50.0f);
+    NSInteger doubleFullRectangles = (NSInteger)round(32.0f * volume / 100.0f);
     NSInteger fullRectangles=doubleFullRectangles>>1;
+    
     [CATransaction begin];
     [CATransaction setAnimationDuration: 0.0];
     [CATransaction setDisableActions: TRUE];
@@ -986,26 +1003,28 @@ static NSTimeInterval statusBarHideDelay=10;
     if(volume==0) [volumeImageLayer setContents:imgVolOff];
     if(volume>0) [volumeImageLayer setContents:imgVolOn];
     
-    for(i=0; i<fullRectangles; i++)
+    CGRect frame;
+    
+    for(NSInteger i=0; i<fullRectangles; i++)
     {
+        frame = [volumeBar[i] frame];
+        frame.size.width=7;
+        [volumeBar[i] setFrame:frame];
+
         [volumeBar[i] setHidden:NO];
     }
     for(NSInteger i=fullRectangles; i<16; i++)
     {
+        frame = [volumeBar[i] frame];
+        frame.size.width=7;
+        [volumeBar[i] setFrame:frame];
+        
         [volumeBar[i] setHidden:YES];
     }
     
-    CGRect frame;
-    
-    if(fullRectangles!=0)
+    if(fullRectangles*2 != doubleFullRectangles)
     {
-        frame = [volumeBar[fullRectangles-1] frame];
-        frame.size.width=7;
-        [volumeBar[fullRectangles-1] setFrame:frame];
-    }
-    
-    if(fullRectangles!=16&&doubleFullRectangles%2)
-    {
+        
         frame = [volumeBar[fullRectangles] frame];
         frame.size.width=4;
         
@@ -1021,6 +1040,7 @@ static NSTimeInterval statusBarHideDelay=10;
     if(fadeInAnimationReady) [self showSpeakerImg:nil];
     if(timerImgSpeaker) {[timerImgSpeaker invalidate]; timerImgSpeaker=nil;}
     timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:waitOverlayPanel target:self selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
+    [[NSRunLoop mainRunLoop] addTimer:timerImgSpeaker forMode:NSRunLoopCommonModes];
 }
 
 #pragma mark - Hide From Status Bar
@@ -1048,7 +1068,9 @@ static NSTimeInterval statusBarHideDelay=10;
         {
             [self setHideFromStatusBarHintLabelWithSeconds:statusBarHideDelay];
             _statusBarHideTimer = [NSTimer scheduledTimerWithTimeInterval:statusBarHideDelay target:self selector:@selector(doHideFromStatusBar:) userInfo:nil repeats:NO];
+            [[NSRunLoop mainRunLoop] addTimer:_statusBarHideTimer forMode:NSRunLoopCommonModes];
             _hideFromStatusBarHintPopoverUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(updateHideFromStatusBarHintPopover:) userInfo:nil repeats:YES];
+            [[NSRunLoop mainRunLoop] addTimer:_hideFromStatusBarHintPopoverUpdateTimer forMode:NSRunLoopCommonModes];
         }
     }
     else
@@ -1129,20 +1151,6 @@ static NSTimeInterval statusBarHideDelay=10;
     [_statusBarItemView setMenuIsVisible:false];
     if ([self hideFromStatusBar])
         [self showHideFromStatusBarHintPopover];
-}
-
-#pragma mark -
-
-void *kContextActivePanel = &kContextActivePanel;
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    if (context == kContextActivePanel) {
-        //self.menubarController.hasActiveIcon = self.panelController.hasActivePanel;
-    }
-    else {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-    }
 }
 
 @end
