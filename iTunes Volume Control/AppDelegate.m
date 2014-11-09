@@ -11,7 +11,6 @@
 #import <Sparkle/SUUpdater.h>
 #import "StatusItemView.h"
 #import "IntroWindowController.h"
-#import "VolumeView.h"
 
 #pragma mark - Tapping key stroke events
 
@@ -524,6 +523,23 @@ static NSTimeInterval statusBarHideDelay=10;
         // [fadeInAnimation setDelegate:self];
         fadeInAnimationReady=true;
         
+        if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6) {
+            //10.6.x or earlier systems
+            osxVersion = 106;
+        } else if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_7) {
+            /* On a 10.7 - 10.7.x system */
+            osxVersion = 107;
+        } else if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_8) {
+            /* On a 10.8 - 10.8.x system */
+            osxVersion = 108;
+        } else if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_9) {
+            /* On a 10.9 - 10.9.x system */
+            osxVersion = 109;
+        } else {
+            /* On a 10.10 - 10.10.x system */
+            osxVersion = 110;
+        }
+        
     }
     return self;
 }
@@ -531,7 +547,7 @@ static NSTimeInterval statusBarHideDelay=10;
 -(void)awakeFromNib
 {
     NSRect screenFrame = [[NSScreen mainScreen] frame];
-    [_volumeWindow setFrame:CGRectMake(round((screenFrame.size.width-200)/2),140,200,200)/*[[NSScreen mainScreen] frame]*/ display:NO animate:NO];
+    [_volumeWindow setFrame:(osxVersion<110?  CGRectMake(round((screenFrame.size.width-210)/2),139,210,206) : CGRectMake(round((screenFrame.size.width-200)/2),140,200,200)) display:NO animate:NO];
     
     [[_volumeWindow contentView] setWantsLayer:YES];
 
@@ -550,7 +566,7 @@ static NSTimeInterval statusBarHideDelay=10;
     CGColorRef backgroundColor=CGColorCreateGenericRGB(0.f, 0.f, 0.f, 0.16f);
     [mainLayer setBackgroundColor:backgroundColor];
     CFRelease(backgroundColor);
-    [mainLayer setCornerRadius:18];
+    [mainLayer setCornerRadius:(osxVersion<110? 22 : 18)];
     [mainLayer setShouldRasterize:true];
     [mainLayer setEdgeAntialiasingMask: kCALayerLeftEdge | kCALayerRightEdge | kCALayerBottomEdge | kCALayerTopEdge];
     
@@ -858,7 +874,7 @@ static NSTimeInterval statusBarHideDelay=10;
 - (void) displayResolutionChanged: (NSNotification*) note
 {
     NSRect screenFrame = [[NSScreen mainScreen] frame];
-    [_volumeWindow setFrame:CGRectMake(round((screenFrame.size.width-200)/2),140,200,200)/*[[NSScreen mainScreen] frame]*/ display:NO animate:NO];
+    [_volumeWindow setFrame:(osxVersion<110?  CGRectMake(round((screenFrame.size.width-210)/2),139,210,206) : CGRectMake(round((screenFrame.size.width-200)/2),140,200,200)) display:NO animate:NO];
 }
 
 - (void) receiveWakeNote: (NSNotification*) note

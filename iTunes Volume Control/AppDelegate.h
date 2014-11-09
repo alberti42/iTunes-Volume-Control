@@ -33,6 +33,8 @@
     
     NSInteger oldVolumeSetting;
     
+    NSInteger osxVersion;
+    
 @public
     iTunesApplication *iTunes;
     IntroWindowController *introWindowController;

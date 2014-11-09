@@ -1,3 +1,0 @@
-@interface VolumeView : NSVisualEffectView
-
-@end
