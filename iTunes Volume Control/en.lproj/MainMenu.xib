@@ -19,7 +19,7 @@
             </connections>
         </customObject>
         <customObject id="683" customClass="SUUpdater"/>
-        <sliderCell state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="left" sliderType="linear" id="fXP-fC-Ybp"/>
+        <sliderCell state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="fXP-fC-Ybp"/>
         <menu id="554" userLabel="Status Menu">
             <items>
                 <menuItem title="Enabled" state="on" tag="1" id="585">
@@ -172,10 +172,10 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" animationBehavior="default" id="nuK-9O-IGi" customClass="VolumeWindow">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="131" y="158" width="171" height="142"/>
+            <rect key="contentRect" x="131" y="158" width="200" height="200"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
             <view key="contentView" id="e8n-qv-VrI">
-                <rect key="frame" x="0.0" y="0.0" width="171" height="142"/>
+                <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                 <autoresizingMask key="autoresizingMask"/>
             </view>
             <point key="canvasLocation" x="262.5" y="126"/>

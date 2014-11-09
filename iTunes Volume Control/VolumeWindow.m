@@ -19,11 +19,9 @@
     return self;
 }
 
--(void)awakeFromNib
-{
-    NSRect screenFrame = [[NSScreen mainScreen] frame];
-    [self setFrame:CGRectMake(round((screenFrame.size.width-200)/2),140,200,200)/*[[NSScreen mainScreen] frame]*/ display:NO animate:NO];
-    
+//-(void)awakeFromNib
+//{
+
 //
 //    [self setStyleMask:self.styleMask | NSFullSizeContentViewWindowMask];
 //    [self setTitlebarAppearsTransparent:true];
@@ -43,5 +41,5 @@
 
 //    [[self contentView] addConstraints:(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[visualEffectView]-0-|", views: ["visualEffectView":visualEffectView]))];
 //     self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[visualEffectView]-0-|", options: NSLayoutFormatOptions.DirectionLeadingToTrailing, metrics: nil, views: ["visualEffectView":visualEffectView]))
-}
+//}
 @end

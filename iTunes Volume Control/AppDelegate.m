@@ -530,6 +530,9 @@ static NSTimeInterval statusBarHideDelay=10;
 
 -(void)awakeFromNib
 {
+    NSRect screenFrame = [[NSScreen mainScreen] frame];
+    [_volumeWindow setFrame:CGRectMake(round((screenFrame.size.width-200)/2),140,200,200)/*[[NSScreen mainScreen] frame]*/ display:NO animate:NO];
+    
     [[_volumeWindow contentView] setWantsLayer:YES];
 
     // [view insertVibrancyViewBlendingMode:NSVisualEffectBlendingModeBehindWindow];
