@@ -42,4 +42,6 @@
 //    [[self contentView] addConstraints:(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[visualEffectView]-0-|", views: ["visualEffectView":visualEffectView]))];
 //     self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[visualEffectView]-0-|", options: NSLayoutFormatOptions.DirectionLeadingToTrailing, metrics: nil, views: ["visualEffectView":visualEffectView]))
 //}
+
+
 @end

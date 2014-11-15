@@ -155,7 +155,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 
 @end
 
-#pragma mark - Implementation
+#pragma mark - Extending NSView
 
 @implementation NSView (HS)
 
@@ -183,6 +183,8 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 }
 
 @end
+
+#pragma mark - Implementation AppDelegate
 
 @implementation AppDelegate
 
@@ -549,22 +551,15 @@ static NSTimeInterval statusBarHideDelay=10;
     NSRect screenFrame = [[NSScreen mainScreen] frame];
     [_volumeWindow setFrame:(osxVersion<110?  CGRectMake(round((screenFrame.size.width-210)/2),139,210,206) : CGRectMake(round((screenFrame.size.width-200)/2),140,200,200)) display:NO animate:NO];
     
-    [[_volumeWindow contentView] setWantsLayer:YES];
+    NSVisualEffectView* view = [[_volumeWindow contentView] insertVibrancyViewBlendingMode:NSVisualEffectBlendingModeBehindWindow];
 
-    // [view insertVibrancyViewBlendingMode:NSVisualEffectBlendingModeBehindWindow];
+    //NSView* view = [_volumeWindow contentView];
     
-    //    [[_volumeWindow contentView] insertVibrancyViewBlendingMode:NSVisualEffectBlendingModeBehindWindow];
-    //    VolumeView* vv = [[VolumeView alloc] initWithFrame:rect];
-    //    [v addSubview:vv];
-    //    [vv setWantsLayer:YES];
-    //    [vv setMaterial:NSVisualEffectMaterialLight];
-    //    [vv setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
-    //    [vv setBlendingMode:NSVisualEffectBlendingModeBehindWindow];
-    //    [vv setState:NSVisualEffectStateActive];
+    [view setWantsLayer:YES];
     
-    mainLayer = [[_volumeWindow contentView] layer];
+    mainLayer = [view layer];
     CGColorRef backgroundColor=CGColorCreateGenericRGB(0.f, 0.f, 0.f, 0.16f);
-    [mainLayer setBackgroundColor:backgroundColor];
+    //[mainLayer setBackgroundColor:backgroundColor];
     CFRelease(backgroundColor);
     [mainLayer setCornerRadius:(osxVersion<110? 22 : 18)];
     [mainLayer setShouldRasterize:true];
@@ -579,7 +574,7 @@ static NSTimeInterval statusBarHideDelay=10;
     
     volumeImageLayer = [CALayer layer];
     [volumeImageLayer setFrame:NSRectToCGRect(rect)];
-    [volumeImageLayer setPosition:CGPointMake([[_volumeWindow contentView] frame].size.width/2, [[_volumeWindow contentView] frame].size.height/2+12)];
+    [volumeImageLayer setPosition:CGPointMake([view frame].size.width/2, [view frame].size.height/2+12)];
     [volumeImageLayer setContents:imgVolOn];
     
     [mainLayer addSublayer:volumeImageLayer];
