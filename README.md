@@ -10,14 +10,14 @@ Description
 
 ![alt tag](https://raw.github.com/alberti42/iTunes-Volume-Control/master/screenshot.png)
 
-Why do I need this app?
+Why do you need this app?
 -----------------------
 
 * iTunes volume is normally not affected by changes of volume from the keyboard. This would only affect the system volume settings.
 * This behavior is somehow undesired, especially when listening to musing on external speakers like AirPlay devices.
 * iTunes does not respond to volume change from your Apple Remote. Again, this would only change the system volume settings, leaving unaffected the volume of your AirPlay device.
 
-How to install it?
+How to get it installed?
 ------------------
 
 It is very simple. There is no need of any installation.
