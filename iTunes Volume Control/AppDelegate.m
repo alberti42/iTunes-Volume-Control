@@ -551,15 +551,16 @@ static NSTimeInterval statusBarHideDelay=10;
     NSRect screenFrame = [[NSScreen mainScreen] frame];
     [_volumeWindow setFrame:(osxVersion<110?  CGRectMake(round((screenFrame.size.width-210)/2),139,210,206) : CGRectMake(round((screenFrame.size.width-200)/2),140,200,200)) display:NO animate:NO];
     
-    NSVisualEffectView* view = [[_volumeWindow contentView] insertVibrancyViewBlendingMode:NSVisualEffectBlendingModeBehindWindow];
-
-    //NSView* view = [_volumeWindow contentView];
+    
+    // NSVisualEffectView* view = [[_volumeWindow contentView] insertVibrancyViewBlendingMode:NSVisualEffectBlendingModeBehindWindow];
+    
+    NSView* view = [_volumeWindow contentView];
     
     [view setWantsLayer:YES];
     
     mainLayer = [view layer];
     CGColorRef backgroundColor=CGColorCreateGenericRGB(0.f, 0.f, 0.f, 0.16f);
-    //[mainLayer setBackgroundColor:backgroundColor];
+    [mainLayer setBackgroundColor:backgroundColor];
     CFRelease(backgroundColor);
     [mainLayer setCornerRadius:(osxVersion<110? 22 : 18)];
     [mainLayer setShouldRasterize:true];
@@ -567,8 +568,8 @@ static NSTimeInterval statusBarHideDelay=10;
     
     [mainLayer setOpacity:0.0f];
     
-    imgVolOn=[NSImage imageNamed:@"volume"];
-    imgVolOff=[NSImage imageNamed:@"volume-off"];
+    imgVolOn=[NSImage imageNamed:osxVersion<110?@"volume":@"volume-yosemite"];
+    imgVolOff=[NSImage imageNamed:osxVersion<110?@"volume-off":@"volume-off-yosemite"];
     NSRect rect = NSZeroRect;
     rect.size = [imgVolOff size];
     
