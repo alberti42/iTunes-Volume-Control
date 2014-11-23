@@ -567,8 +567,8 @@ static NSTimeInterval statusBarHideDelay=10;
     
     [mainLayer setOpacity:0.0f];
     
-    imgVolOn=[NSImage imageNamed:osxVersion<110?@"volume":@"volume-yosemite"];
-    imgVolOff=[NSImage imageNamed:osxVersion<110?@"volume-off":@"volume-off-yosemite"];
+    imgVolOn=[NSImage imageNamed:@"volume"];
+    imgVolOff=[NSImage imageNamed:@"volume-off"];
     NSRect rect = NSZeroRect;
     rect.size = [imgVolOff size];
     
