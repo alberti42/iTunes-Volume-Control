@@ -563,7 +563,7 @@ static NSTimeInterval statusBarHideDelay=10;
     
     mainLayer = [view layer];
     CGColorRef backgroundColor=CGColorCreateGenericRGB(0.f, 0.f, 0.f, 0.16f);
-    //[mainLayer setBackgroundColor:backgroundColor];
+    [mainLayer setBackgroundColor:backgroundColor];
     CFRelease(backgroundColor);
     [mainLayer setCornerRadius:(osxVersion<110? 22 : 18)];
     [mainLayer setShouldRasterize:true];
