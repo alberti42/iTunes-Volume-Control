@@ -157,6 +157,8 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 
 #pragma mark - Extending NSView
 
+#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_10
+
 @implementation NSView (HS)
 
 -(instancetype)insertVibrancyViewBlendingMode:(NSVisualEffectBlendingMode)mode
@@ -183,6 +185,8 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 }
 
 @end
+
+#endif
 
 #pragma mark - Implementation AppDelegate
 
@@ -226,7 +230,7 @@ static NSTimeInterval statusBarHideDelay=10;
             
             // LSSharedFileListItemResolve is deprecated in Mac OS X 10.10
             // Switch to LSSharedFileListItemCopyResolvedURL if possible
-#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_10
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 101000 // MAC_OS_X_VERSION_10_10
             LSSharedFileListItemResolve(itemRef, 0, &url, NULL);
 #else
             url = LSSharedFileListItemCopyResolvedURL(itemRef, 0, NULL);
@@ -294,7 +298,7 @@ static NSTimeInterval statusBarHideDelay=10;
                     
                     // LSSharedFileListItemResolve is deprecated in Mac OS X 10.10
                     // Switch to LSSharedFileListItemCopyResolvedURL if possible
-#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_10
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 101000 // MAC_OS_X_VERSION_10_10
                     LSSharedFileListItemResolve(itemRef, 0, &URL, NULL);
 #else
                     URL = LSSharedFileListItemCopyResolvedURL(itemRef, 0, NULL);
@@ -525,16 +529,16 @@ static NSTimeInterval statusBarHideDelay=10;
         // [fadeInAnimation setDelegate:self];
         fadeInAnimationReady=true;
         
-        if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6) {
+        if (floor(NSAppKitVersionNumber) <= 1038) { // NSAppKitVersionNumber10_6
             //10.6.x or earlier systems
             osxVersion = 106;
-        } else if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_7) {
+        } else if (floor(NSAppKitVersionNumber) <= 1138) { // NSAppKitVersionNumber10_7
             /* On a 10.7 - 10.7.x system */
             osxVersion = 107;
-        } else if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_8) {
+        } else if (floor(NSAppKitVersionNumber) <= 1187) { // NSAppKitVersionNumber10_8
             /* On a 10.8 - 10.8.x system */
             osxVersion = 108;
-        } else if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_9) {
+        } else if (floor(NSAppKitVersionNumber) <= 1265) { // NSAppKitVersionNumber10_9
             /* On a 10.9 - 10.9.x system */
             osxVersion = 109;
         } else {
@@ -551,9 +555,9 @@ static NSTimeInterval statusBarHideDelay=10;
     NSRect screenFrame = [[NSScreen mainScreen] frame];
     [_volumeWindow setFrame:(osxVersion<110?  CGRectMake(round((screenFrame.size.width-210)/2),139,210,206) : CGRectMake(round((screenFrame.size.width-200)/2),140,200,200)) display:NO animate:NO];
     
-    NSVisualEffectView* view = [[_volumeWindow contentView] insertVibrancyViewBlendingMode:NSVisualEffectBlendingModeBehindWindow];
+    // NSVisualEffectView* view = [[_volumeWindow contentView] insertVibrancyViewBlendingMode:NSVisualEffectBlendingModeBehindWindow];
 
-    //NSView* view = [_volumeWindow contentView];
+    NSView* view = [_volumeWindow contentView];
     
     [view setWantsLayer:YES];
     

@@ -23,11 +23,9 @@
 		654DDC65185DDD510095AA66 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 654DDC64185DDD510095AA66 /* dsa_pub.pem */; };
 		656C6C78168A2A0B00ECA482 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 656C6C77168A2A0B00ECA482 /* main.m */; };
 		656C6C7F168A2A0B00ECA482 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 656C6C7E168A2A0B00ECA482 /* AppDelegate.m */; };
-		656C6C82168A2A0C00ECA482 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 656C6C80168A2A0C00ECA482 /* MainMenu.xib */; };
 		656C6CA3168A456900ECA482 /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 656C6CA2168A456900ECA482 /* ScriptingBridge.framework */; };
 		6577E8B1186099DA0024A59C /* introButtons-prev-HL.png in Resources */ = {isa = PBXBuildFile; fileRef = 6577E8AF186099DA0024A59C /* introButtons-prev-HL.png */; };
 		6577E8B2186099DA0024A59C /* introButtons-prev-HL@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6577E8B0186099DA0024A59C /* introButtons-prev-HL@2x.png */; };
-		658B93C4185E4823007BEBEF /* IntroWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658B93C3185E4823007BEBEF /* IntroWindow.xib */; };
 		658B93C7185E48B2007BEBEF /* IntroWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 658B93C6185E48B2007BEBEF /* IntroWindowController.m */; };
 		658B93C8185E6A51007BEBEF /* iTunes-screenshot.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B85973185E389400D8C851 /* iTunes-screenshot.png */; };
 		6597CCE71698BA05005F54C1 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6597CCE61698BA05005F54C1 /* Sparkle.framework */; };
@@ -39,6 +37,7 @@
 		659CCFF5185CBF0F006958AD /* volume@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 659CCFE6185CAC93006958AD /* volume@2x.png */; };
 		65C24C01168CBC7E0000BFC2 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 65C24C00168CBC7E0000BFC2 /* Credits.rtf */; };
 		65C24C67168CEB130000BFC2 /* AppleRemote.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C24C65168CEB130000BFC2 /* AppleRemote.m */; };
+		65C8FB6E1A4754340023CE24 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65C8FB6D1A4754340023CE24 /* MainMenu.xib */; };
 		65CC33B81698B3CC0049AF82 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65C24C6B168CEB9D0000BFC2 /* IOKit.framework */; };
 		65CC33BA1698B3D60049AF82 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 651A7EF1168F226300A76288 /* QuartzCore.framework */; };
 		65CC33BC1698B3E20049AF82 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 656C6C6B168A2A0B00ECA482 /* Cocoa.framework */; };
@@ -102,13 +101,11 @@
 		656C6C79168A2A0B00ECA482 /* iTunes Volume Control-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "iTunes Volume Control-Prefix.pch"; path = "iTunes Volume Control/iTunes Volume Control-Prefix.pch"; sourceTree = "<group>"; };
 		656C6C7D168A2A0B00ECA482 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = "iTunes Volume Control/AppDelegate.h"; sourceTree = "<group>"; };
 		656C6C7E168A2A0B00ECA482 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = "iTunes Volume Control/AppDelegate.m"; sourceTree = "<group>"; };
-		656C6C81168A2A0C00ECA482 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		656C6CA1168A447000ECA482 /* iTunes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iTunes.h; path = "iTunes Volume Control/iTunes.h"; sourceTree = "<group>"; };
 		656C6CA2168A456900ECA482 /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
 		6577E8AF186099DA0024A59C /* introButtons-prev-HL.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "introButtons-prev-HL.png"; path = "iTunes Volume Control/Images/introButtons-prev-HL.png"; sourceTree = "<group>"; };
 		6577E8B0186099DA0024A59C /* introButtons-prev-HL@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "introButtons-prev-HL@2x.png"; path = "iTunes Volume Control/Images/introButtons-prev-HL@2x.png"; sourceTree = "<group>"; };
 		657F9C4E168F349100818384 /* volume.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = volume.png; path = "iTunes Volume Control/Images/volume.png"; sourceTree = "<group>"; };
-		658B93C3185E4823007BEBEF /* IntroWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = IntroWindow.xib; path = "iTunes Volume Control/IntroWindow.xib"; sourceTree = "<group>"; };
 		658B93C5185E48B2007BEBEF /* IntroWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IntroWindowController.h; path = "iTunes Volume Control/IntroWindowController.h"; sourceTree = "<group>"; };
 		658B93C6185E48B2007BEBEF /* IntroWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IntroWindowController.m; path = "iTunes Volume Control/IntroWindowController.m"; sourceTree = "<group>"; };
 		6597CCE61698BA05005F54C1 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = "iTunes Volume Control/Sparkle.framework"; sourceTree = "<group>"; };
@@ -127,6 +124,7 @@
 		65C24C65168CEB130000BFC2 /* AppleRemote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppleRemote.m; sourceTree = "<group>"; };
 		65C24C66168CEB130000BFC2 /* CompatibilityFixes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompatibilityFixes.h; sourceTree = "<group>"; };
 		65C24C6B168CEB9D0000BFC2 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		65C8FB6D1A4754340023CE24 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		65CC785D1692FC1300BFD4AD /* statusbar-item.ai */ = {isa = PBXFileReference; lastKnownFileType = text; name = "statusbar-item.ai"; path = "iTunes Volume Control/Images/statusbar-item.ai"; sourceTree = "<group>"; };
 		65CC786A169305C700BFD4AD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		65E2AE811A044F6C00FD15A1 /* statusbar-item-black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "statusbar-item-black.png"; path = "iTunes Volume Control/Images/statusbar-item-black.png"; sourceTree = "<group>"; };
@@ -174,6 +172,7 @@
 		652D1143187AF05900C8BD88 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				651A7EED168F1F4C00A76288 /* VolumeWindow.m */,
 				656C6C7D168A2A0B00ECA482 /* AppDelegate.h */,
 				656C6C7E168A2A0B00ECA482 /* AppDelegate.m */,
 				658B93C5185E48B2007BEBEF /* IntroWindowController.h */,
@@ -186,7 +185,6 @@
 			isa = PBXGroup;
 			children = (
 				651A7EEE168F1F4C00A76288 /* VolumeWindow.h */,
-				651A7EED168F1F4C00A76288 /* VolumeWindow.m */,
 				E2F254C4179EA2B600DD3C66 /* StatusItemView.h */,
 				E2F254C5179EA2B600DD3C66 /* StatusItemView.m */,
 			);
@@ -216,8 +214,7 @@
 		652D1147187AF12A00C8BD88 /* XIBs */ = {
 			isa = PBXGroup;
 			children = (
-				658B93C3185E4823007BEBEF /* IntroWindow.xib */,
-				656C6C80168A2A0C00ECA482 /* MainMenu.xib */,
+				65C8FB6D1A4754340023CE24 /* MainMenu.xib */,
 			);
 			name = XIBs;
 			sourceTree = "<group>";
@@ -416,14 +413,12 @@
 				65E2AE8C1A044F6C00FD15A1 /* statusbar-item-blue@2x.png in Resources */,
 				653FDD9B185F770000F9795D /* introButtons-next@2x.png in Resources */,
 				65FCC05618607F2100193725 /* iTunes-arrow-1.png in Resources */,
-				658B93C4185E4823007BEBEF /* IntroWindow.xib in Resources */,
 				653FDD9D185F770000F9795D /* introButtons-prev@2x.png in Resources */,
 				659CCFF3185CBF04006958AD /* volume-off@2x.png in Resources */,
 				65E2AE8F1A044F6C00FD15A1 /* statusbar-item-white.png in Resources */,
 				659CCFDE185CAAA7006958AD /* appicon.icns in Resources */,
 				654DDC65185DDD510095AA66 /* dsa_pub.pem in Resources */,
 				659CCFF4185CBF0F006958AD /* volume.png in Resources */,
-				656C6C82168A2A0C00ECA482 /* MainMenu.xib in Resources */,
 				65133B731860F0750040A373 /* keyboard.png in Resources */,
 				65E2AE8B1A044F6C00FD15A1 /* statusbar-item-blue.png in Resources */,
 				659CCFF2185CBF04006958AD /* volume-off.png in Resources */,
@@ -441,6 +436,7 @@
 				65E2AE901A044F6C00FD15A1 /* statusbar-item-white@2x.png in Resources */,
 				653FDDA0185F780000F9795D /* introButtons-next-HL.png in Resources */,
 				6577E8B1186099DA0024A59C /* introButtons-prev-HL.png in Resources */,
+				65C8FB6E1A4754340023CE24 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -479,18 +475,6 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXVariantGroup section */
-		656C6C80168A2A0C00ECA482 /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				656C6C81168A2A0C00ECA482 /* en */,
-			);
-			name = MainMenu.xib;
-			path = "iTunes Volume Control";
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
 		656C6C97168A2A0C00ECA482 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -515,9 +499,10 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = "";
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx10.10;
+				SDKROOT = "";
+				VALID_ARCHS = x86_64;
 			};
 			name = Debug;
 		};
@@ -538,14 +523,16 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				SDKROOT = macosx10.10;
+				MACOSX_DEPLOYMENT_TARGET = "";
+				SDKROOT = "";
+				VALID_ARCHS = x86_64;
 			};
 			name = Release;
 		};
 		656C6C9A168A2A0C00ECA482 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -556,12 +543,13 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iTunes Volume Control/iTunes Volume Control-Prefix.pch";
 				INFOPLIST_FILE = "iTunes Volume Control/iTunes Volume Control-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = "";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE = "";
-				SDKROOT = macosx;
+				SDKROOT = "";
+				VALID_ARCHS = "x86_64 i386";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -569,6 +557,7 @@
 		656C6C9B168A2A0C00ECA482 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -579,12 +568,13 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iTunes Volume Control/iTunes Volume Control-Prefix.pch";
 				INFOPLIST_FILE = "iTunes Volume Control/iTunes Volume Control-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = "";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE = "";
-				SDKROOT = macosx;
+				SDKROOT = "";
+				VALID_ARCHS = "x86_64 i386";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
