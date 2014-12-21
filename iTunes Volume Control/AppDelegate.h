@@ -67,6 +67,7 @@
 - (IBAction)toggleAppleRemote:(id)sender;
 - (IBAction)aboutPanel:(id)sender;
 - (IBAction)sliderValueChanged:(NSSliderCell*)slider;
+- (IBAction)showIntroWindow:(id)sender;
 
 - (void)appleRemoteButton: (AppleRemoteEventIdentifier)buttonIdentifier pressedDown: (BOOL) pressedDown clickCount: (unsigned int) count;
 
