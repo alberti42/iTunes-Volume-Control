@@ -23,6 +23,12 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     static int previousKeyCode = 0;
     NSEvent * sysEvent;
     
+    if (type == kCGEventTapDisabledByTimeout) {
+        //NSLog(@"Event Taps Disabled! Re-enabling");
+        [(__bridge AppDelegate *)(refcon) resetEventTap];
+        return event;
+    }
+    
     // No event we care for? return ASAP
     if (type != NX_SYSDEFINED) return event;
     
@@ -38,17 +44,6 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     bool keyIsRepeat = (keyFlags & 0x1);
     bool iTunesRunning=[app->iTunes isRunning];
     
-    if(app->timer&&previousKeyCode!=keyCode)
-    {
-        [app stopTimer];
-        
-        if(!app->timerImgSpeaker&&!app->fadeInAnimationReady){
-            app->timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:app->waitOverlayPanel target:app selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
-            [[NSRunLoop mainRunLoop] addTimer:app->timerImgSpeaker forMode:NSRunLoopCommonModes];
-        }
-    }
-    previousKeyCode=keyCode;
-    
     // check that whether the Apple CMD modifier has been pressed or not
     if(((keyModifier&NX_COMMANDMASK)==NX_COMMANDMASK)==[app UseAppleCMDModifier])
     {
@@ -63,10 +58,10 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
                         if (!keyIsRepeat)
                             [[NSNotificationCenter defaultCenter] postNotificationName:@"MuteITunesVolume" object:NULL];
                     }
-                    else
-                    {
-                        [app checkEventTap];
-                    }
+                    //else
+                    //{
+                    //    [app checkEventTap];
+                    //}
                     return NULL;
                 }
                 break;
@@ -74,6 +69,16 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
             case NX_KEYTYPE_SOUND_DOWN:
                 if(iTunesRunning)
                 {
+                    if(previousKeyCode!=keyCode && app->timer)
+                    {
+                        [app stopTimer];
+                        if(!app->timerImgSpeaker&&!app->fadeInAnimationReady){
+                            app->timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:app->waitOverlayPanel target:app selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
+                            [[NSRunLoop mainRunLoop] addTimer:app->timerImgSpeaker forMode:NSRunLoopCommonModes];
+                        }
+                    }
+                    previousKeyCode=keyCode;
+                    
                     if( keyState == 1 )
                     {
                         if( !app->timer )
@@ -92,7 +97,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
                     }
                     else
                     {
-                        [app checkEventTap];
+                        // [app checkEventTap];
                         
                         if(app->timer)
                         {
@@ -392,6 +397,8 @@ static NSTimeInterval statusBarHideDelay=10;
 
 - (void)increaseITunesVolume:(NSNotification *)aNotification
 {
+    [self displayVolumeBar];
+
     if( [[aNotification name] isEqualToString:@"IncreaseITunesVolumeRamp"] )
     {
         timer=[NSTimer scheduledTimerWithTimeInterval:volumeRampTimeInterval target:self selector:@selector(rampVolumeUp:) userInfo:nil repeats:YES];
@@ -402,13 +409,14 @@ static NSTimeInterval statusBarHideDelay=10;
     }
     else
     {
-        [self displayVolumeBar];
         [self changeVol:true];
     }
 }
 
 - (void)decreaseITunesVolume:(NSNotification *)aNotification
 {
+    [self displayVolumeBar];
+
     if( [[aNotification name] isEqualToString:@"DecreaseITunesVolumeRamp"] )
     {
         timer=[NSTimer scheduledTimerWithTimeInterval:volumeRampTimeInterval target:self selector:@selector(rampVolumeDown:) userInfo:nil repeats:YES];
@@ -419,7 +427,6 @@ static NSTimeInterval statusBarHideDelay=10;
     }
     else
     {
-        [self displayVolumeBar];
         [self changeVol:false];
     }
 }
@@ -938,26 +945,31 @@ static NSTimeInterval statusBarHideDelay=10;
     } [CATransaction commit];
 }
 
-- (bool)checkEventTap
+-(void)resetEventTap
 {
-    bool ret=true;
-    
-    if(CGEventTapIsEnabled(eventTap)!=_Tapping)
-    {
-        [self stopTimer];
-        [self hideSpeakerImg:nil];
-        [self setTapping:_Tapping];
-        
-        ret=false;
-    }
-    
-    return ret;
+        CGEventTapEnable(eventTap, _Tapping);
 }
+
+//- (bool)checkEventTap
+//{
+//    bool ret=true;
+//    
+//    if(CGEventTapIsEnabled(eventTap)!=_Tapping)
+//    {
+//        [self stopTimer];
+//        [self hideSpeakerImg:nil];
+//        [self setTapping:_Tapping];
+//        
+//        ret=false;
+//    }
+//    
+//    return ret;
+//}
 
 - (void)changeVol:(bool)increase
 {
-    if([self checkEventTap])
-    {
+//    if([self checkEventTap])
+//    {
         NSInteger volume;
         if(oldVolumeSetting<0)
         {
@@ -975,7 +987,7 @@ static NSTimeInterval statusBarHideDelay=10;
         [iTunes setSoundVolume:volume];
 
         [self refreshVolumeBar:(int)volume];
-    }
+//    }
 }
 
 - (void) createVolumeBar
