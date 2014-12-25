@@ -21,10 +21,11 @@ static void displayPreferencesChanged(CGDirectDisplayID displayID, CGDisplayChan
 CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *refcon)
 {
     static int previousKeyCode = 0;
+    static bool muteDown = false;
     NSEvent * sysEvent;
     
     if (type == kCGEventTapDisabledByTimeout) {
-        //NSLog(@"Event Taps Disabled! Re-enabling");
+        NSLog(@"Event Taps Disabled! Re-enabling");
         [(__bridge AppDelegate *)(refcon) resetEventTap];
         return event;
     }
@@ -53,21 +54,31 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
                 
                 if (iTunesRunning)
                 {
+                    if(previousKeyCode!=keyCode && app->timer)
+                    {
+                        [app stopTimer];
+                        if(!app->timerImgSpeaker&&!app->fadeInAnimationReady){
+                            app->timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:app->waitOverlayPanel target:app selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
+                            [[NSRunLoop mainRunLoop] addTimer:app->timerImgSpeaker forMode:NSRunLoopCommonModes];
+                        }
+                    }
+                    previousKeyCode=keyCode;
+                    
                     if( keyState == 1 )
                     {
-                        if (!keyIsRepeat)
-                            [[NSNotificationCenter defaultCenter] postNotificationName:@"MuteITunesVolume" object:NULL];
+                        muteDown = true;
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"MuteITunesVolume" object:NULL];
                     }
-                    //else
-                    //{
-                    //    [app checkEventTap];
-                    //}
+                    else
+                    {
+                        muteDown = false;
+                    }
                     return NULL;
                 }
                 break;
             case NX_KEYTYPE_SOUND_UP:
             case NX_KEYTYPE_SOUND_DOWN:
-                if(iTunesRunning)
+                if(iTunesRunning && !muteDown)
                 {
                     if(previousKeyCode!=keyCode && app->timer)
                     {
@@ -97,8 +108,6 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
                     }
                     else
                     {
-                        // [app checkEventTap];
-                        
                         if(app->timer)
                         {
                             [app stopTimer];
@@ -950,44 +959,26 @@ static NSTimeInterval statusBarHideDelay=10;
         CGEventTapEnable(eventTap, _Tapping);
 }
 
-//- (bool)checkEventTap
-//{
-//    bool ret=true;
-//    
-//    if(CGEventTapIsEnabled(eventTap)!=_Tapping)
-//    {
-//        [self stopTimer];
-//        [self hideSpeakerImg:nil];
-//        [self setTapping:_Tapping];
-//        
-//        ret=false;
-//    }
-//    
-//    return ret;
-//}
 
 - (void)changeVol:(bool)increase
 {
-//    if([self checkEventTap])
-//    {
-        NSInteger volume;
-        if(oldVolumeSetting<0)
-        {
-            volume=[iTunes soundVolume]+_volumeInc*(increase?1:-1);
-        }
-        else
-        {
-            [volumeImageLayer setContents:imgVolOn];
-            volume=oldVolumeSetting;
-            oldVolumeSetting=-1;
-        }
-        if (volume<0) volume=0;
-        if (volume>100) volume=100;
-        
-        [iTunes setSoundVolume:volume];
+    NSInteger volume;
+    if(oldVolumeSetting<0)
+    {
+        volume=[iTunes soundVolume]+_volumeInc*(increase?1:-1);
+    }
+    else
+    {
+        [volumeImageLayer setContents:imgVolOn];
+        volume=oldVolumeSetting;
+        oldVolumeSetting=-1;
+    }
+    if (volume<0) volume=0;
+    if (volume>100) volume=100;
+    
+    [iTunes setSoundVolume:volume];
 
-        [self refreshVolumeBar:(int)volume];
-//    }
+    [self refreshVolumeBar:(int)volume];
 }
 
 - (void) createVolumeBar

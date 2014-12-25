@@ -72,7 +72,6 @@
 - (void)appleRemoteButton: (AppleRemoteEventIdentifier)buttonIdentifier pressedDown: (BOOL) pressedDown clickCount: (unsigned int) count;
 
 - (void)resetEventTap;
-// - (bool)checkEventTap;
 
 - (void)stopTimer;
 
