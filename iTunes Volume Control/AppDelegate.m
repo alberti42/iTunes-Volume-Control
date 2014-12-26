@@ -25,6 +25,9 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     NSEvent * sysEvent;
     
     if (type == kCGEventTapDisabledByTimeout) {
+        NSAlert *alert = [NSAlert alertWithMessageText:@"iTunes Volume Control" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:@"Event Taps Disabled! Re-enabling."];
+        [alert runModal];
+
         NSLog(@"Event Taps Disabled! Re-enabling");
         [(__bridge AppDelegate *)(refcon) resetEventTap];
         return event;
@@ -43,7 +46,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     CGEventFlags keyModifier = [sysEvent modifierFlags]|0xFFFF;
     AppDelegate* app=(__bridge AppDelegate *)(refcon);
     bool keyIsRepeat = (keyFlags & 0x1);
-    bool iTunesRunning=[app->iTunes isRunning];
+    bool musicProgramRunning=[app->musicProgramPnt isRunning];
     
     // check that whether the Apple CMD modifier has been pressed or not
     if(((keyModifier&NX_COMMANDMASK)==NX_COMMANDMASK)==[app UseAppleCMDModifier])
@@ -52,7 +55,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
         {
             case NX_KEYTYPE_MUTE:
                 
-                if (iTunesRunning)
+                if (musicProgramRunning)
                 {
                     if(previousKeyCode!=keyCode && app->timer)
                     {
@@ -78,7 +81,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
                 break;
             case NX_KEYTYPE_SOUND_UP:
             case NX_KEYTYPE_SOUND_DOWN:
-                if(iTunesRunning && !muteDown)
+                if(musicProgramRunning && !muteDown)
                 {
                     if(previousKeyCode!=keyCode && app->timer)
                     {
@@ -367,22 +370,22 @@ static NSTimeInterval statusBarHideDelay=10;
 - (void)playPauseITunes:(NSNotification *)aNotification
 {
     // check if iTunes is running (Q1)
-    [iTunes playpause];
+    [musicProgramPnt playpause];
 }
 
 - (void)nextTrackITunes:(NSNotification *)aNotification
 {
-    if ([iTunes isRunning])
+    if ([musicProgramPnt isRunning])
     {
-        [iTunes nextTrack];
+        [musicProgramPnt nextTrack];
     }
 }
 
 - (void)previousTrackITunes:(NSNotification *)aNotification
 {
-    if ([iTunes isRunning])
+    if ([musicProgramPnt isRunning])
     {
-        [iTunes previousTrack];
+        [musicProgramPnt previousTrack];
     }
 }
 
@@ -391,13 +394,13 @@ static NSTimeInterval statusBarHideDelay=10;
     [self displayVolumeBar];
     if(oldVolumeSetting<0)
     {
-        oldVolumeSetting=[iTunes soundVolume];
-        [iTunes setSoundVolume:0];
+        oldVolumeSetting=[musicProgramPnt soundVolume];
+        [musicProgramPnt setSoundVolume:0];
         [self refreshVolumeBar:0];
     }
     else
     {
-        [iTunes setSoundVolume:oldVolumeSetting];
+        [musicProgramPnt setSoundVolume:oldVolumeSetting];
         [volumeImageLayer setContents:imgVolOn];
         [self refreshVolumeBar:oldVolumeSetting];
         oldVolumeSetting=-1;
@@ -441,7 +444,7 @@ static NSTimeInterval statusBarHideDelay=10;
 }
 
 - (void) appleRemoteButton: (AppleRemoteEventIdentifier)buttonIdentifier pressedDown: (BOOL) pressedDown clickCount: (unsigned int) count {
-    if ([iTunes isRunning])
+    if ([musicProgramPnt isRunning])
     {
         switch (buttonIdentifier)
         {
@@ -589,14 +592,26 @@ static NSTimeInterval statusBarHideDelay=10;
     
     imgVolOn=[NSImage imageNamed:@"volume"];
     imgVolOff=[NSImage imageNamed:@"volume-off"];
+    iTunesIcon=[NSImage imageNamed:@"iTunes12"];
+    spotifyIcon=[NSImage imageNamed:@"spotify"];
+    
     NSRect rect = NSZeroRect;
     rect.size = [imgVolOff size];
+
+    NSRect rectIcon = NSZeroRect;
+    rectIcon.size = [iTunesIcon size];
     
     volumeImageLayer = [CALayer layer];
     [volumeImageLayer setFrame:NSRectToCGRect(rect)];
     [volumeImageLayer setPosition:CGPointMake([view frame].size.width/2, [view frame].size.height/2+12)];
     [volumeImageLayer setContents:imgVolOn];
     
+    iconLayer = [CALayer layer];
+    [iconLayer setFrame:NSRectToCGRect(rectIcon)];
+    [iconLayer setPosition:CGPointMake([volumeImageLayer frame].size.width/2-21.3, [volumeImageLayer frame].size.height/2-0.2)];
+    [iconLayer setContents:spotifyIcon];
+    
+    [volumeImageLayer addSublayer:iconLayer];
     [mainLayer addSublayer:volumeImageLayer];
     
     [self createVolumeBar];
@@ -619,6 +634,14 @@ static NSTimeInterval statusBarHideDelay=10;
     [self showInStatusBar];   // Install icon into the menu bar
     
     iTunes = [SBApplication applicationWithBundleIdentifier:@"com.apple.iTunes"];
+    spotify = [SBApplication applicationWithBundleIdentifier:@"com.spotify.client"];
+
+    // NSString* iTunesVersion = [[NSString alloc] initWithString:[iTunes version]];
+    
+    
+    // NSString* spotifyVersion = [[NSString alloc] initWithString:[spotify version]];
+    
+    musicProgramPnt = spotify;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(increaseITunesVolume:) name:@"IncreaseITunesVolume" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(increaseITunesVolume:) name:@"IncreaseITunesVolumeRamp" object:nil];
@@ -965,7 +988,7 @@ static NSTimeInterval statusBarHideDelay=10;
     NSInteger volume;
     if(oldVolumeSetting<0)
     {
-        volume=[iTunes soundVolume]+_volumeInc*(increase?1:-1);
+        volume=[musicProgramPnt soundVolume]+_volumeInc*(increase?1:-1);
     }
     else
     {
@@ -976,7 +999,8 @@ static NSTimeInterval statusBarHideDelay=10;
     if (volume<0) volume=0;
     if (volume>100) volume=100;
     
-    [iTunes setSoundVolume:volume];
+    [musicProgramPnt setSoundVolume:volume];
+    [spotify setSoundVolume:volume];
 
     [self refreshVolumeBar:(int)volume];
 }

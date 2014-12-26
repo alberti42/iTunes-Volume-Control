@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/CoreAnimation.h>
 #import "iTunes.h"
+#import "Spotify.h"
 #import "AppleRemote.h"
 
 @class IntroWindowController;
@@ -17,9 +18,11 @@
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
     CALayer *mainLayer;
     CALayer *volumeImageLayer;
+    CALayer *iconLayer;
     CALayer *volumeBar[16];
     
     NSImage *imgVolOn,*imgVolOff;
+    NSImage *iTunesIcon,*spotifyIcon;
     
     NSUserDefaults *preferences;
     
@@ -37,6 +40,9 @@
     
 @public
     iTunesApplication *iTunes;
+    SpotifyApplication *spotify;
+    id musicProgramPnt;
+    
     IntroWindowController *introWindowController;
     NSTimer* timer;
     NSTimer* timerImgSpeaker;
