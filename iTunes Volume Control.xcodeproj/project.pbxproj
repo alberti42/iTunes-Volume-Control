@@ -12,12 +12,6 @@
 		656C6C78168A2A0B00ECA482 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 656C6C77168A2A0B00ECA482 /* main.m */; };
 		656C6C7F168A2A0B00ECA482 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 656C6C7E168A2A0B00ECA482 /* AppDelegate.m */; };
 		656C6CA3168A456900ECA482 /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 656C6CA2168A456900ECA482 /* ScriptingBridge.framework */; };
-		6578146C1A4E28DA009C4A0B /* iTunes12@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 657814661A4E28DA009C4A0B /* iTunes12@2x.png */; };
-		6578146D1A4E28DA009C4A0B /* iTunes12.png in Resources */ = {isa = PBXBuildFile; fileRef = 657814671A4E28DA009C4A0B /* iTunes12.png */; };
-		6578146E1A4E28DA009C4A0B /* spotify@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 657814681A4E28DA009C4A0B /* spotify@2x.png */; };
-		6578146F1A4E28DA009C4A0B /* iTunes11@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 657814691A4E28DA009C4A0B /* iTunes11@2x.png */; };
-		657814701A4E28DA009C4A0B /* iTunes11.png in Resources */ = {isa = PBXBuildFile; fileRef = 6578146A1A4E28DA009C4A0B /* iTunes11.png */; };
-		657814711A4E28DA009C4A0B /* spotify.png in Resources */ = {isa = PBXBuildFile; fileRef = 6578146B1A4E28DA009C4A0B /* spotify.png */; };
 		658B93C7185E48B2007BEBEF /* IntroWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 658B93C6185E48B2007BEBEF /* IntroWindowController.m */; };
 		6597CCE71698BA05005F54C1 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6597CCE61698BA05005F54C1 /* Sparkle.framework */; };
 		6597CCE81698BA0C005F54C1 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6597CCE61698BA05005F54C1 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -26,6 +20,14 @@
 		659CCFF3185CBF04006958AD /* volume-off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 659CCFE7185CAD9D006958AD /* volume-off@2x.png */; };
 		659CCFF4185CBF0F006958AD /* volume.png in Resources */ = {isa = PBXBuildFile; fileRef = 657F9C4E168F349100818384 /* volume.png */; };
 		659CCFF5185CBF0F006958AD /* volume@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 659CCFE6185CAC93006958AD /* volume@2x.png */; };
+		65B3EB781A4ED9A8002BB939 /* iTunes10@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B3EB731A4ED996002BB939 /* iTunes10@2x.png */; };
+		65B3EB791A4ED9A8002BB939 /* iTunes10.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B3EB741A4ED996002BB939 /* iTunes10.png */; };
+		65B3EB7A1A4ED9A8002BB939 /* iTunes12@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 657814661A4E28DA009C4A0B /* iTunes12@2x.png */; };
+		65B3EB7B1A4ED9A8002BB939 /* iTunes12.png in Resources */ = {isa = PBXBuildFile; fileRef = 657814671A4E28DA009C4A0B /* iTunes12.png */; };
+		65B3EB7C1A4ED9A8002BB939 /* spotify@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 657814681A4E28DA009C4A0B /* spotify@2x.png */; };
+		65B3EB7D1A4ED9A8002BB939 /* iTunes11@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 657814691A4E28DA009C4A0B /* iTunes11@2x.png */; };
+		65B3EB7E1A4ED9A8002BB939 /* iTunes11.png in Resources */ = {isa = PBXBuildFile; fileRef = 6578146A1A4E28DA009C4A0B /* iTunes11.png */; };
+		65B3EB7F1A4ED9A8002BB939 /* spotify.png in Resources */ = {isa = PBXBuildFile; fileRef = 6578146B1A4E28DA009C4A0B /* spotify.png */; };
 		65C24C01168CBC7E0000BFC2 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 65C24C00168CBC7E0000BFC2 /* Credits.rtf */; };
 		65C24C67168CEB130000BFC2 /* AppleRemote.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C24C65168CEB130000BFC2 /* AppleRemote.m */; };
 		65C8FB6E1A4754340023CE24 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65C8FB6D1A4754340023CE24 /* MainMenu.xib */; };
@@ -111,6 +113,9 @@
 		659CCFE3185CAACD006958AD /* icon_128x128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_128x128.png; path = "iTunes Volume Control/Images/appicon.iconset/icon_128x128.png"; sourceTree = "<group>"; };
 		659CCFE6185CAC93006958AD /* volume@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "volume@2x.png"; path = "iTunes Volume Control/Images/volume@2x.png"; sourceTree = "<group>"; };
 		659CCFE7185CAD9D006958AD /* volume-off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "volume-off@2x.png"; path = "iTunes Volume Control/Images/volume-off@2x.png"; sourceTree = "<group>"; };
+		65B3EB731A4ED996002BB939 /* iTunes10@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunes10@2x.png"; sourceTree = "<group>"; };
+		65B3EB741A4ED996002BB939 /* iTunes10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTunes10.png; sourceTree = "<group>"; };
+		65B3EB771A4ED9A3002BB939 /* icons.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = icons.psd; sourceTree = "<group>"; };
 		65B85972185E389400D8C851 /* iTunes-screenshot.ai */ = {isa = PBXFileReference; lastKnownFileType = text; name = "iTunes-screenshot.ai"; path = "iTunes Volume Control/Images/iTunes-screenshot.ai"; sourceTree = "<group>"; };
 		65B85973185E389400D8C851 /* iTunes-screenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iTunes-screenshot.png"; path = "iTunes Volume Control/Images/iTunes-screenshot.png"; sourceTree = "<group>"; };
 		65C24C00168CBC7E0000BFC2 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; name = Credits.rtf; path = "iTunes Volume Control/Credits.rtf"; sourceTree = "<group>"; };
@@ -258,6 +263,9 @@
 		657814651A4E28CC009C4A0B /* program icons */ = {
 			isa = PBXGroup;
 			children = (
+				65B3EB771A4ED9A3002BB939 /* icons.psd */,
+				65B3EB731A4ED996002BB939 /* iTunes10@2x.png */,
+				65B3EB741A4ED996002BB939 /* iTunes10.png */,
 				657814661A4E28DA009C4A0B /* iTunes12@2x.png */,
 				657814671A4E28DA009C4A0B /* iTunes12.png */,
 				657814681A4E28DA009C4A0B /* spotify@2x.png */,
@@ -413,26 +421,28 @@
 			files = (
 				65E2AE8E1A044F6C00FD15A1 /* statusbar-item-gray@2x.png in Resources */,
 				659CCFF5185CBF0F006958AD /* volume@2x.png in Resources */,
-				6578146D1A4E28DA009C4A0B /* iTunes12.png in Resources */,
+				65B3EB791A4ED9A8002BB939 /* iTunes10.png in Resources */,
 				65E2AE8C1A044F6C00FD15A1 /* statusbar-item-blue@2x.png in Resources */,
-				657814711A4E28DA009C4A0B /* spotify.png in Resources */,
 				659CCFF3185CBF04006958AD /* volume-off@2x.png in Resources */,
 				65E2AE8F1A044F6C00FD15A1 /* statusbar-item-white.png in Resources */,
 				659CCFDE185CAAA7006958AD /* appicon.icns in Resources */,
+				65B3EB7E1A4ED9A8002BB939 /* iTunes11.png in Resources */,
+				65B3EB7C1A4ED9A8002BB939 /* spotify@2x.png in Resources */,
 				654DDC65185DDD510095AA66 /* dsa_pub.pem in Resources */,
 				659CCFF4185CBF0F006958AD /* volume.png in Resources */,
-				6578146C1A4E28DA009C4A0B /* iTunes12@2x.png in Resources */,
-				6578146E1A4E28DA009C4A0B /* spotify@2x.png in Resources */,
 				65E2AE8B1A044F6C00FD15A1 /* statusbar-item-blue.png in Resources */,
+				65B3EB781A4ED9A8002BB939 /* iTunes10@2x.png in Resources */,
 				659CCFF2185CBF04006958AD /* volume-off.png in Resources */,
 				65E2AE8A1A044F6C00FD15A1 /* statusbar-item-black@2x.png in Resources */,
-				6578146F1A4E28DA009C4A0B /* iTunes11@2x.png in Resources */,
+				65B3EB7D1A4ED9A8002BB939 /* iTunes11@2x.png in Resources */,
 				65C24C01168CBC7E0000BFC2 /* Credits.rtf in Resources */,
 				65E2AE8D1A044F6C00FD15A1 /* statusbar-item-gray.png in Resources */,
 				65E2AE891A044F6C00FD15A1 /* statusbar-item-black.png in Resources */,
+				65B3EB7A1A4ED9A8002BB939 /* iTunes12@2x.png in Resources */,
+				65B3EB7F1A4ED9A8002BB939 /* spotify.png in Resources */,
 				65E2AE901A044F6C00FD15A1 /* statusbar-item-white@2x.png in Resources */,
+				65B3EB7B1A4ED9A8002BB939 /* iTunes12.png in Resources */,
 				65C8FB6E1A4754340023CE24 /* MainMenu.xib in Resources */,
-				657814701A4E28DA009C4A0B /* iTunes11.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
