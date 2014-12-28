@@ -31,6 +31,7 @@
 		659CCFF3185CBF04006958AD /* volume-off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 659CCFE7185CAD9D006958AD /* volume-off@2x.png */; };
 		659CCFF4185CBF0F006958AD /* volume.png in Resources */ = {isa = PBXBuildFile; fileRef = 657F9C4E168F349100818384 /* volume.png */; };
 		659CCFF5185CBF0F006958AD /* volume@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 659CCFE6185CAC93006958AD /* volume@2x.png */; };
+		65A9ACBB1A5020AE00C56D65 /* iTunes11.icns in Resources */ = {isa = PBXBuildFile; fileRef = 65A9ACBA1A5020AE00C56D65 /* iTunes11.icns */; };
 		65B3EB781A4ED9A8002BB939 /* iTunes10@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B3EB731A4ED996002BB939 /* iTunes10@2x.png */; };
 		65B3EB791A4ED9A8002BB939 /* iTunes10.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B3EB741A4ED996002BB939 /* iTunes10.png */; };
 		65B3EB7A1A4ED9A8002BB939 /* iTunes12@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 657814661A4E28DA009C4A0B /* iTunes12@2x.png */; };
@@ -140,6 +141,7 @@
 		659CCFE3185CAACD006958AD /* icon_128x128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_128x128.png; path = "iTunes Volume Control/Images/appicon.iconset/icon_128x128.png"; sourceTree = "<group>"; };
 		659CCFE6185CAC93006958AD /* volume@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "volume@2x.png"; path = "iTunes Volume Control/Images/volume@2x.png"; sourceTree = "<group>"; };
 		659CCFE7185CAD9D006958AD /* volume-off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "volume-off@2x.png"; path = "iTunes Volume Control/Images/volume-off@2x.png"; sourceTree = "<group>"; };
+		65A9ACBA1A5020AE00C56D65 /* iTunes11.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = iTunes11.icns; sourceTree = "<group>"; };
 		65B3EB731A4ED996002BB939 /* iTunes10@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunes10@2x.png"; sourceTree = "<group>"; };
 		65B3EB741A4ED996002BB939 /* iTunes10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTunes10.png; sourceTree = "<group>"; };
 		65B3EB771A4ED9A3002BB939 /* icons.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = icons.psd; sourceTree = "<group>"; };
@@ -305,6 +307,7 @@
 			isa = PBXGroup;
 			children = (
 				65B3EB771A4ED9A3002BB939 /* icons.psd */,
+				65A9ACBA1A5020AE00C56D65 /* iTunes11.icns */,
 				65505D731A501C2100F20C24 /* iTunes12.icns */,
 				65505D741A501C2100F20C24 /* spotify.icns */,
 				658E9E8E1A5017AF0037AF64 /* iTunes12Big.png */,
@@ -479,6 +482,7 @@
 				65E2AE8F1A044F6C00FD15A1 /* statusbar-item-white.png in Resources */,
 				658E9E7C1A50141E0037AF64 /* spotifyBig@2x.png in Resources */,
 				659CCFDE185CAAA7006958AD /* appicon.icns in Resources */,
+				65A9ACBB1A5020AE00C56D65 /* iTunes11.icns in Resources */,
 				65B3EB7E1A4ED9A8002BB939 /* iTunes11.png in Resources */,
 				658E9E8B1A5015A20037AF64 /* iTunes10Big.png in Resources */,
 				65B3EB7C1A4ED9A8002BB939 /* spotify@2x.png in Resources */,
