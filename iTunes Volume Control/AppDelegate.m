@@ -25,10 +25,10 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     NSEvent * sysEvent;
     
     if (type == kCGEventTapDisabledByTimeout) {
-        NSAlert *alert = [NSAlert alertWithMessageText:@"iTunes Volume Control" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:@"Event Taps Disabled! Re-enabling."];
-        [alert runModal];
-
-        NSLog(@"Event Taps Disabled! Re-enabling");
+//        NSAlert *alert = [NSAlert alertWithMessageText:@"iTunes Volume Control" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:@"Event Taps Disabled! Re-enabling."];
+//        [alert runModal];
+//
+//        NSLog(@"Event Taps Disabled! Re-enabling");
         [(__bridge AppDelegate *)(refcon) resetEventTap];
         return event;
     }
@@ -911,6 +911,7 @@ static NSTimeInterval statusBarHideDelay=10;
 
 - (void) displayResolutionChanged: (NSNotification*) note
 {
+    /* TODO test with the old operating system and check it is triggered when res is changed */
     NSRect screenFrame = [[NSScreen mainScreen] frame];
     [_volumeWindow setFrame:(osxVersion<110?  CGRectMake(round((screenFrame.size.width-210)/2),139,210,206) : CGRectMake(round((screenFrame.size.width-200)/2),140,200,200)) display:NO animate:NO];
 }
