@@ -13,8 +13,8 @@
 
 @synthesize icons = _icons;
 
--(void) awakeFromNib {
-    
+-(void) awakeFromNib {       
+
     IconModel* itunes = [[IconModel alloc] init];
     itunes.nameProgram = @"iTunes";
     itunes.iconImage = [NSImage imageNamed:@"iTunes12Big"];
@@ -23,8 +23,8 @@
     spotify.nameProgram = @"Spotify";
     spotify.iconImage = [NSImage imageNamed:@"spotifyBig"];
 
-    
     _icons = [[NSMutableArray alloc] init];
+    
     [arrayController addObject:itunes];
     [arrayController addObject:spotify];
 

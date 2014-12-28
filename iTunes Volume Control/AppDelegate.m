@@ -983,6 +983,11 @@ static NSTimeInterval statusBarHideDelay=10;
         CGEventTapEnable(eventTap, _Tapping);
 }
 
+- (IBAction)increaseVol:(id)sender
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"IncreaseITunesVolume" object:NULL];
+    
+}
 
 - (void)changeVol:(bool)increase
 {

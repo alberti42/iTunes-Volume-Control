@@ -65,6 +65,9 @@
 @property (assign, nonatomic) bool hideFromStatusBar;
 @property (assign, nonatomic) bool loadIntroAtStart;
 
+- (IBAction)increaseVol:(id)sender;
+
+
 - (IBAction)toggleUseAppleCMDModifier:(id)sender;
 - (IBAction)toggleAutomaticUpdates:(id)sender;
 - (IBAction)toggleHideFromStatusBar:(id)sender;
