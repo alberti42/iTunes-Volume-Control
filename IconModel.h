@@ -12,5 +12,6 @@
 
 @property (strong) NSString* nameProgram;
 @property (strong) NSImage* iconImage;
+@property (assign, nonatomic) BOOL selected;
 
 @end

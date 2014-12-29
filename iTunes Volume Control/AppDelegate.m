@@ -608,7 +608,7 @@ static NSTimeInterval statusBarHideDelay=10;
     
     iconLayer = [CALayer layer];
     [iconLayer setFrame:NSRectToCGRect(rectIcon)];
-    [iconLayer setPosition:CGPointMake([volumeImageLayer frame].size.width/2-21.3, [volumeImageLayer frame].size.height/2-0.2)];
+    [iconLayer setPosition:CGPointMake([volumeImageLayer frame].size.width/2-22, [volumeImageLayer frame].size.height/2)];
     [iconLayer setContents:spotifyIcon];
     
     [volumeImageLayer addSublayer:iconLayer];
@@ -637,8 +637,6 @@ static NSTimeInterval statusBarHideDelay=10;
     spotify = [SBApplication applicationWithBundleIdentifier:@"com.spotify.client"];
 
     // NSString* iTunesVersion = [[NSString alloc] initWithString:[iTunes version]];
-    
-    
     // NSString* spotifyVersion = [[NSString alloc] initWithString:[spotify version]];
     
     musicProgramPnt = spotify;
@@ -932,6 +930,7 @@ static NSTimeInterval statusBarHideDelay=10;
     }
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
     
     [remote stopListening:self];
 
@@ -957,6 +956,7 @@ static NSTimeInterval statusBarHideDelay=10;
      
      _statusBar = nil;
      */
+    
 }
 
 - (void) showSpeakerImg:(NSTimer*)theTimer

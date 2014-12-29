@@ -12,6 +12,7 @@
 
 @synthesize nameProgram = _nameProgram;
 @synthesize iconImage = _iconImage;
+@synthesize selected = _selected;
 
 - (id)init{
     
@@ -19,6 +20,7 @@
     
     if(self)
     {
+        _selected = false;
     }
     
     return self;

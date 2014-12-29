@@ -142,6 +142,7 @@
 		659CCFE3185CAACD006958AD /* icon_128x128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_128x128.png; path = "iTunes Volume Control/Images/appicon.iconset/icon_128x128.png"; sourceTree = "<group>"; };
 		659CCFE6185CAC93006958AD /* volume@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "volume@2x.png"; path = "iTunes Volume Control/Images/volume@2x.png"; sourceTree = "<group>"; };
 		659CCFE7185CAD9D006958AD /* volume-off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "volume-off@2x.png"; path = "iTunes Volume Control/Images/volume-off@2x.png"; sourceTree = "<group>"; };
+		65A1ECEC1A51541500CEE4A9 /* iTunes9.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = iTunes9.icns; sourceTree = "<group>"; };
 		65A9ACBA1A5020AE00C56D65 /* iTunes11.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = iTunes11.icns; sourceTree = "<group>"; };
 		65A9ACBC1A5021EA00C56D65 /* iTunes10.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = iTunes10.icns; sourceTree = "<group>"; };
 		65B3EB731A4ED996002BB939 /* iTunes10@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunes10@2x.png"; sourceTree = "<group>"; };
@@ -224,6 +225,8 @@
 				658B93C6185E48B2007BEBEF /* IntroWindowController.m */,
 				65163D971A50077E007F3DE6 /* IconController.h */,
 				65163D981A50077E007F3DE6 /* IconController.m */,
+				65E325D91A5081C8007BFC10 /* iconCollectionViewItem.h */,
+				65E325DA1A5081C8007BFC10 /* iconCollectionViewItem.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -235,8 +238,6 @@
 				651A7EEE168F1F4C00A76288 /* VolumeWindow.h */,
 				E2F254C4179EA2B600DD3C66 /* StatusItemView.h */,
 				E2F254C5179EA2B600DD3C66 /* StatusItemView.m */,
-				65E325D91A5081C8007BFC10 /* iconCollectionViewItem.h */,
-				65E325DA1A5081C8007BFC10 /* iconCollectionViewItem.m */,
 				65E325D61A508078007BFC10 /* iconView.h */,
 				65E325D71A508078007BFC10 /* iconView.m */,
 				65E325DC1A50AEC6007BFC10 /* iconCollectionView.h */,
@@ -319,6 +320,7 @@
 			isa = PBXGroup;
 			children = (
 				65B3EB771A4ED9A3002BB939 /* icons.psd */,
+				65A1ECEC1A51541500CEE4A9 /* iTunes9.icns */,
 				65A9ACBC1A5021EA00C56D65 /* iTunes10.icns */,
 				65A9ACBA1A5020AE00C56D65 /* iTunes11.icns */,
 				65505D731A501C2100F20C24 /* iTunes12.icns */,

@@ -18,6 +18,7 @@
     IconModel* itunes = [[IconModel alloc] init];
     itunes.nameProgram = @"iTunes";
     itunes.iconImage = [NSImage imageNamed:@"iTunes12Big"];
+    itunes.selected = true;
 
     IconModel* spotify = [[IconModel alloc] init];
     spotify.nameProgram = @"Spotify";
@@ -27,7 +28,22 @@
     
     [arrayController addObject:itunes];
     [arrayController addObject:spotify];
-
+    
+//    [arrayController addObserver:self forKeyPath:@"selectedObjects"
+//                         options:NSKeyValueObservingOptionNew
+//                         context:nil];
 }
+
+//- (void)observeValueForKeyPath:(NSString *)keyPath
+//                      ofObject:(id)object
+//                        change:(NSDictionary *)change
+//                       context:(void *)context
+//{
+//    // do whatever necessary here
+//    NSLog(@"dfdfdf");
+//}
+
+
+
 
 @end

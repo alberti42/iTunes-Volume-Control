@@ -8,6 +8,7 @@
 
 #import "iconCollectionView.h"
 #import "iconView.h"
+#import "IconModel.h"
 
 @implementation iconCollectionView
 
@@ -15,11 +16,14 @@
     [super drawRect:dirtyRect];
     
     // Drawing code here.
+
 }
 
 - (NSCollectionViewItem *)newItemForRepresentedObject:(id)object
 {
     NSCollectionViewItem *newItem = [super newItemForRepresentedObject:object];
+    
+    [newItem setSelected: [(IconModel*)newItem.representedObject selected]];
     
     [(iconView*)[newItem view] bind:@"iconImage" toObject:newItem withKeyPath:@"representedObject.iconImage" options: nil];
     
