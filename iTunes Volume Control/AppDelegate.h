@@ -67,7 +67,6 @@
 
 - (IBAction)increaseVol:(id)sender;
 
-
 - (IBAction)toggleUseAppleCMDModifier:(id)sender;
 - (IBAction)toggleAutomaticUpdates:(id)sender;
 - (IBAction)toggleHideFromStatusBar:(id)sender;

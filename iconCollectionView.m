@@ -12,6 +12,13 @@
 
 @implementation iconCollectionView
 
+-(void)awakeFromNib {
+    
+    [self setFocusRingType:NSFocusRingTypeNone];
+    [self setAllowsMultipleSelection:NO];
+
+}
+
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];
     

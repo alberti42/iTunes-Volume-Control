@@ -57,6 +57,7 @@
 		65E325D81A508078007BFC10 /* iconView.m in Sources */ = {isa = PBXBuildFile; fileRef = 65E325D71A508078007BFC10 /* iconView.m */; };
 		65E325DB1A5081C8007BFC10 /* iconCollectionViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 65E325DA1A5081C8007BFC10 /* iconCollectionViewItem.m */; };
 		65E325DE1A50AEC6007BFC10 /* iconCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 65E325DD1A50AEC6007BFC10 /* iconCollectionView.m */; };
+		65F7DD921A51BB2400089B83 /* musicPlayersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F7DD911A51BB2400089B83 /* musicPlayersView.m */; };
 		E2F254C6179EA2B600DD3C66 /* StatusItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F254C5179EA2B600DD3C66 /* StatusItemView.m */; };
 /* End PBXBuildFile section */
 
@@ -172,6 +173,8 @@
 		65E325DA1A5081C8007BFC10 /* iconCollectionViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iconCollectionViewItem.m; sourceTree = "<group>"; };
 		65E325DC1A50AEC6007BFC10 /* iconCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iconCollectionView.h; sourceTree = "<group>"; };
 		65E325DD1A50AEC6007BFC10 /* iconCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iconCollectionView.m; sourceTree = "<group>"; };
+		65F7DD901A51BB2400089B83 /* musicPlayersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = musicPlayersView.h; sourceTree = "<group>"; };
+		65F7DD911A51BB2400089B83 /* musicPlayersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = musicPlayersView.m; sourceTree = "<group>"; };
 		65FCC05218607F2100193725 /* iTunes-arrow-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iTunes-arrow-1.png"; path = "iTunes Volume Control/Images/iTunes-arrow-1.png"; sourceTree = "<group>"; };
 		65FCC05318607F2100193725 /* iTunes-arrow-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iTunes-arrow-1@2x.png"; path = "iTunes Volume Control/Images/iTunes-arrow-1@2x.png"; sourceTree = "<group>"; };
 		65FCC05418607F2100193725 /* iTunes-arrow-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iTunes-arrow-2.png"; path = "iTunes Volume Control/Images/iTunes-arrow-2.png"; sourceTree = "<group>"; };
@@ -234,6 +237,8 @@
 		652D1144187AF06E00C8BD88 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				65F7DD901A51BB2400089B83 /* musicPlayersView.h */,
+				65F7DD911A51BB2400089B83 /* musicPlayersView.m */,
 				651A7EED168F1F4C00A76288 /* VolumeWindow.m */,
 				651A7EEE168F1F4C00A76288 /* VolumeWindow.h */,
 				E2F254C4179EA2B600DD3C66 /* StatusItemView.h */,
@@ -554,6 +559,7 @@
 				65163D991A50077E007F3DE6 /* IconController.m in Sources */,
 				658B93C7185E48B2007BEBEF /* IntroWindowController.m in Sources */,
 				656C6C78168A2A0B00ECA482 /* main.m in Sources */,
+				65F7DD921A51BB2400089B83 /* musicPlayersView.m in Sources */,
 				656C6C7F168A2A0B00ECA482 /* AppDelegate.m in Sources */,
 				65C24C67168CEB130000BFC2 /* AppleRemote.m in Sources */,
 				651A7EEF168F1F4C00A76288 /* VolumeWindow.m in Sources */,
