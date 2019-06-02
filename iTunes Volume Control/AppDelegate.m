@@ -66,10 +66,10 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
                     if(previousKeyCode!=keyCode && app->timer)
                     {
                         [app stopTimer];
-                        if(!app->timerImgSpeaker&&!app->fadeInAnimationReady){
-                            app->timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:app->waitOverlayPanel target:app selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
-                            [[NSRunLoop mainRunLoop] addTimer:app->timerImgSpeaker forMode:NSRunLoopCommonModes];
-                        }
+                        //                        if(!app->timerImgSpeaker&&!app->fadeInAnimationReady){
+                        //                            app->timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:app->waitOverlayPanel target:app selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
+                        //                            [[NSRunLoop mainRunLoop] addTimer:app->timerImgSpeaker forMode:NSRunLoopCommonModes];
+                        //                        }
                     }
                     previousKeyCode=keyCode;
                     
@@ -92,10 +92,10 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
                     if(previousKeyCode!=keyCode && app->timer)
                     {
                         [app stopTimer];
-                        if(!app->timerImgSpeaker&&!app->fadeInAnimationReady){
-                            app->timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:app->waitOverlayPanel target:app selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
-                            [[NSRunLoop mainRunLoop] addTimer:app->timerImgSpeaker forMode:NSRunLoopCommonModes];
-                        }
+                        //                        if(!app->timerImgSpeaker&&!app->fadeInAnimationReady){
+                        //                            app->timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:app->waitOverlayPanel target:app selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
+                        //                            [[NSRunLoop mainRunLoop] addTimer:app->timerImgSpeaker forMode:NSRunLoopCommonModes];
+                        //                        }
                     }
                     previousKeyCode=keyCode;
                     
@@ -121,10 +121,10 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
                         {
                             [app stopTimer];
                             
-                            if(!app->timerImgSpeaker&&!app->fadeInAnimationReady){
-                                app->timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:app->waitOverlayPanel target:app selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
-                                [[NSRunLoop mainRunLoop] addTimer:app->timerImgSpeaker forMode:NSRunLoopCommonModes];
-                            }
+                            //                            if(!app->timerImgSpeaker&&!app->fadeInAnimationReady){
+                            //                                app->timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:app->waitOverlayPanel target:app selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
+                            //                                [[NSRunLoop mainRunLoop] addTimer:app->timerImgSpeaker forMode:NSRunLoopCommonModes];
+                            //                            }
                         }
                     }
                     return NULL;
@@ -429,13 +429,19 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     {
         oldVolumeSetting=[musicProgramPnt soundVolume];
         [musicProgramPnt setSoundVolume:0];
-        [self refreshVolumeBar:0];
+        
+        [[NSClassFromString(@"OSDManager") sharedManager] showImage:OSDGraphicSpeakerMute onDisplayID:CGSMainDisplayID() priority:OSDPriorityDefault msecUntilFade:1000 filledChiclets:0 totalChiclets:(unsigned int)100 locked:NO];
+
+        //[self refreshVolumeBar:0];
     }
     else
     {
         [musicProgramPnt setSoundVolume:oldVolumeSetting];
         [volumeImageLayer setContents:imgVolOn];
-        [self refreshVolumeBar:oldVolumeSetting];
+        
+        [[NSClassFromString(@"OSDManager") sharedManager] showImage:OSDGraphicSpeaker onDisplayID:CGSMainDisplayID() priority:OSDPriorityDefault msecUntilFade:1000 filledChiclets:(unsigned int)oldVolumeSetting totalChiclets:(unsigned int)100 locked:NO];
+
+        //[self refreshVolumeBar:oldVolumeSetting];
         oldVolumeSetting=-1;
     }
 }
@@ -450,7 +456,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     
         [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
 
-        if(timerImgSpeaker) {[timerImgSpeaker invalidate]; timerImgSpeaker=nil;}
+        // if(timerImgSpeaker) {[timerImgSpeaker invalidate]; timerImgSpeaker=nil;}
     }
     else
     {
@@ -468,7 +474,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
         
         [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
         
-        if(timerImgSpeaker) {[timerImgSpeaker invalidate]; timerImgSpeaker=nil;}
+        // if(timerImgSpeaker) {[timerImgSpeaker invalidate]; timerImgSpeaker=nil;}
     }
     else
     {
@@ -486,10 +492,10 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
                 {
                     [self stopTimer];
                     
-                    if(!timerImgSpeaker&&!fadeInAnimationReady) {
-                        timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:waitOverlayPanel target:self selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
-                        [[NSRunLoop mainRunLoop] addTimer:timerImgSpeaker forMode:NSRunLoopCommonModes];
-                    }
+                    //                    if(!timerImgSpeaker&&!fadeInAnimationReady) {
+                    //                        timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:waitOverlayPanel target:self selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
+                    //                        [[NSRunLoop mainRunLoop] addTimer:timerImgSpeaker forMode:NSRunLoopCommonModes];
+                    //                    }
                 }
                 else
                 {
@@ -505,10 +511,10 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
                 {
                     [self stopTimer];
                     
-                    if(!timerImgSpeaker&&!fadeInAnimationReady){
-                        timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:waitOverlayPanel target:self selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
-                        [[NSRunLoop mainRunLoop] addTimer:timerImgSpeaker forMode:NSRunLoopCommonModes];
-                    }
+                    //                    if(!timerImgSpeaker&&!fadeInAnimationReady){
+                    //                        timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:waitOverlayPanel target:self selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
+                    //                        [[NSRunLoop mainRunLoop] addTimer:timerImgSpeaker forMode:NSRunLoopCommonModes];
+                    //                    }
                 }
                 else
                 {
@@ -1039,19 +1045,20 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     }
     else // if it was mute
     {
-        // [volumeImageLayer setContents:imgVolOn];
+        // [volumeImageLayer setContents:imgVolOn];  // restore the image of the speaker from mute speaker
         volume=oldVolumeSetting;
         oldVolumeSetting=-1;  // this says that it is not mute
     }
     if (volume<0) volume=0;
     if (volume>100) volume=100;
     
-    [[NSClassFromString(@"OSDManager") sharedManager] showImage:OSDGraphicSpeakerMute onDisplayID:CGSMainDisplayID() priority:OSDPriorityDefault msecUntilFade:1000 filledChiclets:(unsigned int)volume totalChiclets:(unsigned int)100 locked:NO];
+    OSDGraphic image = (volume > 0)? OSDGraphicSpeaker : OSDGraphicSpeakerMute;
+    
+    [[NSClassFromString(@"OSDManager") sharedManager] showImage:image onDisplayID:CGSMainDisplayID() priority:OSDPriorityDefault msecUntilFade:1000 filledChiclets:(unsigned int)volume totalChiclets:(unsigned int)100 locked:NO];
     
     [musicProgramPnt setSoundVolume:volume];
-    // [spotify setSoundVolume:volume];
-
-    [self refreshVolumeBar:(int)volume];
+    
+    // [self refreshVolumeBar:(int)volume];
 }
 
 - (void) createVolumeBar
@@ -1148,6 +1155,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     [CATransaction commit];
 }
 
+/*
 - (void) displayVolumeBar
 {
     if(fadeInAnimationReady) [self showSpeakerImg:nil];
@@ -1155,6 +1163,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:waitOverlayPanel target:self selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
     [[NSRunLoop mainRunLoop] addTimer:timerImgSpeaker forMode:NSRunLoopCommonModes];
 }
+*/
 
 #pragma mark - Hide From Status Bar
 
