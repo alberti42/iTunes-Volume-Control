@@ -3,11 +3,11 @@
 @implementation VolumeWindow
 
 - (id) initWithContentRect: (NSRect) contentRect
-                 styleMask: (unsigned long) aStyle
+                 styleMask: (NSWindowStyleMask) aStyle
                    backing: (NSBackingStoreType) bufferingType
                      defer: (BOOL) flag
 {
-    self = [super initWithContentRect: contentRect styleMask: NSBorderlessWindowMask backing: bufferingType defer: flag];
+    self = [super initWithContentRect: contentRect styleMask: NSWindowStyleMaskBorderless backing: bufferingType defer: flag];
     if (!self) return nil;
     
     [self setOpaque:NO];

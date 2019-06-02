@@ -72,6 +72,9 @@
 		65133B6C1860ECE30040A373 /* introButtons-close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "introButtons-close@2x.png"; path = "iTunes Volume Control/Images/introButtons-close@2x.png"; sourceTree = "<group>"; };
 		65133B711860F0750040A373 /* keyboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = keyboard.png; path = "iTunes Volume Control/Images/keyboard.png"; sourceTree = "<group>"; };
 		65133B721860F0750040A373 /* keyboard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "keyboard@2x.png"; path = "iTunes Volume Control/Images/keyboard@2x.png"; sourceTree = "<group>"; };
+		6515C51C22A453680065EAA2 /* CoreGraphicsPriv.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CoreGraphicsPriv.h; path = "iTunes Volume Control/CoreGraphicsPriv.h"; sourceTree = "<group>"; };
+		6515C51D22A453680065EAA2 /* BezelServices.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BezelServices.h; path = "iTunes Volume Control/BezelServices.h"; sourceTree = "<group>"; };
+		6515C51E22A453770065EAA2 /* OSD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OSD.h; path = "iTunes Volume Control/OSD.h"; sourceTree = "<group>"; };
 		65163D931A500652007F3DE6 /* IconModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconModel.h; sourceTree = "<group>"; };
 		65163D941A500652007F3DE6 /* IconModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconModel.m; sourceTree = "<group>"; };
 		65163D971A50077E007F3DE6 /* IconController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconController.h; sourceTree = "<group>"; };
@@ -217,6 +220,8 @@
 			children = (
 				656C6C7D168A2A0B00ECA482 /* AppDelegate.h */,
 				656C6C7E168A2A0B00ECA482 /* AppDelegate.m */,
+				6515C51D22A453680065EAA2 /* BezelServices.h */,
+				6515C51C22A453680065EAA2 /* CoreGraphicsPriv.h */,
 				65E325D91A5081C8007BFC10 /* iconCollectionViewItem.h */,
 				65E325DA1A5081C8007BFC10 /* iconCollectionViewItem.m */,
 				65163D971A50077E007F3DE6 /* IconController.h */,
@@ -225,6 +230,7 @@
 				658B93C6185E48B2007BEBEF /* IntroWindowController.m */,
 				65B8E4B122A35572005198A8 /* MyNSVisualEffectView.h */,
 				65B8E4B222A35572005198A8 /* MyNSVisualEffectView.m */,
+				6515C51E22A453770065EAA2 /* OSD.h */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";

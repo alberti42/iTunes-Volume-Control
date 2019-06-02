@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface StatusItemView : NSView{
+@interface StatusItemView : NSView {
 
     NSImage *statusImageWhite;
     NSImage *statusImageBlack;

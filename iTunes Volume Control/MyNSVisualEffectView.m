@@ -12,9 +12,6 @@
 
 -(BOOL) allowsVibrancy
 {
-    
-    int a = 1;
-    
     return true;
 }
 

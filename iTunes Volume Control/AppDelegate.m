@@ -13,6 +13,11 @@
 #import "IntroWindowController.h"
 #import "MyNSVisualEffectView.h"
 
+#import "BezelServices.h"
+#import "OSD.h"
+
+#include <dlfcn.h>
+
 #pragma mark - Tapping key stroke events
 
 static void displayPreferencesChanged(CGDirectDisplayID displayID, CGDisplayChangeSummaryFlags flags, void *userInfo) {
@@ -173,9 +178,12 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 
 @end
 
+/*
+ 
 #pragma mark - Extending NSView
 
 #if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_10
+
 
 @implementation NSView (HS)
 
@@ -206,6 +214,8 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 
 #endif
 
+*/
+
 #pragma mark - Implementation AppDelegate
 
 @implementation AppDelegate
@@ -226,6 +236,27 @@ static CFTimeInterval fadeInDuration=0.2;
 static CFTimeInterval fadeOutDuration=0.7;
 static NSTimeInterval volumeRampTimeInterval=0.02;
 static NSTimeInterval statusBarHideDelay=10;
+
+void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1, int arg2, float v, int timeout) = NULL;
+
+- (BOOL)_loadBezelServices
+{
+    // Load BezelServices framework
+    void *handle = dlopen("/System/Library/PrivateFrameworks/BezelServices.framework/Versions/A/BezelServices", RTLD_GLOBAL);
+    if (!handle) {
+        NSLog(@"Error opening framework");
+        return NO;
+    }
+    else {
+        _BSDoGraphicWithMeterAndTimeout = dlsym(handle, "BSDoGraphicWithMeterAndTimeout");
+        return _BSDoGraphicWithMeterAndTimeout != NULL;
+    }
+}
+
+- (BOOL)_loadOSDFramework
+{
+    return [[NSBundle bundleWithPath:@"/System/Library/PrivateFrameworks/OSD.framework"] load];
+}
 
 - (bool) StartAtLogin
 {
@@ -392,7 +423,8 @@ static NSTimeInterval statusBarHideDelay=10;
 
 - (void)muteITunesVolume:(NSNotification *)aNotification
 {
-    [self displayVolumeBar];
+    // [self displayVolumeBar];
+    
     if(oldVolumeSetting<0)
     {
         oldVolumeSetting=[musicProgramPnt soundVolume];
@@ -410,7 +442,7 @@ static NSTimeInterval statusBarHideDelay=10;
 
 - (void)increaseITunesVolume:(NSNotification *)aNotification
 {
-    [self displayVolumeBar];
+//    [self displayVolumeBar];
 
     if( [[aNotification name] isEqualToString:@"IncreaseITunesVolumeRamp"] )
     {
@@ -428,7 +460,7 @@ static NSTimeInterval statusBarHideDelay=10;
 
 - (void)decreaseITunesVolume:(NSNotification *)aNotification
 {
-    [self displayVolumeBar];
+    // [self displayVolumeBar];
 
     if( [[aNotification name] isEqualToString:@"DecreaseITunesVolumeRamp"] )
     {
@@ -570,7 +602,7 @@ static NSTimeInterval statusBarHideDelay=10;
     return self;
 }
 
--(void)awakeFromNib
+-(void)awakeFromNib_disabled
 {
     NSRect screenFrame = [[NSScreen mainScreen] frame];
     [_volumeWindow setFrame:(osxVersion<110?  CGRectMake(round((screenFrame.size.width-210)/2),139,210,206) : CGRectMake(round((screenFrame.size.width-200)/2),140,200,200)) display:NO animate:NO];
@@ -579,25 +611,16 @@ static NSTimeInterval statusBarHideDelay=10;
     
     NSView* volumeView = [_volumeWindow contentView];
     
-    /*
-    MyNSVisualEffectView* visualEffectView = [[MyNSVisualEffectView alloc] initWithFrame: volumeView.frame];
-    visualEffectView.appearance =  [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
-    //[visualEffectView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
-    visualEffectView.material = NSVisualEffectMaterialMediumLight;//Dark,MediumLight,PopOver,UltraDark,AppearanceBased,Titlebar,Menu
-    [volumeView addSubview:visualEffectView];
-    */
-    
     [volumeView setWantsLayer:YES];
     
     mainLayer = [volumeView layer];
-    CGColorRef backgroundColor=CGColorCreateGenericGray(0.00f, 0.10f);
+    CGColorRef backgroundColor=CGColorCreateGenericGray(0.00f, 0.30f);
     [mainLayer setBackgroundColor:backgroundColor];
     CFRelease(backgroundColor);
     
-    [mainLayer setCornerRadius:(osxVersion<110? 22 : 16)];
+    [mainLayer setCornerRadius:16];
     [mainLayer setShouldRasterize:false];
     [mainLayer setEdgeAntialiasingMask: kCALayerLeftEdge | kCALayerRightEdge | kCALayerBottomEdge | kCALayerTopEdge];
-    
     
     [mainLayer setOpacity:0.0f];
     
@@ -648,7 +671,7 @@ static NSTimeInterval statusBarHideDelay=10;
     [self showInStatusBar];   // Install icon into the menu bar
     
     iTunes = [SBApplication applicationWithBundleIdentifier:@"com.apple.iTunes"];
-    spotify = [SBApplication applicationWithBundleIdentifier:@"com.spotify.client"];
+    // spotify = [SBApplication applicationWithBundleIdentifier:@"com.spotify.client"];
 
     // NSString* iTunesVersion = [[NSString alloc] initWithString:[iTunes version]];
     // NSString* spotifyVersion = [[NSString alloc] initWithString:[spotify version]];
@@ -670,6 +693,11 @@ static NSTimeInterval statusBarHideDelay=10;
                                                                name: NSWorkspaceDidWakeNotification object: NULL];
     
     CGDisplayRegisterReconfigurationCallback(displayPreferencesChanged, NULL);
+    
+    if (![self _loadBezelServices])
+    {
+        [self _loadOSDFramework];
+    }
     
     [self createEventTap];
     
@@ -788,13 +816,12 @@ static NSTimeInterval statusBarHideDelay=10;
     if(enabled && _Tapping)
     {
         [remote startListening:self];
-        waitOverlayPanel=1.0;
     }
     else
     {
         [remote stopListening:self];
-        waitOverlayPanel=1.2;
     }
+    waitOverlayPanel=1.0;
     
     [preferences setBool:enabled forKey:@"AppleRemoteConnected"];
     [preferences synchronize];
@@ -1006,21 +1033,23 @@ static NSTimeInterval statusBarHideDelay=10;
 - (void)changeVol:(bool)increase
 {
     NSInteger volume;
-    if(oldVolumeSetting<0)
+    if(oldVolumeSetting<0) // if it was not mute
     {
         volume=[musicProgramPnt soundVolume]+_volumeInc*(increase?1:-1);
     }
-    else
+    else // if it was mute
     {
-        [volumeImageLayer setContents:imgVolOn];
+        // [volumeImageLayer setContents:imgVolOn];
         volume=oldVolumeSetting;
-        oldVolumeSetting=-1;
+        oldVolumeSetting=-1;  // this says that it is not mute
     }
     if (volume<0) volume=0;
     if (volume>100) volume=100;
     
+    [[NSClassFromString(@"OSDManager") sharedManager] showImage:OSDGraphicSpeakerMute onDisplayID:CGSMainDisplayID() priority:OSDPriorityDefault msecUntilFade:1000 filledChiclets:(unsigned int)volume totalChiclets:(unsigned int)100 locked:NO];
+    
     [musicProgramPnt setSoundVolume:volume];
-    [spotify setSoundVolume:volume];
+    // [spotify setSoundVolume:volume];
 
     [self refreshVolumeBar:(int)volume];
 }
