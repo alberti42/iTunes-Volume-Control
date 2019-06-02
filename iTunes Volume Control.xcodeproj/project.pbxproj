@@ -15,13 +15,8 @@
 		656C6C7F168A2A0B00ECA482 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 656C6C7E168A2A0B00ECA482 /* AppDelegate.m */; };
 		656C6CA3168A456900ECA482 /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 656C6CA2168A456900ECA482 /* ScriptingBridge.framework */; };
 		658B93C7185E48B2007BEBEF /* IntroWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 658B93C6185E48B2007BEBEF /* IntroWindowController.m */; };
-		658E9E7A1A50141E0037AF64 /* iTunes11Big@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 658E9E761A50141E0037AF64 /* iTunes11Big@2x.png */; };
 		658E9E7C1A50141E0037AF64 /* spotifyBig@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 658E9E781A50141E0037AF64 /* spotifyBig@2x.png */; };
-		658E9E7D1A50141E0037AF64 /* iTunes10Big@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 658E9E791A50141E0037AF64 /* iTunes10Big@2x.png */; };
-		658E9E8A1A5015A20037AF64 /* iTunes11Big.png in Resources */ = {isa = PBXBuildFile; fileRef = 658E9E861A5015A20037AF64 /* iTunes11Big.png */; };
-		658E9E8B1A5015A20037AF64 /* iTunes10Big.png in Resources */ = {isa = PBXBuildFile; fileRef = 658E9E871A5015A20037AF64 /* iTunes10Big.png */; };
 		658E9E8D1A5015A20037AF64 /* spotifyBig.png in Resources */ = {isa = PBXBuildFile; fileRef = 658E9E891A5015A20037AF64 /* spotifyBig.png */; };
-		658E9E901A5017AF0037AF64 /* iTunes12Big.png in Resources */ = {isa = PBXBuildFile; fileRef = 658E9E8E1A5017AF0037AF64 /* iTunes12Big.png */; };
 		658E9E911A5017AF0037AF64 /* iTunes12Big@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 658E9E8F1A5017AF0037AF64 /* iTunes12Big@2x.png */; };
 		6597CCE71698BA05005F54C1 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6597CCE61698BA05005F54C1 /* Sparkle.framework */; };
 		6597CCE81698BA0C005F54C1 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6597CCE61698BA05005F54C1 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -30,16 +25,9 @@
 		659CCFF3185CBF04006958AD /* volume-off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 659CCFE7185CAD9D006958AD /* volume-off@2x.png */; };
 		659CCFF4185CBF0F006958AD /* volume.png in Resources */ = {isa = PBXBuildFile; fileRef = 657F9C4E168F349100818384 /* volume.png */; };
 		659CCFF5185CBF0F006958AD /* volume@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 659CCFE6185CAC93006958AD /* volume@2x.png */; };
-		65A9ACBB1A5020AE00C56D65 /* iTunes11.icns in Resources */ = {isa = PBXBuildFile; fileRef = 65A9ACBA1A5020AE00C56D65 /* iTunes11.icns */; };
-		65A9ACBD1A5021EA00C56D65 /* iTunes10.icns in Resources */ = {isa = PBXBuildFile; fileRef = 65A9ACBC1A5021EA00C56D65 /* iTunes10.icns */; };
-		65B3EB781A4ED9A8002BB939 /* iTunes10@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B3EB731A4ED996002BB939 /* iTunes10@2x.png */; };
-		65B3EB791A4ED9A8002BB939 /* iTunes10.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B3EB741A4ED996002BB939 /* iTunes10.png */; };
-		65B3EB7A1A4ED9A8002BB939 /* iTunes12@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 657814661A4E28DA009C4A0B /* iTunes12@2x.png */; };
-		65B3EB7B1A4ED9A8002BB939 /* iTunes12.png in Resources */ = {isa = PBXBuildFile; fileRef = 657814671A4E28DA009C4A0B /* iTunes12.png */; };
 		65B3EB7C1A4ED9A8002BB939 /* spotify@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 657814681A4E28DA009C4A0B /* spotify@2x.png */; };
-		65B3EB7D1A4ED9A8002BB939 /* iTunes11@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 657814691A4E28DA009C4A0B /* iTunes11@2x.png */; };
-		65B3EB7E1A4ED9A8002BB939 /* iTunes11.png in Resources */ = {isa = PBXBuildFile; fileRef = 6578146A1A4E28DA009C4A0B /* iTunes11.png */; };
 		65B3EB7F1A4ED9A8002BB939 /* spotify.png in Resources */ = {isa = PBXBuildFile; fileRef = 6578146B1A4E28DA009C4A0B /* spotify.png */; };
+		65B8E4B322A35572005198A8 /* MyNSVisualEffectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B8E4B222A35572005198A8 /* MyNSVisualEffectView.m */; };
 		65C24C01168CBC7E0000BFC2 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 65C24C00168CBC7E0000BFC2 /* Credits.rtf */; };
 		65C24C67168CEB130000BFC2 /* AppleRemote.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C24C65168CEB130000BFC2 /* AppleRemote.m */; };
 		65C8FB6E1A4754340023CE24 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65C8FB6D1A4754340023CE24 /* MainMenu.xib */; };
@@ -57,6 +45,9 @@
 		65E325D81A508078007BFC10 /* iconView.m in Sources */ = {isa = PBXBuildFile; fileRef = 65E325D71A508078007BFC10 /* iconView.m */; };
 		65E325DB1A5081C8007BFC10 /* iconCollectionViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 65E325DA1A5081C8007BFC10 /* iconCollectionViewItem.m */; };
 		65E325DE1A50AEC6007BFC10 /* iconCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 65E325DD1A50AEC6007BFC10 /* iconCollectionView.m */; };
+		65EB7A8022A3084400680044 /* iTunes12.png in Resources */ = {isa = PBXBuildFile; fileRef = 657814671A4E28DA009C4A0B /* iTunes12.png */; };
+		65EB7A8122A3084700680044 /* iTunes12@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 657814661A4E28DA009C4A0B /* iTunes12@2x.png */; };
+		65EB7A8222A3085900680044 /* iTunes12Big.png in Resources */ = {isa = PBXBuildFile; fileRef = 658E9E8E1A5017AF0037AF64 /* iTunes12Big.png */; };
 		65F7DD921A51BB2400089B83 /* musicPlayersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F7DD911A51BB2400089B83 /* musicPlayersView.m */; };
 		E2F254C6179EA2B600DD3C66 /* StatusItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F254C5179EA2B600DD3C66 /* StatusItemView.m */; };
 /* End PBXBuildFile section */
@@ -151,6 +142,8 @@
 		65B3EB771A4ED9A3002BB939 /* icons.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = icons.psd; sourceTree = "<group>"; };
 		65B85972185E389400D8C851 /* iTunes-screenshot.ai */ = {isa = PBXFileReference; lastKnownFileType = text; name = "iTunes-screenshot.ai"; path = "iTunes Volume Control/Images/iTunes-screenshot.ai"; sourceTree = "<group>"; };
 		65B85973185E389400D8C851 /* iTunes-screenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iTunes-screenshot.png"; path = "iTunes Volume Control/Images/iTunes-screenshot.png"; sourceTree = "<group>"; };
+		65B8E4B122A35572005198A8 /* MyNSVisualEffectView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MyNSVisualEffectView.h; path = "iTunes Volume Control/MyNSVisualEffectView.h"; sourceTree = "<group>"; };
+		65B8E4B222A35572005198A8 /* MyNSVisualEffectView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MyNSVisualEffectView.m; path = "iTunes Volume Control/MyNSVisualEffectView.m"; sourceTree = "<group>"; };
 		65C24C00168CBC7E0000BFC2 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; name = Credits.rtf; path = "iTunes Volume Control/Credits.rtf"; sourceTree = "<group>"; };
 		65C24C64168CEB130000BFC2 /* AppleRemote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppleRemote.h; sourceTree = "<group>"; };
 		65C24C65168CEB130000BFC2 /* AppleRemote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppleRemote.m; sourceTree = "<group>"; };
@@ -224,12 +217,14 @@
 			children = (
 				656C6C7D168A2A0B00ECA482 /* AppDelegate.h */,
 				656C6C7E168A2A0B00ECA482 /* AppDelegate.m */,
-				658B93C5185E48B2007BEBEF /* IntroWindowController.h */,
-				658B93C6185E48B2007BEBEF /* IntroWindowController.m */,
-				65163D971A50077E007F3DE6 /* IconController.h */,
-				65163D981A50077E007F3DE6 /* IconController.m */,
 				65E325D91A5081C8007BFC10 /* iconCollectionViewItem.h */,
 				65E325DA1A5081C8007BFC10 /* iconCollectionViewItem.m */,
+				65163D971A50077E007F3DE6 /* IconController.h */,
+				65163D981A50077E007F3DE6 /* IconController.m */,
+				658B93C5185E48B2007BEBEF /* IntroWindowController.h */,
+				658B93C6185E48B2007BEBEF /* IntroWindowController.m */,
+				65B8E4B122A35572005198A8 /* MyNSVisualEffectView.h */,
+				65B8E4B222A35572005198A8 /* MyNSVisualEffectView.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -327,25 +322,25 @@
 				65B3EB771A4ED9A3002BB939 /* icons.psd */,
 				65A1ECEC1A51541500CEE4A9 /* iTunes9.icns */,
 				65A9ACBC1A5021EA00C56D65 /* iTunes10.icns */,
+				65B3EB741A4ED996002BB939 /* iTunes10.png */,
+				65B3EB731A4ED996002BB939 /* iTunes10@2x.png */,
+				658E9E871A5015A20037AF64 /* iTunes10Big.png */,
+				658E9E791A50141E0037AF64 /* iTunes10Big@2x.png */,
 				65A9ACBA1A5020AE00C56D65 /* iTunes11.icns */,
+				6578146A1A4E28DA009C4A0B /* iTunes11.png */,
+				657814691A4E28DA009C4A0B /* iTunes11@2x.png */,
+				658E9E861A5015A20037AF64 /* iTunes11Big.png */,
+				658E9E761A50141E0037AF64 /* iTunes11Big@2x.png */,
 				65505D731A501C2100F20C24 /* iTunes12.icns */,
-				65505D741A501C2100F20C24 /* spotify.icns */,
+				657814671A4E28DA009C4A0B /* iTunes12.png */,
+				657814661A4E28DA009C4A0B /* iTunes12@2x.png */,
 				658E9E8E1A5017AF0037AF64 /* iTunes12Big.png */,
 				658E9E8F1A5017AF0037AF64 /* iTunes12Big@2x.png */,
-				658E9E861A5015A20037AF64 /* iTunes11Big.png */,
-				658E9E871A5015A20037AF64 /* iTunes10Big.png */,
-				658E9E891A5015A20037AF64 /* spotifyBig.png */,
-				658E9E761A50141E0037AF64 /* iTunes11Big@2x.png */,
-				658E9E781A50141E0037AF64 /* spotifyBig@2x.png */,
-				658E9E791A50141E0037AF64 /* iTunes10Big@2x.png */,
-				65B3EB731A4ED996002BB939 /* iTunes10@2x.png */,
-				65B3EB741A4ED996002BB939 /* iTunes10.png */,
-				657814661A4E28DA009C4A0B /* iTunes12@2x.png */,
-				657814671A4E28DA009C4A0B /* iTunes12.png */,
-				657814681A4E28DA009C4A0B /* spotify@2x.png */,
-				657814691A4E28DA009C4A0B /* iTunes11@2x.png */,
-				6578146A1A4E28DA009C4A0B /* iTunes11.png */,
+				65505D741A501C2100F20C24 /* spotify.icns */,
 				6578146B1A4E28DA009C4A0B /* spotify.png */,
+				657814681A4E28DA009C4A0B /* spotify@2x.png */,
+				658E9E891A5015A20037AF64 /* spotifyBig.png */,
+				658E9E781A50141E0037AF64 /* spotifyBig@2x.png */,
 			);
 			name = "program icons";
 			sourceTree = "<group>";
@@ -470,12 +465,19 @@
 			attributes = {
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "Andrea Alberti";
+				TargetAttributes = {
+					656C6C66168A2A0B00ECA482 = {
+						DevelopmentTeam = 9V3X7C8VCK;
+						ProvisioningStyle = Automatic;
+					};
+				};
 			};
 			buildConfigurationList = 656C6C61168A2A0B00ECA482 /* Build configuration list for PBXProject "iTunes Volume Control" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 656C6C5C168A2A0B00ECA482;
@@ -493,40 +495,30 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				658E9E7A1A50141E0037AF64 /* iTunes11Big@2x.png in Resources */,
 				65E2AE8E1A044F6C00FD15A1 /* statusbar-item-gray@2x.png in Resources */,
 				659CCFF5185CBF0F006958AD /* volume@2x.png in Resources */,
-				65A9ACBD1A5021EA00C56D65 /* iTunes10.icns in Resources */,
-				65B3EB791A4ED9A8002BB939 /* iTunes10.png in Resources */,
 				65E2AE8C1A044F6C00FD15A1 /* statusbar-item-blue@2x.png in Resources */,
 				659CCFF3185CBF04006958AD /* volume-off@2x.png in Resources */,
 				65E2AE8F1A044F6C00FD15A1 /* statusbar-item-white.png in Resources */,
 				658E9E7C1A50141E0037AF64 /* spotifyBig@2x.png in Resources */,
+				65EB7A8022A3084400680044 /* iTunes12.png in Resources */,
 				659CCFDE185CAAA7006958AD /* appicon.icns in Resources */,
-				65A9ACBB1A5020AE00C56D65 /* iTunes11.icns in Resources */,
-				65B3EB7E1A4ED9A8002BB939 /* iTunes11.png in Resources */,
-				658E9E8B1A5015A20037AF64 /* iTunes10Big.png in Resources */,
 				65B3EB7C1A4ED9A8002BB939 /* spotify@2x.png in Resources */,
 				654DDC65185DDD510095AA66 /* dsa_pub.pem in Resources */,
 				659CCFF4185CBF0F006958AD /* volume.png in Resources */,
-				658E9E901A5017AF0037AF64 /* iTunes12Big.png in Resources */,
 				65E2AE8B1A044F6C00FD15A1 /* statusbar-item-blue.png in Resources */,
-				65B3EB781A4ED9A8002BB939 /* iTunes10@2x.png in Resources */,
 				659CCFF2185CBF04006958AD /* volume-off.png in Resources */,
+				65EB7A8122A3084700680044 /* iTunes12@2x.png in Resources */,
 				65E2AE8A1A044F6C00FD15A1 /* statusbar-item-black@2x.png in Resources */,
-				658E9E7D1A50141E0037AF64 /* iTunes10Big@2x.png in Resources */,
 				658E9E8D1A5015A20037AF64 /* spotifyBig.png in Resources */,
 				658E9E911A5017AF0037AF64 /* iTunes12Big@2x.png in Resources */,
-				65B3EB7D1A4ED9A8002BB939 /* iTunes11@2x.png in Resources */,
 				65C24C01168CBC7E0000BFC2 /* Credits.rtf in Resources */,
-				658E9E8A1A5015A20037AF64 /* iTunes11Big.png in Resources */,
 				65E2AE8D1A044F6C00FD15A1 /* statusbar-item-gray.png in Resources */,
 				65E2AE891A044F6C00FD15A1 /* statusbar-item-black.png in Resources */,
-				65B3EB7A1A4ED9A8002BB939 /* iTunes12@2x.png in Resources */,
 				65B3EB7F1A4ED9A8002BB939 /* spotify.png in Resources */,
 				65E2AE901A044F6C00FD15A1 /* statusbar-item-white@2x.png in Resources */,
-				65B3EB7B1A4ED9A8002BB939 /* iTunes12.png in Resources */,
 				65C8FB6E1A4754340023CE24 /* MainMenu.xib in Resources */,
+				65EB7A8222A3085900680044 /* iTunes12Big.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -545,7 +537,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "echo \"Updating version/build number from git...\"\n\nversionnum=`git for-each-ref --format='%(*committerdate:raw)%(committerdate:raw) %(refname) %(*objectname) %(objectname)' refs/tags | sort -n | awk '{ print $3; }' | tail -n1 | sed 's/refs\\/tags\\/v\\(.*\\)/\\1/'`\nbuildnum=`git rev-list HEAD | awk 'END{print NR}'`\nplist=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n\n# versionnum='1.4.8'\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion ${versionnum}.$buildnum\" \"${plist}\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString ${versionnum}\" \"${plist}\"";
+			shellScript = "echo \"Updating version/build number from git...\"\n\nversionnum=`git for-each-ref --format='%(*committerdate:raw)%(committerdate:raw) %(refname) %(*objectname) %(objectname)' refs/tags | sort -n | awk '{ print $3; }' | tail -n1 | sed 's/refs\\/tags\\/v\\(.*\\)/\\1/'`\nbuildnum=`git rev-list HEAD | awk 'END{print NR}'`\nplist=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n\n# versionnum='1.4.8'\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion ${versionnum}.$buildnum\" \"${plist}\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString ${versionnum}\" \"${plist}\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -563,6 +555,7 @@
 				656C6C7F168A2A0B00ECA482 /* AppDelegate.m in Sources */,
 				65C24C67168CEB130000BFC2 /* AppleRemote.m in Sources */,
 				651A7EEF168F1F4C00A76288 /* VolumeWindow.m in Sources */,
+				65B8E4B322A35572005198A8 /* MyNSVisualEffectView.m in Sources */,
 				65163D951A500652007F3DE6 /* IconModel.m in Sources */,
 				E2F254C6179EA2B600DD3C66 /* StatusItemView.m in Sources */,
 				65E325D81A508078007BFC10 /* iconView.m in Sources */,
@@ -597,7 +590,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = "";
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = "";
+				SDKROOT = macosx;
 				VALID_ARCHS = x86_64;
 			};
 			name = Debug;
@@ -620,7 +613,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = "";
-				SDKROOT = "";
+				SDKROOT = macosx;
 				VALID_ARCHS = x86_64;
 			};
 			name = Release;
@@ -629,8 +622,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 9V3X7C8VCK;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -639,13 +634,14 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iTunes Volume Control/iTunes Volume Control-Prefix.pch";
 				INFOPLIST_FILE = "iTunes Volume Control/iTunes Volume Control-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
-				VALID_ARCHS = "x86_64 i386";
+				VALID_ARCHS = x86_64;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -654,8 +650,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 9V3X7C8VCK;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -664,13 +662,14 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iTunes Volume Control/iTunes Volume Control-Prefix.pch";
 				INFOPLIST_FILE = "iTunes Volume Control/iTunes Volume Control-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				ONLY_ACTIVE_ARCH = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CODE_SIGN_FLAGS = "--deep";
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
-				VALID_ARCHS = "x86_64 i386";
+				VALID_ARCHS = x86_64;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

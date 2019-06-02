@@ -11,6 +11,7 @@
 #import <Sparkle/SUUpdater.h>
 #import "StatusItemView.h"
 #import "IntroWindowController.h"
+#import "MyNSVisualEffectView.h"
 
 #pragma mark - Tapping key stroke events
 
@@ -223,7 +224,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 
 static CFTimeInterval fadeInDuration=0.2;
 static CFTimeInterval fadeOutDuration=0.7;
-static NSTimeInterval volumeRampTimeInterval=0.025;
+static NSTimeInterval volumeRampTimeInterval=0.02;
 static NSTimeInterval statusBarHideDelay=10;
 
 - (bool) StartAtLogin
@@ -575,18 +576,28 @@ static NSTimeInterval statusBarHideDelay=10;
     [_volumeWindow setFrame:(osxVersion<110?  CGRectMake(round((screenFrame.size.width-210)/2),139,210,206) : CGRectMake(round((screenFrame.size.width-200)/2),140,200,200)) display:NO animate:NO];
     
     // NSVisualEffectView* view = [[_volumeWindow contentView] insertVibrancyViewBlendingMode:NSVisualEffectBlendingModeBehindWindow];
-
-    NSView* view = [_volumeWindow contentView];
     
-    [view setWantsLayer:YES];
+    NSView* volumeView = [_volumeWindow contentView];
     
-    mainLayer = [view layer];
-    CGColorRef backgroundColor=CGColorCreateGenericRGB(0.f, 0.f, 0.f, 0.16f);
+    /*
+    MyNSVisualEffectView* visualEffectView = [[MyNSVisualEffectView alloc] initWithFrame: volumeView.frame];
+    visualEffectView.appearance =  [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
+    //[visualEffectView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
+    visualEffectView.material = NSVisualEffectMaterialMediumLight;//Dark,MediumLight,PopOver,UltraDark,AppearanceBased,Titlebar,Menu
+    [volumeView addSubview:visualEffectView];
+    */
+    
+    [volumeView setWantsLayer:YES];
+    
+    mainLayer = [volumeView layer];
+    CGColorRef backgroundColor=CGColorCreateGenericGray(0.00f, 0.10f);
     [mainLayer setBackgroundColor:backgroundColor];
     CFRelease(backgroundColor);
-    [mainLayer setCornerRadius:(osxVersion<110? 22 : 18)];
-    [mainLayer setShouldRasterize:true];
+    
+    [mainLayer setCornerRadius:(osxVersion<110? 22 : 16)];
+    [mainLayer setShouldRasterize:false];
     [mainLayer setEdgeAntialiasingMask: kCALayerLeftEdge | kCALayerRightEdge | kCALayerBottomEdge | kCALayerTopEdge];
+    
     
     [mainLayer setOpacity:0.0f];
     
@@ -603,15 +614,18 @@ static NSTimeInterval statusBarHideDelay=10;
     
     volumeImageLayer = [CALayer layer];
     [volumeImageLayer setFrame:NSRectToCGRect(rect)];
-    [volumeImageLayer setPosition:CGPointMake([view frame].size.width/2, [view frame].size.height/2+12)];
+    [volumeImageLayer setPosition:CGPointMake([volumeView frame].size.width/2, [volumeView frame].size.height/2+12)];
     [volumeImageLayer setContents:imgVolOn];
     
+    /*
     iconLayer = [CALayer layer];
     [iconLayer setFrame:NSRectToCGRect(rectIcon)];
     [iconLayer setPosition:CGPointMake([volumeImageLayer frame].size.width/2-22, [volumeImageLayer frame].size.height/2)];
     [iconLayer setContents:spotifyIcon];
     
+     
     [volumeImageLayer addSublayer:iconLayer];
+    */
     [mainLayer addSublayer:volumeImageLayer];
     
     [self createVolumeBar];
@@ -639,7 +653,7 @@ static NSTimeInterval statusBarHideDelay=10;
     // NSString* iTunesVersion = [[NSString alloc] initWithString:[iTunes version]];
     // NSString* spotifyVersion = [[NSString alloc] initWithString:[spotify version]];
     
-    musicProgramPnt = spotify;
+    musicProgramPnt = iTunes;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(increaseITunesVolume:) name:@"IncreaseITunesVolume" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(increaseITunesVolume:) name:@"IncreaseITunesVolumeRamp" object:nil];
@@ -1016,6 +1030,8 @@ static NSTimeInterval statusBarHideDelay=10;
     
     CALayer* background;
     int i;
+    
+    /*
     for(i=0; i<16; i++)
     {
         background = [CALayer layer];
@@ -1024,22 +1040,33 @@ static NSTimeInterval statusBarHideDelay=10;
         
         [mainLayer addSublayer:background];
     }
+     
+    */
+    
+    background = [CALayer layer];
+    [background setFrame:CGRectMake(20.0, 20, 160.0, 8.0)];
+    [background setBackgroundColor:CGColorCreateGenericRGB(0.f, 0.f, 0.f, 0.5f)];
+     
+    [mainLayer addSublayer:background];
     
     for(i=0; i<16; i++)
     {
         volumeBar[i] = [CALayer layer];
-        [volumeBar[i] setFrame:CGRectMake(9*i+32, 29.0, 7.0, 9.0)];
+        [volumeBar[i] setFrame:CGRectMake(10*i+21, 21.0, 9.0, 6.0)];
         [volumeBar[i] setBackgroundColor:CGColorCreateGenericRGB(1.0f, 1.0f, 1.0f, 1.0f)];
         
+        /*
         [volumeBar[i] setShadowOffset:CGSizeMake(-1, -1)];
         [volumeBar[i] setShadowRadius:1.0];
         [volumeBar[i] setShadowColor:CGColorCreateGenericRGB(0.f, 0.f, 0.f, 1.0f)];
         [volumeBar[i] setShadowOpacity:0.5];
+        */
         
         [volumeBar[i] setHidden:YES];
         
         [mainLayer addSublayer:volumeBar[i]];
     }
+    
 }
 
 - (void) refreshVolumeBar:(NSInteger)volume
@@ -1051,15 +1078,21 @@ static NSTimeInterval statusBarHideDelay=10;
     [CATransaction setAnimationDuration: 0.0];
     [CATransaction setDisableActions: TRUE];
     
-    if(volume==0) [volumeImageLayer setContents:imgVolOff];
-    if(volume>0) [volumeImageLayer setContents:imgVolOn];
+    if(volume==0)
+    {
+        [volumeImageLayer setContents:imgVolOff];
+    }
+    else
+    {
+        [volumeImageLayer setContents:imgVolOn];
+    }
     
     CGRect frame;
     
     for(NSInteger i=0; i<fullRectangles; i++)
     {
         frame = [volumeBar[i] frame];
-        frame.size.width=7;
+        frame.size.width=9;
         [volumeBar[i] setFrame:frame];
 
         [volumeBar[i] setHidden:NO];
@@ -1067,7 +1100,7 @@ static NSTimeInterval statusBarHideDelay=10;
     for(NSInteger i=fullRectangles; i<16; i++)
     {
         frame = [volumeBar[i] frame];
-        frame.size.width=7;
+        frame.size.width=9;
         [volumeBar[i] setFrame:frame];
         
         [volumeBar[i] setHidden:YES];
@@ -1077,7 +1110,7 @@ static NSTimeInterval statusBarHideDelay=10;
     {
         
         frame = [volumeBar[fullRectangles] frame];
-        frame.size.width=4;
+        frame.size.width=5;
         
         [volumeBar[fullRectangles] setFrame:frame];
         [volumeBar[fullRectangles] setHidden:NO];
