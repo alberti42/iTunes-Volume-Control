@@ -39,7 +39,7 @@ Mac OS X version at least 10.14 (Mojave) or greater
 Credits
 -------
 
-This app has been inspired by ``Volume for iTunes'' by Yogi Patel. The icon has been designed by Alexandro Rei. The apple remote control has been adapted from iremotepipe by Steven Wittens.
+This app has been inspired by *Volume for iTunes* by Yogi Patel. The icon has been designed by Alexandro Rei. The apple remote control has been adapted from iremotepipe by Steven Wittens.
 
 Contacts
 --------
