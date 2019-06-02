@@ -28,7 +28,7 @@
     
     [arrayController addObject:itunes];
     [arrayController addObject:spotify];
-    
+        
 //    [arrayController addObserver:self forKeyPath:@"selectedObjects"
 //                         options:NSKeyValueObservingOptionNew
 //                         context:nil];
