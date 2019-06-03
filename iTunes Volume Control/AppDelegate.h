@@ -12,8 +12,9 @@
 #import "Spotify.h"
 #import "AppleRemote.h"
 
-@class IntroWindowController;
-@class StatusBarItem;
+#import "ISSoundAdditions.h"
+
+@class IntroWindowController, StatusBarItem, PlayerApplication;
 
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
     CALayer *mainLayer;
@@ -42,8 +43,10 @@
     NSInteger numPos;
     
 @public
-    iTunesApplication *iTunes;
-    SpotifyApplication *spotify;
+    PlayerApplication* iTunes;
+    PlayerApplication* spotify;
+    SystemApplication* systemAudio;
+    
     id musicProgramPnt;
     
     IntroWindowController *introWindowController;
@@ -59,9 +62,11 @@
 
 @property (nonatomic, assign) IBOutlet NSButton* iTunesBtn;
 @property (nonatomic, assign) IBOutlet NSButton* spotifyBtn;
+@property (nonatomic, assign) IBOutlet NSButton* systemBtn;
 
 @property (nonatomic, assign) IBOutlet NSTextField* iTunesPerc;
 @property (nonatomic, assign) IBOutlet NSTextField* spotifyPerc;
+@property (nonatomic, assign) IBOutlet NSTextField* systemPerc;
 
 @property (nonatomic, readonly, strong) NSStatusItem* statusBar;
 
@@ -77,6 +82,7 @@
 
 @property (assign, nonatomic) NSInteger itunesVolume;
 @property (assign, nonatomic) NSInteger spotifyVolume;
+@property (assign, nonatomic) NSInteger systemVolume;
 
 - (IBAction)increaseVol:(id)sender;
 
@@ -97,5 +103,18 @@
 
 - (void)stopTimer;
 
+- (void) updatePercentages;
+
 @end
 
+@interface PlayerApplication : NSObject {
+    iTunesApplication* iTunesPnt;
+}
+
+- (BOOL) isRunning;
+- (iTunesEPlS) playerState;
+
+@property (assign, nonatomic) NSInteger soundVolume;
+@property (assign, nonatomic) NSInteger oldVolume;
+
+@end

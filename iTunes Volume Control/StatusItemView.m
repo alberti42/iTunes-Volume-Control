@@ -33,6 +33,10 @@
 
 - (void)drawRect:(NSRect)rect
 {
+    AppDelegate* appDelegate = [[NSApplication sharedApplication] delegate];
+    
+    [appDelegate updatePercentages];
+    
     NSRect bounds = [self bounds];
     if (_menuIsVisible)
     {

@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		650EBA6B22A571A3003EB2D5 /* spotify-icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 650EBA6A22A571A3003EB2D5 /* spotify-icon.icns */; };
 		650EBA6D22A571BB003EB2D5 /* iTunes-icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 650EBA6C22A571BB003EB2D5 /* iTunes-icon.icns */; };
+		650EBA6F22A59DC2003EB2D5 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 650EBA6E22A59DC2003EB2D5 /* CoreAudio.framework */; };
+		650EBA7222A5A628003EB2D5 /* ISSoundAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 650EBA7122A5A628003EB2D5 /* ISSoundAdditions.m */; };
+		650EBA7922A5AB1E003EB2D5 /* Finder.png in Resources */ = {isa = PBXBuildFile; fileRef = 650EBA7722A5AB1E003EB2D5 /* Finder.png */; };
+		650EBA7A22A5AB1E003EB2D5 /* Finder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 650EBA7822A5AB1E003EB2D5 /* Finder@2x.png */; };
 		651A7EEF168F1F4C00A76288 /* VolumeWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 651A7EED168F1F4C00A76288 /* VolumeWindow.m */; };
 		653925B622A55724004F60DB /* statusbar-item-black@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65E2AE821A044F6C00FD15A1 /* statusbar-item-black@2x.png */; };
 		653925B722A55727004F60DB /* statusbar-item-black.png in Resources */ = {isa = PBXBuildFile; fileRef = 65E2AE811A044F6C00FD15A1 /* statusbar-item-black.png */; };
@@ -42,7 +46,6 @@
 		65E325DE1A50AEC6007BFC10 /* iconCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 65E325DD1A50AEC6007BFC10 /* iconCollectionView.m */; };
 		65EB7A8122A3084700680044 /* iTunes12@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 657814661A4E28DA009C4A0B /* iTunes12@2x.png */; };
 		65EB7A8222A3085900680044 /* iTunes12Big.png in Resources */ = {isa = PBXBuildFile; fileRef = 658E9E8E1A5017AF0037AF64 /* iTunes12Big.png */; };
-		65F7DD921A51BB2400089B83 /* musicPlayersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F7DD911A51BB2400089B83 /* musicPlayersView.m */; };
 		E2F254C6179EA2B600DD3C66 /* StatusItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F254C5179EA2B600DD3C66 /* StatusItemView.m */; };
 /* End PBXBuildFile section */
 
@@ -62,6 +65,12 @@
 /* Begin PBXFileReference section */
 		650EBA6A22A571A3003EB2D5 /* spotify-icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "spotify-icon.icns"; sourceTree = "<group>"; };
 		650EBA6C22A571BB003EB2D5 /* iTunes-icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "iTunes-icon.icns"; sourceTree = "<group>"; };
+		650EBA6E22A59DC2003EB2D5 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		650EBA7022A5A628003EB2D5 /* ISSoundAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISSoundAdditions.h; sourceTree = "<group>"; };
+		650EBA7122A5A628003EB2D5 /* ISSoundAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISSoundAdditions.m; sourceTree = "<group>"; };
+		650EBA7722A5AB1E003EB2D5 /* Finder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Finder.png; sourceTree = "<group>"; };
+		650EBA7822A5AB1E003EB2D5 /* Finder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Finder@2x.png"; sourceTree = "<group>"; };
+		650EBA7B22A5B953003EB2D5 /* iTunes Volume Control.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "iTunes Volume Control.entitlements"; path = "iTunes Volume Control/iTunes Volume Control.entitlements"; sourceTree = "<group>"; };
 		65133B691860ECE30040A373 /* introButtons-close-HL.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "introButtons-close-HL.png"; path = "iTunes Volume Control/Images/introButtons-close-HL.png"; sourceTree = "<group>"; };
 		65133B6A1860ECE30040A373 /* introButtons-close-HL@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "introButtons-close-HL@2x.png"; path = "iTunes Volume Control/Images/introButtons-close-HL@2x.png"; sourceTree = "<group>"; };
 		65133B6B1860ECE30040A373 /* introButtons-close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "introButtons-close.png"; path = "iTunes Volume Control/Images/introButtons-close.png"; sourceTree = "<group>"; };
@@ -177,6 +186,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				650EBA6F22A59DC2003EB2D5 /* CoreAudio.framework in Frameworks */,
 				656C6CA3168A456900ECA482 /* ScriptingBridge.framework in Frameworks */,
 				65CC33B81698B3CC0049AF82 /* IOKit.framework in Frameworks */,
 				65CC33BA1698B3D60049AF82 /* QuartzCore.framework in Frameworks */,
@@ -211,6 +221,8 @@
 		652D1143187AF05900C8BD88 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				650EBA7022A5A628003EB2D5 /* ISSoundAdditions.h */,
+				650EBA7122A5A628003EB2D5 /* ISSoundAdditions.m */,
 				656C6C7D168A2A0B00ECA482 /* AppDelegate.h */,
 				656C6C7E168A2A0B00ECA482 /* AppDelegate.m */,
 				6515C51D22A453680065EAA2 /* BezelServices.h */,
@@ -286,6 +298,7 @@
 		656C6C5C168A2A0B00ECA482 = {
 			isa = PBXGroup;
 			children = (
+				650EBA7B22A5B953003EB2D5 /* iTunes Volume Control.entitlements */,
 				652D1146187AF12200C8BD88 /* User interface */,
 				652D1142187AF05200C8BD88 /* Sources */,
 				65C24BEA168CA8B10000BFC2 /* Resources */,
@@ -306,6 +319,7 @@
 		656C6C6A168A2A0B00ECA482 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				650EBA6E22A59DC2003EB2D5 /* CoreAudio.framework */,
 				6597CCE61698BA05005F54C1 /* Sparkle.framework */,
 				651A7EF1168F226300A76288 /* QuartzCore.framework */,
 				65C24C6B168CEB9D0000BFC2 /* IOKit.framework */,
@@ -318,6 +332,8 @@
 		657814651A4E28CC009C4A0B /* program icons */ = {
 			isa = PBXGroup;
 			children = (
+				650EBA7722A5AB1E003EB2D5 /* Finder.png */,
+				650EBA7822A5AB1E003EB2D5 /* Finder@2x.png */,
 				650EBA6C22A571BB003EB2D5 /* iTunes-icon.icns */,
 				653925BB22A56C66004F60DB /* iTunes.png */,
 				653925BC22A56C66004F60DB /* iTunes@2x.png */,
@@ -467,6 +483,11 @@
 					656C6C66168A2A0B00ECA482 = {
 						DevelopmentTeam = 9V3X7C8VCK;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.HardenedRuntime = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -493,9 +514,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				650EBA7922A5AB1E003EB2D5 /* Finder.png in Resources */,
 				65E2AE8E1A044F6C00FD15A1 /* statusbar-item-gray@2x.png in Resources */,
 				659CCFF5185CBF0F006958AD /* volume@2x.png in Resources */,
 				650EBA6B22A571A3003EB2D5 /* spotify-icon.icns in Resources */,
+				650EBA7A22A5AB1E003EB2D5 /* Finder@2x.png in Resources */,
 				659CCFF3185CBF04006958AD /* volume-off@2x.png in Resources */,
 				65E2AE8F1A044F6C00FD15A1 /* statusbar-item-white.png in Resources */,
 				653925B622A55724004F60DB /* statusbar-item-black@2x.png in Resources */,
@@ -546,7 +569,7 @@
 			files = (
 				65E325DE1A50AEC6007BFC10 /* iconCollectionView.m in Sources */,
 				656C6C78168A2A0B00ECA482 /* main.m in Sources */,
-				65F7DD921A51BB2400089B83 /* musicPlayersView.m in Sources */,
+				650EBA7222A5A628003EB2D5 /* ISSoundAdditions.m in Sources */,
 				656C6C7F168A2A0B00ECA482 /* AppDelegate.m in Sources */,
 				65C24C67168CEB130000BFC2 /* AppleRemote.m in Sources */,
 				651A7EEF168F1F4C00A76288 /* VolumeWindow.m in Sources */,
@@ -658,6 +681,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 9V3X7C8VCK;
+				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -686,6 +710,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 9V3X7C8VCK;
+				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
