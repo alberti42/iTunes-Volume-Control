@@ -34,18 +34,21 @@ It is very simple. There is no need of any installation.
 Remove quarantine flag
 -------
 
-If you get an error message *...is damaged and can't be opened...*, it is likely that a quarantine flag has been set to the downloaded file. To remove it, you can either
+If you get an error message *...is damaged and can't be opened...*, it is likely that a quarantine flag has been added to the downloaded file. To remove it, you can either
 
 * Download the program using the terminal. In this case, type:
 	
 	``wget https://github.com/alberti42/iTunes-Volume-Control/raw/master/iTunes%20Volume%20Control.dmg``
+	
+	If you downloaded one the zip files linked below, then replace in the above command the dmg file with the corresponding zip file.
+	
 * Remove the *com.apple.quarantine* flag using the terminal, typing:
-* 
+
 	``xattr -d -r com.apple.quarantine ~/Downloads/iTunes\ Volume\ Control.dmg``
 	
 	replacing *~/Downloads/iTunes\ Volume\ Control.dmg* with the filename where you have downloaded the .dmg package.
 	
-Finally, if someone has suggestions how to avoid this cumbersome procedure, I would be glad to get a feedback.
+If you have a suggestion how to avoid such a cumbersome procedure, I would appreciate to hear your feedback.
 
 Requirements
 -------
