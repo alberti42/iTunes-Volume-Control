@@ -246,6 +246,9 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 @synthesize loadIntroAtStart = _loadIntroAtStart;
 @synthesize statusBar = _statusBar;
 
+@synthesize iTunesBtn = _iTunesBtn;
+@synthesize spotifyBtn = _spotifyBtn;
+
 @synthesize volumeWindow=_volumeWindow;
 @synthesize statusMenu=_statusMenu;
 
@@ -650,8 +653,6 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     
     imgVolOn=[NSImage imageNamed:@"volume"];
     imgVolOff=[NSImage imageNamed:@"volume-off"];
-    //iTunesIcon=[NSImage imageNamed:@"iTunes12"];
-    //spotifyIcon=[NSImage imageNamed:@"spotify"];
     
     NSRect rect = NSZeroRect;
     rect.size = [imgVolOff size];
@@ -1353,6 +1354,14 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 - (void)setHideFromStatusBarHintLabelWithSeconds:(NSUInteger)seconds
 {
     [_hideFromStatusBarHintLabel setStringValue:[NSString stringWithFormat:@"iTunes Volume Control will hide after %ld seconds.\n\nLaunch it again to re-show the icon.",seconds]];
+}
+
+#pragma mark - Music players
+
+- (IBAction)toggleMusicPlayer:(id)sender
+{
+    int a= 1;
+//    [self setHideVolumeWindow:![self hideVolumeWindow]];
 }
 
 #pragma mark - NSMenuDelegate

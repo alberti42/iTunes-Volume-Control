@@ -57,6 +57,9 @@
 @property (nonatomic, assign) IBOutlet NSMenu* statusMenu;
 @property (nonatomic, assign) IBOutlet NSSliderCell* volumeIncrementsSlider;
 
+@property (nonatomic, assign) IBOutlet NSButton* iTunesBtn;
+@property (nonatomic, assign) IBOutlet NSButton* spotifyBtn;
+
 @property (nonatomic, readonly, strong) NSStatusItem* statusBar;
 
 @property (assign, nonatomic) NSInteger volumeInc;
