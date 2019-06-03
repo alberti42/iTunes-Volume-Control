@@ -27,7 +27,7 @@ It is very simple. There is no need of any installation.
 * Drag the *iTunes Volume Control* app into your *Application* folder, or any other folder of your choice.
 * Run the *iTunes Volume Control* app and a "music note" symbol will appear in your status bar.
 * Make sure that *iTunes Volume Control* is enabled in the *Accessibility* panel of *Security & Privacy* of the *System Preferences* (see screenshot below); otherwise the application will not start.
-* While iTunes is running, use the volume control keys to change its volume. This will not affect the main volume. 
+* While iTunes is running, use the volume control keys to change its volume. This will not affect the main volume.
 
 ![alt tag](https://raw.github.com/alberti42/iTunes-Volume-Control/master/SecurityPrivacy.png)
 
@@ -39,7 +39,7 @@ Mac OS X version at least 10.14 (Mojave) or greater
 Credits
 -------
 
-This app has been inspired by *Volume for iTunes* by Yogi Patel. The icon has been designed by Alexandro Rei. The apple remote control has been adapted from iremotepipe by Steven Wittens.
+This app has been inspired by *Volume for iTunes* by Yogi Patel. The icon has been designed by Alexandro Rei. The apple remote control has been adapted from iremotepipe by Steven Wittens. The utilization of MacOS native HUD is based on code written by Benno Krauss and on reverse engineering of */System/Library/CoreServices/OSDUIHelper.app/Contents/MacOS/OSDUIHelper*.
 
 Contacts
 --------
