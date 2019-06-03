@@ -22,7 +22,7 @@ How to get it installed?
 
 It is very simple. There is no need of any installation.
 
-* Just download this [dmg package](https://github.com/alberti42/iTunes-Volume-Control/raw/master/iTunes%20Volume%20Control.dmg).
+* Just download this [dmg package](https://github.com/alberti42/iTunes-Volume-Control/raw/master/iTunes%20Volume%20Control.dmg). Note that some users have experienced a flag *com.apple.quarantine* which leads to a corrupt application. Below it is explained how to remove this flag manually.
 * Open it.
 * Drag the *iTunes Volume Control* app into your *Application* folder, or any other folder of your choice.
 * Run the *iTunes Volume Control* app and a "music note" symbol will appear in your status bar.
@@ -30,6 +30,22 @@ It is very simple. There is no need of any installation.
 * While iTunes is running, use the volume control keys to change its volume. This will not affect the main volume.
 
 ![alt tag](https://raw.github.com/alberti42/iTunes-Volume-Control/master/SecurityPrivacy.png)
+
+Remove quarantine flag
+-------
+
+To remove the quarantine flag (I don't know the reason why Safari adds it to the downloaded file), you can either
+
+* Download the program using the terminal. In this case, type:
+	
+	``wget https://github.com/alberti42/iTunes-Volume-Control/raw/master/iTunes%20Volume%20Control.dmg``
+* Remove the *com.apple.quarantine* flag using the terminal, typing:
+* 
+	``xattr -d -r com.apple.quarantine ~/Downloads/iTunes\ Volume\ Control.dmg``
+	
+	replacing *~/Downloads/iTunes\ Volume\ Control.dmg* with the filename where you have downloaded the .dmg package.
+	
+Finally, if someone has suggestions how to avoid this cumbersome procedure, I would be glad to get a feedback.
 
 Requirements
 -------
