@@ -234,7 +234,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 
 static CFTimeInterval fadeInDuration=0.2;
 static CFTimeInterval fadeOutDuration=0.7;
-static NSTimeInterval volumeRampTimeInterval=0.02;
+static NSTimeInterval volumeRampTimeInterval=0.01;
 static NSTimeInterval statusBarHideDelay=10;
 
 void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1, int arg2, float v, int timeout) = NULL;
@@ -452,7 +452,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 
     if( [[aNotification name] isEqualToString:@"IncreaseITunesVolumeRamp"] )
     {
-        timer=[NSTimer scheduledTimerWithTimeInterval:volumeRampTimeInterval target:self selector:@selector(rampVolumeUp:) userInfo:nil repeats:YES];
+        timer=[NSTimer scheduledTimerWithTimeInterval:volumeRampTimeInterval*(NSTimeInterval)_volumeInc target:self selector:@selector(rampVolumeUp:) userInfo:nil repeats:YES];
     
         [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
 
@@ -470,7 +470,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 
     if( [[aNotification name] isEqualToString:@"DecreaseITunesVolumeRamp"] )
     {
-        timer=[NSTimer scheduledTimerWithTimeInterval:volumeRampTimeInterval target:self selector:@selector(rampVolumeDown:) userInfo:nil repeats:YES];
+        timer=[NSTimer scheduledTimerWithTimeInterval:volumeRampTimeInterval*(NSTimeInterval)_volumeInc target:self selector:@selector(rampVolumeDown:) userInfo:nil repeats:YES];
         
         [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
         
@@ -910,30 +910,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 
 - (void) setVolumeInc:(NSInteger)volumeIncSetting
 {
-    switch(volumeIncSetting)
-    {
-        case 0:
-            _volumeInc = 1;
-            break;
-        case 1:
-            _volumeInc = 3;
-            break;
-        case 2:
-            _volumeInc = 6;
-            break;
-        case 3:
-            _volumeInc = 9;
-            break;
-        case 4:
-            _volumeInc = 12;
-            break;
-        case 5:
-            _volumeInc = 18;
-            break;
-        default:
-            _volumeInc = 3;
-            break;
-    }
+    _volumeInc = volumeIncSetting;
 }
 
 - (IBAction)aboutPanel:(id)sender
