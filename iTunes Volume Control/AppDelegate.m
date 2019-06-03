@@ -10,8 +10,8 @@
 #import <IOKit/hidsystem/ev_keymap.h>
 #import <Sparkle/SUUpdater.h>
 #import "StatusItemView.h"
-#import "IntroWindowController.h"
-#import "MyNSVisualEffectView.h"
+//#import "IntroWindowController.h"
+//#import "MyNSVisualEffectView.h"
 
 #import "BezelServices.h"
 #import "OSD.h"
@@ -23,6 +23,23 @@
 static void displayPreferencesChanged(CGDirectDisplayID displayID, CGDisplayChangeSummaryFlags flags, void *userInfo) {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"displayResolutionHasChanged" object:NULL];
 }
+
+NSInteger positions1[] = {0, 1, 3, 4, 6, 8, 9, 11, 12, 14, 15, 17, 18, 20, 22, 23, 25, 26, 28, 29, 31, 33, 34, 36, 37, 39, 40, 42, 43, 45, 47, 48, 50, 51, 53, 54, 56, 58, 59, 61, 62, 64, 65, 67, 68, 70, 72, 73, 75, 76, 78, 79, 81, 83, 84, 86, 87, 89, 90, 92, 93, 95, 97, 98, 100}; // 65
+NSInteger positions2[] = {0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78, 80, 82, 84, 86, 88, 90, 92, 94, 96, 98, 100}; // 51
+NSInteger positions3[] = {0, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48, 51, 54, 57, 60, 63, 66, 69, 72, 75, 78, 81, 84, 87, 90, 93, 96, 100}; // 34
+NSInteger positions4[] = {0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 68, 72, 76, 80, 84, 88, 92, 96, 100}; // 26
+NSInteger positions5[] = {0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100}; // 21
+NSInteger positions6[] = {0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, 100}; // 18
+NSInteger positions7[] = {0, 7, 14, 21, 28, 35, 42, 49, 56, 63, 70, 77, 84, 91, 100};  // 15
+NSInteger positions8[] = {0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 100}; // 13
+NSInteger positions9[] = {0, 9, 18, 27, 36, 45, 54, 63, 72, 81, 90, 100}; // 12
+NSInteger positions10[] = {0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100}; // 11
+NSInteger positions11[] = {0, 11, 22, 33, 44, 55, 66, 77, 88, 100}; // 10
+NSInteger positions12[] = {0, 12, 24, 36, 48, 60, 72, 84, 100}; // 9
+NSInteger positions13[] = {0, 13, 26, 39, 52, 65, 78, 91, 100}; // 9
+NSInteger positions14[] = {0, 14, 28, 42, 56, 70, 84, 100}; // 8
+NSInteger positions15[] = {0, 15, 30, 45, 60, 75, 90, 100}; // 8
+
 
 CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *refcon)
 {
@@ -226,6 +243,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 @synthesize UseAppleCMDModifier=_UseAppleCMDModifier;
 @synthesize AutomaticUpdates=_AutomaticUpdates;
 @synthesize hideFromStatusBar = _hideFromStatusBar;
+@synthesize hideVolumeWindow = _hideVolumeWindow;
 @synthesize loadIntroAtStart = _loadIntroAtStart;
 @synthesize statusBar = _statusBar;
 
@@ -430,7 +448,8 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
         oldVolumeSetting=[musicProgramPnt soundVolume];
         [musicProgramPnt setSoundVolume:0];
         
-        [[NSClassFromString(@"OSDManager") sharedManager] showImage:OSDGraphicSpeakerMute onDisplayID:CGSMainDisplayID() priority:OSDPriorityDefault msecUntilFade:1000 filledChiclets:0 totalChiclets:(unsigned int)100 locked:NO];
+        if(!_hideVolumeWindow)
+            [[NSClassFromString(@"OSDManager") sharedManager] showImage:OSDGraphicSpeakerMute onDisplayID:CGSMainDisplayID() priority:OSDPriorityDefault msecUntilFade:1000 filledChiclets:0 totalChiclets:(unsigned int)100 locked:NO];
 
         //[self refreshVolumeBar:0];
     }
@@ -439,7 +458,8 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
         [musicProgramPnt setSoundVolume:oldVolumeSetting];
         [volumeImageLayer setContents:imgVolOn];
         
-        [[NSClassFromString(@"OSDManager") sharedManager] showImage:OSDGraphicSpeaker onDisplayID:CGSMainDisplayID() priority:OSDPriorityDefault msecUntilFade:1000 filledChiclets:(unsigned int)oldVolumeSetting totalChiclets:(unsigned int)100 locked:NO];
+        if(!_hideVolumeWindow)
+            [[NSClassFromString(@"OSDManager") sharedManager] showImage:OSDGraphicSpeaker onDisplayID:CGSMainDisplayID() priority:OSDPriorityDefault msecUntilFade:1000 filledChiclets:(unsigned int)oldVolumeSetting totalChiclets:(unsigned int)100 locked:NO];
 
         //[self refreshVolumeBar:oldVolumeSetting];
         oldVolumeSetting=-1;
@@ -760,6 +780,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
                           [NSNumber numberWithBool:false], @"UseAppleCMDModifier",
                           [NSNumber numberWithBool:true],  @"AutomaticUpdates",
                           [NSNumber numberWithBool:false], @"hideFromStatusBarPreference",
+                          [NSNumber numberWithBool:false], @"hideVolumeWindowPreference",
                           [NSNumber numberWithBool:true],  @"loadIntroAtStart",
                           nil ]; // terminate the list
     [preferences registerDefaults:dict];
@@ -769,6 +790,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     [self setUseAppleCMDModifier:[preferences boolForKey:  @"UseAppleCMDModifier"]];
     [self setAutomaticUpdates:[preferences boolForKey:     @"AutomaticUpdates"]];
     [self setHideFromStatusBar:[preferences boolForKey:    @"hideFromStatusBarPreference"]];
+    [self setHideVolumeWindow:[preferences boolForKey:    @"hideVolumeWindowPreference"]];
     [self setLoadIntroAtStart:[preferences boolForKey:     @"loadIntroAtStart"]];
     
     NSInteger volumeIncSetting = [preferences integerForKey:@"volumeInc"];
@@ -885,6 +907,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     [self setTapping:![self Tapping]];
 }
 
+/*
 - (IBAction)showIntroWindow:(id)sender
 {
     if(!introWindowController)
@@ -896,6 +919,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     [introWindowController showWindow:self];
     [[introWindowController window] makeKeyAndOrderFront:self];
 }
+*/
 
 - (IBAction)sliderValueChanged:(NSSliderCell*)slider
 {
@@ -910,6 +934,72 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 
 - (void) setVolumeInc:(NSInteger)volumeIncSetting
 {
+    switch(volumeIncSetting)
+    {
+        case 15:
+            positions = positions15;
+            numPos = 8;
+            break;
+        case 14:
+            positions = positions14;
+            numPos = 8;
+            break;
+        case 13:
+            positions = positions13;
+            numPos = 9;
+            break;
+        case 12:
+            positions = positions12;
+            numPos = 9;
+            break;
+        case 11:
+            positions = positions11;
+            numPos = 10;
+            break;
+        case 10:
+            positions = positions10;
+            numPos = 11;
+            break;
+        case 9:
+            positions = positions9;
+            numPos = 12;
+            break;
+        case 8:
+            positions = positions8;
+            numPos = 13;
+            break;
+        case 7:
+            positions = positions7;
+            numPos = 15;
+            break;
+        case 6:
+            positions = positions6;
+            numPos = 18;
+            break;
+        case 5:
+            positions = positions5;
+            numPos = 21;
+            break;
+        case 4:
+            positions = positions4;
+            numPos = 26;
+            break;
+        case 3:
+            positions = positions3;
+            numPos = 34;
+            break;
+        case 2:
+            positions = positions2;
+            numPos = 51;
+            break;
+        case 1:
+        default:
+            positions = positions1;
+            numPos = 65;
+            break;
+            
+    }
+    
     _volumeInc = volumeIncSetting;
 }
 
@@ -995,8 +1085,8 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 {
     [CATransaction begin]; {
         [CATransaction setCompletionBlock:^{
-            [_volumeWindow orderOut:self];
-            fadeInAnimationReady=true;
+            [self->_volumeWindow orderOut:self];
+            self->fadeInAnimationReady=true;
         }];
         [mainLayer addAnimation:fadeOutAnimation forKey:@"decreaseOpacity"];
     } [CATransaction commit];
@@ -1015,10 +1105,35 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 
 - (void)changeVol:(bool)increase
 {
-    NSInteger volume;
+    NSInteger volume = [musicProgramPnt soundVolume];
+    /* output each array element's value */
+    
+    NSInteger i = 0;
+    NSInteger diff1 = abs(4);
+    NSInteger diff2;
+    
+    for (NSInteger j = 1; j < numPos; j++ ) {
+        diff2 = abs((int)(volume - positions[j]));
+        if ( diff2<diff1 )
+        {
+            diff1 = diff2;
+            i = j;
+        }
+    }
+    
     if(oldVolumeSetting<0) // if it was not mute
     {
-        volume=[musicProgramPnt soundVolume]+_volumeInc*(increase?1:-1);
+        //volume=[musicProgramPnt soundVolume]+_volumeInc*(increase?1:-1);
+        i += (increase?1:-1);
+        if (i >= numPos)
+        {
+            i = numPos-1;
+        }
+        else if ( i < 0 )
+        {
+            i = 0;
+        }
+        volume = positions[i];
     }
     else // if it was mute
     {
@@ -1031,7 +1146,13 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     
     OSDGraphic image = (volume > 0)? OSDGraphicSpeaker : OSDGraphicSpeakerMute;
     
-    [[NSClassFromString(@"OSDManager") sharedManager] showImage:image onDisplayID:CGSMainDisplayID() priority:OSDPriorityDefault msecUntilFade:1000 filledChiclets:(unsigned int)volume totalChiclets:(unsigned int)100 locked:NO];
+    NSInteger numFullBlks = floor(volume/6.25);
+    NSInteger numQrtsBlks = round(((double)volume-(double)numFullBlks*6.25)/1.5625);
+    
+    //NSLog(@"%d %d",(int)numFullBlks,(int)numQrtsBlks);
+    
+    if(!_hideVolumeWindow)
+        [[NSClassFromString(@"OSDManager") sharedManager] showImage:image onDisplayID:CGSMainDisplayID() priority:OSDPriorityDefault msecUntilFade:1000 filledChiclets:(unsigned int)(round(((numFullBlks*4+numQrtsBlks)*1.5625)*100)) totalChiclets:(unsigned int)10000 locked:NO];
     
     [musicProgramPnt setSoundVolume:volume];
     
@@ -1238,6 +1359,23 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 }
 
 #pragma mark - NSMenuDelegate
+
+- (IBAction)toggleHideVolumeWindow:(id)sender
+{
+    [self setHideVolumeWindow:![self hideVolumeWindow]];
+}
+
+- (void)setHideVolumeWindow:(bool)enabled
+{
+    _hideVolumeWindow=enabled;
+    
+    NSMenuItem* menuItem=[_statusMenu itemWithTag:6];
+    [menuItem setState:[self hideVolumeWindow]];
+    
+    [preferences setBool:enabled forKey:@"hideVolumeWindowPreference"];
+    [preferences synchronize];
+}
+
 
 - (void)menuWillOpen:(NSMenu *)menu
 {

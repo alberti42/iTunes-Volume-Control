@@ -24,7 +24,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="200" height="200"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="2">
                 <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -58,8 +58,11 @@
                         <action selector="toggleHideFromStatusBar:" target="-1" id="25"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Hide volume window" id="IG3-xA-1iJ">
+                <menuItem title="Hide volume window" tag="6" id="IG3-xA-1iJ">
                     <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="toggleHideVolumeWindow:" target="3" id="YZl-KG-mLA"/>
+                    </connections>
                 </menuItem>
                 <menuItem title="Start at login" tag="4" id="12" userLabel="Start at login">
                     <modifierMask key="keyEquivalentModifierMask"/>
@@ -85,12 +88,6 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="toggleAutomaticUpdates:" target="3" id="39"/>
-                    </connections>
-                </menuItem>
-                <menuItem title="How does it work?" hidden="YES" enabled="NO" id="14" userLabel="How does it work?">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="showIntroWindow:" target="3" id="41"/>
                     </connections>
                 </menuItem>
                 <menuItem title="About" id="15" userLabel="About">
@@ -191,11 +188,6 @@
             </subviews>
             <point key="canvasLocation" x="-118.5" y="-29"/>
         </customView>
-        <collectionViewItem id="329" customClass="iconCollectionViewItem">
-            <connections>
-                <outlet property="view" destination="330" id="332"/>
-            </connections>
-        </collectionViewItem>
         <view id="330" customClass="iconView">
             <rect key="frame" x="0.0" y="0.0" width="57" height="59"/>
             <autoresizingMask key="autoresizingMask"/>
@@ -210,9 +202,6 @@
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
-                    <connections>
-                        <binding destination="329" name="value" keyPath="representedObject.nameProgram" id="454"/>
-                    </connections>
                 </textField>
             </subviews>
             <constraints>
@@ -221,19 +210,11 @@
             </constraints>
             <point key="canvasLocation" x="149.5" y="126.5"/>
         </view>
-        <customObject id="342" customClass="IconController">
-            <connections>
-                <outlet property="arrayController" destination="343" id="344"/>
-            </connections>
-        </customObject>
         <arrayController objectClassName="IconModel" editable="NO" id="343">
             <declaredKeys>
                 <string>nameProgram</string>
                 <string>iconImage</string>
             </declaredKeys>
-            <connections>
-                <binding destination="342" name="contentArray" keyPath="icons" id="349"/>
-            </connections>
         </arrayController>
         <customView id="516" userLabel="Select program collection view">
             <rect key="frame" x="0.0" y="0.0" width="181" height="79"/>
@@ -256,7 +237,6 @@
                     <color key="primaryBackgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                     <connections>
                         <binding destination="343" name="content" keyPath="arrangedObjects" id="761"/>
-                        <outlet property="itemPrototype" destination="329" id="760"/>
                     </connections>
                 </collectionView>
             </subviews>

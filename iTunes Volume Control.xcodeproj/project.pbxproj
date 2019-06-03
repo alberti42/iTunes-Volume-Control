@@ -7,14 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		65163D951A500652007F3DE6 /* IconModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 65163D941A500652007F3DE6 /* IconModel.m */; };
-		65163D991A50077E007F3DE6 /* IconController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65163D981A50077E007F3DE6 /* IconController.m */; };
 		651A7EEF168F1F4C00A76288 /* VolumeWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 651A7EED168F1F4C00A76288 /* VolumeWindow.m */; };
 		654DDC65185DDD510095AA66 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 654DDC64185DDD510095AA66 /* dsa_pub.pem */; };
 		656C6C78168A2A0B00ECA482 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 656C6C77168A2A0B00ECA482 /* main.m */; };
 		656C6C7F168A2A0B00ECA482 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 656C6C7E168A2A0B00ECA482 /* AppDelegate.m */; };
 		656C6CA3168A456900ECA482 /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 656C6CA2168A456900ECA482 /* ScriptingBridge.framework */; };
-		658B93C7185E48B2007BEBEF /* IntroWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 658B93C6185E48B2007BEBEF /* IntroWindowController.m */; };
 		658E9E7C1A50141E0037AF64 /* spotifyBig@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 658E9E781A50141E0037AF64 /* spotifyBig@2x.png */; };
 		658E9E8D1A5015A20037AF64 /* spotifyBig.png in Resources */ = {isa = PBXBuildFile; fileRef = 658E9E891A5015A20037AF64 /* spotifyBig.png */; };
 		658E9E911A5017AF0037AF64 /* iTunes12Big@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 658E9E8F1A5017AF0037AF64 /* iTunes12Big@2x.png */; };
@@ -27,7 +24,6 @@
 		659CCFF5185CBF0F006958AD /* volume@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 659CCFE6185CAC93006958AD /* volume@2x.png */; };
 		65B3EB7C1A4ED9A8002BB939 /* spotify@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 657814681A4E28DA009C4A0B /* spotify@2x.png */; };
 		65B3EB7F1A4ED9A8002BB939 /* spotify.png in Resources */ = {isa = PBXBuildFile; fileRef = 6578146B1A4E28DA009C4A0B /* spotify.png */; };
-		65B8E4B322A35572005198A8 /* MyNSVisualEffectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B8E4B222A35572005198A8 /* MyNSVisualEffectView.m */; };
 		65C24C01168CBC7E0000BFC2 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 65C24C00168CBC7E0000BFC2 /* Credits.rtf */; };
 		65C24C67168CEB130000BFC2 /* AppleRemote.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C24C65168CEB130000BFC2 /* AppleRemote.m */; };
 		65C8FB6E1A4754340023CE24 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65C8FB6D1A4754340023CE24 /* MainMenu.xib */; };
@@ -43,7 +39,6 @@
 		65E2AE8F1A044F6C00FD15A1 /* statusbar-item-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 65E2AE871A044F6C00FD15A1 /* statusbar-item-white.png */; };
 		65E2AE901A044F6C00FD15A1 /* statusbar-item-white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65E2AE881A044F6C00FD15A1 /* statusbar-item-white@2x.png */; };
 		65E325D81A508078007BFC10 /* iconView.m in Sources */ = {isa = PBXBuildFile; fileRef = 65E325D71A508078007BFC10 /* iconView.m */; };
-		65E325DB1A5081C8007BFC10 /* iconCollectionViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 65E325DA1A5081C8007BFC10 /* iconCollectionViewItem.m */; };
 		65E325DE1A50AEC6007BFC10 /* iconCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 65E325DD1A50AEC6007BFC10 /* iconCollectionView.m */; };
 		65EB7A8022A3084400680044 /* iTunes12.png in Resources */ = {isa = PBXBuildFile; fileRef = 657814671A4E28DA009C4A0B /* iTunes12.png */; };
 		65EB7A8122A3084700680044 /* iTunes12@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 657814661A4E28DA009C4A0B /* iTunes12@2x.png */; };
@@ -553,16 +548,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				65E325DE1A50AEC6007BFC10 /* iconCollectionView.m in Sources */,
-				65E325DB1A5081C8007BFC10 /* iconCollectionViewItem.m in Sources */,
-				65163D991A50077E007F3DE6 /* IconController.m in Sources */,
-				658B93C7185E48B2007BEBEF /* IntroWindowController.m in Sources */,
 				656C6C78168A2A0B00ECA482 /* main.m in Sources */,
 				65F7DD921A51BB2400089B83 /* musicPlayersView.m in Sources */,
 				656C6C7F168A2A0B00ECA482 /* AppDelegate.m in Sources */,
 				65C24C67168CEB130000BFC2 /* AppleRemote.m in Sources */,
 				651A7EEF168F1F4C00A76288 /* VolumeWindow.m in Sources */,
-				65B8E4B322A35572005198A8 /* MyNSVisualEffectView.m in Sources */,
-				65163D951A500652007F3DE6 /* IconModel.m in Sources */,
 				E2F254C6179EA2B600DD3C66 /* StatusItemView.m in Sources */,
 				65E325D81A508078007BFC10 /* iconView.m in Sources */,
 			);

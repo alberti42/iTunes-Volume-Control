@@ -38,6 +38,9 @@
     
     NSInteger osxVersion;
     
+    NSInteger* positions;
+    NSInteger numPos;
+    
 @public
     iTunesApplication *iTunes;
     SpotifyApplication *spotify;
@@ -63,6 +66,7 @@
 @property (assign, nonatomic) bool UseAppleCMDModifier;
 @property (assign, nonatomic) bool AutomaticUpdates;
 @property (assign, nonatomic) bool hideFromStatusBar;
+@property (assign, nonatomic) bool hideVolumeWindow;
 @property (assign, nonatomic) bool loadIntroAtStart;
 
 - (IBAction)increaseVol:(id)sender;
@@ -70,12 +74,13 @@
 - (IBAction)toggleUseAppleCMDModifier:(id)sender;
 - (IBAction)toggleAutomaticUpdates:(id)sender;
 - (IBAction)toggleHideFromStatusBar:(id)sender;
+- (IBAction)toggleHideVolumeWindow:(id)sender;
 - (IBAction)toggleStartAtLogin:(id)sender;
 - (IBAction)toggleTapping:(id)sender;
 - (IBAction)toggleAppleRemote:(id)sender;
 - (IBAction)aboutPanel:(id)sender;
 - (IBAction)sliderValueChanged:(NSSliderCell*)slider;
-- (IBAction)showIntroWindow:(id)sender;
+//- (IBAction)showIntroWindow:(id)sender;
 
 - (void)appleRemoteButton: (AppleRemoteEventIdentifier)buttonIdentifier pressedDown: (BOOL) pressedDown clickCount: (unsigned int) count;
 
