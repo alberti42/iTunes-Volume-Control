@@ -22,7 +22,7 @@ How to get it installed?
 
 It is very simple. There is no need of any installation.
 
-* Just download this [dmg package](https://github.com/alberti42/iTunes-Volume-Control/raw/master/iTunes%20Volume%20Control.dmg). Note that some users have experienced a flag *com.apple.quarantine* which leads to a corrupt application. Below it is explained how to remove this flag manually.
+* Just download this [dmg package](https://github.com/alberti42/iTunes-Volume-Control/raw/master/iTunes%20Volume%20Control.dmg).
 * Open it.
 * Drag the *iTunes Volume Control* app into your *Application* folder, or any other folder of your choice.
 * Run the *iTunes Volume Control* app and a "music note" symbol will appear in your status bar.
@@ -34,7 +34,7 @@ It is very simple. There is no need of any installation.
 Remove quarantine flag
 -------
 
-To remove the quarantine flag (I don't know the reason why Safari adds it to the downloaded file), you can either
+If you get an error message *...is damaged and can't be opened...*, it is likely that a quarantine flag has been set to the downloaded file. To remove it, you can either
 
 * Download the program using the terminal. In this case, type:
 	
