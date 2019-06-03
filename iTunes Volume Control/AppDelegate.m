@@ -40,7 +40,6 @@ NSInteger positions13[] = {0, 13, 26, 39, 52, 65, 78, 91, 100}; // 9
 NSInteger positions14[] = {0, 14, 28, 42, 56, 70, 84, 100}; // 8
 NSInteger positions15[] = {0, 15, 30, 45, 60, 75, 90, 100}; // 8
 
-
 CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *refcon)
 {
     static int previousKeyCode = 0;
@@ -302,7 +301,6 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 #else
             url = LSSharedFileListItemCopyResolvedURL(itemRef, 0, NULL);
 #endif
-            
             
             if ( url ) {
                 if ( CFEqual(url, (__bridge CFTypeRef)(appURL)) ) // found it
@@ -652,8 +650,8 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     
     imgVolOn=[NSImage imageNamed:@"volume"];
     imgVolOff=[NSImage imageNamed:@"volume-off"];
-    iTunesIcon=[NSImage imageNamed:@"iTunes12"];
-    spotifyIcon=[NSImage imageNamed:@"spotify"];
+    //iTunesIcon=[NSImage imageNamed:@"iTunes12"];
+    //spotifyIcon=[NSImage imageNamed:@"spotify"];
     
     NSRect rect = NSZeroRect;
     rect.size = [imgVolOff size];
@@ -767,7 +765,6 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     }
     
     [_statusBar setView:_statusBarItemView];
-
 }
 
 - (void)initializePreferences

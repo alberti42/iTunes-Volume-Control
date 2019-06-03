@@ -55,6 +55,15 @@
      */
 }
 
+- (void) viewDidChangeEffectiveAppearance
+{
+    [self setAppropriateColorScheme];
+    
+    [self setImage: _menuIsVisible? ([self iconStatusBarIsGrayed]? statusImageOffClicked : statusImageOnClicked) : ([self iconStatusBarIsGrayed]? statusImageOff : statusImageOn)];
+    
+    [self setNeedsDisplay:YES];
+}
+
 - (id)initWithStatusItem:(NSStatusItem *)statusItem
 {
     CGFloat itemWidth = [statusItem length];
@@ -64,12 +73,11 @@
     
     if (self != nil) {
         
-        [[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(darkModeChanged:) name:@"AppleInterfaceThemeChangedNotification" object:nil];
+        //[[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(darkModeChanged:) name:@"AppleInterfaceThemeChangedNotification" object:nil];
 
         _statusItem = statusItem;
         
         statusImageBlack = [NSImage imageNamed:@"statusbar-item-black"];
-        statusImageBlue = [NSImage imageNamed:@"statusbar-item-blue"];
         statusImageGray = [NSImage imageNamed:@"statusbar-item-gray"];
         statusImageWhite = [NSImage imageNamed:@"statusbar-item-white"];
         
@@ -92,29 +100,25 @@
     if(isDark)
     {
         statusImageOnClicked = statusImageWhite;
-        statusImageOffClicked = statusImageBlue;
+        statusImageOffClicked = statusImageWhite;
         statusImageOn = statusImageWhite;
         statusImageOff = statusImageGray;
     }
     else
     {
         statusImageOnClicked = statusImageWhite;
-        statusImageOffClicked = statusImageBlue;
+        statusImageOffClicked = statusImageWhite;
         statusImageOn = statusImageBlack;
         statusImageOff = statusImageGray;
     }
 
 }
 
--(void)darkModeChanged:(NSNotification *)notif
-{
-    [self setAppropriateColorScheme];
-
-    [self setImage: _menuIsVisible? ([self iconStatusBarIsGrayed]? statusImageOffClicked : statusImageOnClicked) : ([self iconStatusBarIsGrayed]? statusImageOff : statusImageOn)];
-    
-    [self setNeedsDisplay:YES];
- 
-}
+//-(void)darkModeChanged:(NSNotification *)notif
+//{
+//
+//
+//}
 
 
 -(void)setMenuIsVisible:(BOOL)menuIsVisible
