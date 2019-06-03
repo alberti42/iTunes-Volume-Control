@@ -19,6 +19,8 @@
                 <outlet property="spotifyBtn" destination="hrb-gt-hEq" id="9Cf-nW-Vli"/>
                 <outlet property="spotifyPerc" destination="q1C-RX-nra" id="cJQ-q7-Hwo"/>
                 <outlet property="statusMenu" destination="5" id="34"/>
+                <outlet property="systemBtn" destination="0bg-hh-XNT" id="OGo-XQ-z8N"/>
+                <outlet property="systemPerc" destination="tqe-nv-xjS" id="ZpI-lj-eHB"/>
                 <outlet property="volumeIncrementsSlider" destination="99" id="196"/>
                 <outlet property="volumeWindow" destination="1" id="QVK-kj-HYh"/>
             </connections>
@@ -200,11 +202,11 @@
             <point key="canvasLocation" x="-118.5" y="-29"/>
         </customView>
         <customView id="516" userLabel="Select music player">
-            <rect key="frame" x="0.0" y="0.0" width="187" height="87"/>
+            <rect key="frame" x="0.0" y="0.0" width="187" height="119"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="526">
-                    <rect key="frame" x="19" y="68" width="151" height="17"/>
+                    <rect key="frame" x="19" y="100" width="151" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Controlled music player:" id="527">
                         <font key="font" metaFont="system"/>
@@ -213,17 +215,17 @@
                     </textFieldCell>
                 </textField>
                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="smK-tF-oAo">
-                    <rect key="frame" x="91" y="0.0" width="32" height="32"/>
+                    <rect key="frame" x="98" y="2" width="32" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="spotify" id="Nkd-GN-UZ9"/>
                 </imageView>
                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Dq-gA-3QC">
-                    <rect key="frame" x="91" y="33" width="32" height="32"/>
+                    <rect key="frame" x="98" y="35" width="32" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="iTunes" id="ZtE-IF-hUt"/>
                 </imageView>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i0t-Ei-94H">
-                    <rect key="frame" x="25" y="40" width="62" height="18"/>
+                    <rect key="frame" x="25" y="42" width="62" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="iTunes" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="4RS-28-iPU">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -234,7 +236,7 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hrb-gt-hEq">
-                    <rect key="frame" x="25" y="7" width="66" height="18"/>
+                    <rect key="frame" x="25" y="9" width="66" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Spotify" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="WHM-96-Dj4">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -244,8 +246,19 @@
                         <action selector="toggleMusicPlayer:" target="3" id="tdI-5n-OrG"/>
                     </connections>
                 </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0bg-hh-XNT">
+                    <rect key="frame" x="25" y="75" width="67" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="System" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="gn3-1v-oHN">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="toggleMusicPlayer:" target="3" id="n7h-KJ-PhQ"/>
+                    </connections>
+                </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gbm-9b-kdp">
-                    <rect key="frame" x="127" y="41" width="43" height="17"/>
+                    <rect key="frame" x="134" y="43" width="43" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(0%)" id="Slf-tf-lOn">
                         <font key="font" metaFont="system"/>
@@ -253,8 +266,22 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N1r-k3-3vR">
+                    <rect key="frame" x="98" y="68" width="32" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="Finder" id="iGx-TR-YJX"/>
+                </imageView>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tqe-nv-xjS">
+                    <rect key="frame" x="133" y="76" width="43" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(0%)" id="dks-w9-Z2B">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="q1C-RX-nra">
-                    <rect key="frame" x="127" y="8" width="42" height="17"/>
+                    <rect key="frame" x="134" y="10" width="42" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(0%)" id="9Qg-R9-iWN">
                         <font key="font" metaFont="system"/>
@@ -263,10 +290,11 @@
                     </textFieldCell>
                 </textField>
             </subviews>
-            <point key="canvasLocation" x="440.5" y="357.5"/>
+            <point key="canvasLocation" x="440.5" y="373.5"/>
         </customView>
     </objects>
     <resources>
+        <image name="Finder" width="26" height="26"/>
         <image name="iTunes" width="26" height="26"/>
         <image name="spotify" width="26" height="26"/>
     </resources>
