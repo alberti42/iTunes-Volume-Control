@@ -6,7 +6,7 @@
 #import <ScriptingBridge/ScriptingBridge.h>
 
 
-@class SpotifyApplication, SpotifyTrack, SpotifyApplication;
+@class SpotifyApplication, SpotifyTrack;
 
 enum SpotifyEPlS {
 	SpotifyEPlSStopped = 'kPSS',

@@ -68,7 +68,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     CGEventFlags keyModifier = [sysEvent modifierFlags]|0xFFFF;
     AppDelegate* app=(__bridge AppDelegate *)(refcon);
     bool keyIsRepeat = (keyFlags & 0x1);
-    bool musicProgramRunning=[app->musicProgramPnt isRunning];
+    //bool musicProgramRunning=[app->musicProgramPnt isRunning];
     
     // check that whether the Apple CMD modifier has been pressed or not
     if(((keyModifier&NX_COMMANDMASK)==NX_COMMANDMASK)==[app UseAppleCMDModifier])
@@ -77,8 +77,6 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
         {
             case NX_KEYTYPE_MUTE:
                 
-                if (musicProgramRunning)
-                {
                     if(previousKeyCode!=keyCode && app->timer)
                     {
                         [app stopTimer];
@@ -99,11 +97,10 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
                         muteDown = false;
                     }
                     return NULL;
-                }
                 break;
             case NX_KEYTYPE_SOUND_UP:
             case NX_KEYTYPE_SOUND_DOWN:
-                if(musicProgramRunning && !muteDown)
+                if(!muteDown)
                 {
                     if(previousKeyCode!=keyCode && app->timer)
                     {
@@ -248,6 +245,12 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 
 @synthesize iTunesBtn = _iTunesBtn;
 @synthesize spotifyBtn = _spotifyBtn;
+
+@synthesize itunesVolume = _itunesVolume;
+@synthesize spotifyVolume = _spotifyVolume;
+
+@synthesize iTunesPerc = _iTunesPerc;
+@synthesize spotifyPerc = _spotifyPerc;
 
 @synthesize volumeWindow=_volumeWindow;
 @synthesize statusMenu=_statusMenu;
@@ -444,26 +447,31 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 {
     // [self displayVolumeBar];
     
-    if(oldVolumeSetting<0)
+    id musicPlayerPnt = [self runningPlayer];
+    
+    if (musicPlayerPnt != nil)
     {
-        oldVolumeSetting=[musicProgramPnt soundVolume];
-        [musicProgramPnt setSoundVolume:0];
-        
-        if(!_hideVolumeWindow)
-            [[NSClassFromString(@"OSDManager") sharedManager] showImage:OSDGraphicSpeakerMute onDisplayID:CGSMainDisplayID() priority:OSDPriorityDefault msecUntilFade:1000 filledChiclets:0 totalChiclets:(unsigned int)100 locked:NO];
-
-        //[self refreshVolumeBar:0];
-    }
-    else
-    {
-        [musicProgramPnt setSoundVolume:oldVolumeSetting];
-        [volumeImageLayer setContents:imgVolOn];
-        
-        if(!_hideVolumeWindow)
-            [[NSClassFromString(@"OSDManager") sharedManager] showImage:OSDGraphicSpeaker onDisplayID:CGSMainDisplayID() priority:OSDPriorityDefault msecUntilFade:1000 filledChiclets:(unsigned int)oldVolumeSetting totalChiclets:(unsigned int)100 locked:NO];
-
-        //[self refreshVolumeBar:oldVolumeSetting];
-        oldVolumeSetting=-1;
+        if(oldVolumeSetting<0)
+        {
+            oldVolumeSetting=[musicPlayerPnt soundVolume];
+            [musicPlayerPnt setSoundVolume:0];
+            
+            if(!_hideVolumeWindow)
+                [[NSClassFromString(@"OSDManager") sharedManager] showImage:OSDGraphicSpeakerMute onDisplayID:CGSMainDisplayID() priority:OSDPriorityDefault msecUntilFade:1000 filledChiclets:0 totalChiclets:(unsigned int)100 locked:NO];
+            
+            //[self refreshVolumeBar:0];
+        }
+        else
+        {
+            [musicPlayerPnt setSoundVolume:oldVolumeSetting];
+            [volumeImageLayer setContents:imgVolOn];
+            
+            if(!_hideVolumeWindow)
+                [[NSClassFromString(@"OSDManager") sharedManager] showImage:OSDGraphicSpeaker onDisplayID:CGSMainDisplayID() priority:OSDPriorityDefault msecUntilFade:1000 filledChiclets:(unsigned int)oldVolumeSetting totalChiclets:(unsigned int)100 locked:NO];
+            
+            //[self refreshVolumeBar:oldVolumeSetting];
+            oldVolumeSetting=-1;
+        }
     }
 }
 
@@ -696,7 +704,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     [self showInStatusBar];   // Install icon into the menu bar
     
     iTunes = [SBApplication applicationWithBundleIdentifier:@"com.apple.iTunes"];
-    // spotify = [SBApplication applicationWithBundleIdentifier:@"com.spotify.client"];
+    spotify = [SBApplication applicationWithBundleIdentifier:@"com.spotify.client"];
 
     // NSString* iTunesVersion = [[NSString alloc] initWithString:[iTunes version]];
     // NSString* spotifyVersion = [[NSString alloc] initWithString:[spotify version]];
@@ -779,6 +787,8 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
                           [NSNumber numberWithBool:true],  @"AutomaticUpdates",
                           [NSNumber numberWithBool:false], @"hideFromStatusBarPreference",
                           [NSNumber numberWithBool:false], @"hideVolumeWindowPreference",
+                          [NSNumber numberWithBool:true],  @"iTunesControl",
+                          [NSNumber numberWithBool:true],  @"spotifyControl",
                           [NSNumber numberWithBool:true],  @"loadIntroAtStart",
                           nil ]; // terminate the list
     [preferences registerDefaults:dict];
@@ -788,14 +798,15 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     [self setUseAppleCMDModifier:[preferences boolForKey:  @"UseAppleCMDModifier"]];
     [self setAutomaticUpdates:[preferences boolForKey:     @"AutomaticUpdates"]];
     [self setHideFromStatusBar:[preferences boolForKey:    @"hideFromStatusBarPreference"]];
-    [self setHideVolumeWindow:[preferences boolForKey:    @"hideVolumeWindowPreference"]];
+    [self setHideVolumeWindow:[preferences boolForKey:     @"hideVolumeWindowPreference"]];
+    [[self iTunesBtn] setState:[preferences boolForKey:    @"iTunesControl"]];
+    [[self spotifyBtn] setState:[preferences boolForKey:   @"spotifyControl"]];
     [self setLoadIntroAtStart:[preferences boolForKey:     @"loadIntroAtStart"]];
     
     NSInteger volumeIncSetting = [preferences integerForKey:@"volumeInc"];
     [self setVolumeInc:volumeIncSetting];
     
     [[self volumeIncrementsSlider] setIntegerValue: volumeIncSetting];
-
 }
 
 - (IBAction)toggleAutomaticUpdates:(id)sender
@@ -1101,60 +1112,99 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     
 }
 
+- (id)runningPlayer
+{
+    id musicPlayerPnt = nil;
+    if([_iTunesBtn state] && [iTunes isRunning] && [iTunes playerState] == iTunesEPlSPlaying)
+    {
+        musicPlayerPnt = iTunes;
+    }
+    else if([_spotifyBtn state] && [spotify isRunning] && [spotify playerState] == SpotifyEPlSPlaying)
+    {
+        musicPlayerPnt = spotify;
+    }
+    
+    return musicPlayerPnt;
+}
+
 - (void)changeVol:(bool)increase
 {
-    NSInteger volume = [musicProgramPnt soundVolume];
-    /* output each array element's value */
+    id musicPlayerPnt = [self runningPlayer];
     
-    NSInteger i = 0;
-    NSInteger diff1 = abs(4);
-    NSInteger diff2;
-    
-    for (NSInteger j = 1; j < numPos; j++ ) {
-        diff2 = abs((int)(volume - positions[j]));
-        if ( diff2<diff1 )
-        {
-            diff1 = diff2;
-            i = j;
-        }
-    }
-    
-    if(oldVolumeSetting<0) // if it was not mute
+    if (musicPlayerPnt != nil)
     {
-        //volume=[musicProgramPnt soundVolume]+_volumeInc*(increase?1:-1);
-        i += (increase?1:-1);
-        if (i >= numPos)
-        {
-            i = numPos-1;
+        NSInteger volume = [musicPlayerPnt soundVolume];
+        
+        NSInteger i = 0;
+        NSInteger diff1 = abs(4);
+        NSInteger diff2;
+        
+        for (NSInteger j = 1; j < numPos; j++ ) {
+            diff2 = abs((int)(volume - positions[j]));
+            if ( diff2<diff1 )
+            {
+                diff1 = diff2;
+                i = j;
+            }
         }
-        else if ( i < 0 )
+        
+        if(oldVolumeSetting<0) // if it was not mute
         {
-            i = 0;
+            //volume=[musicProgramPnt soundVolume]+_volumeInc*(increase?1:-1);
+            i += (increase?1:-1);
+            if (i >= numPos)
+            {
+                i = numPos-1;
+            }
+            else if ( i < 0 )
+            {
+                i = 0;
+            }
+            volume = positions[i];
         }
-        volume = positions[i];
+        else // if it was mute
+        {
+            // [volumeImageLayer setContents:imgVolOn];  // restore the image of the speaker from mute speaker
+            volume=oldVolumeSetting;
+            oldVolumeSetting=-1;  // this says that it is not mute
+        }
+        if (volume<0) volume=0;
+        if (volume>100) volume=100;
+        
+        OSDGraphic image = (volume > 0)? OSDGraphicSpeaker : OSDGraphicSpeakerMute;
+        
+        NSInteger numFullBlks = floor(volume/6.25);
+        NSInteger numQrtsBlks = round(((double)volume-(double)numFullBlks*6.25)/1.5625);
+        
+        //NSLog(@"%d %d",(int)numFullBlks,(int)numQrtsBlks);
+        
+        if(!_hideVolumeWindow)
+            [[NSClassFromString(@"OSDManager") sharedManager] showImage:image onDisplayID:CGSMainDisplayID() priority:OSDPriorityDefault msecUntilFade:1000 filledChiclets:(unsigned int)(round(((numFullBlks*4+numQrtsBlks)*1.5625)*100)) totalChiclets:(unsigned int)10000 locked:NO];
+        
+        [musicPlayerPnt setSoundVolume:volume];
+        if(musicPlayerPnt==iTunes)
+        {
+            [self setItunesVolume:volume];
+        }
+        else if(musicPlayerPnt==spotify)
+        {
+            [[self spotifyPerc] setStringValue:[NSString stringWithFormat:@"(%d%%)",(int)volume]];
+        }
+        
+        // [self refreshVolumeBar:(int)volume];
     }
-    else // if it was mute
-    {
-        // [volumeImageLayer setContents:imgVolOn];  // restore the image of the speaker from mute speaker
-        volume=oldVolumeSetting;
-        oldVolumeSetting=-1;  // this says that it is not mute
-    }
-    if (volume<0) volume=0;
-    if (volume>100) volume=100;
-    
-    OSDGraphic image = (volume > 0)? OSDGraphicSpeaker : OSDGraphicSpeakerMute;
-    
-    NSInteger numFullBlks = floor(volume/6.25);
-    NSInteger numQrtsBlks = round(((double)volume-(double)numFullBlks*6.25)/1.5625);
-    
-    //NSLog(@"%d %d",(int)numFullBlks,(int)numQrtsBlks);
-    
-    if(!_hideVolumeWindow)
-        [[NSClassFromString(@"OSDManager") sharedManager] showImage:image onDisplayID:CGSMainDisplayID() priority:OSDPriorityDefault msecUntilFade:1000 filledChiclets:(unsigned int)(round(((numFullBlks*4+numQrtsBlks)*1.5625)*100)) totalChiclets:(unsigned int)10000 locked:NO];
-    
-    [musicProgramPnt setSoundVolume:volume];
-    
-    // [self refreshVolumeBar:(int)volume];
+}
+
+- (void) setItunesVolume:(NSInteger)volume
+{
+    _itunesVolume = volume;
+    [[self iTunesPerc] setStringValue:[NSString stringWithFormat:@"(%d%%)",(int)volume]];
+}
+
+- (void) setSpotifyVolume:(NSInteger)volume
+{
+    _spotifyVolume = volume;
+    [[self spotifyPerc] setStringValue:[NSString stringWithFormat:@"(%d%%)",(int)volume]];
 }
 
 - (void) createVolumeBar
@@ -1360,8 +1410,14 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 
 - (IBAction)toggleMusicPlayer:(id)sender
 {
-    int a= 1;
-//    [self setHideVolumeWindow:![self hideVolumeWindow]];
+    if (sender == _iTunesBtn) {
+        [preferences setBool:[sender state] forKey:@"iTunesControl"];
+    }
+    else if (sender == _spotifyBtn)
+    {
+        [preferences setBool:[sender state] forKey:@"spotifyControl"];
+    }
+    [preferences synchronize];
 }
 
 #pragma mark - NSMenuDelegate

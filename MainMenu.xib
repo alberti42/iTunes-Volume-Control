@@ -15,7 +15,9 @@
         <customObject id="3" customClass="AppDelegate">
             <connections>
                 <outlet property="iTunesBtn" destination="i0t-Ei-94H" id="b2x-eC-ShE"/>
+                <outlet property="iTunesPerc" destination="Gbm-9b-kdp" id="lRa-C2-Ba4"/>
                 <outlet property="spotifyBtn" destination="hrb-gt-hEq" id="9Cf-nW-Vli"/>
+                <outlet property="spotifyPerc" destination="q1C-RX-nra" id="cJQ-q7-Hwo"/>
                 <outlet property="statusMenu" destination="5" id="34"/>
                 <outlet property="volumeIncrementsSlider" destination="99" id="196"/>
                 <outlet property="volumeWindow" destination="1" id="QVK-kj-HYh"/>
@@ -197,28 +199,6 @@
             </subviews>
             <point key="canvasLocation" x="-118.5" y="-29"/>
         </customView>
-        <view id="330" customClass="iconView">
-            <rect key="frame" x="0.0" y="0.0" width="57" height="59"/>
-            <autoresizingMask key="autoresizingMask"/>
-            <subviews>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="382">
-                    <rect key="frame" x="1" y="6" width="56" height="17"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="52" id="610"/>
-                    </constraints>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Name" id="383">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-            </subviews>
-            <constraints>
-                <constraint firstItem="382" firstAttribute="centerX" secondItem="330" secondAttribute="centerX" id="626"/>
-                <constraint firstAttribute="bottom" secondItem="382" secondAttribute="bottom" constant="6" id="828"/>
-            </constraints>
-            <point key="canvasLocation" x="149.5" y="126.5"/>
-        </view>
         <customView id="516" userLabel="Select music player">
             <rect key="frame" x="0.0" y="0.0" width="187" height="87"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -264,81 +244,27 @@
                         <action selector="toggleMusicPlayer:" target="3" id="tdI-5n-OrG"/>
                     </connections>
                 </button>
-            </subviews>
-            <point key="canvasLocation" x="440.5" y="357.5"/>
-        </customView>
-        <customView id="843" userLabel="Select program" customClass="musicPlayersView">
-            <rect key="frame" x="0.0" y="0.0" width="181" height="79"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <subviews>
-                <view translatesAutoresizingMaskIntoConstraints="NO" id="987" userLabel="iTunes Icon View" customClass="iconView">
-                    <rect key="frame" x="17" y="0.0" width="57" height="59"/>
-                    <subviews>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="988">
-                            <rect key="frame" x="1" y="6" width="56" height="17"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="52" id="991"/>
-                            </constraints>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="iTunes" id="992">
-                                <font key="font" metaFont="system"/>
-                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                    </subviews>
-                    <constraints>
-                        <constraint firstItem="988" firstAttribute="centerX" secondItem="987" secondAttribute="centerX" id="989"/>
-                        <constraint firstAttribute="bottom" secondItem="988" secondAttribute="bottom" constant="6" id="990"/>
-                    </constraints>
-                </view>
-                <view translatesAutoresizingMaskIntoConstraints="NO" id="946" userLabel="Spotify View" customClass="iconView">
-                    <rect key="frame" x="83" y="0.0" width="57" height="59"/>
-                    <subviews>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="947">
-                            <rect key="frame" x="1" y="6" width="56" height="17"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="52" id="950"/>
-                            </constraints>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Spotify" id="951">
-                                <font key="font" metaFont="system"/>
-                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                    </subviews>
-                    <constraints>
-                        <constraint firstItem="947" firstAttribute="centerX" secondItem="946" secondAttribute="centerX" id="948"/>
-                        <constraint firstAttribute="bottom" secondItem="947" secondAttribute="bottom" constant="6" id="949"/>
-                    </constraints>
-                </view>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="845">
-                    <rect key="frame" x="19" y="63" width="141" height="17"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Selected music player:" id="850">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gbm-9b-kdp">
+                    <rect key="frame" x="127" y="41" width="43" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(0%)" id="Slf-tf-lOn">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="q1C-RX-nra">
+                    <rect key="frame" x="127" y="8" width="42" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(0%)" id="9Qg-R9-iWN">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
             </subviews>
-            <constraints>
-                <constraint firstItem="845" firstAttribute="leading" secondItem="843" secondAttribute="leading" constant="21" id="846"/>
-                <constraint firstItem="845" firstAttribute="top" secondItem="843" secondAttribute="top" constant="-1" id="847"/>
-                <constraint firstItem="987" firstAttribute="bottom" secondItem="946" secondAttribute="bottom" id="1006"/>
-                <constraint firstItem="987" firstAttribute="top" secondItem="946" secondAttribute="top" id="1008"/>
-                <constraint firstItem="987" firstAttribute="top" secondItem="843" secondAttribute="top" constant="20" symbolic="YES" id="1022"/>
-                <constraint firstItem="987" firstAttribute="leading" secondItem="843" secondAttribute="leading" constant="17" id="1092"/>
-                <constraint firstAttribute="trailing" secondItem="987" secondAttribute="trailing" constant="107" id="1093"/>
-                <constraint firstAttribute="bottom" secondItem="946" secondAttribute="bottom" id="1095"/>
-                <constraint firstAttribute="trailing" secondItem="946" secondAttribute="trailing" constant="41" id="1103"/>
-                <constraint firstItem="946" firstAttribute="leading" secondItem="843" secondAttribute="leading" constant="83" id="1104"/>
-            </constraints>
-            <connections>
-                <outlet property="iTunesView" destination="987" id="1105"/>
-                <outlet property="spotifyView" destination="946" id="1106"/>
-            </connections>
-            <point key="canvasLocation" x="-190" y="560"/>
+            <point key="canvasLocation" x="440.5" y="357.5"/>
         </customView>
-        <userDefaultsController representsSharedInstance="YES" id="iU6-iC-nLz"/>
     </objects>
     <resources>
         <image name="iTunes" width="26" height="26"/>

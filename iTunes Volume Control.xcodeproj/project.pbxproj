@@ -39,7 +39,6 @@
 		65E2AE8E1A044F6C00FD15A1 /* statusbar-item-gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65E2AE861A044F6C00FD15A1 /* statusbar-item-gray@2x.png */; };
 		65E2AE8F1A044F6C00FD15A1 /* statusbar-item-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 65E2AE871A044F6C00FD15A1 /* statusbar-item-white.png */; };
 		65E2AE901A044F6C00FD15A1 /* statusbar-item-white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65E2AE881A044F6C00FD15A1 /* statusbar-item-white@2x.png */; };
-		65E325D81A508078007BFC10 /* iconView.m in Sources */ = {isa = PBXBuildFile; fileRef = 65E325D71A508078007BFC10 /* iconView.m */; };
 		65E325DE1A50AEC6007BFC10 /* iconCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 65E325DD1A50AEC6007BFC10 /* iconCollectionView.m */; };
 		65EB7A8122A3084700680044 /* iTunes12@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 657814661A4E28DA009C4A0B /* iTunes12@2x.png */; };
 		65EB7A8222A3085900680044 /* iTunes12Big.png in Resources */ = {isa = PBXBuildFile; fileRef = 658E9E8E1A5017AF0037AF64 /* iTunes12Big.png */; };
@@ -552,7 +551,6 @@
 				65C24C67168CEB130000BFC2 /* AppleRemote.m in Sources */,
 				651A7EEF168F1F4C00A76288 /* VolumeWindow.m in Sources */,
 				E2F254C6179EA2B600DD3C66 /* StatusItemView.m in Sources */,
-				65E325D81A508078007BFC10 /* iconView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

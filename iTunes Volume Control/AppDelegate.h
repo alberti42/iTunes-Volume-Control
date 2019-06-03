@@ -60,6 +60,9 @@
 @property (nonatomic, assign) IBOutlet NSButton* iTunesBtn;
 @property (nonatomic, assign) IBOutlet NSButton* spotifyBtn;
 
+@property (nonatomic, assign) IBOutlet NSTextField* iTunesPerc;
+@property (nonatomic, assign) IBOutlet NSTextField* spotifyPerc;
+
 @property (nonatomic, readonly, strong) NSStatusItem* statusBar;
 
 @property (assign, nonatomic) NSInteger volumeInc;
@@ -71,6 +74,9 @@
 @property (assign, nonatomic) bool hideFromStatusBar;
 @property (assign, nonatomic) bool hideVolumeWindow;
 @property (assign, nonatomic) bool loadIntroAtStart;
+
+@property (assign, nonatomic) NSInteger itunesVolume;
+@property (assign, nonatomic) NSInteger spotifyVolume;
 
 - (IBAction)increaseVol:(id)sender;
 
