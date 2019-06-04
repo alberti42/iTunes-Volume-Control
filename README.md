@@ -39,7 +39,7 @@ It is simple. There is no need of any installation.
 Installing it on Mojave as a third-party application
 ----------------------------------------------------
 
-Mojave has recently increased security with version 10.14.5, disabling the possibility to install third-party application, which are not downloaded from a certified developer. Only companies who are recognized as legal entity can receive from Apple a ``notarization'' quality seal. As I am not planning to start a company to distribute this app, if you want to install it, you can choose either of the two options:
+Mojave has recently increased security with version 10.14.5, disabling the possibility to install third-party application, which are not downloaded from a certified developer. Only companies who are recognized as legal entity can receive from Apple a *notarization* quality seal. As I am not planning to start a company to distribute this app, if you want to install it, you can choose either of the two options:
 
 * You can clone the Git repository onto your computer by typing from terminal:
 

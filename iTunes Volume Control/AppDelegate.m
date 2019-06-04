@@ -838,6 +838,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
                           [NSNumber numberWithBool:false], @"hideVolumeWindowPreference",
                           [NSNumber numberWithBool:true],  @"iTunesControl",
                           [NSNumber numberWithBool:true],  @"spotifyControl",
+                          [NSNumber numberWithBool:true],  @"systemControl",
                           [NSNumber numberWithBool:true],  @"loadIntroAtStart",
                           nil ]; // terminate the list
     [preferences registerDefaults:dict];
