@@ -9,6 +9,7 @@ Description
 * This is particularly useful to control the volume of AirPlay devices.
 * You can adjust the finess by which you change the volume.
 * You can disable the heads-up display showing the volume status; this is quite handy when you are watching movies and you do not want to be distracted by the overlay volume display.
+* Using the volume keys, the volume of the currently playing application (either iTunes or Spotify) is controlled. If neither iTunes nor Spotify are playing music. Then the global volume will be affected by the volume keys.
 
 ![alt tag](https://raw.github.com/alberti42/iTunes-Volume-Control/master/screenshot.png)
 
@@ -33,6 +34,7 @@ It is simple. There is no need of any installation.
 * While iTunes is running, use the volume control keys to change its volume. This will not affect the main volume.
 
 ![alt tag](https://raw.github.com/alberti42/iTunes-Volume-Control/master/SecurityPrivacy.png)
+
 
 Installing it on Mojave as a third-party application
 ----------------------------------------------------
