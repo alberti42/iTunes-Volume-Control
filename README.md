@@ -4,23 +4,26 @@ iTunes-Volume-Control
 Description
 -----------
 
-* This little app allows you to control the iTunes volume using ``volume-up`` and ``volume-down`` hotkeys from your keyboard.
-* It allows you also to control the same iTunes volume by means of your Apple Remote control.
+* This app allows you to control iTunes's volume and Spotify's volume using ``volume-up`` and ``volume-down`` hotkeys from your keyboard.
+* It also allows you to control the same iTunes volume by means of your Apple Remote control.
 * This is particularly useful to control the volume of AirPlay devices.
+* You can adjust the finess by which you change the volume.
+* You can disable the heads-up display showing the volume status; this is quite handy when you are watching movies and you do not want to be distracted by the overlay volume display.
 
 ![alt tag](https://raw.github.com/alberti42/iTunes-Volume-Control/master/screenshot.png)
 
 Why do you need this app?
------------------------
+-------------------------
 
-* iTunes volume is normally not affected by changes of volume from the keyboard. This would only affect the system volume settings.
-* This behavior is somehow undesired, especially when listening to musing on external speakers like AirPlay devices.
-* iTunes does not respond to volume change from your Apple Remote. Again, this would only change the system volume settings, leaving unaffected the volume of your AirPlay device.
+* iTunes volume cannot be controlled from the keyboard. Volume keys only affect the global system volume.
+* However, you might desire to directly control iTunes volume. This is especially relevant when listening to musing on external speakers like AirPlay devices. The volume level of AirPlay devices depends on iTunes's volume but not on the global volume, which you can set with the volume keys.
+* iTunes does not respond to volume change from your Apple Remote. Again, Apple Remote would only change the system volume settings, leaving unaffected the volume of your AirPlay devices.
+* Sometimes you might desire to hide the volume heads-up overlay from your screen, especially when watching movies. This app can be configured to hide it.
 
 How to get it installed?
-------------------
+------------------------
 
-It is very simple. There is no need of any installation.
+It is simple. There is no need of any installation.
 
 * Just download this [dmg package](https://github.com/alberti42/iTunes-Volume-Control/raw/master/iTunes%20Volume%20Control.dmg).
 * Open it.
@@ -31,8 +34,32 @@ It is very simple. There is no need of any installation.
 
 ![alt tag](https://raw.github.com/alberti42/iTunes-Volume-Control/master/SecurityPrivacy.png)
 
+Installing it on Mojave as a third-party application
+----------------------------------------------------
+
+Mojave has recently increased security with version 10.14.5, disabling the possibility to install third-party application, which are not downloaded from a certified developer. Only companies who are recognized as legal entity can receive from Apple a ``notarization'' quality seal. As I am not planning to start a company to distribute this app, if you want to install it, you can choose either of the two options:
+
+* You can clone the Git repository onto your computer by typing from terminal:
+
+	``git co https://github.com/alberti42/iTunes-Volume-Control.git``
+	
+ and compile the source code with Xcode. This overcomes the foregoing limitation.
+ 
+* You can temporariy disable Apple's Gatekeeper protection by typing from terminal:
+
+	``sudo spctl --master-disable``
+	
+  This will add an extra option in the Security & Privacy configuration panel, which you have to select before running the app for the first time.
+  
+  ![alt tag](https://raw.github.com/alberti42/iTunes-Volume-Control/master/SecurityPrivacyMojave.png)
+  
+  Do not forget to enable the Gatekeeper back again after you have launched for the first time the application.
+
+	``sudo spctl --master-enable``
+
+
 Remove quarantine flag
--------
+----------------------
 
 If you get an error message *...is damaged and can't be opened...*, it is likely that a quarantine flag has been added to the downloaded file. To remove it, you can either
 
@@ -51,7 +78,7 @@ If you get an error message *...is damaged and can't be opened...*, it is likely
 If you have a suggestion how to avoid such a cumbersome procedure, I would appreciate to hear your feedback.
 
 Requirements
--------
+------------
 
 Mac OS X version at least 10.14 (Mojave) or greater
 
@@ -69,6 +96,7 @@ If you have any questions, you can contact me at a.alberti82@gmail.com. If you w
 Versions
 --------
 
+* [1.6.0](http://quantum-technologies.iap.uni-bonn.de/alberti/iTunesVolumeControl/iTunesVolumeControl-v1.6.0.zip): Able to control Spotify, iTunes, and main volume.
 * [1.5.3](http://quantum-technologies.iap.uni-bonn.de/alberti/iTunesVolumeControl/iTunesVolumeControl-v1.5.3.zip): Made use of Mojave's native heads-up display to show the volume status.
 * [1.5.2](http://quantum-technologies.iap.uni-bonn.de/alberti/iTunesVolumeControl/iTunesVolumeControl-v1.5.2.zip): Fixed compatibility with Mojave. Prior versions are no longer supported. Fixed small bug on displaying the volume level when controlling it with the Apple Remote.
 * [1.5.1](http://quantum-technologies.iap.uni-bonn.de/alberti/iTunesVolumeControl/iTunesVolumeControl-v1.5.1.zip): Added the compatibility with Mac OS X versions greater than OS X 10.7 (Lion).
