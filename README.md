@@ -26,7 +26,7 @@ How to get it installed?
 
 It is simple. There is no need of any installation.
 
-* Just download either this [dmg package](https://github.com/alberti42/iTunes-Volume-Control/raw/master/iTunes%20Volume%20Control.dmg) or this [zip file](https://github.com/alberti42/iTunes-Volume-Control/blob/master/iTunes%20Volume%20Control.zip).
+* Just download either this [dmg package](https://github.com/alberti42/iTunes-Volume-Control/raw/master/iTunes%20Volume%20Control.dmg) or this [zip file](https://github.com/alberti42/iTunes-Volume-Control/raw/master/iTunes%20Volume%20Control.zip).
 * Open it.
 * Drag the *iTunes Volume Control* app into your *Application* folder, or any other folder of your choice.
 * Run the *iTunes Volume Control* app and a "music note" symbol will appear in your status bar.
