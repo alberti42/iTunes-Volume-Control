@@ -26,7 +26,7 @@ How to get it installed?
 
 It is simple. There is no need of any installation.
 
-* Just download this [dmg package](https://github.com/alberti42/iTunes-Volume-Control/raw/master/iTunes%20Volume%20Control.dmg).
+* Just download either this [dmg package](https://github.com/alberti42/iTunes-Volume-Control/raw/master/iTunes%20Volume%20Control.dmg) or this [zip file]().
 * Open it.
 * Drag the *iTunes Volume Control* app into your *Application* folder, or any other folder of your choice.
 * Run the *iTunes Volume Control* app and a "music note" symbol will appear in your status bar.
@@ -58,26 +58,6 @@ Mojave has recently increased security with version 10.14.5, disabling the possi
   Do not forget to enable the Gatekeeper back again after you have launched for the first time the application.
 
 	``sudo spctl --master-enable``
-
-
-Remove quarantine flag
-----------------------
-
-If you get an error message *...is damaged and can't be opened...*, it is likely that a quarantine flag has been added to the downloaded file. To remove it, you can either
-
-* Download the program using the terminal. In this case, type:
-	
-	``wget https://github.com/alberti42/iTunes-Volume-Control/raw/master/iTunes%20Volume%20Control.dmg``
-	
-	If you downloaded one the zip files linked below, then replace in the above command the dmg file with the corresponding zip file.
-	
-* Remove the *com.apple.quarantine* flag using the terminal, typing:
-
-	``xattr -d -r com.apple.quarantine ~/Downloads/iTunes\ Volume\ Control.dmg``
-	
-	replacing *~/Downloads/iTunes\ Volume\ Control.dmg* with the filename where you have downloaded the .dmg package.
-	
-If you have a suggestion how to avoid such a cumbersome procedure, I would appreciate to hear your feedback.
 
 Requirements
 ------------
