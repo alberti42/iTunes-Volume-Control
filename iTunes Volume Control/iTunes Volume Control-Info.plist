@@ -46,7 +46,7 @@
 		</dict>
 	</dict>
 	<key>NSAppleEventsUsageDescription</key>
-	<string>iTunes Volume Control requires access Accessibility permissions to determine when the volume keys are pressed.</string>
+	<string>iTunes Volume Control requires to communicate with iTunes and Spotify through AppleEvents.</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2012 Andrea Alberti. All rights reserved.</string>
 	<key>NSMainNibFile</key>

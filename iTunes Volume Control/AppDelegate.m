@@ -290,7 +290,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 
 static CFTimeInterval fadeInDuration=0.2;
 static CFTimeInterval fadeOutDuration=0.7;
-static NSTimeInterval volumeRampTimeInterval=0.002;
+static NSTimeInterval volumeRampTimeInterval=0.01;
 static NSTimeInterval statusBarHideDelay=10;
 
 void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1, int arg2, float v, int timeout) = NULL;
@@ -312,6 +312,49 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 - (BOOL)_loadOSDFramework
 {
     return [[NSBundle bundleWithPath:@"/System/Library/PrivateFrameworks/OSD.framework"] load];
+}
+
+- (BOOL)checkSIPforAppIdentifier:(NSString*)identifier {
+    
+    // First available from 10.14 Mojave
+    if (@available(macOS 10.14, *)) {
+        
+        OSStatus status;
+        NSAppleEventDescriptor *targetAppEventDescriptor;
+        
+        targetAppEventDescriptor = [NSAppleEventDescriptor descriptorWithBundleIdentifier:identifier];
+        
+        status = AEDeterminePermissionToAutomateTarget(targetAppEventDescriptor.aeDesc, typeWildCard, typeWildCard, true);
+        
+        switch (status) {
+            case -600: //procNotFound
+                NSLog(@"Not running app with id '%@'",identifier);
+                break;
+                
+            case 0: // noErr
+                NSLog(@"SIP check successfull for app with id '%@'",identifier);
+                break;
+                
+            case -1744: // errAEEventWouldRequireUserConsent
+                // This only appears if you send false for askUserIfNeeded
+                NSLog(@"User consent required for app with id '%@'",identifier);
+                break;
+                
+            case -1743: //errAEEventNotPermitted
+                NSLog(@"User didn't allow usage for app with id '%@'",identifier);
+                
+                // Here you should present a dialog with a tutorial on how to activate it manually
+                // This can be something like
+                // Go to system preferences > security > privacy
+                // Choose automation and active [APPNAME] for [APPNAME]
+                
+                return NO;
+                
+            default:
+                break;
+        }
+    }
+    return YES;
 }
 
 - (bool) StartAtLogin
@@ -439,13 +482,20 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     [self changeVol:false];
 }
 
-- (void)createEventTap
+- (bool)createEventTap
 {
     CGEventMask eventMask = (/*(1 << kCGEventKeyDown) | (1 << kCGEventKeyUp) |*/CGEventMaskBit(NX_SYSDEFINED));
     eventTap = CGEventTapCreate(kCGSessionEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault,
                                 eventMask, event_tap_callback, (__bridge void *)self); // Create an event tap. We are interested in SYS key presses.
-    runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0); // Create a run loop source.
-    CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes); // Add to the current run loop.
+    
+    if(eventTap != nil)
+    {
+        runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0); // Create a run loop source.
+        CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes); // Add to the current run loop.
+        return true;
+    }
+    else
+        return false;
 }
 
 - (void) appleRemoteInit
@@ -640,6 +690,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     self = [super init];
     if(self)
     {
+        /*
         fadeOutAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
         [fadeOutAnimation setDuration:fadeOutDuration];
         [fadeOutAnimation setRemovedOnCompletion:NO];
@@ -656,6 +707,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
         [fadeInAnimation setToValue:[NSNumber numberWithFloat:1.0f]];
         // [fadeInAnimation setDelegate:self];
         fadeInAnimationReady=true;
+        */
         
         if (floor(NSAppKitVersionNumber) <= 1038) { // NSAppKitVersionNumber10_6
             //10.6.x or earlier systems
@@ -676,6 +728,12 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
         
     }
     return self;
+}
+
+-(void)awakeFromNib
+{
+
+    
 }
 
 -(void)awakeFromNib_disabled
@@ -744,6 +802,8 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     
     [self showInStatusBar];   // Install icon into the menu bar
     
+    //[self checkSIPforAppIdentifier:@"com.apple.iTunes"];
+    
     iTunes = [[PlayerApplication alloc] initWithBundleIdentifier:@"com.apple.iTunes"];
     spotify = [SBApplication applicationWithBundleIdentifier:@"com.spotify.client"];
     systemAudio = [[SystemApplication alloc] init];
@@ -774,17 +834,64 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
         [self _loadOSDFramework];
     }
     
-    [self createEventTap];
+    bool res;
+    do{
+        res = [self createEventTap];
+        
+        if(!res)
+        {
+            NSAlert *alert = [[NSAlert alloc] init];
+            [alert setMessageText:@"It seems that \"iTunes Volume Control\" is not authorized to respond upon events where the volume keys are pressed."];
+            [alert setInformativeText:@"Open the \"System Preferences\", go to \"Security & Privacy\", and enable \"iTunes Volume Control\" in \"Accessibility\". If \"iTunes Volume Control\" appears to be already enabled, remove it from \"Accessibility\", so as to force MacOS to reconsider it."];
+            [alert addButtonWithTitle:@"Restart"];
+            [alert addButtonWithTitle:@"Exit"];
+            
+            NSModalResponse responseTag = [alert runModal];
+            
+            if (responseTag == NSAlertSecondButtonReturn) {
+                [NSApp terminate:nil];
+            }
+            else {
+                [self restartOurselves];
+            }
+        }
+    }while(!res);
     
     [self appleRemoteInit];
     
     [self initializePreferences];
     
     [self setStartAtLogin:[self StartAtLogin] savePreferences:false];
+    
 
 //    if([self loadIntroAtStart])
 //        [self showIntroWindow:nil];
     
+}
+
+- (void) restartOurselves
+{
+    //$N = argv[N]
+    NSString *killArg1AndOpenArg2Script = @"kill -9 $1 \n open \"$2\"";
+    
+    //NSTask needs its arguments to be strings
+    NSString *ourPID = [NSString stringWithFormat:@"%d",
+                        [[NSProcessInfo processInfo] processIdentifier]];
+    
+    //this will be the path to the .app bundle,
+    //not the executable inside it; exactly what `open` wants
+    NSString * pathToUs = [[NSBundle mainBundle] bundlePath];
+    
+    NSArray *shArgs = [NSArray arrayWithObjects:@"-c", // -c tells sh to execute the next argument, passing it the remaining arguments.
+                       killArg1AndOpenArg2Script,
+                       @"", //$0 path to script (ignored)
+                       ourPID, //$1 in restartScript
+                       pathToUs, //$2 in the restartScript
+                       nil];
+    NSTask *restartTask = [NSTask launchedTaskWithLaunchPath:@"/bin/sh" arguments:shArgs];
+    [restartTask waitUntilExit]; //wait for killArg1AndOpenArg2Script to finish
+    NSLog(@"*** ERROR: %@ should have been terminated, but we are still running", pathToUs);
+    assert(!"We should not be running!");
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
