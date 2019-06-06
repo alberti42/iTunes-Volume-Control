@@ -300,16 +300,26 @@ AudioDeviceID obtainDefaultOutputDevice()
 
 @implementation SystemApplication
 
-@synthesize soundVolume = _soundVolume;
+@synthesize currentVolume = _currentVolume;
+@synthesize doubleVolume = _doubleVolume;
 
-- (void) setSoundVolume:(NSInteger)soundVolume
+- (void) setCurrentVolume:(double)currentVolume
 {
-    [NSSound setSystemVolume:soundVolume/100.];
+    [self setDoubleVolume:currentVolume];
+    
+    [NSSound setSystemVolume:currentVolume/100.];
 }
 
-- (NSInteger) soundVolume
+- (double) currentVolume
 {
-    return round([NSSound systemVolume]*100);
+    double vol = (double)[NSSound systemVolume]*100;
+    
+    if (fabs(vol-[self doubleVolume])<1)
+    {
+        vol = [self doubleVolume];
+    }
+    
+    return vol;
 }
 
 -(id)init {

@@ -39,8 +39,7 @@
     
     NSInteger osxVersion;
     
-    NSInteger* positions;
-    NSInteger numPos;
+    double increment;
     
 @public
     PlayerApplication* iTunes;
@@ -114,7 +113,8 @@
 - (BOOL) isRunning;
 - (iTunesEPlS) playerState;
 
-@property (assign, nonatomic) NSInteger soundVolume;
-@property (assign, nonatomic) NSInteger oldVolume;
+@property (assign, nonatomic) double currentVolume;
+@property (assign, nonatomic) double oldVolume;
+@property (assign, nonatomic) double doubleVolume;
 
 @end

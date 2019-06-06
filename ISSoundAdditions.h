@@ -62,7 +62,8 @@
 
 }
 
-@property (assign, nonatomic) NSInteger soundVolume;  // The sound output volume (0 = minimum, 100 = maximum)
-@property (assign, nonatomic) NSInteger oldVolume;
+@property (assign, nonatomic) double currentVolume;  // The sound output volume (0 = minimum, 100 = maximum)
+@property (assign, nonatomic) double oldVolume;
+@property (assign, nonatomic) double doubleVolume;
 
 @end

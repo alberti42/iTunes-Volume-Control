@@ -24,22 +24,6 @@ static void displayPreferencesChanged(CGDirectDisplayID displayID, CGDisplayChan
     [[NSNotificationCenter defaultCenter] postNotificationName:@"displayResolutionHasChanged" object:NULL];
 }
 
-NSInteger positions1[] = {0, 1, 3, 4, 6, 8, 9, 11, 12, 14, 15, 17, 18, 20, 22, 23, 25, 26, 28, 29, 31, 33, 34, 36, 37, 39, 40, 42, 43, 45, 47, 48, 50, 51, 53, 54, 56, 58, 59, 61, 62, 64, 65, 67, 68, 70, 72, 73, 75, 76, 78, 79, 81, 83, 84, 86, 87, 89, 90, 92, 93, 95, 97, 98, 100}; // 65
-NSInteger positions2[] = {0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78, 80, 82, 84, 86, 88, 90, 92, 94, 96, 98, 100}; // 51
-NSInteger positions3[] = {0, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48, 51, 54, 57, 60, 63, 66, 69, 72, 75, 78, 81, 84, 87, 90, 93, 96, 100}; // 34
-NSInteger positions4[] = {0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 68, 72, 76, 80, 84, 88, 92, 96, 100}; // 26
-NSInteger positions5[] = {0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100}; // 21
-NSInteger positions6[] = {0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, 100}; // 18
-NSInteger positions7[] = {0, 7, 14, 21, 28, 35, 42, 49, 56, 63, 70, 77, 84, 91, 100};  // 15
-NSInteger positions8[] = {0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 100}; // 13
-NSInteger positions9[] = {0, 9, 18, 27, 36, 45, 54, 63, 72, 81, 90, 100}; // 12
-NSInteger positions10[] = {0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100}; // 11
-NSInteger positions11[] = {0, 11, 22, 33, 44, 55, 66, 77, 88, 100}; // 10
-NSInteger positions12[] = {0, 12, 24, 36, 48, 60, 72, 84, 100}; // 9
-NSInteger positions13[] = {0, 13, 26, 39, 52, 65, 78, 91, 100}; // 9
-NSInteger positions14[] = {0, 14, 28, 42, 56, 70, 84, 100}; // 8
-NSInteger positions15[] = {0, 15, 30, 45, 60, 75, 90, 100}; // 8
-
 CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *refcon)
 {
     static int previousKeyCode = 0;
@@ -169,16 +153,25 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 
 @implementation PlayerApplication
 
-@synthesize soundVolume = _soundVolume;
+@synthesize currentVolume = _currentVolume;
 
-- (void) setSoundVolume:(NSInteger)soundVolume
+- (void) setCurrentVolume:(double)currentVolume
 {
-    [iTunesPnt setSoundVolume:soundVolume];
+    [self setDoubleVolume:currentVolume];
+    
+    [iTunesPnt setSoundVolume:round(currentVolume)];
 }
 
-- (NSInteger) soundVolume
+- (double) currentVolume
 {
-    return [iTunesPnt soundVolume];
+    double vol = [iTunesPnt soundVolume];
+    
+    if (fabs(vol-[self doubleVolume])<1)
+    {
+        vol = [self doubleVolume];
+    }
+    
+    return vol;
 }
 
 - (BOOL) isRunning
@@ -193,6 +186,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 
 -(id)initWithBundleIdentifier:(NSString*) bundleIdentifier {
     if (self = [super init])  {
+        [self setCurrentVolume: -100];
         [self setOldVolume: -1];
         iTunesPnt = [SBApplication applicationWithBundleIdentifier:bundleIdentifier];
     }
@@ -296,7 +290,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 
 static CFTimeInterval fadeInDuration=0.2;
 static CFTimeInterval fadeOutDuration=0.7;
-static NSTimeInterval volumeRampTimeInterval=0.01;
+static NSTimeInterval volumeRampTimeInterval=0.002;
 static NSTimeInterval statusBarHideDelay=10;
 
 void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1, int arg2, float v, int timeout) = NULL;
@@ -492,9 +486,8 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     {
         if([musicPlayerPnt oldVolume]<0)
         {
-            [musicPlayerPnt setOldVolume:[musicPlayerPnt soundVolume]];
-            [musicPlayerPnt setSoundVolume:0];
-            NSLog(@"%d",[musicPlayerPnt soundVolume]);
+            [musicPlayerPnt setOldVolume:[musicPlayerPnt currentVolume]];
+            [musicPlayerPnt setCurrentVolume:0];
             
             if(!_hideVolumeWindow)
                 [[NSClassFromString(@"OSDManager") sharedManager] showImage:OSDGraphicSpeakerMute onDisplayID:CGSMainDisplayID() priority:OSDPriorityDefault msecUntilFade:1000 filledChiclets:0 totalChiclets:(unsigned int)100 locked:NO];
@@ -503,7 +496,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
         }
         else
         {
-            [musicPlayerPnt setSoundVolume:[musicPlayerPnt oldVolume]];
+            [musicPlayerPnt setCurrentVolume:[musicPlayerPnt oldVolume]];
             [volumeImageLayer setContents:imgVolOn];
             
             if(!_hideVolumeWindow)
@@ -516,11 +509,11 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
         if([_statusBarItemView menuIsVisible])
         {
             if( musicPlayerPnt == iTunes)
-                [self setItunesVolume:[musicPlayerPnt soundVolume]];
+                [self setItunesVolume:[musicPlayerPnt currentVolume]];
             else if( musicPlayerPnt == spotify)
-                [self setSpotifyVolume:[musicPlayerPnt soundVolume]];
+                [self setSpotifyVolume:[musicPlayerPnt currentVolume]];
             else if( musicPlayerPnt == systemAudio)
-                [self setSystemVolume:[musicPlayerPnt soundVolume]];
+                [self setSystemVolume:[musicPlayerPnt currentVolume]];
         }
     }
 }
@@ -531,7 +524,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 
     if( [[aNotification name] isEqualToString:@"IncreaseITunesVolumeRamp"] )
     {
-        timer=[NSTimer scheduledTimerWithTimeInterval:volumeRampTimeInterval*(NSTimeInterval)_volumeInc target:self selector:@selector(rampVolumeUp:) userInfo:nil repeats:YES];
+        timer=[NSTimer scheduledTimerWithTimeInterval:volumeRampTimeInterval*(NSTimeInterval)increment target:self selector:@selector(rampVolumeUp:) userInfo:nil repeats:YES];
     
         [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
 
@@ -549,7 +542,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 
     if( [[aNotification name] isEqualToString:@"DecreaseITunesVolumeRamp"] )
     {
-        timer=[NSTimer scheduledTimerWithTimeInterval:volumeRampTimeInterval*(NSTimeInterval)_volumeInc target:self selector:@selector(rampVolumeDown:) userInfo:nil repeats:YES];
+        timer=[NSTimer scheduledTimerWithTimeInterval:volumeRampTimeInterval*(NSTimeInterval)increment target:self selector:@selector(rampVolumeDown:) userInfo:nil repeats:YES];
         
         [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
         
@@ -829,7 +822,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 {
     preferences = [NSUserDefaults standardUserDefaults];
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
-                          [NSNumber numberWithInt:1],      @"volumeInc",
+                          [NSNumber numberWithInt:2],      @"volumeIncrement",
                           [NSNumber numberWithBool:true] , @"TappingEnabled",
                           [NSNumber numberWithBool:false], @"AppleRemoteConnected",
                           [NSNumber numberWithBool:false], @"UseAppleCMDModifier",
@@ -854,7 +847,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     [[self systemBtn] setState:[preferences boolForKey:    @"systemControl"]];
     [self setLoadIntroAtStart:[preferences boolForKey:     @"loadIntroAtStart"]];
     
-    NSInteger volumeIncSetting = [preferences integerForKey:@"volumeInc"];
+    NSInteger volumeIncSetting = [preferences integerForKey:@"volumeIncrement"];
     [self setVolumeInc:volumeIncSetting];
     
     [[self volumeIncrementsSlider] setIntegerValue: volumeIncSetting];
@@ -987,7 +980,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     
     [self setVolumeInc:volumeIncSetting];
     
-    [preferences setInteger:volumeIncSetting forKey:@"volumeInc"];
+    [preferences setInteger:volumeIncSetting forKey:@"volumeIncrement"];
     [preferences synchronize];
 
 }
@@ -996,71 +989,24 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 {
     switch(volumeIncSetting)
     {
-        case 15:
-            positions = positions15;
-            numPos = 8;
-            break;
-        case 14:
-            positions = positions14;
-            numPos = 8;
-            break;
-        case 13:
-            positions = positions13;
-            numPos = 9;
-            break;
-        case 12:
-            positions = positions12;
-            numPos = 9;
-            break;
-        case 11:
-            positions = positions11;
-            numPos = 10;
-            break;
-        case 10:
-            positions = positions10;
-            numPos = 11;
-            break;
-        case 9:
-            positions = positions9;
-            numPos = 12;
-            break;
-        case 8:
-            positions = positions8;
-            numPos = 13;
-            break;
-        case 7:
-            positions = positions7;
-            numPos = 15;
-            break;
-        case 6:
-            positions = positions6;
-            numPos = 18;
-            break;
         case 5:
-            positions = positions5;
-            numPos = 21;
+            increment = 25;
             break;
         case 4:
-            positions = positions4;
-            numPos = 26;
+            increment = 12.5;
             break;
         case 3:
-            positions = positions3;
-            numPos = 34;
+            increment = 6.25;
             break;
         case 2:
-            positions = positions2;
-            numPos = 51;
+            increment = 3.125;
             break;
         case 1:
         default:
-            positions = positions1;
-            numPos = 65;
+            increment = 1.5625;
             break;
             
     }
-    
-    _volumeInc = volumeIncSetting;
 }
 
 - (IBAction)aboutPanel:(id)sender
@@ -1188,34 +1134,12 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     
     if (musicPlayerPnt != nil)
     {
-        NSInteger volume = [musicPlayerPnt soundVolume];
-        
-        NSInteger i = 0;
-        NSInteger diff1 = abs(4);
-        NSInteger diff2;
-        
-        for (NSInteger j = 1; j < numPos; j++ ) {
-            diff2 = abs((int)(volume - positions[j]));
-            if ( diff2<diff1 )
-            {
-                diff1 = diff2;
-                i = j;
-            }
-        }
+        double volume = [musicPlayerPnt currentVolume];
         
         if([musicPlayerPnt oldVolume]<0) // if it was not mute
         {
             //volume=[musicProgramPnt soundVolume]+_volumeInc*(increase?1:-1);
-            i += (increase?1:-1);
-            if (i >= numPos)
-            {
-                i = numPos-1;
-            }
-            else if ( i < 0 )
-            {
-                i = 0;
-            }
-            volume = positions[i];
+            volume += (increase?1:-1)*increment;
         }
         else // if it was mute
         {
@@ -1226,17 +1150,32 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
         if (volume<0) volume=0;
         if (volume>100) volume=100;
         
+        /*
+        NSInteger i = 0;
+        double diff1 = abs(100);
+        double diff2;
+        
+        for (NSInteger j = 1; j < numPos; j++ ) {
+            diff2 = fabs(volume - (double)positions[j]);
+            if ( diff2<diff1 )
+            {
+                diff1 = diff2;
+                i = j;
+            }
+        }
+        */
+        
         OSDGraphic image = (volume > 0)? OSDGraphicSpeaker : OSDGraphicSpeakerMute;
         
         NSInteger numFullBlks = floor(volume/6.25);
-        NSInteger numQrtsBlks = round(((double)volume-(double)numFullBlks*6.25)/1.5625);
+        NSInteger numQrtsBlks = round((volume-(double)numFullBlks*6.25)/1.5625);
         
         //NSLog(@"%d %d",(int)numFullBlks,(int)numQrtsBlks);
         
         if(!_hideVolumeWindow)
             [[NSClassFromString(@"OSDManager") sharedManager] showImage:image onDisplayID:CGSMainDisplayID() priority:OSDPriorityDefault msecUntilFade:1000 filledChiclets:(unsigned int)(round(((numFullBlks*4+numQrtsBlks)*1.5625)*100)) totalChiclets:(unsigned int)10000 locked:NO];
         
-        [musicPlayerPnt setSoundVolume:volume];
+        [musicPlayerPnt setCurrentVolume:volume];
         
         if([_statusBarItemView menuIsVisible])
         {
@@ -1291,16 +1230,16 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 - (void) updatePercentages
 {
     if([iTunes isRunning])
-        [self setItunesVolume:[iTunes soundVolume]];
+        [self setItunesVolume:[iTunes currentVolume]];
     else
         [self setItunesVolume:-1];
     
     if([spotify isRunning])
-        [self setSpotifyVolume:[spotify soundVolume]];
+        [self setSpotifyVolume:[spotify currentVolume]];
     else
         [self setSpotifyVolume:-1];
     
-    [self setSystemVolume:[systemAudio soundVolume]];
+    [self setSystemVolume:[systemAudio currentVolume]];
 }
 
 - (void) createVolumeBar
