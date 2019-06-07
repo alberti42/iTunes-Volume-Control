@@ -72,6 +72,7 @@
 		650EBA7722A5AB1E003EB2D5 /* Finder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Finder.png; sourceTree = "<group>"; };
 		650EBA7822A5AB1E003EB2D5 /* Finder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Finder@2x.png"; sourceTree = "<group>"; };
 		650EBA7B22A5B953003EB2D5 /* iTunes Volume Control.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "iTunes Volume Control.entitlements"; path = "iTunes Volume Control/iTunes Volume Control.entitlements"; sourceTree = "<group>"; };
+		6511BDBB22AB24C700722B22 /* Spotify.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Spotify.h; path = "iTunes Volume Control/Spotify.h"; sourceTree = "<group>"; };
 		65133B691860ECE30040A373 /* introButtons-close-HL.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "introButtons-close-HL.png"; path = "iTunes Volume Control/Images/introButtons-close-HL.png"; sourceTree = "<group>"; };
 		65133B6A1860ECE30040A373 /* introButtons-close-HL@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "introButtons-close-HL@2x.png"; path = "iTunes Volume Control/Images/introButtons-close-HL@2x.png"; sourceTree = "<group>"; };
 		65133B6B1860ECE30040A373 /* introButtons-close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "introButtons-close.png"; path = "iTunes Volume Control/Images/introButtons-close.png"; sourceTree = "<group>"; };
@@ -117,7 +118,6 @@
 		656C6CA2168A456900ECA482 /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
 		6577E8AF186099DA0024A59C /* introButtons-prev-HL.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "introButtons-prev-HL.png"; path = "iTunes Volume Control/Images/introButtons-prev-HL.png"; sourceTree = "<group>"; };
 		6577E8B0186099DA0024A59C /* introButtons-prev-HL@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "introButtons-prev-HL@2x.png"; path = "iTunes Volume Control/Images/introButtons-prev-HL@2x.png"; sourceTree = "<group>"; };
-		657814631A4E1E59009C4A0B /* Spotify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Spotify.h; sourceTree = "<group>"; };
 		657814661A4E28DA009C4A0B /* iTunes12@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunes12@2x.png"; sourceTree = "<group>"; };
 		657814671A4E28DA009C4A0B /* iTunes12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTunes12.png; sourceTree = "<group>"; };
 		657814681A4E28DA009C4A0B /* spotify@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "spotify@2x.png"; sourceTree = "<group>"; };
@@ -262,7 +262,7 @@
 			isa = PBXGroup;
 			children = (
 				656C6CA1168A447000ECA482 /* iTunes.h */,
-				657814631A4E1E59009C4A0B /* Spotify.h */,
+				6511BDBB22AB24C700722B22 /* Spotify.h */,
 				656C6C77168A2A0B00ECA482 /* main.m */,
 				656C6C79168A2A0B00ECA482 /* iTunes Volume Control-Prefix.pch */,
 				65C24C68168CEB190000BFC2 /* AppleRemote */,

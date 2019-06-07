@@ -18,6 +18,15 @@
 
 #include <dlfcn.h>
 
+#pragma mark - Signal handling
+
+/**
+ This will handle signals for us, specifically SIGTERM.
+ */
+void handleSIGTERM(int sig) {
+    [NSApp terminate:nil];
+}
+
 #pragma mark - Tapping key stroke events
 
 static void displayPreferencesChanged(CGDirectDisplayID displayID, CGDisplayChangeSummaryFlags flags, void *userInfo) {
@@ -159,12 +168,12 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 {
     [self setDoubleVolume:currentVolume];
     
-    [iTunesPnt setSoundVolume:round(currentVolume)];
+    [musicPlayer setSoundVolume:round(currentVolume)];
 }
 
 - (double) currentVolume
 {
-    double vol = [iTunesPnt soundVolume];
+    double vol = [musicPlayer soundVolume];
     
     if (fabs(vol-[self doubleVolume])<1)
     {
@@ -174,21 +183,31 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     return vol;
 }
 
+- (BOOL) isPlaying
+{
+    
+//    [iTunesApplication class];
+//    [musicPlayer isKindOfClass:[iTunesApplication class]];
+    
+    return [musicPlayer isRunning];
+}
+
 - (BOOL) isRunning
 {
-    return [iTunesPnt isRunning];
+    return [musicPlayer isRunning];
 }
 
 - (iTunesEPlS) playerState
 {
-    return [iTunesPnt playerState];
+    return [musicPlayer playerState];
 }
 
 -(id)initWithBundleIdentifier:(NSString*) bundleIdentifier {
     if (self = [super init])  {
         [self setCurrentVolume: -100];
         [self setOldVolume: -1];
-        iTunesPnt = [SBApplication applicationWithBundleIdentifier:bundleIdentifier];
+        musicPlayer = [SBApplication applicationWithBundleIdentifier:bundleIdentifier];
+        
     }
     return self;
 }
@@ -276,10 +295,6 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 @synthesize iTunesBtn = _iTunesBtn;
 @synthesize spotifyBtn = _spotifyBtn;
 @synthesize systemBtn = _systemBtn;
-
-@synthesize itunesVolume = _itunesVolume;
-@synthesize spotifyVolume = _spotifyVolume;
-@synthesize systemVolume = _systemVolume;
 
 @synthesize iTunesPerc = _iTunesPerc;
 @synthesize spotifyPerc = _spotifyPerc;
@@ -789,6 +804,8 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    signal(SIGTERM, handleSIGTERM);
+    
     NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
     NSString* version = [infoDict objectForKey:@"CFBundleShortVersionString"];
     NSString * operatingSystemVersionString = [[NSProcessInfo processInfo] operatingSystemVersionString];
@@ -805,7 +822,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     //[self checkSIPforAppIdentifier:@"com.apple.iTunes"];
     
     iTunes = [[PlayerApplication alloc] initWithBundleIdentifier:@"com.apple.iTunes"];
-    spotify = [SBApplication applicationWithBundleIdentifier:@"com.spotify.client"];
+    spotify = [[PlayerApplication alloc] initWithBundleIdentifier:@"com.spotify.client"];
     systemAudio = [[SystemApplication alloc] init];
 
     // NSString* iTunesVersion = [[NSString alloc] initWithString:[iTunes version]];
@@ -863,7 +880,6 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     
     [self setStartAtLogin:[self StartAtLogin] savePreferences:false];
     
-
 //    if([self loadIntroAtStart])
 //        [self showIntroWindow:nil];
     
@@ -872,7 +888,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 - (void) restartOurselves
 {
     //$N = argv[N]
-    NSString *killArg1AndOpenArg2Script = @"kill -9 $1 \n open \"$2\"";
+    NSString *killArg1AndOpenArg2Script = @"kill -15 $1 \n open \"$2\"";
     
     //NSTask needs its arguments to be strings
     NSString *ourPID = [NSString stringWithFormat:@"%d",
@@ -1299,7 +1315,6 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 
 - (void) setItunesVolume:(NSInteger)volume
 {
-    _itunesVolume = volume;
     if (volume == -1)
         [[self iTunesPerc] setHidden:YES];
     else
@@ -1311,7 +1326,6 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 
 - (void) setSpotifyVolume:(NSInteger)volume
 {
-    _spotifyVolume = volume;
     if (volume == -1)
         [[self spotifyPerc] setHidden:YES];
     else
@@ -1323,7 +1337,6 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 
 - (void) setSystemVolume:(NSInteger)volume
 {
-    _systemVolume = volume;
     if (volume == -1)
         [[self systemPerc] setHidden:YES];
     else

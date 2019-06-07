@@ -79,10 +79,6 @@
 @property (assign, nonatomic) bool hideVolumeWindow;
 @property (assign, nonatomic) bool loadIntroAtStart;
 
-@property (assign, nonatomic) NSInteger itunesVolume;
-@property (assign, nonatomic) NSInteger spotifyVolume;
-@property (assign, nonatomic) NSInteger systemVolume;
-
 - (IBAction)increaseVol:(id)sender;
 
 - (IBAction)toggleUseAppleCMDModifier:(id)sender;
@@ -107,10 +103,11 @@
 @end
 
 @interface PlayerApplication : NSObject {
-    iTunesApplication* iTunesPnt;
+    id musicPlayer;
 }
 
 - (BOOL) isRunning;
+- (BOOL) isPlaying;
 - (iTunesEPlS) playerState;
 
 @property (assign, nonatomic) double currentVolume;
