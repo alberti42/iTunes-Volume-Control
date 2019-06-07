@@ -303,8 +303,8 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 @synthesize volumeWindow=_volumeWindow;
 @synthesize statusMenu=_statusMenu;
 
-static CFTimeInterval fadeInDuration=0.2;
-static CFTimeInterval fadeOutDuration=0.7;
+//static CFTimeInterval fadeInDuration=0.2;
+//static CFTimeInterval fadeOutDuration=0.7;
 static NSTimeInterval volumeRampTimeInterval=0.01;
 static NSTimeInterval statusBarHideDelay=10;
 
