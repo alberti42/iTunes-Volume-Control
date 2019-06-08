@@ -13,7 +13,7 @@
 //#import "IntroWindowController.h"
 //#import "MyNSVisualEffectView.h"
 
-#import "BezelServices.h"
+//#import "BezelServices.h"
 #import "OSD.h"
 
 #include <dlfcn.h>
@@ -308,6 +308,8 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 static NSTimeInterval volumeRampTimeInterval=0.01;
 static NSTimeInterval statusBarHideDelay=10;
 
+/*
+// El Capitan and probably older systems
 void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1, int arg2, float v, int timeout) = NULL;
 
 - (BOOL)_loadBezelServices
@@ -323,6 +325,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
         return _BSDoGraphicWithMeterAndTimeout != NULL;
     }
 }
+*/
 
 - (BOOL)_loadOSDFramework
 {
@@ -846,10 +849,8 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     
     CGDisplayRegisterReconfigurationCallback(displayPreferencesChanged, NULL);
     
-    if (![self _loadBezelServices])
-    {
-        [self _loadOSDFramework];
-    }
+    // [self _loadBezelServices]; // El Capitan and probably older systems
+    [self _loadOSDFramework];
     
     bool res;
     do{

@@ -34,6 +34,6 @@ typedef enum {
 
 extern void *BSDoGraphicWithMessage(CGDirectDisplayID arg0, BSGraphic arg1, int arg2, const char *arg3, int length);
 extern void *BSDoGraphicWithMeterAndTimeout(CGDirectDisplayID arg0, BSGraphic arg1, int arg2, float v, int timeout);
-extern void *LoadBezelServicesConnection();
+extern void *LoadBezelServicesConnection(void);
 
 #endif /* BezelServices_h */
