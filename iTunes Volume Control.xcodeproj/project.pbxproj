@@ -22,6 +22,9 @@
 		65545E5F22AD12C900A4A25F /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65545E5E22AD12C800A4A25F /* Sparkle.framework */; };
 		65545E6022AD12CC00A4A25F /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65545E5E22AD12C800A4A25F /* Sparkle.framework */; };
 		65545E6122AD12CC00A4A25F /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 65545E5E22AD12C800A4A25F /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		65545E6C22AD1A2900A4A25F /* AccessibilityDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 65545E6A22AD1A2900A4A25F /* AccessibilityDialog.m */; };
+		65545E6D22AD1A2900A4A25F /* AccessibilityDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65545E6B22AD1A2900A4A25F /* AccessibilityDialog.xib */; };
+		65545E6F22AD20A200A4A25F /* SecurityPrivacy.png in Resources */ = {isa = PBXBuildFile; fileRef = 65545E6E22AD20A200A4A25F /* SecurityPrivacy.png */; };
 		656C6C78168A2A0B00ECA482 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 656C6C77168A2A0B00ECA482 /* main.m */; };
 		656C6C7F168A2A0B00ECA482 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 656C6C7E168A2A0B00ECA482 /* AppDelegate.m */; };
 		656C6CA3168A456900ECA482 /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 656C6CA2168A456900ECA482 /* ScriptingBridge.framework */; };
@@ -96,6 +99,10 @@
 		654DDC64185DDD510095AA66 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 		65505D731A501C2100F20C24 /* iTunes12.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = iTunes12.icns; sourceTree = "<group>"; };
 		65545E5E22AD12C800A4A25F /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = "iTunes Volume Control/Sparkle.framework"; sourceTree = "<group>"; };
+		65545E6922AD1A2900A4A25F /* AccessibilityDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AccessibilityDialog.h; sourceTree = "<group>"; };
+		65545E6A22AD1A2900A4A25F /* AccessibilityDialog.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AccessibilityDialog.m; sourceTree = "<group>"; };
+		65545E6B22AD1A2900A4A25F /* AccessibilityDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccessibilityDialog.xib; sourceTree = "<group>"; };
+		65545E6E22AD20A200A4A25F /* SecurityPrivacy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SecurityPrivacy.png; sourceTree = "<group>"; };
 		6563BFD61692EAB500C1271D /* volume-off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "volume-off.png"; path = "iTunes Volume Control/Images/volume-off.png"; sourceTree = "<group>"; };
 		656C6C67168A2A0B00ECA482 /* iTunes Volume Control.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iTunes Volume Control.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		656C6C6B168A2A0B00ECA482 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -242,6 +249,7 @@
 		652D1146187AF12200C8BD88 /* User interface */ = {
 			isa = PBXGroup;
 			children = (
+				65545E6822AD19DB00A4A25F /* Accessibility */,
 				65C24BEB168CA8B50000BFC2 /* Images */,
 				652D1147187AF12A00C8BD88 /* XIBs */,
 			);
@@ -263,6 +271,17 @@
 				654DDC62185DD4C00095AA66 /* sign_update.rb */,
 			);
 			name = "Signing tools";
+			sourceTree = "<group>";
+		};
+		65545E6822AD19DB00A4A25F /* Accessibility */ = {
+			isa = PBXGroup;
+			children = (
+				65545E6922AD1A2900A4A25F /* AccessibilityDialog.h */,
+				65545E6A22AD1A2900A4A25F /* AccessibilityDialog.m */,
+				65545E6B22AD1A2900A4A25F /* AccessibilityDialog.xib */,
+				65545E6E22AD20A200A4A25F /* SecurityPrivacy.png */,
+			);
+			name = Accessibility;
 			sourceTree = "<group>";
 		};
 		656C6C5C168A2A0B00ECA482 = {
@@ -451,7 +470,8 @@
 				ORGANIZATIONNAME = "Andrea Alberti";
 				TargetAttributes = {
 					656C6C66168A2A0B00ECA482 = {
-						ProvisioningStyle = Manual;
+						DevelopmentTeam = 9V3X7C8VCK;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.HardenedRuntime = {
 								enabled = 1;
@@ -485,6 +505,7 @@
 			files = (
 				650EBA7922A5AB1E003EB2D5 /* Finder.png in Resources */,
 				65E2AE8E1A044F6C00FD15A1 /* statusbar-item-gray@2x.png in Resources */,
+				65545E6D22AD1A2900A4A25F /* AccessibilityDialog.xib in Resources */,
 				650EBA6B22A571A3003EB2D5 /* spotify-icon.icns in Resources */,
 				650EBA7A22A5AB1E003EB2D5 /* Finder@2x.png in Resources */,
 				659CCFF3185CBF04006958AD /* volume-off@2x.png in Resources */,
@@ -494,6 +515,7 @@
 				65B3EB7C1A4ED9A8002BB939 /* spotify@2x.png in Resources */,
 				654DDC65185DDD510095AA66 /* dsa_pub.pem in Resources */,
 				659CCFF2185CBF04006958AD /* volume-off.png in Resources */,
+				65545E6F22AD20A200A4A25F /* SecurityPrivacy.png in Resources */,
 				653925BE22A56C66004F60DB /* iTunes@2x.png in Resources */,
 				65C24C01168CBC7E0000BFC2 /* Credits.rtf in Resources */,
 				653925B722A55727004F60DB /* statusbar-item-black.png in Resources */,
@@ -535,6 +557,7 @@
 				656C6C7F168A2A0B00ECA482 /* AppDelegate.m in Sources */,
 				65C24C67168CEB130000BFC2 /* AppleRemote.m in Sources */,
 				651A7EEF168F1F4C00A76288 /* VolumeWindow.m in Sources */,
+				65545E6C22AD1A2900A4A25F /* AccessibilityDialog.m in Sources */,
 				E2F254C6179EA2B600DD3C66 /* StatusItemView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -567,7 +590,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -642,10 +665,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "iTunes Volume Control/iTunes Volume Control.entitlements";
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 9V3X7C8VCK;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -684,9 +707,9 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "iTunes Volume Control/iTunes Volume Control.entitlements";
 				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 9V3X7C8VCK;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

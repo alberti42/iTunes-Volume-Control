@@ -14,7 +14,7 @@
 
 #import "ISSoundAdditions.h"
 
-@class IntroWindowController, StatusBarItem, PlayerApplication;
+@class IntroWindowController, AccessibilityDialog, StatusBarItem, PlayerApplication;
 
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
     CALayer *mainLayer;
@@ -49,6 +49,8 @@
     id musicProgramPnt;
     
     IntroWindowController *introWindowController;
+    AccessibilityDialog *accessibilityDialog;
+    
     NSTimer* timer;
     NSTimer* timerImgSpeaker;
     NSTimeInterval waitOverlayPanel;

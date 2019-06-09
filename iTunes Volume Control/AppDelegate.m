@@ -13,6 +13,8 @@
 //#import "IntroWindowController.h"
 //#import "MyNSVisualEffectView.h"
 
+#import "AccessibilityDialog.h"
+
 //#import "BezelServices.h"
 #import "OSD.h"
 
@@ -23,9 +25,11 @@
 /**
  This will handle signals for us, specifically SIGTERM.
  */
+/*
 void handleSIGTERM(int sig) {
     [NSApp terminate:nil];
 }
+*/
 
 #pragma mark - Tapping key stroke events
 
@@ -300,8 +304,8 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 @synthesize spotifyPerc = _spotifyPerc;
 @synthesize systemPerc = _systemPerc;
 
-@synthesize volumeWindow=_volumeWindow;
-@synthesize statusMenu=_statusMenu;
+@synthesize volumeWindow = _volumeWindow;
+@synthesize statusMenu = _statusMenu;
 
 //static CFTimeInterval fadeInDuration=0.2;
 //static CFTimeInterval fadeOutDuration=0.7;
@@ -750,7 +754,14 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 
 -(void)awakeFromNib
 {
-
+    BOOL accessibilityEnabled = AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)@{(__bridge id)kAXTrustedCheckOptionPrompt: @NO});
+    
+    accessibilityDialog = [[AccessibilityDialog alloc] initWithWindowNibName:@"AccessibilityDialog"];
+    
+    [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
+    [accessibilityDialog showWindow:nil];
+    [[accessibilityDialog window] makeKeyAndOrderFront:nil];
+    
     
 }
 
@@ -807,7 +818,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    signal(SIGTERM, handleSIGTERM);
+    // signal(SIGTERM, handleSIGTERM);
     
     NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
     NSString* version = [infoDict objectForKey:@"CFBundleShortVersionString"];
@@ -823,28 +834,47 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     // [self _loadBezelServices]; // El Capitan and probably older systems
     [self _loadOSDFramework];
     
-    bool res;
-    do{
-        res = [self createEventTap];
+    extern CFStringRef kAXTrustedCheckOptionPrompt __attribute__((weak_import));
+
+    
+//    NSAlert *alert = [[NSAlert alloc] init];
+//    [alert setMessageText:@"It seems that \"iTunes Volume Control\" is not authorized to respond upon events where the volume keys are pressed."];
+//    [alert setInformativeText:@"Open the \"System Preferences\", go to \"Security & Privacy\", and enable \"iTunes Volume Control\" in \"Accessibility\". If \"iTunes Volume Control\" appears to be already enabled, remove it from \"Accessibility\", so as to force MacOS to reconsider it."];
+//    [alert addButtonWithTitle:@"Go to Security & Privacy panel"];
+//    [alert addButtonWithTitle:@"Exit"];
+
+    bool accessibilityEnabled = true;
+    
+    while(!accessibilityEnabled)
+    {
         
-        if(!res)
-        {
-            NSAlert *alert = [[NSAlert alloc] init];
-            [alert setMessageText:@"It seems that \"iTunes Volume Control\" is not authorized to respond upon events where the volume keys are pressed."];
-            [alert setInformativeText:@"Open the \"System Preferences\", go to \"Security & Privacy\", and enable \"iTunes Volume Control\" in \"Accessibility\". If \"iTunes Volume Control\" appears to be already enabled, remove it from \"Accessibility\", so as to force MacOS to reconsider it."];
-            [alert addButtonWithTitle:@"Restart"];
-            [alert addButtonWithTitle:@"Exit"];
-            
-            NSModalResponse responseTag = [alert runModal];
-            
-            if (responseTag == NSAlertSecondButtonReturn) {
-                [NSApp terminate:nil];
-            }
-            else {
-                [self restartOurselves];
-            }
+        /*
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert setMessageText:@"It seems that \"iTunes Volume Control\" is not authorized to respond upon events where the volume keys are pressed."];
+        [alert setInformativeText:@"Open the \"System Preferences\", go to \"Security & Privacy\", and enable \"iTunes Volume Control\" in \"Accessibility\". If \"iTunes Volume Control\" appears to be already enabled, remove it from \"Accessibility\", so as to force MacOS to reconsider it."];
+        [alert addButtonWithTitle:@"Go to Security & Privacy panel"];
+        [alert addButtonWithTitle:@"Exit"];
+        
+        NSModalResponse responseTag = [alert runModal];
+        
+        if (responseTag == NSAlertSecondButtonReturn) {
+            [NSApp terminate:nil];
         }
-    }while(!res);
+        else {
+            NSString *urlString = @"x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility";
+            [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:urlString]];
+            // [self restartOurselves];
+        }
+        */
+        
+        [NSThread sleepForTimeInterval:1.0f];
+        
+        NSLog(@"check");
+        
+        accessibilityEnabled = AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)@{(__bridge id)kAXTrustedCheckOptionPrompt: @NO});
+        
+        accessibilityEnabled = true;
+    }
         
     [self showInStatusBar];   // Install icon into the menu bar
     
@@ -875,6 +905,8 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     
     // CGDisplayRegisterReconfigurationCallback(displayPreferencesChanged, NULL);
     
+    [self createEventTap];
+    
     [self appleRemoteInit];
     
     [self initializePreferences];
@@ -886,6 +918,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     
 }
 
+/*
 - (void) restartOurselves
 {
     //$N = argv[N]
@@ -910,6 +943,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     NSLog(@"*** ERROR: %@ should have been terminated, but we are still running", pathToUs);
     assert(!"We should not be running!");
 }
+*/
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
 {
