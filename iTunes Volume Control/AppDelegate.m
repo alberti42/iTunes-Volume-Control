@@ -22,16 +22,10 @@
 
 #include <dlfcn.h>
 
-#pragma mark - Signal handling
-
-/**
- This will handle signals for us, specifically SIGTERM.
- */
-/*
+//This will handle signals for us, specifically SIGTERM.
 void handleSIGTERM(int sig) {
     [NSApp terminate:nil];
 }
-*/
 
 #pragma mark - Tapping key stroke events
 
@@ -333,52 +327,92 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 }
 */
 
+- (PrivacyConsentState)checkSIPforAppIdentifier:(NSString *)bundleIdentifier promptIfNeeded:(BOOL)promptIfNeeded
+{
+    PrivacyConsentState result;
+    if (@available(macOS 10.14, *)) {
+        AEAddressDesc addressDesc;
+        // We need a C string here, not an NSString
+        const char *bundleIdentifierCString = [bundleIdentifier cStringUsingEncoding:NSUTF8StringEncoding];
+        if( AECreateDesc(typeApplicationBundleID, bundleIdentifierCString, strlen(bundleIdentifierCString), &addressDesc) == noErr )
+        {
+            OSStatus appleScriptPermission = AEDeterminePermissionToAutomateTarget(&addressDesc, typeWildCard, typeWildCard, promptIfNeeded);
+            
+            AEDisposeDesc(&addressDesc);
+            
+            switch (appleScriptPermission) {
+                case errAEEventWouldRequireUserConsent:
+                    NSLog(@"Automation consent not yet granted for %@, would require user consent.", bundleIdentifier);
+                    result = PrivacyConsentStateUnknown;
+                    break;
+                case noErr:
+                    NSLog(@"Automation permitted for %@.", bundleIdentifier);
+                    result = PrivacyConsentStateGranted;
+                    break;
+                case errAEEventNotPermitted:
+                    NSLog(@"Automation of %@ not permitted.", bundleIdentifier);
+                    result = PrivacyConsentStateDenied;
+                    break;
+                case procNotFound:
+                    NSLog(@"%@ not running, automation consent unknown.", bundleIdentifier);
+                    result = PrivacyConsentStateUnknown;
+                    break;
+                default:
+                    NSLog(@"%s switch statement fell through: %@ %d", __PRETTY_FUNCTION__, bundleIdentifier, appleScriptPermission);
+                    result = PrivacyConsentStateUnknown;
+            }
+            return result;
+        }
+        else
+        {
+            NSLog(@"%s error executing AECreateDesc.", __PRETTY_FUNCTION__);
+            return PrivacyConsentStateDenied;
+        }
+    }
+    else {
+        return PrivacyConsentStateGranted;
+    }
+    
+}
+
+- (IBAction)terminate:(id)sender
+{
+    if(CFMachPortIsValid(eventTap)) {
+        CFMachPortInvalidate(eventTap);
+        CFRunLoopSourceInvalidate(runLoopSource);
+        CFRelease(eventTap);
+        CFRelease(runLoopSource);
+    }
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
+    
+    [remote stopListening:self];
+    remote=nil;
+    
+    systemAudio = nil;
+    iTunes = nil;
+    spotify = nil;
+    
+    _statusBar = nil;
+    
+    accessibilityDialog = nil;
+    introWindowController = nil;
+    
+    [timer invalidate];
+    timer = nil;
+    
+    [timerImgSpeaker invalidate];
+    timerImgSpeaker = nil;
+    
+    preferences = nil;
+    
+    [NSApp terminate:nil];
+}
+
 - (BOOL)_loadOSDFramework
 {
     return [[NSBundle bundleWithPath:@"/System/Library/PrivateFrameworks/OSD.framework"] load];
-}
-
-- (BOOL)checkSIPforAppIdentifier:(NSString*)identifier {
-    
-    // First available from 10.14 Mojave
-    if (@available(macOS 10.14, *)) {
-        
-        OSStatus status;
-        NSAppleEventDescriptor *targetAppEventDescriptor;
-        
-        targetAppEventDescriptor = [NSAppleEventDescriptor descriptorWithBundleIdentifier:identifier];
-        
-        status = AEDeterminePermissionToAutomateTarget(targetAppEventDescriptor.aeDesc, typeWildCard, typeWildCard, true);
-        
-        switch (status) {
-            case -600: //procNotFound
-                NSLog(@"Not running app with id '%@'",identifier);
-                break;
-                
-            case 0: // noErr
-                NSLog(@"SIP check successfull for app with id '%@'",identifier);
-                break;
-                
-            case -1744: // errAEEventWouldRequireUserConsent
-                // This only appears if you send false for askUserIfNeeded
-                NSLog(@"User consent required for app with id '%@'",identifier);
-                break;
-                
-            case -1743: //errAEEventNotPermitted
-                NSLog(@"User didn't allow usage for app with id '%@'",identifier);
-                
-                // Here you should present a dialog with a tutorial on how to activate it manually
-                // This can be something like
-                // Go to system preferences > security > privacy
-                // Choose automation and active [APPNAME] for [APPNAME]
-                
-                return NO;
-                
-            default:
-                break;
-        }
-    }
-    return YES;
 }
 
 - (bool) StartAtLogin
@@ -817,9 +851,8 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     
 }
 
--(void)completeInitialization{
-    
-    // signal(SIGTERM, handleSIGTERM);
+-(void)completeInitialization
+{
     
     NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
     NSString* version = [infoDict objectForKey:@"CFBundleShortVersionString"];
@@ -835,32 +868,20 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     // [self _loadBezelServices]; // El Capitan and probably older systems
     [self _loadOSDFramework];
     
-    [self showInStatusBar];   // Install icon into the menu bar
+    [self checkSIPforAppIdentifier:@"com.apple.iTunes" promptIfNeeded:YES];
+    [self checkSIPforAppIdentifier:@"com.spotify.client" promptIfNeeded:YES];
     
-    //[self checkSIPforAppIdentifier:@"com.apple.iTunes"];
+    [self showInStatusBar];   // Install icon into the menu bar
     
     iTunes = [[PlayerApplication alloc] initWithBundleIdentifier:@"com.apple.iTunes"];
     spotify = [[PlayerApplication alloc] initWithBundleIdentifier:@"com.spotify.client"];
-    systemAudio = [[SystemApplication alloc] init];
     
+    systemAudio = [[SystemApplication alloc] init];
+     
     // NSString* iTunesVersion = [[NSString alloc] initWithString:[iTunes version]];
     // NSString* spotifyVersion = [[NSString alloc] initWithString:[spotify version]];
     
     musicProgramPnt = iTunes;
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(increaseITunesVolume:) name:@"IncreaseITunesVolume" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(increaseITunesVolume:) name:@"IncreaseITunesVolumeRamp" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(decreaseITunesVolume:) name:@"DecreaseITunesVolume" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(decreaseITunesVolume:) name:@"DecreaseITunesVolumeRamp" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(muteITunesVolume:) name:@"MuteITunesVolume" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playPauseITunes:) name:@"PlayPauseITunes" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(nextTrackITunes:) name:@"NextTrackITunes" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(previousTrackITunes:) name:@"PreviousTrackITunes" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(displayResolutionChanged:) name:@"displayResolutionHasChanged" object:nil];
-    
-    [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver: self
-                                                           selector: @selector(receiveWakeNote:)
-                                                               name: NSWorkspaceDidWakeNotification object: NULL];
     
     // CGDisplayRegisterReconfigurationCallback(displayPreferencesChanged, NULL);
     
@@ -878,6 +899,22 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(increaseITunesVolume:) name:@"IncreaseITunesVolume" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(increaseITunesVolume:) name:@"IncreaseITunesVolumeRamp" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(decreaseITunesVolume:) name:@"DecreaseITunesVolume" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(decreaseITunesVolume:) name:@"DecreaseITunesVolumeRamp" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(muteITunesVolume:) name:@"MuteITunesVolume" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playPauseITunes:) name:@"PlayPauseITunes" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(nextTrackITunes:) name:@"NextTrackITunes" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(previousTrackITunes:) name:@"PreviousTrackITunes" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(displayResolutionChanged:) name:@"displayResolutionHasChanged" object:nil];
+    
+    [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver: self
+                                                           selector: @selector(receiveWakeNote:)
+                                                               name: NSWorkspaceDidWakeNotification object: NULL];
+    
+    signal(SIGTERM, handleSIGTERM);
+    
     extern CFStringRef kAXTrustedCheckOptionPrompt __attribute__((weak_import));
     
     if( ! AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)@{(__bridge id)kAXTrustedCheckOptionPrompt: @NO}) )
@@ -891,33 +928,6 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
         [self completeInitialization];
     }
 }
-
-/*
-- (void) restartOurselves
-{
-    //$N = argv[N]
-    NSString *killArg1AndOpenArg2Script = @"kill -15 $1 \n open \"$2\"";
-    
-    //NSTask needs its arguments to be strings
-    NSString *ourPID = [NSString stringWithFormat:@"%d",
-                        [[NSProcessInfo processInfo] processIdentifier]];
-    
-    //this will be the path to the .app bundle,
-    //not the executable inside it; exactly what `open` wants
-    NSString * pathToUs = [[NSBundle mainBundle] bundlePath];
-    
-    NSArray *shArgs = [NSArray arrayWithObjects:@"-c", // -c tells sh to execute the next argument, passing it the remaining arguments.
-                       killArg1AndOpenArg2Script,
-                       @"", //$0 path to script (ignored)
-                       ourPID, //$1 in restartScript
-                       pathToUs, //$2 in the restartScript
-                       nil];
-    NSTask *restartTask = [NSTask launchedTaskWithLaunchPath:@"/bin/sh" arguments:shArgs];
-    [restartTask waitUntilExit]; //wait for killArg1AndOpenArg2Script to finish
-    NSLog(@"*** ERROR: %@ should have been terminated, but we are still running", pathToUs);
-    assert(!"We should not be running!");
-}
-*/
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
 {
@@ -1172,40 +1182,6 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 
 - (void) dealloc
 {
-    if(CFMachPortIsValid(eventTap)) {
-        CFMachPortInvalidate(eventTap);
-        CFRunLoopSourceInvalidate(runLoopSource);
-        CFRelease(eventTap);
-        CFRelease(runLoopSource);
-    }
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
-    
-    [remote stopListening:self];
-
-    /*
-     remote=nil;
-     
-     imgVolOn=nil;
-     imgVolOff=nil;
-     
-     introWindowController = nil;
-     
-     volumeImageLayer=nil;
-     for(int i=0; i<16; i++)
-     {
-     volumeBar[i]=nil;
-     }
-     
-     imgVolOn=nil;
-     imgVolOff=nil;
-     
-     fadeOutAnimation=nil;
-     fadeInAnimation=nil;
-     
-     _statusBar = nil;
-     */
     
 }
 

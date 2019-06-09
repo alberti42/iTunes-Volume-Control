@@ -80,8 +80,6 @@
 @property (assign, nonatomic) bool hideVolumeWindow;
 @property (assign, nonatomic) bool loadIntroAtStart;
 
-- (IBAction)increaseVol:(id)sender;
-
 - (IBAction)toggleUseAppleCMDModifier:(id)sender;
 - (IBAction)toggleAutomaticUpdates:(id)sender;
 - (IBAction)toggleHideFromStatusBar:(id)sender;
@@ -92,6 +90,8 @@
 - (IBAction)aboutPanel:(id)sender;
 - (IBAction)sliderValueChanged:(NSSliderCell*)slider;
 //- (IBAction)showIntroWindow:(id)sender;
+
+- (IBAction)terminate:(id)sender;
 
 - (void)appleRemoteButton: (AppleRemoteEventIdentifier)buttonIdentifier pressedDown: (BOOL) pressedDown clickCount: (unsigned int) count;
 
@@ -116,5 +116,6 @@
 @property (assign, nonatomic) double currentVolume;
 @property (assign, nonatomic) double oldVolume;
 @property (assign, nonatomic) double doubleVolume;
+
 
 @end

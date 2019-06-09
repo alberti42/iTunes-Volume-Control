@@ -17,6 +17,8 @@
 
 @synthesize openSecurityPrivacyBtn;
 @synthesize exitBtn;
+@synthesize restartBtn;
+@synthesize screenshot;
 
 - (IBAction)onExitButton:(id)sender
 {
@@ -29,6 +31,31 @@
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:urlString]];
 }
 
+- (IBAction)onRestart:(id)sender
+{
+    //$N = argv[N]
+    NSString *killArg1AndOpenArg2Script = @"kill -15 $1 \n open \"$2\"";
+    
+    //NSTask needs its arguments to be strings
+    NSString *ourPID = [NSString stringWithFormat:@"%d",
+                        [[NSProcessInfo processInfo] processIdentifier]];
+    
+    //this will be the path to the .app bundle,
+    //not the executable inside it; exactly what `open` wants
+    NSString * pathToUs = [[NSBundle mainBundle] bundlePath];
+    
+    NSArray *shArgs = [NSArray arrayWithObjects:@"-c", // -c tells sh to execute the next argument, passing it the remaining arguments.
+                       killArg1AndOpenArg2Script,
+                       @"", //$0 path to script (ignored)
+                       ourPID, //$1 in restartScript
+                       pathToUs, //$2 in the restartScript
+                       nil];
+    NSTask *restartTask = [NSTask launchedTaskWithLaunchPath:@"/bin/sh" arguments:shArgs];
+    [restartTask waitUntilExit]; //wait for killArg1AndOpenArg2Script to finish
+    NSLog(@"*** ERROR: %@ should have been terminated, but we are still running", pathToUs);
+    assert(!"We should not be running!");
+}
+
 - (void)windowDidLoad {
     [super windowDidLoad];
     
@@ -36,9 +63,9 @@
     
     [openSecurityPrivacyBtn setBezelStyle:NSBezelStyleRounded];
     [exitBtn setBezelStyle:NSBezelStyleRounded];
+    [restartBtn setBezelStyle:NSBezelStyleRounded];
     
     [[self window] setDefaultButtonCell:[openSecurityPrivacyBtn cell]];
-
 }
 
 - (void)checkAuthorization:(NSTimer*)aTimer
@@ -65,6 +92,13 @@
     checkAuthorizationTimer = [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(checkAuthorization:) userInfo:nil repeats:YES];
 }
 
+-(void)dealloc
+{
+    exitBtn = nil;
+    openSecurityPrivacyBtn = nil;
+    restartBtn = nil;
+}
+
 -(id) init
 {
     if (self = [super init])  {
@@ -73,6 +107,34 @@
     return self;
 }
 
+-(void)awakeFromNib
+{
+    [screenshot setAppropriateImage];
+}
 
+@end
+
+@implementation ScreenshotView
+
+- (void) setAppropriateImage
+{
+    bool isDark = [[[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"] isEqualToString:@"Dark"];
+    
+    if(isDark)
+        screenshotImage = [NSImage imageNamed:@"SecurityPrivacyDark"];
+    else
+        screenshotImage = [NSImage imageNamed:@"SecurityPrivacyLight"];
+    
+    [self setImage:screenshotImage];
+    
+    [self setNeedsDisplay:YES];
+}
+
+- (void) viewDidChangeEffectiveAppearance
+{
+    [self setAppropriateImage];
+    
+    NSLog(@"changed");
+}
 
 @end

@@ -23,7 +23,6 @@
 		65545E6122AD12CC00A4A25F /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 65545E5E22AD12C800A4A25F /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		65545E6C22AD1A2900A4A25F /* AccessibilityDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 65545E6A22AD1A2900A4A25F /* AccessibilityDialog.m */; };
 		65545E6D22AD1A2900A4A25F /* AccessibilityDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65545E6B22AD1A2900A4A25F /* AccessibilityDialog.xib */; };
-		65545E6F22AD20A200A4A25F /* SecurityPrivacy.png in Resources */ = {isa = PBXBuildFile; fileRef = 65545E6E22AD20A200A4A25F /* SecurityPrivacy.png */; };
 		656C6C78168A2A0B00ECA482 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 656C6C77168A2A0B00ECA482 /* main.m */; };
 		656C6C7F168A2A0B00ECA482 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 656C6C7E168A2A0B00ECA482 /* AppDelegate.m */; };
 		656C6CA3168A456900ECA482 /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 656C6CA2168A456900ECA482 /* ScriptingBridge.framework */; };
@@ -40,6 +39,8 @@
 		65CC33B81698B3CC0049AF82 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65C24C6B168CEB9D0000BFC2 /* IOKit.framework */; };
 		65CC33BA1698B3D60049AF82 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 651A7EF1168F226300A76288 /* QuartzCore.framework */; };
 		65CC33BC1698B3E20049AF82 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 656C6C6B168A2A0B00ECA482 /* Cocoa.framework */; };
+		65CF278D22AD8C840046C399 /* SecurityPrivacyDark.png in Resources */ = {isa = PBXBuildFile; fileRef = 65CF278B22AD8C840046C399 /* SecurityPrivacyDark.png */; };
+		65CF278E22AD8C840046C399 /* SecurityPrivacyLight.png in Resources */ = {isa = PBXBuildFile; fileRef = 65CF278C22AD8C840046C399 /* SecurityPrivacyLight.png */; };
 		65E2AE8D1A044F6C00FD15A1 /* statusbar-item-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 65E2AE851A044F6C00FD15A1 /* statusbar-item-gray.png */; };
 		65E2AE8E1A044F6C00FD15A1 /* statusbar-item-gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65E2AE861A044F6C00FD15A1 /* statusbar-item-gray@2x.png */; };
 		65E2AE8F1A044F6C00FD15A1 /* statusbar-item-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 65E2AE871A044F6C00FD15A1 /* statusbar-item-white.png */; };
@@ -103,7 +104,6 @@
 		65545E6922AD1A2900A4A25F /* AccessibilityDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AccessibilityDialog.h; sourceTree = "<group>"; };
 		65545E6A22AD1A2900A4A25F /* AccessibilityDialog.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AccessibilityDialog.m; sourceTree = "<group>"; };
 		65545E6B22AD1A2900A4A25F /* AccessibilityDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccessibilityDialog.xib; sourceTree = "<group>"; };
-		65545E6E22AD20A200A4A25F /* SecurityPrivacy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SecurityPrivacy.png; sourceTree = "<group>"; };
 		6563BFD61692EAB500C1271D /* volume-off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "volume-off.png"; path = "iTunes Volume Control/Images/volume-off.png"; sourceTree = "<group>"; };
 		656C6C67168A2A0B00ECA482 /* iTunes Volume Control.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iTunes Volume Control.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		656C6C6B168A2A0B00ECA482 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -158,6 +158,8 @@
 		65C8FB6D1A4754340023CE24 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		65CC785D1692FC1300BFD4AD /* statusbar-item.ai */ = {isa = PBXFileReference; lastKnownFileType = text; name = "statusbar-item.ai"; path = "iTunes Volume Control/Images/statusbar-item.ai"; sourceTree = "<group>"; };
 		65CC786A169305C700BFD4AD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		65CF278B22AD8C840046C399 /* SecurityPrivacyDark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SecurityPrivacyDark.png; sourceTree = "<group>"; };
+		65CF278C22AD8C840046C399 /* SecurityPrivacyLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SecurityPrivacyLight.png; sourceTree = "<group>"; };
 		65E2AE811A044F6C00FD15A1 /* statusbar-item-black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "statusbar-item-black.png"; path = "iTunes Volume Control/Images/statusbar-item-black.png"; sourceTree = "<group>"; };
 		65E2AE821A044F6C00FD15A1 /* statusbar-item-black@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "statusbar-item-black@2x.png"; path = "iTunes Volume Control/Images/statusbar-item-black@2x.png"; sourceTree = "<group>"; };
 		65E2AE851A044F6C00FD15A1 /* statusbar-item-gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "statusbar-item-gray.png"; path = "iTunes Volume Control/Images/statusbar-item-gray.png"; sourceTree = "<group>"; };
@@ -286,7 +288,8 @@
 				65545E6922AD1A2900A4A25F /* AccessibilityDialog.h */,
 				65545E6A22AD1A2900A4A25F /* AccessibilityDialog.m */,
 				65545E6B22AD1A2900A4A25F /* AccessibilityDialog.xib */,
-				65545E6E22AD20A200A4A25F /* SecurityPrivacy.png */,
+				65CF278B22AD8C840046C399 /* SecurityPrivacyDark.png */,
+				65CF278C22AD8C840046C399 /* SecurityPrivacyLight.png */,
 			);
 			name = Accessibility;
 			sourceTree = "<group>";
@@ -519,6 +522,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				650EBA7922A5AB1E003EB2D5 /* Finder.png in Resources */,
+				65CF278E22AD8C840046C399 /* SecurityPrivacyLight.png in Resources */,
 				65E2AE8E1A044F6C00FD15A1 /* statusbar-item-gray@2x.png in Resources */,
 				65545E6D22AD1A2900A4A25F /* AccessibilityDialog.xib in Resources */,
 				650EBA6B22A571A3003EB2D5 /* spotify-icon.icns in Resources */,
@@ -526,12 +530,12 @@
 				659CCFF3185CBF04006958AD /* volume-off@2x.png in Resources */,
 				65E2AE8F1A044F6C00FD15A1 /* statusbar-item-white.png in Resources */,
 				653925B622A55724004F60DB /* statusbar-item-black@2x.png in Resources */,
+				65CF278D22AD8C840046C399 /* SecurityPrivacyDark.png in Resources */,
 				659CCFDE185CAAA7006958AD /* appicon.icns in Resources */,
 				6584C4FE22AD52FC00450C34 /* SystemVolume.scpt in Resources */,
 				65B3EB7C1A4ED9A8002BB939 /* spotify@2x.png in Resources */,
 				654DDC65185DDD510095AA66 /* dsa_pub.pem in Resources */,
 				659CCFF2185CBF04006958AD /* volume-off.png in Resources */,
-				65545E6F22AD20A200A4A25F /* SecurityPrivacy.png in Resources */,
 				653925BE22A56C66004F60DB /* iTunes@2x.png in Resources */,
 				65C24C01168CBC7E0000BFC2 /* Credits.rtf in Resources */,
 				653925B722A55727004F60DB /* statusbar-item-black.png in Resources */,

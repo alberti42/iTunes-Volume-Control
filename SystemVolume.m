@@ -24,7 +24,10 @@
     [AEsetVolume setParamDescriptor:AEsetVolumeParams forKeyword:keyDirectObject];
     
     NSDictionary *error = nil;
-    [ASSystemVolume executeAppleEvent:AEsetVolume error:&error];
+    NSAppleEventDescriptor *resultEventDescriptor = [ASSystemVolume executeAppleEvent:AEsetVolume error:&error];
+    if (! resultEventDescriptor) {
+        NSLog(@"%s AppleScript setVolume error = %@", __PRETTY_FUNCTION__, error);
+    }
     
 }
 
@@ -58,6 +61,13 @@
     return vol;
 }
 
+-(void)dealloc
+{
+    ASSystemVolume = nil;
+    AEsetVolume = nil;
+    AEgetVolume = nil;
+}
+
 -(id)init {
     if (self = [super init])  {
         [self setOldVolume: -1];
@@ -77,7 +87,7 @@
             // events
             AEsetVolume = [NSAppleEventDescriptor appleEventWithEventClass:kASAppleScriptSuite eventID:kASSubroutineEvent targetDescriptor:target returnID:kAutoGenerateReturnID transactionID:kAnyTransactionID];
             [AEsetVolume setParamDescriptor:setVolumeHandler forKeyword:keyASSubroutineName];
-            
+
             AEgetVolume = [NSAppleEventDescriptor appleEventWithEventClass:kASAppleScriptSuite eventID:kASSubroutineEvent targetDescriptor:target returnID:kAutoGenerateReturnID transactionID:kAnyTransactionID];
             [AEgetVolume setParamDescriptor:getVolumeHandler forKeyword:keyASSubroutineName];
         }

@@ -30,7 +30,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="200" height="200"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="2">
                 <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -42,26 +42,26 @@
                 <menuItem title="Enabled" state="on" tag="1" id="6" userLabel="Enabled">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="toggleTapping:" target="-1" id="27"/>
+                        <action selector="toggleTapping:" target="3" id="HHI-BF-9NR"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Apple Remote intercepted" tag="2" id="7" userLabel="Apple Remote intercepted">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="toggleAppleRemote:" target="-1" id="24"/>
+                        <action selector="toggleAppleRemote:" target="3" id="yol-eD-67z"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="17"/>
                 <menuItem title="Use ⌘ modifier" tag="3" id="9" userLabel="Use ⌘ modifier">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="toggleUseAppleCMDModifier:" target="-1" id="28"/>
+                        <action selector="toggleUseAppleCMDModifier:" target="3" id="ypk-61-qkE"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Hide from Status Bar" tag="5" id="10" userLabel="Hide from Status Bar">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="toggleHideFromStatusBar:" target="-1" id="25"/>
+                        <action selector="toggleHideFromStatusBar:" target="3" id="5IS-cK-VYc"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Hide volume window" tag="6" id="IG3-xA-1iJ">
@@ -106,14 +106,14 @@
                 <menuItem title="About" id="15" userLabel="About">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="aboutPanel:" target="-1" id="23"/>
+                        <action selector="aboutPanel:" target="3" id="AgP-Ce-wkv"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="21"/>
                 <menuItem title="Close" id="16" userLabel="Close">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="terminate:" target="-2" id="43"/>
+                        <action selector="terminate:" target="3" id="Hwo-lV-uSz"/>
                     </connections>
                 </menuItem>
             </items>

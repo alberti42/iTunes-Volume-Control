@@ -33,7 +33,7 @@ It is simple. There is no need of any installation.
 * Make sure that *iTunes Volume Control* is enabled in the *Accessibility* panel of *Security & Privacy* of the *System Preferences* (see screenshot below); otherwise the application will not start. **Moreover, if you update from an old version, it is very likely that you have to remove the old permission. You will then be asked to authorize the app again.**
 * While iTunes is running, use the volume control keys to change its volume. This will not affect the main volume.
 
-![alt tag](https://raw.github.com/alberti42/iTunes-Volume-Control/master/SecurityPrivacy.png)
+![alt tag](https://raw.github.com/alberti42/iTunes-Volume-Control/master/SecurityPrivacyDark.png)
 
 
 Installing it on Mojave as a third-party application
