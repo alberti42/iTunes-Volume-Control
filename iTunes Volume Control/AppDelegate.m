@@ -29,9 +29,9 @@ void handleSIGTERM(int sig) {
 
 #pragma mark - Tapping key stroke events
 
-static void displayPreferencesChanged(CGDirectDisplayID displayID, CGDisplayChangeSummaryFlags flags, void *userInfo) {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"displayResolutionHasChanged" object:NULL];
-}
+//static void displayPreferencesChanged(CGDirectDisplayID displayID, CGDisplayChangeSummaryFlags flags, void *userInfo) {
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"displayResolutionHasChanged" object:NULL];
+//}
 
 CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *refcon)
 {
@@ -813,13 +813,39 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     NSString* version = [infoDict objectForKey:@"CFBundleShortVersionString"];
     NSString * operatingSystemVersionString = [[NSProcessInfo processInfo] operatingSystemVersionString];
     
-    [[SUUpdater sharedUpdater] setFeedURL:[NSURL URLWithString:[NSString stringWithFormat: @"http://quantum-technologies.iap.uni-bonn.de/alberti/iTunesVolumeControl/iTunesVolumeControlCast.xml.php?version=%@&osxversion=%@",version,[operatingSystemVersionString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]]];
+    [[SUUpdater sharedUpdater] setFeedURL:[NSURL URLWithString:[NSString stringWithFormat: @"http://quantum-technologies.iap.uni-bonn.de/alberti/iTunesVolumeControl/iTunesVolumeControlCast.xml.php?version=%@&osxversion=%@",version,[operatingSystemVersionString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]]]];
     
     [[SUUpdater sharedUpdater] setUpdateCheckInterval:60*60*24*7]; // look for new updates every 7 days
     
     [_volumeWindow orderOut:self];
     [_volumeWindow setLevel:NSFloatingWindowLevel];
     
+    // [self _loadBezelServices]; // El Capitan and probably older systems
+    [self _loadOSDFramework];
+    
+    bool res;
+    do{
+        res = [self createEventTap];
+        
+        if(!res)
+        {
+            NSAlert *alert = [[NSAlert alloc] init];
+            [alert setMessageText:@"It seems that \"iTunes Volume Control\" is not authorized to respond upon events where the volume keys are pressed."];
+            [alert setInformativeText:@"Open the \"System Preferences\", go to \"Security & Privacy\", and enable \"iTunes Volume Control\" in \"Accessibility\". If \"iTunes Volume Control\" appears to be already enabled, remove it from \"Accessibility\", so as to force MacOS to reconsider it."];
+            [alert addButtonWithTitle:@"Restart"];
+            [alert addButtonWithTitle:@"Exit"];
+            
+            NSModalResponse responseTag = [alert runModal];
+            
+            if (responseTag == NSAlertSecondButtonReturn) {
+                [NSApp terminate:nil];
+            }
+            else {
+                [self restartOurselves];
+            }
+        }
+    }while(!res);
+        
     [self showInStatusBar];   // Install icon into the menu bar
     
     //[self checkSIPforAppIdentifier:@"com.apple.iTunes"];
@@ -847,33 +873,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
                                                            selector: @selector(receiveWakeNote:)
                                                                name: NSWorkspaceDidWakeNotification object: NULL];
     
-    CGDisplayRegisterReconfigurationCallback(displayPreferencesChanged, NULL);
-    
-    // [self _loadBezelServices]; // El Capitan and probably older systems
-    [self _loadOSDFramework];
-    
-    bool res;
-    do{
-        res = [self createEventTap];
-        
-        if(!res)
-        {
-            NSAlert *alert = [[NSAlert alloc] init];
-            [alert setMessageText:@"It seems that \"iTunes Volume Control\" is not authorized to respond upon events where the volume keys are pressed."];
-            [alert setInformativeText:@"Open the \"System Preferences\", go to \"Security & Privacy\", and enable \"iTunes Volume Control\" in \"Accessibility\". If \"iTunes Volume Control\" appears to be already enabled, remove it from \"Accessibility\", so as to force MacOS to reconsider it."];
-            [alert addButtonWithTitle:@"Restart"];
-            [alert addButtonWithTitle:@"Exit"];
-            
-            NSModalResponse responseTag = [alert runModal];
-            
-            if (responseTag == NSAlertSecondButtonReturn) {
-                [NSApp terminate:nil];
-            }
-            else {
-                [self restartOurselves];
-            }
-        }
-    }while(!res);
+    // CGDisplayRegisterReconfigurationCallback(displayPreferencesChanged, NULL);
     
     [self appleRemoteInit];
     
