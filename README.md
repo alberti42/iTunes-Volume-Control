@@ -39,7 +39,7 @@ It is simple. There is no need of any installation.
 Installing it on Mojave as a third-party application
 ----------------------------------------------------
 
-Mojave has recently increased security with version 10.14.5, disabling the possibility to install third-party application, which are not downloaded from a certified developer. Only companies who are recognized as legal entity can receive from Apple a *notarization* quality seal. As I am not planning to start a company to distribute this app, if you want to install it, you can choose either of the two options:
+Mojave has recently increased security with version 10.14.5, disabling the possibility to install third-party application, which are not downloaded from a certified developer. Only companies who are recognized as legal entity can receive from Apple a *notarization* certificate. As I am not planning to start a company to distribute this app, if you want to install it, you can choose either of the two options:
 
 * You can clone the Git repository onto your computer by typing from terminal:
 
@@ -58,6 +58,15 @@ Mojave has recently increased security with version 10.14.5, disabling the possi
   Do not forget to enable the Gatekeeper back again after you have launched for the first time the application.
 
 	``sudo spctl --master-enable``
+	
+Enabling control of iTunes and Spotify
+--------------------------------------
+
+The System Integrity Protection under Mojave requires you to grant *iTunes Volume Control* access to iTunes and Spotify. The first time the application attempts to control their volume, you will be asked with a dialog window to grant access.
+
+If the application is running, but it is not able to read nor control the volume of the music player, you should then check that you have correctly granted access. You can change this in the *Automator* panel of *Security & Privacy* of the *System Preferences* (see screenshot below).
+
+![alt tag](https://raw.github.com/alberti42/iTunes-Volume-Control/master/AutomationScreenshotDark.png)
 
 Requirements
 ------------
