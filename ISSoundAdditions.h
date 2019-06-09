@@ -59,7 +59,11 @@
 @end
 
 @interface SystemApplication : NSObject{
-
+    
+    NSAppleScript *ASSystemVolume;
+    NSAppleEventDescriptor* AEsetVolume;
+    NSAppleEventDescriptor* AEgetVolume;
+    
 }
 
 @property (assign, nonatomic) double currentVolume;  // The sound output volume (0 = minimum, 100 = maximum)

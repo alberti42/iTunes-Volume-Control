@@ -8,13 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/CoreAnimation.h>
+
 #import "iTunes.h"
 #import "Spotify.h"
 #import "AppleRemote.h"
 
-#import "ISSoundAdditions.h"
-
-@class IntroWindowController, AccessibilityDialog, StatusBarItem, PlayerApplication;
+@class IntroWindowController, AccessibilityDialog, StatusBarItem, PlayerApplication, SystemApplication;
 
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
     CALayer *mainLayer;
@@ -100,7 +99,9 @@
 
 - (void)stopTimer;
 
-- (void) updatePercentages;
+- (void)updatePercentages;
+
+- (void)wasAuthorized;
 
 @end
 

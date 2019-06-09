@@ -11,6 +11,13 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AccessibilityDialog : NSWindowController
+{
+    NSTimer* checkAuthorizationTimer;
+    
+@public
+    
+    BOOL authorized;
+}
 
 @property (nonatomic, assign) IBOutlet NSButton* exitBtn;
 @property (nonatomic, assign) IBOutlet NSButton* openSecurityPrivacyBtn;

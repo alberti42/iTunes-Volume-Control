@@ -7,6 +7,7 @@
 //
 
 #import "AccessibilityDialog.h"
+#import "AppDelegate.h"
 
 @interface AccessibilityDialog ()
 
@@ -32,16 +33,46 @@
     [super windowDidLoad];
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-}
-
--(void)awakeFromNib
-{
+    
     [openSecurityPrivacyBtn setBezelStyle:NSBezelStyleRounded];
     [exitBtn setBezelStyle:NSBezelStyleRounded];
-
-    [[self window] setDefaultButtonCell:[openSecurityPrivacyBtn cell]];
     
+    [[self window] setDefaultButtonCell:[openSecurityPrivacyBtn cell]];
+
 }
+
+- (void)checkAuthorization:(NSTimer*)aTimer
+{
+    extern CFStringRef kAXTrustedCheckOptionPrompt __attribute__((weak_import));
+    
+    authorized = AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)@{(__bridge id)kAXTrustedCheckOptionPrompt: @NO});
+    
+    if(authorized)
+    {
+        [aTimer invalidate];
+        aTimer = nil;
+        
+        [(AppDelegate*)[NSApp delegate] wasAuthorized];
+    }
+}
+
+- (IBAction)showWindow:(id)sender
+{
+    [super showWindow:sender];
+    [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
+    [[self window] makeKeyAndOrderFront:sender];
+    
+    checkAuthorizationTimer = [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(checkAuthorization:) userInfo:nil repeats:YES];
+}
+
+-(id) init
+{
+    if (self = [super init])  {
+        self->authorized = false;
+    }
+    return self;
+}
+
 
 
 @end

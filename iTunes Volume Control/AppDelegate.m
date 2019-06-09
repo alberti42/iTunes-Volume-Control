@@ -13,6 +13,8 @@
 //#import "IntroWindowController.h"
 //#import "MyNSVisualEffectView.h"
 
+#import "SystemVolume.h"
+
 #import "AccessibilityDialog.h"
 
 //#import "BezelServices.h"
@@ -504,6 +506,14 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     [self changeVol:false];
 }
 
+- (void)wasAuthorized
+{
+    [accessibilityDialog close];
+    accessibilityDialog = nil;
+    
+    [self completeInitialization];
+}
+
 - (bool)createEventTap
 {
     CGEventMask eventMask = (/*(1 << kCGEventKeyDown) | (1 << kCGEventKeyUp) |*/CGEventMaskBit(NX_SYSDEFINED));
@@ -754,15 +764,6 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 
 -(void)awakeFromNib
 {
-    BOOL accessibilityEnabled = AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)@{(__bridge id)kAXTrustedCheckOptionPrompt: @NO});
-    
-    accessibilityDialog = [[AccessibilityDialog alloc] initWithWindowNibName:@"AccessibilityDialog"];
-    
-    [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
-    [accessibilityDialog showWindow:nil];
-    [[accessibilityDialog window] makeKeyAndOrderFront:nil];
-    
-    
 }
 
 -(void)awakeFromNib_disabled
@@ -816,8 +817,8 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     
 }
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
-{
+-(void)completeInitialization{
+    
     // signal(SIGTERM, handleSIGTERM);
     
     NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
@@ -834,48 +835,6 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     // [self _loadBezelServices]; // El Capitan and probably older systems
     [self _loadOSDFramework];
     
-    extern CFStringRef kAXTrustedCheckOptionPrompt __attribute__((weak_import));
-
-    
-//    NSAlert *alert = [[NSAlert alloc] init];
-//    [alert setMessageText:@"It seems that \"iTunes Volume Control\" is not authorized to respond upon events where the volume keys are pressed."];
-//    [alert setInformativeText:@"Open the \"System Preferences\", go to \"Security & Privacy\", and enable \"iTunes Volume Control\" in \"Accessibility\". If \"iTunes Volume Control\" appears to be already enabled, remove it from \"Accessibility\", so as to force MacOS to reconsider it."];
-//    [alert addButtonWithTitle:@"Go to Security & Privacy panel"];
-//    [alert addButtonWithTitle:@"Exit"];
-
-    bool accessibilityEnabled = true;
-    
-    while(!accessibilityEnabled)
-    {
-        
-        /*
-        NSAlert *alert = [[NSAlert alloc] init];
-        [alert setMessageText:@"It seems that \"iTunes Volume Control\" is not authorized to respond upon events where the volume keys are pressed."];
-        [alert setInformativeText:@"Open the \"System Preferences\", go to \"Security & Privacy\", and enable \"iTunes Volume Control\" in \"Accessibility\". If \"iTunes Volume Control\" appears to be already enabled, remove it from \"Accessibility\", so as to force MacOS to reconsider it."];
-        [alert addButtonWithTitle:@"Go to Security & Privacy panel"];
-        [alert addButtonWithTitle:@"Exit"];
-        
-        NSModalResponse responseTag = [alert runModal];
-        
-        if (responseTag == NSAlertSecondButtonReturn) {
-            [NSApp terminate:nil];
-        }
-        else {
-            NSString *urlString = @"x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility";
-            [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:urlString]];
-            // [self restartOurselves];
-        }
-        */
-        
-        [NSThread sleepForTimeInterval:1.0f];
-        
-        NSLog(@"check");
-        
-        accessibilityEnabled = AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)@{(__bridge id)kAXTrustedCheckOptionPrompt: @NO});
-        
-        accessibilityEnabled = true;
-    }
-        
     [self showInStatusBar];   // Install icon into the menu bar
     
     //[self checkSIPforAppIdentifier:@"com.apple.iTunes"];
@@ -883,7 +842,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     iTunes = [[PlayerApplication alloc] initWithBundleIdentifier:@"com.apple.iTunes"];
     spotify = [[PlayerApplication alloc] initWithBundleIdentifier:@"com.spotify.client"];
     systemAudio = [[SystemApplication alloc] init];
-
+    
     // NSString* iTunesVersion = [[NSString alloc] initWithString:[iTunes version]];
     // NSString* spotifyVersion = [[NSString alloc] initWithString:[spotify version]];
     
@@ -898,7 +857,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(nextTrackITunes:) name:@"NextTrackITunes" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(previousTrackITunes:) name:@"PreviousTrackITunes" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(displayResolutionChanged:) name:@"displayResolutionHasChanged" object:nil];
-
+    
     [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver: self
                                                            selector: @selector(receiveWakeNote:)
                                                                name: NSWorkspaceDidWakeNotification object: NULL];
@@ -913,9 +872,24 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     
     [self setStartAtLogin:[self StartAtLogin] savePreferences:false];
     
-//    if([self loadIntroAtStart])
-//        [self showIntroWindow:nil];
+    //    if([self loadIntroAtStart])
+    //        [self showIntroWindow:nil];
+}
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+{
+    extern CFStringRef kAXTrustedCheckOptionPrompt __attribute__((weak_import));
     
+    if( ! AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)@{(__bridge id)kAXTrustedCheckOptionPrompt: @NO}) )
+    {
+        accessibilityDialog = [[AccessibilityDialog alloc] initWithWindowNibName:@"AccessibilityDialog"];
+        
+        [accessibilityDialog showWindow:self];
+    }
+    else
+    {
+        [self completeInitialization];
+    }
 }
 
 /*
@@ -1169,8 +1143,6 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 
 - (IBAction)aboutPanel:(id)sender
 {
-    
-//    return;
     
     NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
     NSString* version = [infoDict objectForKey:@"CFBundleVersion"];

@@ -10,7 +10,6 @@
 		650EBA6B22A571A3003EB2D5 /* spotify-icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 650EBA6A22A571A3003EB2D5 /* spotify-icon.icns */; };
 		650EBA6D22A571BB003EB2D5 /* iTunes-icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 650EBA6C22A571BB003EB2D5 /* iTunes-icon.icns */; };
 		650EBA6F22A59DC2003EB2D5 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 650EBA6E22A59DC2003EB2D5 /* CoreAudio.framework */; };
-		650EBA7222A5A628003EB2D5 /* ISSoundAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 650EBA7122A5A628003EB2D5 /* ISSoundAdditions.m */; };
 		650EBA7922A5AB1E003EB2D5 /* Finder.png in Resources */ = {isa = PBXBuildFile; fileRef = 650EBA7722A5AB1E003EB2D5 /* Finder.png */; };
 		650EBA7A22A5AB1E003EB2D5 /* Finder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 650EBA7822A5AB1E003EB2D5 /* Finder@2x.png */; };
 		651A7EEF168F1F4C00A76288 /* VolumeWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 651A7EED168F1F4C00A76288 /* VolumeWindow.m */; };
@@ -28,6 +27,8 @@
 		656C6C78168A2A0B00ECA482 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 656C6C77168A2A0B00ECA482 /* main.m */; };
 		656C6C7F168A2A0B00ECA482 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 656C6C7E168A2A0B00ECA482 /* AppDelegate.m */; };
 		656C6CA3168A456900ECA482 /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 656C6CA2168A456900ECA482 /* ScriptingBridge.framework */; };
+		6584C4FE22AD52FC00450C34 /* SystemVolume.scpt in Resources */ = {isa = PBXBuildFile; fileRef = 6584C4FD22AD4E0600450C34 /* SystemVolume.scpt */; };
+		6584C50222AD5C4B00450C34 /* SystemVolume.m in Sources */ = {isa = PBXBuildFile; fileRef = 6584C50022AD5C4B00450C34 /* SystemVolume.m */; };
 		659CCFDE185CAAA7006958AD /* appicon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 659CCFDD185CAAA7006958AD /* appicon.icns */; };
 		659CCFF2185CBF04006958AD /* volume-off.png in Resources */ = {isa = PBXBuildFile; fileRef = 6563BFD61692EAB500C1271D /* volume-off.png */; };
 		659CCFF3185CBF04006958AD /* volume-off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 659CCFE7185CAD9D006958AD /* volume-off@2x.png */; };
@@ -122,6 +123,9 @@
 		6578146A1A4E28DA009C4A0B /* iTunes11.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTunes11.png; sourceTree = "<group>"; };
 		6578146B1A4E28DA009C4A0B /* spotify.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spotify.png; sourceTree = "<group>"; };
 		657F9C4E168F349100818384 /* volume.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = volume.png; path = "iTunes Volume Control/Images/volume.png"; sourceTree = "<group>"; };
+		6584C4FD22AD4E0600450C34 /* SystemVolume.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = SystemVolume.scpt; sourceTree = "<group>"; };
+		6584C50022AD5C4B00450C34 /* SystemVolume.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemVolume.m; sourceTree = "<group>"; };
+		6584C50322AD5C5D00450C34 /* SystemVolume.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SystemVolume.h; sourceTree = "<group>"; };
 		658B93C5185E48B2007BEBEF /* IntroWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IntroWindowController.h; path = "iTunes Volume Control/IntroWindowController.h"; sourceTree = "<group>"; };
 		658B93C6185E48B2007BEBEF /* IntroWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IntroWindowController.m; path = "iTunes Volume Control/IntroWindowController.m"; sourceTree = "<group>"; };
 		658E9E761A50141E0037AF64 /* iTunes11Big@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunes11Big@2x.png"; sourceTree = "<group>"; };
@@ -198,6 +202,7 @@
 		652D1142187AF05200C8BD88 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				6584C4FA22AD490D00450C34 /* AppleScripts */,
 				65163D961A500663007F3DE6 /* Models */,
 				652D1143187AF05900C8BD88 /* Controllers */,
 				652D1144187AF06E00C8BD88 /* Views */,
@@ -211,6 +216,8 @@
 			children = (
 				650EBA7022A5A628003EB2D5 /* ISSoundAdditions.h */,
 				650EBA7122A5A628003EB2D5 /* ISSoundAdditions.m */,
+				6584C50022AD5C4B00450C34 /* SystemVolume.m */,
+				6584C50322AD5C5D00450C34 /* SystemVolume.h */,
 				656C6C7D168A2A0B00ECA482 /* AppDelegate.h */,
 				656C6C7E168A2A0B00ECA482 /* AppDelegate.m */,
 				6515C51C22A453680065EAA2 /* CoreGraphicsPriv.h */,
@@ -348,6 +355,14 @@
 				657814681A4E28DA009C4A0B /* spotify@2x.png */,
 			);
 			name = "program icons";
+			sourceTree = "<group>";
+		};
+		6584C4FA22AD490D00450C34 /* AppleScripts */ = {
+			isa = PBXGroup;
+			children = (
+				6584C4FD22AD4E0600450C34 /* SystemVolume.scpt */,
+			);
+			name = AppleScripts;
 			sourceTree = "<group>";
 		};
 		659CCFE4185CAAD2006958AD /* appicon */ = {
@@ -512,6 +527,7 @@
 				65E2AE8F1A044F6C00FD15A1 /* statusbar-item-white.png in Resources */,
 				653925B622A55724004F60DB /* statusbar-item-black@2x.png in Resources */,
 				659CCFDE185CAAA7006958AD /* appicon.icns in Resources */,
+				6584C4FE22AD52FC00450C34 /* SystemVolume.scpt in Resources */,
 				65B3EB7C1A4ED9A8002BB939 /* spotify@2x.png in Resources */,
 				654DDC65185DDD510095AA66 /* dsa_pub.pem in Resources */,
 				659CCFF2185CBF04006958AD /* volume-off.png in Resources */,
@@ -553,11 +569,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				656C6C78168A2A0B00ECA482 /* main.m in Sources */,
-				650EBA7222A5A628003EB2D5 /* ISSoundAdditions.m in Sources */,
 				656C6C7F168A2A0B00ECA482 /* AppDelegate.m in Sources */,
 				65C24C67168CEB130000BFC2 /* AppleRemote.m in Sources */,
 				651A7EEF168F1F4C00A76288 /* VolumeWindow.m in Sources */,
 				65545E6C22AD1A2900A4A25F /* AccessibilityDialog.m in Sources */,
+				6584C50222AD5C4B00450C34 /* SystemVolume.m in Sources */,
 				E2F254C6179EA2B600DD3C66 /* StatusItemView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

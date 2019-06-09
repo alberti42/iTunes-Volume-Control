@@ -47,7 +47,7 @@
                         </textFieldCell>
                     </textField>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3x8-bD-4It">
-                        <rect key="frame" x="3" y="40" width="550" height="384"/>
+                        <rect key="frame" x="3" y="43" width="550" height="384"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="SecurityPrivacy" id="hSz-3m-4Wa"/>
                     </imageView>
