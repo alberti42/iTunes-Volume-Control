@@ -573,6 +573,13 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 
 - (bool)createEventTap
 {
+    if(eventTap != nil && CFMachPortIsValid(eventTap)) {
+        CFMachPortInvalidate(eventTap);
+        CFRunLoopSourceInvalidate(runLoopSource);
+        CFRelease(eventTap);
+        CFRelease(runLoopSource);
+    }
+    
     CGEventMask eventMask = (/*(1 << kCGEventKeyDown) | (1 << kCGEventKeyUp) |*/CGEventMaskBit(NX_SYSDEFINED));
     eventTap = CGEventTapCreate(kCGSessionEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault,
                                 eventMask, event_tap_callback, (__bridge void *)self); // Create an event tap. We are interested in SYS key presses.
@@ -619,7 +626,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     [self sendMediaKey:NX_KEYTYPE_PREVIOUS];
     
 //    id musicPlayerPnt = [self runningPlayer];
-//    
+//
 //    if ([musicPlayerPnt isRunning])
 //    {
 //        [musicPlayerPnt previousTrack];
@@ -792,6 +799,8 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     self = [super init];
     if(self)
     {
+        self->eventTap = nil;
+        
         /*
         fadeOutAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
         [fadeOutAnimation setDuration:fadeOutDuration];
@@ -922,8 +931,6 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     
     // CGDisplayRegisterReconfigurationCallback(displayPreferencesChanged, NULL);
     
-    [self createEventTap];
-    
     [self appleRemoteInit];
     
     [self initializePreferences];
@@ -954,15 +961,16 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     
     extern CFStringRef kAXTrustedCheckOptionPrompt __attribute__((weak_import));
     
-    if( ! AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)@{(__bridge id)kAXTrustedCheckOptionPrompt: @NO}) )
+
+    if( AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)@{(__bridge id)kAXTrustedCheckOptionPrompt: @NO}) && [self createEventTap] )
+    {
+        [self completeInitialization];
+    }
+    else
     {
         accessibilityDialog = [[AccessibilityDialog alloc] initWithWindowNibName:@"AccessibilityDialog"];
         
         [accessibilityDialog showWindow:self];
-    }
-    else
-    {
-        [self completeInitialization];
     }
 }
 
@@ -1242,7 +1250,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 
 -(void)resetEventTap
 {
-        CGEventTapEnable(eventTap, _Tapping);
+    CGEventTapEnable(eventTap, _Tapping);
 }
 
 - (IBAction)increaseVol:(id)sender
