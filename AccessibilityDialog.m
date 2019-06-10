@@ -133,8 +133,6 @@
 - (void) viewDidChangeEffectiveAppearance
 {
     [self setAppropriateImage];
-    
-    NSLog(@"changed");
 }
 
 @end

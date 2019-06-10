@@ -45,8 +45,6 @@
     PlayerApplication* spotify;
     SystemApplication* systemAudio;
     
-    id musicProgramPnt;
-    
     IntroWindowController *introWindowController;
     AccessibilityDialog *accessibilityDialog;
     
@@ -110,7 +108,6 @@
 }
 
 - (BOOL) isRunning;
-- (BOOL) isPlaying;
 - (iTunesEPlS) playerState;
 
 @property (assign, nonatomic) double currentVolume;

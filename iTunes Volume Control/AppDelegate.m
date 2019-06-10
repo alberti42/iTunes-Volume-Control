@@ -13,6 +13,8 @@
 //#import "IntroWindowController.h"
 //#import "MyNSVisualEffectView.h"
 
+#import <IOKit/hidsystem/ev_keymap.h>
+
 #import "SystemVolume.h"
 
 #import "AccessibilityDialog.h"
@@ -183,13 +185,19 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     return vol;
 }
 
-- (BOOL) isPlaying
+- (void) nextTrack
 {
-    
-//    [iTunesApplication class];
-//    [musicPlayer isKindOfClass:[iTunesApplication class]];
-    
-    return [musicPlayer isRunning];
+    return [musicPlayer nextTrack];
+}
+
+- (void) previousTrack
+{
+    return [musicPlayer previousTrack];
+}
+
+- (void) playPause
+{
+    return [musicPlayer playPause];
 }
 
 - (BOOL) isRunning
@@ -326,6 +334,21 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     }
 }
 */
+
+-(void) sendMediaKey: (int)key {
+    // create and send down key event
+    NSEvent* key_event;
+    
+    key_event = [NSEvent otherEventWithType:NSEventTypeSystemDefined location:CGPointZero modifierFlags:0xa00 timestamp:0 windowNumber:0 context:0 subtype:8 data1:((key << 16) | (0xa << 8)) data2:-1];
+    CGEventPost(0, key_event.CGEvent);
+    // NSLog(@"%d keycode (down) sent",key);
+    
+    // create and send up key event
+    key_event = [NSEvent otherEventWithType:NSEventTypeSystemDefined location:CGPointZero modifierFlags:0xb00 timestamp:0 windowNumber:0 context:0 subtype:8 data1:((key << 16) | (0xb << 8)) data2:-1];
+    CGEventPost(0, key_event.CGEvent);
+    // NSLog(@"%d keycode (up) sent",key);
+}
+
 
 - (PrivacyConsentState)checkSIPforAppIdentifier:(NSString *)bundleIdentifier promptIfNeeded:(BOOL)promptIfNeeded
 {
@@ -572,24 +595,35 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 
 - (void)playPauseITunes:(NSNotification *)aNotification
 {
-    // check if iTunes is running (Q1)
-    [musicProgramPnt playpause];
+    [self sendMediaKey:NX_KEYTYPE_PLAY];
+
+//    id musicPlayerPnt = [self runningPlayer];
+//
+//    // check if iTunes is running (Q1)
+//    [musicPlayerPnt playpause];
 }
 
 - (void)nextTrackITunes:(NSNotification *)aNotification
 {
-    if ([musicProgramPnt isRunning])
-    {
-        [musicProgramPnt nextTrack];
-    }
+    [self sendMediaKey:NX_KEYTYPE_NEXT];
+//    id musicPlayerPnt = [self runningPlayer];
+//
+//    if ([musicPlayerPnt isRunning])
+//    {
+//        [musicPlayerPnt nextTrack];
+//    }
 }
 
 - (void)previousTrackITunes:(NSNotification *)aNotification
 {
-    if ([musicProgramPnt isRunning])
-    {
-        [musicProgramPnt previousTrack];
-    }
+    [self sendMediaKey:NX_KEYTYPE_PREVIOUS];
+    
+//    id musicPlayerPnt = [self runningPlayer];
+//    
+//    if ([musicPlayerPnt isRunning])
+//    {
+//        [musicPlayerPnt previousTrack];
+//    }
 }
 
 - (void)muteITunesVolume:(NSNotification *)aNotification
@@ -671,7 +705,9 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 }
 
 - (void) appleRemoteButton: (AppleRemoteEventIdentifier)buttonIdentifier pressedDown: (BOOL) pressedDown clickCount: (unsigned int) count {
-    if ([musicProgramPnt isRunning])
+    id musicPlayerPnt = [self runningPlayer];
+    
+    if ([musicPlayerPnt isRunning])
     {
         switch (buttonIdentifier)
         {
@@ -853,7 +889,6 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 
 -(void)completeInitialization
 {
-    
     NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
     NSString* version = [infoDict objectForKey:@"CFBundleShortVersionString"];
     NSString * operatingSystemVersionString = [[NSProcessInfo processInfo] operatingSystemVersionString];
@@ -868,20 +903,22 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     // [self _loadBezelServices]; // El Capitan and probably older systems
     [self _loadOSDFramework];
     
-    [self checkSIPforAppIdentifier:@"com.apple.iTunes" promptIfNeeded:YES];
-    [self checkSIPforAppIdentifier:@"com.spotify.client" promptIfNeeded:YES];
-    
-    [self showInStatusBar];   // Install icon into the menu bar
+    //[self checkSIPforAppIdentifier:@"com.apple.iTunes" promptIfNeeded:YES];
+    //[self checkSIPforAppIdentifier:@"com.spotify.client" promptIfNeeded:YES];
     
     iTunes = [[PlayerApplication alloc] initWithBundleIdentifier:@"com.apple.iTunes"];
     spotify = [[PlayerApplication alloc] initWithBundleIdentifier:@"com.spotify.client"];
     
+    // Force MacOS to ask for authorization to AppleEvents if this was not already given
+    [iTunes currentVolume];
+    [spotify currentVolume];
+    
     systemAudio = [[SystemApplication alloc] init];
-     
+    
+    [self showInStatusBar];   // Install icon into the menu bar
+    
     // NSString* iTunesVersion = [[NSString alloc] initWithString:[iTunes version]];
     // NSString* spotifyVersion = [[NSString alloc] initWithString:[spotify version]];
-    
-    musicProgramPnt = iTunes;
     
     // CGDisplayRegisterReconfigurationCallback(displayPreferencesChanged, NULL);
     
@@ -1153,7 +1190,6 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 
 - (IBAction)aboutPanel:(id)sender
 {
-    
     NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
     NSString* version = [infoDict objectForKey:@"CFBundleVersion"];
     NSRange range=[version rangeOfString:@"." options:NSBackwardsSearch];
