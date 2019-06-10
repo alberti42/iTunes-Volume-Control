@@ -72,9 +72,7 @@
 {
     extern CFStringRef kAXTrustedCheckOptionPrompt __attribute__((weak_import));
     
-    authorized = AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)@{(__bridge id)kAXTrustedCheckOptionPrompt: @NO});
-    
-    if(authorized)
+    if ( AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)@{(__bridge id)kAXTrustedCheckOptionPrompt: @NO}) && [(AppDelegate*)[NSApp delegate] createEventTap] )
     {
         [aTimer invalidate];
         aTimer = nil;

@@ -101,6 +101,8 @@
 
 - (void)wasAuthorized;
 
+- (bool)createEventTap;
+
 @end
 
 @interface PlayerApplication : NSObject {
