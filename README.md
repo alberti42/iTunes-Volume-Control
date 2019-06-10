@@ -11,7 +11,7 @@ Description
 * You can disable the heads-up display showing the volume status; this is quite handy when you are watching movies and you do not want to be distracted by the overlay volume display.
 * Using the volume keys, the volume of the currently playing application (either iTunes or Spotify) is controlled. If neither iTunes nor Spotify are playing music. Then the global volume will be affected by the volume keys.
 
-![alt tag](https://raw.github.com/alberti42/iTunes-Volume-Control/master/screenshot.png)
+![alt tag](https://raw.github.com/alberti42/iTunes-Volume-Control/master/iTunes%20Volume%20Control/Images/screenshot.png)
 
 Why do you need this app?
 -------------------------
@@ -33,7 +33,7 @@ It is simple. There is no need of any installation.
 * Make sure that *iTunes Volume Control* is enabled in the *Accessibility* panel of *Security & Privacy* of the *System Preferences* (see screenshot below); otherwise the application will not start. **Moreover, if you update from an old version, it is very likely that you have to remove the old permission. You will then be asked to authorize the app again.**
 * While iTunes is running, use the volume control keys to change its volume. This will not affect the main volume.
 
-![alt tag](https://raw.github.com/alberti42/iTunes-Volume-Control/master/SecurityPrivacyDark.png)
+![alt tag](https://raw.github.com/alberti42/iTunes-Volume-Control/master/iTunes%20Volume%20Control/Images/SecurityPrivacyDark.png)
 
 
 Installing it on Mojave as a third-party application
@@ -53,7 +53,7 @@ Mojave has recently increased security with version 10.14.5, disabling the possi
 	
   This will add an extra option in the Security & Privacy configuration panel, which you have to select before running the app for the first time.
   
-  ![alt tag](https://raw.github.com/alberti42/iTunes-Volume-Control/master/SecurityPrivacyMojave.png)
+  ![alt tag](https://raw.github.com/alberti42/iTunes-Volume-Control/master/iTunes%20Volume%20Control/Images/SecurityPrivacyMojave.png)
   
   Do not forget to enable the Gatekeeper back again after you have launched for the first time the application.
 
@@ -66,7 +66,7 @@ The System Integrity Protection under Mojave requires you to grant *iTunes Volum
 
 If the application is running, but it is not able to read nor control the volume of the music player, you should then check that you have correctly granted access. You can change this in the *Automator* panel of *Security & Privacy* of the *System Preferences* (see screenshot below).
 
-![alt tag](https://raw.github.com/alberti42/iTunes-Volume-Control/master/AutomationScreenshotDark.png)
+![alt tag](https://raw.github.com/alberti42/iTunes-Volume-Control/master/iTunes%20Volume%20Control/Images/AutomationScreenshotDark.png)
 
 Requirements
 ------------
