@@ -66,6 +66,7 @@
     [restartBtn setBezelStyle:NSBezelStyleRounded];
     
     [[self window] setDefaultButtonCell:[openSecurityPrivacyBtn cell]];
+    [self window].styleMask &= ~NSWindowStyleMaskResizable;
 }
 
 - (void)checkAuthorization:(NSTimer*)aTimer

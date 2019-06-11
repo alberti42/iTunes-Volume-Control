@@ -20,15 +20,19 @@
     [self setDoubleVolume:currentVolume];
     
     NSAppleEventDescriptor* AEsetVolumeParams = [NSAppleEventDescriptor listDescriptor];
-    [AEsetVolumeParams insertDescriptor:[NSAppleEventDescriptor descriptorWithInt32:(int)currentVolume] atIndex:1];
+    [AEsetVolumeParams insertDescriptor:[NSAppleEventDescriptor descriptorWithInt32:round(currentVolume)] atIndex:1];
     [AEsetVolume setParamDescriptor:AEsetVolumeParams forKeyword:keyDirectObject];
-    
+
     NSDictionary *error = nil;
     NSAppleEventDescriptor *resultEventDescriptor = [ASSystemVolume executeAppleEvent:AEsetVolume error:&error];
     if (! resultEventDescriptor) {
         NSLog(@"%s AppleScript setVolume error = %@", __PRETTY_FUNCTION__, error);
     }
     
+    /*NSLog(@"");
+    NSLog(@"Internal volume Mac: %1.3f",round(currentVolume));
+    NSLog(@"Internal volume Mac: %1.3f",[self doubleVolume]);
+    NSLog(@"Internal volume Mac: %1.3f",[self currentVolume]);*/
 }
 
 - (double) currentVolume
@@ -53,7 +57,9 @@
         }
     }
     
-    if (fabs(vol-[self doubleVolume])<1)
+    //NSLog(@"External volume Mac: %1.3f",vol);
+    
+    if (fabs(vol-[self doubleVolume])<=2)
     {
         vol = [self doubleVolume];
     }
