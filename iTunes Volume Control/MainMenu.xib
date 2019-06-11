@@ -30,7 +30,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="200" height="200"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
             <view key="contentView" id="2">
                 <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -45,11 +45,8 @@
                         <action selector="toggleTapping:" target="3" id="HHI-BF-9NR"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Apple Remote intercepted" tag="2" id="7" userLabel="Apple Remote intercepted">
+                <menuItem title="Apple Remote intercepted" tag="2" hidden="YES" enabled="NO" id="7" userLabel="Apple Remote intercepted">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="toggleAppleRemote:" target="3" id="yol-eD-67z"/>
-                    </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="17"/>
                 <menuItem title="Use ⌘ modifier" tag="3" id="9" userLabel="Use ⌘ modifier">

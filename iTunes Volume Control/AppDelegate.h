@@ -11,7 +11,7 @@
 
 #import "iTunes.h"
 #import "Spotify.h"
-#import "AppleRemote.h"
+// #import "AppleRemote.h"
 
 @class IntroWindowController, AccessibilityDialog, StatusBarItem, PlayerApplication, SystemApplication;
 
@@ -32,7 +32,7 @@
     CFMachPortRef eventTap;
     CFRunLoopSourceRef runLoopSource;
 
-    AppleRemote* remote;
+    // AppleRemote* remote;
     
     NSInteger oldVolumeSetting;
     
@@ -91,7 +91,7 @@
 
 - (IBAction)terminate:(id)sender;
 
-- (void)appleRemoteButton: (AppleRemoteEventIdentifier)buttonIdentifier pressedDown: (BOOL) pressedDown clickCount: (unsigned int) count;
+// - (void)appleRemoteButton: (AppleRemoteEventIdentifier)buttonIdentifier pressedDown: (BOOL) pressedDown clickCount: (unsigned int) count;
 
 - (void)resetEventTap;
 

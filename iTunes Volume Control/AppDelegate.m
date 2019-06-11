@@ -290,7 +290,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 
 @implementation AppDelegate
 
-@synthesize AppleRemoteConnected=_AppleRemoteConnected;
+// @synthesize AppleRemoteConnected=_AppleRemoteConnected;
 @synthesize StartAtLogin=_StartAtLogin;
 @synthesize Tapping=_Tapping;
 @synthesize UseAppleCMDModifier=_UseAppleCMDModifier;
@@ -410,8 +410,8 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
     
-    [remote stopListening:self];
-    remote=nil;
+    // [remote stopListening:self];
+    // remote=nil;
     
     systemAudio = nil;
     iTunes = nil;
@@ -594,11 +594,14 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
         return false;
 }
 
+/*
+// Apple remote
 - (void) appleRemoteInit
 {
     remote = [[AppleRemote alloc] init];
     [remote setDelegate:self];
 }
+*/
 
 - (void)playPauseITunes:(NSNotification *)aNotification
 {
@@ -711,88 +714,80 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     }
 }
 
+/*
+// Apple remote
 - (void) appleRemoteButton: (AppleRemoteEventIdentifier)buttonIdentifier pressedDown: (BOOL) pressedDown clickCount: (unsigned int) count {
-    id musicPlayerPnt = [self runningPlayer];
     
-    if ([musicPlayerPnt isRunning])
+    switch (buttonIdentifier)
     {
-        switch (buttonIdentifier)
-        {
-            case kRemoteButtonVolume_Plus_Hold:
-                if(timer)
-                {
-                    [self stopTimer];
-                    
-                    //                    if(!timerImgSpeaker&&!fadeInAnimationReady) {
-                    //                        timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:waitOverlayPanel target:self selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
-                    //                        [[NSRunLoop mainRunLoop] addTimer:timerImgSpeaker forMode:NSRunLoopCommonModes];
-                    //                    }
-                }
-                else
-                {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"IncreaseITunesVolumeRamp" object:NULL];
-                }
-                break;
-            case kRemoteButtonVolume_Plus:
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"IncreaseITunesVolume" object:NULL];
-                break;
+        case kRemoteButtonVolume_Plus_Hold:
+            if(timer)
+            {
+                [self stopTimer];
                 
-            case kRemoteButtonVolume_Minus_Hold:
-                if(timer)
-                {
-                    [self stopTimer];
-                    
-                    //                    if(!timerImgSpeaker&&!fadeInAnimationReady){
-                    //                        timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:waitOverlayPanel target:self selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
-                    //                        [[NSRunLoop mainRunLoop] addTimer:timerImgSpeaker forMode:NSRunLoopCommonModes];
-                    //                    }
-                }
-                else
-                {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"DecreaseITunesVolumeRamp" object:NULL];
-                }
-                break;
-            case kRemoteButtonVolume_Minus:
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"DecreaseITunesVolume" object:NULL];
-                break;
+                //                    if(!timerImgSpeaker&&!fadeInAnimationReady) {
+                //                        timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:waitOverlayPanel target:self selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
+                //                        [[NSRunLoop mainRunLoop] addTimer:timerImgSpeaker forMode:NSRunLoopCommonModes];
+                //                    }
+            }
+            else
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"IncreaseITunesVolumeRamp" object:NULL];
+            }
+            break;
+        case kRemoteButtonVolume_Plus:
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"IncreaseITunesVolume" object:NULL];
+            break;
+            
+        case kRemoteButtonVolume_Minus_Hold:
+            if(timer)
+            {
+                [self stopTimer];
                 
-            case k2009RemoteButtonFullscreen:
-                break;
-                
-            case k2009RemoteButtonPlay:
-            case kRemoteButtonPlay:
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"PlayPauseITunes" object:NULL];
-                break;
-                
-            case kRemoteButtonLeft_Hold:
-            case kRemoteButtonLeft:
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"PreviousTrackITunes" object:NULL];
-                break;
-                
-            case kRemoteButtonRight_Hold:
-            case kRemoteButtonRight:
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"NextTrackITunes" object:NULL];
-                break;
-                
-            case kRemoteButtonMenu_Hold:
-            case kRemoteButtonMenu:
-                break;
-                
-            case kRemoteButtonPlay_Sleep:
-                break;
-                
-            default:
-                break;
-        }
-    }
-    else
-    {
-        if(buttonIdentifier==k2009RemoteButtonPlay||buttonIdentifier==kRemoteButtonPlay)
-        {
+                //                    if(!timerImgSpeaker&&!fadeInAnimationReady){
+                //                        timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:waitOverlayPanel target:self selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
+                //                        [[NSRunLoop mainRunLoop] addTimer:timerImgSpeaker forMode:NSRunLoopCommonModes];
+                //                    }
+            }
+            else
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"DecreaseITunesVolumeRamp" object:NULL];
+            }
+            break;
+        case kRemoteButtonVolume_Minus:
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"DecreaseITunesVolume" object:NULL];
+            break;
+            
+        case k2009RemoteButtonFullscreen:
+            break;
+            
+        case k2009RemoteButtonPlay:
+        case kRemoteButtonPlay:
             [[NSNotificationCenter defaultCenter] postNotificationName:@"PlayPauseITunes" object:NULL];
-        }
+            break;
+            
+        case kRemoteButtonLeft_Hold:
+        case kRemoteButtonLeft:
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"PreviousTrackITunes" object:NULL];
+            break;
+            
+        case kRemoteButtonRight_Hold:
+        case kRemoteButtonRight:
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"NextTrackITunes" object:NULL];
+            break;
+            
+        case kRemoteButtonMenu_Hold:
+        case kRemoteButtonMenu:
+            break;
+            
+        case kRemoteButtonPlay_Sleep:
+            break;
+            
+        default:
+            break;
     }
 }
+*/
 
 - (id)init
 {
@@ -931,7 +926,8 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     
     // CGDisplayRegisterReconfigurationCallback(displayPreferencesChanged, NULL);
     
-    [self appleRemoteInit];
+    // Apple remote
+    // [self appleRemoteInit];
     
     [self initializePreferences];
     
@@ -1011,7 +1007,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
                           [NSNumber numberWithInt:2],      @"volumeIncrement",
                           [NSNumber numberWithBool:true] , @"TappingEnabled",
-                          [NSNumber numberWithBool:false], @"AppleRemoteConnected",
+                          //[NSNumber numberWithBool:false], @"AppleRemoteConnected",
                           [NSNumber numberWithBool:false], @"UseAppleCMDModifier",
                           [NSNumber numberWithBool:true],  @"AutomaticUpdates",
                           [NSNumber numberWithBool:false], @"hideFromStatusBarPreference",
@@ -1023,7 +1019,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
                           nil ]; // terminate the list
     [preferences registerDefaults:dict];
     
-    [self setAppleRemoteConnected:[preferences boolForKey: @"AppleRemoteConnected"]];
+    // [self setAppleRemoteConnected:[preferences boolForKey: @"AppleRemoteConnected"]];
     [self setTapping:[preferences boolForKey:              @"TappingEnabled"]];
     [self setUseAppleCMDModifier:[preferences boolForKey:  @"UseAppleCMDModifier"]];
     [self setAutomaticUpdates:[preferences boolForKey:     @"AutomaticUpdates"]];
@@ -1076,6 +1072,8 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     _loadIntroAtStart=enabled;
 }
 
+// Appleremote
+/*
 - (void)setAppleRemoteConnected:(bool)enabled
 {
     NSMenuItem* menuItem=[_statusMenu itemWithTag:2];
@@ -1096,11 +1094,14 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     
     _AppleRemoteConnected=enabled;
 }
+ */
 
+/*
 - (IBAction)toggleAppleRemote:(id)sender
 {
     [self setAppleRemoteConnected:![self AppleRemoteConnected]];
 }
+*/
 
 - (void) setUseAppleCMDModifier:(bool)enabled
 {
@@ -1128,12 +1129,14 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     if(enabled)
     {
         [_statusBarItemView setIconStatusBarIsGrayed:NO];
-        if([self AppleRemoteConnected]) [remote startListening:self];
+        // Appleremote
+        // if([self AppleRemoteConnected]) [remote startListening:self];
     }
     else
     {
         [_statusBarItemView setIconStatusBarIsGrayed:YES];
-        [remote stopListening:self];
+        // Appleremote
+        // [remote stopListening:self];
     }
     
     [preferences setBool:enabled forKey:@"TappingEnabled"];
@@ -1221,7 +1224,8 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 - (void) receiveWakeNote: (NSNotification*) note
 {
     [self setTapping:[self Tapping]];
-    [self setAppleRemoteConnected:[self AppleRemoteConnected]];
+    // Apple remote
+    // [self setAppleRemoteConnected:[self AppleRemoteConnected]];
 }
 
 - (void) dealloc
