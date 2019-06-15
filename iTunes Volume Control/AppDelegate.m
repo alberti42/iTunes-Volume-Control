@@ -914,8 +914,10 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     spotify = [[PlayerApplication alloc] initWithBundleIdentifier:@"com.spotify.client"];
     
     // Force MacOS to ask for authorization to AppleEvents if this was not already given
-    [iTunes currentVolume];
-    [spotify currentVolume];
+    if([iTunes isRunning])
+        [iTunes currentVolume];
+    if([spotify isRunning])
+        [spotify currentVolume];
     
     systemAudio = [[SystemApplication alloc] init];
     
