@@ -71,7 +71,7 @@ If the application is running, but it is not able to read nor control the volume
 Requirements
 ------------
 
-Mac OS X version at least 10.14 (Mojave) or greater.
+Mac OS X version at least 10.13 (High Sierra) or greater.
 
 Credits
 -------
