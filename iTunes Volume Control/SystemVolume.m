@@ -7,6 +7,7 @@
 //
 
 #import <Carbon/Carbon.h>
+#import "AppDelegate.h"
 
 #import "SystemVolume.h"
 
@@ -59,7 +60,25 @@
     
     //NSLog(@"External volume Mac: %1.3f",vol);
     
-    if (fabs(vol-[self doubleVolume])<=2)
+    int step;
+    
+    switch(osxVersion)
+    {
+        case 112:
+            step = 4;
+            break;
+        case 113:
+            step = 4;
+            break;
+        case 114:
+            step = 2;
+            break;
+        default:
+            step = 1;
+            break;
+    }
+    
+    if (fabs(vol-[self doubleVolume])<=step)
     {
         vol = [self doubleVolume];
     }
@@ -74,7 +93,7 @@
     AEgetVolume = nil;
 }
 
--(id)init {
+-(id)initWithVersion:(NSInteger)osxVersion {
     if (self = [super init])  {
         [self setOldVolume: -1];
         
@@ -97,6 +116,8 @@
             AEgetVolume = [NSAppleEventDescriptor appleEventWithEventClass:kASAppleScriptSuite eventID:kASSubroutineEvent targetDescriptor:target returnID:kAutoGenerateReturnID transactionID:kAnyTransactionID];
             [AEgetVolume setParamDescriptor:getVolumeHandler forKeyword:keyASSubroutineName];
         }
+        
+        self->osxVersion = osxVersion;
     }
     return self;
 }

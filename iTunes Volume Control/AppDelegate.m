@@ -350,6 +350,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 }
 
 
+/*
 - (PrivacyConsentState)checkSIPforAppIdentifier:(NSString *)bundleIdentifier promptIfNeeded:(BOOL)promptIfNeeded
 {
     PrivacyConsentState result;
@@ -397,6 +398,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     }
     
 }
+*/
 
 - (IBAction)terminate:(id)sender
 {
@@ -815,22 +817,39 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
         fadeInAnimationReady=true;
         */
         
-        if (floor(NSAppKitVersionNumber) <= 1038) { // NSAppKitVersionNumber10_6
+        if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6) {
             //10.6.x or earlier systems
             osxVersion = 106;
-        } else if (floor(NSAppKitVersionNumber) <= 1138) { // NSAppKitVersionNumber10_7
+        } else if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_7) {
             /* On a 10.7 - 10.7.x system */
             osxVersion = 107;
-        } else if (floor(NSAppKitVersionNumber) <= 1187) { // NSAppKitVersionNumber10_8
+        } else if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_8) {
             /* On a 10.8 - 10.8.x system */
             osxVersion = 108;
-        } else if (floor(NSAppKitVersionNumber) <= 1265) { // NSAppKitVersionNumber10_9
+        } else if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_9) {
             /* On a 10.9 - 10.9.x system */
             osxVersion = 109;
-        } else {
+        } else if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_10) {
             /* On a 10.10 - 10.10.x system */
             osxVersion = 110;
+        } else if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_11) {
+            /* On a 10.11 - 10.11.x system */
+            osxVersion = 111;
+        } else if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_12) {
+            /* On a 10.12 - 10.12.x system */
+            osxVersion = 112;
+        } else if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_13) {
+            /* On a 10.13 - 10.13.x system */
+            osxVersion = 113;
+        } else if (floor(NSAppKitVersionNumber) <= 1671) {
+            /* On a 10.14 - 10.14.x system */
+            osxVersion = 114;
         }
+        else
+        {
+            osxVersion = 114;
+        }
+            
         
     }
     return self;
@@ -840,6 +859,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 {
 }
 
+/*
 -(void)awakeFromNib_disabled
 {
     NSRect screenFrame = [[NSScreen mainScreen] frame];
@@ -876,20 +896,21 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     [volumeImageLayer setPosition:CGPointMake([volumeView frame].size.width/2, [volumeView frame].size.height/2+12)];
     [volumeImageLayer setContents:imgVolOn];
     
-    /*
-    iconLayer = [CALayer layer];
-    [iconLayer setFrame:NSRectToCGRect(rectIcon)];
-    [iconLayer setPosition:CGPointMake([volumeImageLayer frame].size.width/2-22, [volumeImageLayer frame].size.height/2)];
-    [iconLayer setContents:spotifyIcon];
+ 
+    //iconLayer = [CALayer layer];
+    //[iconLayer setFrame:NSRectToCGRect(rectIcon)];
+    //[iconLayer setPosition:CGPointMake([volumeImageLayer frame].size.width/2-22, [volumeImageLayer frame].size.height/2)];
+    //[iconLayer setContents:spotifyIcon];
     
      
-    [volumeImageLayer addSublayer:iconLayer];
-    */
+    //[volumeImageLayer addSublayer:iconLayer];
+    
     [mainLayer addSublayer:volumeImageLayer];
     
     [self createVolumeBar];
     
 }
+*/
 
 -(void)completeInitialization
 {
@@ -919,7 +940,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     if([spotify isRunning])
         [spotify currentVolume];
     
-    systemAudio = [[SystemApplication alloc] init];
+    systemAudio = [[SystemApplication alloc] initWithVersion:osxVersion];
     
     [self showInStatusBar];   // Install icon into the menu bar
     
@@ -949,7 +970,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playPauseITunes:) name:@"PlayPauseITunes" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(nextTrackITunes:) name:@"NextTrackITunes" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(previousTrackITunes:) name:@"PreviousTrackITunes" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(displayResolutionChanged:) name:@"displayResolutionHasChanged" object:nil];
+    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(displayResolutionChanged:) name:@"displayResolutionHasChanged" object:nil];
     
     [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver: self
                                                            selector: @selector(receiveWakeNote:)
@@ -1216,12 +1237,15 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     [[NSApplication sharedApplication] orderFrontStandardAboutPanelWithOptions:infoDict];
 }
 
+
+/*
 - (void) displayResolutionChanged: (NSNotification*) note
 {
-    /* TODO test with the old operating system and check it is triggered when res is changed */
+    // TODO test with the old operating system and check it is triggered when res is changed
     NSRect screenFrame = [[NSScreen mainScreen] frame];
     [_volumeWindow setFrame:(osxVersion<110?  CGRectMake(round((screenFrame.size.width-210)/2),139,210,206) : CGRectMake(round((screenFrame.size.width-200)/2),140,200,200)) display:NO animate:NO];
 }
+*/
 
 - (void) receiveWakeNote: (NSNotification*) note
 {
