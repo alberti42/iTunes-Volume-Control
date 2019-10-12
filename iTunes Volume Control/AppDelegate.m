@@ -817,6 +817,8 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
         fadeInAnimationReady=true;
         */
         
+        NSLog(@"My version Andrea: %f",floor(NSAppKitVersionNumber));
+        
         if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6) {
             //10.6.x or earlier systems
             osxVersion = 106;
@@ -845,9 +847,13 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
             /* On a 10.14 - 10.14.x system */
             osxVersion = 114;
         }
+        else if (floor(NSAppKitVersionNumber) <= 1894) {
+            /* On a 10.15 - 10.15.x system */
+            osxVersion = 115;
+        }
         else
         {
-            osxVersion = 114;
+            osxVersion = 115;
         }
             
         
@@ -931,7 +937,10 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     //[self checkSIPforAppIdentifier:@"com.apple.iTunes" promptIfNeeded:YES];
     //[self checkSIPforAppIdentifier:@"com.spotify.client" promptIfNeeded:YES];
     
-    iTunes = [[PlayerApplication alloc] initWithBundleIdentifier:@"com.apple.iTunes"];
+    if(osxVersion >= 115)
+        iTunes = [[PlayerApplication alloc] initWithBundleIdentifier:@"com.apple.Music"];
+    else
+        iTunes = [[PlayerApplication alloc] initWithBundleIdentifier:@"com.apple.iTunes"];
     spotify = [[PlayerApplication alloc] initWithBundleIdentifier:@"com.spotify.client"];
     
     // Force MacOS to ask for authorization to AppleEvents if this was not already given

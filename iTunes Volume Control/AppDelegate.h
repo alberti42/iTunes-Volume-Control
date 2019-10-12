@@ -10,6 +10,7 @@
 #import <QuartzCore/CoreAnimation.h>
 
 #import "iTunes.h"
+// #import "Music.h"
 #import "Spotify.h"
 // #import "AppleRemote.h"
 
@@ -84,7 +85,6 @@
 - (IBAction)toggleHideVolumeWindow:(id)sender;
 - (IBAction)toggleStartAtLogin:(id)sender;
 - (IBAction)toggleTapping:(id)sender;
-- (IBAction)toggleAppleRemote:(id)sender;
 - (IBAction)aboutPanel:(id)sender;
 - (IBAction)sliderValueChanged:(NSSliderCell*)slider;
 //- (IBAction)showIntroWindow:(id)sender;
