@@ -21,7 +21,7 @@
 		656C6C7F168A2A0B00ECA482 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 656C6C7E168A2A0B00ECA482 /* AppDelegate.m */; };
 		656C6CA3168A456900ECA482 /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 656C6CA2168A456900ECA482 /* ScriptingBridge.framework */; };
 		659CCFDE185CAAA7006958AD /* appicon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 659CCFDD185CAAA7006958AD /* appicon.icns */; };
-		65B78DE323528A340035CCB7 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65B78DA0235285110035CCB7 /* Media.xcassets */; };
+		65BA5D11235323940059690A /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65BA5D10235323940059690A /* Media.xcassets */; };
 		65C24C01168CBC7E0000BFC2 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 65C24C00168CBC7E0000BFC2 /* Credits.rtf */; };
 		65CC33B81698B3CC0049AF82 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65C24C6B168CEB9D0000BFC2 /* IOKit.framework */; };
 		65CC33BA1698B3D60049AF82 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 651A7EF1168F226300A76288 /* QuartzCore.framework */; };
@@ -107,9 +107,9 @@
 		659CCFE3185CAACD006958AD /* icon_128x128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_128x128.png; path = "iTunes Volume Control/Images/appicon.iconset/icon_128x128.png"; sourceTree = "<group>"; };
 		659CCFE6185CAC93006958AD /* volume@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "volume@2x.png"; path = "iTunes Volume Control/Images/volume@2x.png"; sourceTree = "<group>"; };
 		659CCFE7185CAD9D006958AD /* volume-off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "volume-off@2x.png"; path = "iTunes Volume Control/Images/volume-off@2x.png"; sourceTree = "<group>"; };
-		65B78DA0235285110035CCB7 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		65B85972185E389400D8C851 /* iTunes-screenshot.ai */ = {isa = PBXFileReference; lastKnownFileType = text; name = "iTunes-screenshot.ai"; path = "iTunes Volume Control/Images/iTunes-screenshot.ai"; sourceTree = "<group>"; };
 		65B85973185E389400D8C851 /* iTunes-screenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iTunes-screenshot.png"; path = "iTunes Volume Control/Images/iTunes-screenshot.png"; sourceTree = "<group>"; };
+		65BA5D10235323940059690A /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = "iTunes Volume Control/Media.xcassets"; sourceTree = "<group>"; };
 		65C24C00168CBC7E0000BFC2 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; name = Credits.rtf; path = "iTunes Volume Control/Credits.rtf"; sourceTree = "<group>"; };
 		65C24C64168CEB130000BFC2 /* AppleRemote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppleRemote.h; sourceTree = "<group>"; };
 		65C24C65168CEB130000BFC2 /* AppleRemote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppleRemote.m; sourceTree = "<group>"; };
@@ -358,7 +358,7 @@
 				653492751690ACD300B73CA3 /* volume.ai */,
 				657F9C4E168F349100818384 /* volume.png */,
 				659CCFE6185CAC93006958AD /* volume@2x.png */,
-				65B78DA0235285110035CCB7 /* Media.xcassets */,
+				65BA5D10235323940059690A /* Media.xcassets */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -441,7 +441,7 @@
 			files = (
 				651471F222AE9A3900ABB4AE /* dsa_pub.pem in Resources */,
 				6514720422AE9BB900ABB4AE /* MainMenu.xib in Resources */,
-				65B78DE323528A340035CCB7 /* Media.xcassets in Resources */,
+				65BA5D11235323940059690A /* Media.xcassets in Resources */,
 				651471EC22AE990D00ABB4AE /* AccessibilityDialog.xib in Resources */,
 				659CCFDE185CAAA7006958AD /* appicon.icns in Resources */,
 				65C24C01168CBC7E0000BFC2 /* Credits.rtf in Resources */,

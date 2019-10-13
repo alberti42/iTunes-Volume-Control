@@ -817,8 +817,6 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
         fadeInAnimationReady=true;
         */
         
-        NSLog(@"My version Andrea: %f",floor(NSAppKitVersionNumber));
-        
         if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6) {
             //10.6.x or earlier systems
             osxVersion = 106;
