@@ -939,6 +939,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
         iTunes = [[PlayerApplication alloc] initWithBundleIdentifier:@"com.apple.Music"];
     else
         iTunes = [[PlayerApplication alloc] initWithBundleIdentifier:@"com.apple.iTunes"];
+    
     spotify = [[PlayerApplication alloc] initWithBundleIdentifier:@"com.spotify.client"];
     
     // Force MacOS to ask for authorization to AppleEvents if this was not already given
@@ -1056,6 +1057,12 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     [self setHideFromStatusBar:[preferences boolForKey:    @"hideFromStatusBarPreference"]];
     [self setHideVolumeWindow:[preferences boolForKey:     @"hideVolumeWindowPreference"]];
     [[self iTunesBtn] setState:[preferences boolForKey:    @"iTunesControl"]];
+    if(osxVersion >= 115)
+    {
+        [[self iTunesBtn] setTitle:@"Music"];
+    }
+    [[self iTunesBtn] setState:[preferences boolForKey:    @"iTunesControl"]];
+    
     [[self spotifyBtn] setState:[preferences boolForKey:   @"spotifyControl"]];
     [[self systemBtn] setState:[preferences boolForKey:    @"systemControl"]];
     [self setLoadIntroAtStart:[preferences boolForKey:     @"loadIntroAtStart"]];
