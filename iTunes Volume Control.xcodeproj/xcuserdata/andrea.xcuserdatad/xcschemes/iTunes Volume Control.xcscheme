@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1110"
+   LastUpgradeVersion = "1120"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "656C6C66168A2A0B00ECA482"
-               BuildableName = "iTunes Volume Control.app"
-               BlueprintName = "iTunes Volume Control"
+               BuildableName = "iTunes Volume Control test.app"
+               BlueprintName = "iTunes Volume Control test"
                ReferencedContainer = "container:iTunes Volume Control.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -31,8 +31,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "656C6C66168A2A0B00ECA482"
-            BuildableName = "iTunes Volume Control.app"
-            BlueprintName = "iTunes Volume Control"
+            BuildableName = "iTunes Volume Control test.app"
+            BlueprintName = "iTunes Volume Control test"
             ReferencedContainer = "container:iTunes Volume Control.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -54,8 +54,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "656C6C66168A2A0B00ECA482"
-            BuildableName = "iTunes Volume Control.app"
-            BlueprintName = "iTunes Volume Control"
+            BuildableName = "iTunes Volume Control test.app"
+            BlueprintName = "iTunes Volume Control test"
             ReferencedContainer = "container:iTunes Volume Control.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

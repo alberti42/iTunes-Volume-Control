@@ -41,6 +41,7 @@
     
     double increment;
     
+    
 @public
     PlayerApplication* iTunes;
     PlayerApplication* spotify;
@@ -88,12 +89,13 @@
 - (IBAction)aboutPanel:(id)sender;
 - (IBAction)sliderValueChanged:(NSSliderCell*)slider;
 //- (IBAction)showIntroWindow:(id)sender;
-
 - (IBAction)terminate:(id)sender;
 
 // - (void)appleRemoteButton: (AppleRemoteEventIdentifier)buttonIdentifier pressedDown: (BOOL) pressedDown clickCount: (unsigned int) count;
 
 - (void)resetEventTap;
+
+- (void) hideSpeakerImg:(NSTimer*)theTimer;
 
 - (void)stopTimer;
 

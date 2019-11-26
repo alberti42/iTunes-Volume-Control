@@ -22,7 +22,9 @@
 //#import "BezelServices.h"
 #import "OSD.h"
 
-#include <dlfcn.h>
+// #define OWN_WINDOW
+
+// #include <dlfcn.h>
 
 //This will handle signals for us, specifically SIGTERM.
 void handleSIGTERM(int sig) {
@@ -75,10 +77,12 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
                     if(previousKeyCode!=keyCode && app->timer)
                     {
                         [app stopTimer];
-                        //                        if(!app->timerImgSpeaker&&!app->fadeInAnimationReady){
-                        //                            app->timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:app->waitOverlayPanel target:app selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
-                        //                            [[NSRunLoop mainRunLoop] addTimer:app->timerImgSpeaker forMode:NSRunLoopCommonModes];
-                        //                        }
+#ifdef OWN_WINDOW
+                        if(!app->timerImgSpeaker&&!app->fadeInAnimationReady){
+                            app->timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:app->waitOverlayPanel target:app selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
+                            [[NSRunLoop mainRunLoop] addTimer:app->timerImgSpeaker forMode:NSRunLoopCommonModes];
+                        }
+#endif
                     }
                     previousKeyCode=keyCode;
                     
@@ -100,10 +104,12 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
                     if(previousKeyCode!=keyCode && app->timer)
                     {
                         [app stopTimer];
-                        //                        if(!app->timerImgSpeaker&&!app->fadeInAnimationReady){
-                        //                            app->timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:app->waitOverlayPanel target:app selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
-                        //                            [[NSRunLoop mainRunLoop] addTimer:app->timerImgSpeaker forMode:NSRunLoopCommonModes];
-                        //                        }
+#ifdef OWN_WINDOW
+                        if(!app->timerImgSpeaker&&!app->fadeInAnimationReady){
+                            app->timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:app->waitOverlayPanel target:app selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
+                            [[NSRunLoop mainRunLoop] addTimer:app->timerImgSpeaker forMode:NSRunLoopCommonModes];
+                        }
+#endif
                     }
                     previousKeyCode=keyCode;
                     
@@ -128,11 +134,12 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
                         if(app->timer)
                         {
                             [app stopTimer];
-                            
-                            //                            if(!app->timerImgSpeaker&&!app->fadeInAnimationReady){
-                            //                                app->timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:app->waitOverlayPanel target:app selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
-                            //                                [[NSRunLoop mainRunLoop] addTimer:app->timerImgSpeaker forMode:NSRunLoopCommonModes];
-                            //                            }
+#ifdef OWN_WINDOW
+                            if(!app->timerImgSpeaker&&!app->fadeInAnimationReady){
+                                app->timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:app->waitOverlayPanel target:app selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
+                                [[NSRunLoop mainRunLoop] addTimer:app->timerImgSpeaker forMode:NSRunLoopCommonModes];
+                            }
+#endif
                         }
                     }
                     return NULL;
@@ -248,12 +255,10 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 
 @end
 
-/*
- 
+#ifdef OWN_WINDOW
 #pragma mark - Extending NSView
 
-#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_10
-
+//#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_10
 
 @implementation NSView (HS)
 
@@ -267,12 +272,14 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
         [vibrant setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
         [vibrant setBlendingMode:mode];
         
-        [vibrant setMaterial:NSVisualEffectMaterialLight];
-        [vibrant setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
+        //[vibrant setMaterial:NSVisualEffectMaterialLight];
+        //[vibrant setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
         [vibrant setState:NSVisualEffectStateActive];
 
+        [vibrant setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantDark]];
+        [vibrant setMaterial:NSVisualEffectMaterialDark];
         
-        [self addSubview:vibrant positioned:NSWindowBelow relativeTo:nil];
+        [self addSubview:vibrant positioned:NSWindowAbove relativeTo:nil];
         
         return vibrant;
     }
@@ -282,9 +289,9 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 
 @end
 
-#endif
+//#endif
 
-*/
+#endif
 
 #pragma mark - Implementation AppDelegate
 
@@ -311,8 +318,11 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 @synthesize volumeWindow = _volumeWindow;
 @synthesize statusMenu = _statusMenu;
 
-//static CFTimeInterval fadeInDuration=0.2;
-//static CFTimeInterval fadeOutDuration=0.7;
+#ifdef OWN_WINDOW
+static CFTimeInterval fadeInDuration=0.1;
+static CFTimeInterval fadeOutDuration=0.7;
+#endif
+
 static NSTimeInterval volumeRampTimeInterval=0.01;
 static NSTimeInterval statusBarHideDelay=10;
 
@@ -640,7 +650,9 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 
 - (void)muteITunesVolume:(NSNotification *)aNotification
 {
-    // [self displayVolumeBar];
+#ifdef OWN_WINDOW
+    [self displayVolumeBar];
+#endif
     
     id musicPlayerPnt = [self runningPlayer];
     
@@ -682,15 +694,17 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 
 - (void)increaseITunesVolume:(NSNotification *)aNotification
 {
-//    [self displayVolumeBar];
-
+#ifdef OWN_WINDOW
+    [self displayVolumeBar];
+#endif
+    
     if( [[aNotification name] isEqualToString:@"IncreaseITunesVolumeRamp"] )
     {
         timer=[NSTimer scheduledTimerWithTimeInterval:volumeRampTimeInterval*(NSTimeInterval)increment target:self selector:@selector(rampVolumeUp:) userInfo:nil repeats:YES];
     
         [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
 
-        // if(timerImgSpeaker) {[timerImgSpeaker invalidate]; timerImgSpeaker=nil;}
+        if(timerImgSpeaker) {[timerImgSpeaker invalidate]; timerImgSpeaker=nil;}
     }
     else
     {
@@ -700,7 +714,9 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 
 - (void)decreaseITunesVolume:(NSNotification *)aNotification
 {
-    // [self displayVolumeBar];
+#ifdef OWN_WINDOW
+    [self displayVolumeBar];
+#endif
 
     if( [[aNotification name] isEqualToString:@"DecreaseITunesVolumeRamp"] )
     {
@@ -708,7 +724,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
         
         [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
         
-        // if(timerImgSpeaker) {[timerImgSpeaker invalidate]; timerImgSpeaker=nil;}
+        if(timerImgSpeaker) {[timerImgSpeaker invalidate]; timerImgSpeaker=nil;}
     }
     else
     {
@@ -798,7 +814,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     {
         self->eventTap = nil;
         
-        /*
+#ifdef OWN_WINDOW
         fadeOutAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
         [fadeOutAnimation setDuration:fadeOutDuration];
         [fadeOutAnimation setRemovedOnCompletion:NO];
@@ -814,8 +830,12 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
         [fadeInAnimation setFromValue:[NSNumber numberWithFloat:0.0f]];
         [fadeInAnimation setToValue:[NSNumber numberWithFloat:1.0f]];
         // [fadeInAnimation setDelegate:self];
+        
         fadeInAnimationReady=true;
-        */
+        
+        waitOverlayPanel=1.0;
+#endif
+        
         
         if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_6) {
             //10.6.x or earlier systems
@@ -859,24 +879,21 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     return self;
 }
 
+#ifdef OWN_WINDOW
 -(void)awakeFromNib
 {
-}
-
-/*
--(void)awakeFromNib_disabled
-{
     NSRect screenFrame = [[NSScreen mainScreen] frame];
-    [_volumeWindow setFrame:(osxVersion<110?  CGRectMake(round((screenFrame.size.width-210)/2),139,210,206) : CGRectMake(round((screenFrame.size.width-200)/2),140,200,200)) display:NO animate:NO];
-    
+    [_volumeWindow setFrame:(osxVersion<110?  CGRectMake(round((screenFrame.size.width-210)/2),139,210,206) : CGRectMake(round((screenFrame.size.width-200)/2)+200,140,200,200)) display:NO animate:NO];
+
     // NSVisualEffectView* view = [[_volumeWindow contentView] insertVibrancyViewBlendingMode:NSVisualEffectBlendingModeBehindWindow];
+    [[_volumeWindow contentView] insertVibrancyViewBlendingMode:NSVisualEffectBlendingModeBehindWindow];
     
     NSView* volumeView = [_volumeWindow contentView];
     
     [volumeView setWantsLayer:YES];
     
     mainLayer = [volumeView layer];
-    CGColorRef backgroundColor=CGColorCreateGenericGray(0.00f, 0.30f);
+    CGColorRef backgroundColor=CGColorCreateGenericGray(0.00f, 0.00f);
     [mainLayer setBackgroundColor:backgroundColor];
     CFRelease(backgroundColor);
     
@@ -892,29 +909,39 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     NSRect rect = NSZeroRect;
     rect.size = [imgVolOff size];
 
-    NSRect rectIcon = NSZeroRect;
-    rectIcon.size = [iTunesIcon size];
-    
     volumeImageLayer = [CALayer layer];
     [volumeImageLayer setFrame:NSRectToCGRect(rect)];
     [volumeImageLayer setPosition:CGPointMake([volumeView frame].size.width/2, [volumeView frame].size.height/2+12)];
     [volumeImageLayer setContents:imgVolOn];
     
- 
-    //iconLayer = [CALayer layer];
-    //[iconLayer setFrame:NSRectToCGRect(rectIcon)];
-    //[iconLayer setPosition:CGPointMake([volumeImageLayer frame].size.width/2-22, [volumeImageLayer frame].size.height/2)];
-    //[iconLayer setContents:spotifyIcon];
+    iTunesIcon=[NSImage imageNamed:@"iTunes"];
     
-     
-    //[volumeImageLayer addSublayer:iconLayer];
+    rect = NSZeroRect;
+    rect.size = [iTunesIcon size];
     
+    iconLayer = [CALayer layer];
+    [iconLayer setFrame:NSRectToCGRect(rect)];
+    [iconLayer setPosition:CGPointMake([volumeImageLayer frame].size.width/2-26, [volumeImageLayer frame].size.height/2)];
+    //[iconLayer setPosition:CGPointMake([volumeView frame].size.width/2, [volumeView frame].size.height/2+12)];
+    [iconLayer setContents:iTunesIcon];
+    
+    [volumeImageLayer addSublayer:iconLayer];
     [mainLayer addSublayer:volumeImageLayer];
+    
     
     [self createVolumeBar];
     
 }
-*/
+
+#else
+
+-(void)awakeFromNib
+{
+}
+
+#endif
+
+
 
 -(void)completeInitialization
 {
@@ -1124,7 +1151,6 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     {
         [remote stopListening:self];
     }
-    waitOverlayPanel=1.0;
     
     [preferences setBool:enabled forKey:@"AppleRemoteConnected"];
     [preferences synchronize];
@@ -1380,7 +1406,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
             else if( musicPlayerPnt == systemAudio)
                 [self setSystemVolume:volume];
         }
-        // [self refreshVolumeBar:(int)volume];
+        [self refreshVolumeBar:(int)volume];
     }
 }
 
@@ -1527,7 +1553,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     [CATransaction commit];
 }
 
-/*
+#ifdef OWN_WINDOW
 - (void) displayVolumeBar
 {
     if(fadeInAnimationReady) [self showSpeakerImg:nil];
@@ -1535,7 +1561,8 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:waitOverlayPanel target:self selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
     [[NSRunLoop mainRunLoop] addTimer:timerImgSpeaker forMode:NSRunLoopCommonModes];
 }
-*/
+#endif
+
 
 #pragma mark - Hide From Status Bar
 
@@ -1597,7 +1624,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     {
         CGRect popoverRect = (CGRect) {
             .size.width = 225,
-            .size.height = 75
+            .size.height = 50
         };
         
         _hideFromStatusBarHintLabel = [[NSTextField alloc] initWithFrame:CGRectInset(popoverRect, 10, 10)];
@@ -1606,7 +1633,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
         [_hideFromStatusBarHintLabel setSelectable:false];
         [_hideFromStatusBarHintLabel setBezeled:false];
         [_hideFromStatusBarHintLabel setBackgroundColor:[NSColor clearColor]];
-        [_hideFromStatusBarHintLabel setAlignment:NSCenterTextAlignment];
+        [_hideFromStatusBarHintLabel setAlignment:NSTextAlignmentCenter];
         
         _hintView = [[NSView alloc] initWithFrame:popoverRect];
         [_hintView addSubview:_hideFromStatusBarHintLabel];
