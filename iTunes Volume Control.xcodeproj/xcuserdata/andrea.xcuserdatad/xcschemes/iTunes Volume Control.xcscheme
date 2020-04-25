@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "656C6C66168A2A0B00ECA482"
-               BuildableName = "iTunes Volume Control test.app"
-               BlueprintName = "iTunes Volume Control test"
+               BuildableName = "iTunes Volume Control.app"
+               BlueprintName = "iTunes Volume Control"
                ReferencedContainer = "container:iTunes Volume Control.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -31,8 +31,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "656C6C66168A2A0B00ECA482"
-            BuildableName = "iTunes Volume Control test.app"
-            BlueprintName = "iTunes Volume Control test"
+            BuildableName = "iTunes Volume Control.app"
+            BlueprintName = "iTunes Volume Control"
             ReferencedContainer = "container:iTunes Volume Control.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -54,8 +54,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "656C6C66168A2A0B00ECA482"
-            BuildableName = "iTunes Volume Control test.app"
-            BlueprintName = "iTunes Volume Control test"
+            BuildableName = "iTunes Volume Control.app"
+            BlueprintName = "iTunes Volume Control"
             ReferencedContainer = "container:iTunes Volume Control.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

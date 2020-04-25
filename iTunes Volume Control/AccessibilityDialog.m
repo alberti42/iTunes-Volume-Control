@@ -117,7 +117,7 @@
 
 - (void) setAppropriateImage
 {
-    bool isDark = [[[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"] isEqualToString:@"Dark"];
+    bool isDark = [[[NSApp effectiveAppearance] name] isEqualToString:@"NSAppearanceNameDarkAqua"];
     
     if(isDark)
         screenshotImage = [NSImage imageNamed:@"SecurityPrivacyDark"];

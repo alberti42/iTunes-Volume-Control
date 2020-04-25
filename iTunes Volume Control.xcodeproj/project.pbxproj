@@ -14,13 +14,13 @@
 		6514720422AE9BB900ABB4AE /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6514720322AE9BB900ABB4AE /* MainMenu.xib */; };
 		6514720722AE9CC900ABB4AE /* SystemVolume.m in Sources */ = {isa = PBXBuildFile; fileRef = 6514720622AE9CC900ABB4AE /* SystemVolume.m */; };
 		6514720922AE9CD800ABB4AE /* SystemVolume.scpt in Resources */ = {isa = PBXBuildFile; fileRef = 6514720822AE9CD400ABB4AE /* SystemVolume.scpt */; };
-		651A7EEF168F1F4C00A76288 /* VolumeWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 651A7EED168F1F4C00A76288 /* VolumeWindow.m */; };
 		65545E5F22AD12C900A4A25F /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65545E5E22AD12C800A4A25F /* Sparkle.framework */; };
 		65545E6122AD12CC00A4A25F /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 65545E5E22AD12C800A4A25F /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		656C6C78168A2A0B00ECA482 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 656C6C77168A2A0B00ECA482 /* main.m */; };
 		656C6C7F168A2A0B00ECA482 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 656C6C7E168A2A0B00ECA482 /* AppDelegate.m */; };
 		656C6CA3168A456900ECA482 /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 656C6CA2168A456900ECA482 /* ScriptingBridge.framework */; };
 		659CCFDE185CAAA7006958AD /* appicon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 659CCFDD185CAAA7006958AD /* appicon.icns */; };
+		65A865B92455E11200A89021 /* VolumeWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 651A7EED168F1F4C00A76288 /* VolumeWindow.m */; };
 		65BA5D11235323940059690A /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65BA5D10235323940059690A /* Media.xcassets */; };
 		65C24C01168CBC7E0000BFC2 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 65C24C00168CBC7E0000BFC2 /* Credits.rtf */; };
 		65CC33B81698B3CC0049AF82 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65C24C6B168CEB9D0000BFC2 /* IOKit.framework */; };
@@ -65,7 +65,6 @@
 		6514720822AE9CD400ABB4AE /* SystemVolume.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; name = SystemVolume.scpt; path = "iTunes Volume Control/SystemVolume.scpt"; sourceTree = "<group>"; };
 		6514720A22AE9D0700ABB4AE /* ISSoundAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ISSoundAdditions.h; path = "iTunes Volume Control/ISSoundAdditions.h"; sourceTree = "<group>"; };
 		6514720B22AE9D0700ABB4AE /* ISSoundAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ISSoundAdditions.m; path = "iTunes Volume Control/ISSoundAdditions.m"; sourceTree = "<group>"; };
-		6515C51C22A453680065EAA2 /* CoreGraphicsPriv.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CoreGraphicsPriv.h; path = "iTunes Volume Control/CoreGraphicsPriv.h"; sourceTree = "<group>"; };
 		6515C51E22A453770065EAA2 /* OSD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OSD.h; path = "iTunes Volume Control/OSD.h"; sourceTree = "<group>"; };
 		651A7EED168F1F4C00A76288 /* VolumeWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VolumeWindow.m; path = "iTunes Volume Control/VolumeWindow.m"; sourceTree = "<group>"; };
 		651A7EEE168F1F4C00A76288 /* VolumeWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VolumeWindow.h; path = "iTunes Volume Control/VolumeWindow.h"; sourceTree = "<group>"; };
@@ -84,7 +83,7 @@
 		654DDC61185DD4C00095AA66 /* generate_keys.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = generate_keys.rb; sourceTree = "<group>"; };
 		654DDC62185DD4C00095AA66 /* sign_update.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = sign_update.rb; sourceTree = "<group>"; };
 		65545E5E22AD12C800A4A25F /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = "iTunes Volume Control/Sparkle.framework"; sourceTree = "<group>"; };
-		656C6C67168A2A0B00ECA482 /* iTunes Volume Control test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iTunes Volume Control test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		656C6C67168A2A0B00ECA482 /* iTunes Volume Control.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iTunes Volume Control.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		656C6C6B168A2A0B00ECA482 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		656C6C73168A2A0B00ECA482 /* iTunes Volume Control-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "iTunes Volume Control-Info.plist"; path = "iTunes Volume Control/iTunes Volume Control-Info.plist"; sourceTree = "<group>"; };
 		656C6C77168A2A0B00ECA482 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = main.m; path = "iTunes Volume Control/main.m"; sourceTree = "<group>"; };
@@ -167,7 +166,6 @@
 				6514720622AE9CC900ABB4AE /* SystemVolume.m */,
 				656C6C7D168A2A0B00ECA482 /* AppDelegate.h */,
 				656C6C7E168A2A0B00ECA482 /* AppDelegate.m */,
-				6515C51C22A453680065EAA2 /* CoreGraphicsPriv.h */,
 				658B93C5185E48B2007BEBEF /* IntroWindowController.h */,
 				658B93C6185E48B2007BEBEF /* IntroWindowController.m */,
 				6515C51E22A453770065EAA2 /* OSD.h */,
@@ -178,8 +176,8 @@
 		652D1144187AF06E00C8BD88 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				651A7EED168F1F4C00A76288 /* VolumeWindow.m */,
 				651A7EEE168F1F4C00A76288 /* VolumeWindow.h */,
+				651A7EED168F1F4C00A76288 /* VolumeWindow.m */,
 				E2F254C4179EA2B600DD3C66 /* StatusItemView.h */,
 				E2F254C5179EA2B600DD3C66 /* StatusItemView.m */,
 			);
@@ -253,7 +251,7 @@
 		656C6C68168A2A0B00ECA482 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				656C6C67168A2A0B00ECA482 /* iTunes Volume Control test.app */,
+				656C6C67168A2A0B00ECA482 /* iTunes Volume Control.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -369,9 +367,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		656C6C66168A2A0B00ECA482 /* iTunes Volume Control test */ = {
+		656C6C66168A2A0B00ECA482 /* iTunes Volume Control */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 656C6C99168A2A0C00ECA482 /* Build configuration list for PBXNativeTarget "iTunes Volume Control test" */;
+			buildConfigurationList = 656C6C99168A2A0C00ECA482 /* Build configuration list for PBXNativeTarget "iTunes Volume Control" */;
 			buildPhases = (
 				656C6C63168A2A0B00ECA482 /* Sources */,
 				656C6C64168A2A0B00ECA482 /* Frameworks */,
@@ -383,9 +381,9 @@
 			);
 			dependencies = (
 			);
-			name = "iTunes Volume Control test";
+			name = "iTunes Volume Control";
 			productName = "iTunes Volume Control";
-			productReference = 656C6C67168A2A0B00ECA482 /* iTunes Volume Control test.app */;
+			productReference = 656C6C67168A2A0B00ECA482 /* iTunes Volume Control.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -399,7 +397,7 @@
 				TargetAttributes = {
 					656C6C66168A2A0B00ECA482 = {
 						DevelopmentTeam = 9V3X7C8VCK;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.HardenedRuntime = {
 								enabled = 1;
@@ -421,7 +419,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				656C6C66168A2A0B00ECA482 /* iTunes Volume Control test */,
+				656C6C66168A2A0B00ECA482 /* iTunes Volume Control */,
 			);
 		};
 /* End PBXProject section */
@@ -468,7 +466,7 @@
 				656C6C78168A2A0B00ECA482 /* main.m in Sources */,
 				656C6C7F168A2A0B00ECA482 /* AppDelegate.m in Sources */,
 				6514720722AE9CC900ABB4AE /* SystemVolume.m in Sources */,
-				651A7EEF168F1F4C00A76288 /* VolumeWindow.m in Sources */,
+				65A865B92455E11200A89021 /* VolumeWindow.m in Sources */,
 				651471EA22AE990400ABB4AE /* AccessibilityDialog.m in Sources */,
 				E2F254C6179EA2B600DD3C66 /* StatusItemView.m in Sources */,
 			);
@@ -523,7 +521,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				VALID_ARCHS = x86_64;
@@ -569,7 +567,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				SDKROOT = macosx;
 				VALID_ARCHS = x86_64;
 			};
@@ -579,10 +577,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "iTunes Volume Control/iTunes Volume Control.entitlements";
-				CODE_SIGN_IDENTITY = "Apple Development: alberti@iap.uni-bonn.de (28S769H525)";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 9V3X7C8VCK;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -603,7 +601,7 @@
 				GCC_PREFIX_HEADER = "iTunes Volume Control/iTunes Volume Control-Prefix.pch";
 				INFOPLIST_FILE = "iTunes Volume Control/iTunes Volume Control-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "Alberti42.${PRODUCT_NAME:rfc1034identifier}";
@@ -644,7 +642,7 @@
 				GCC_PREFIX_HEADER = "iTunes Volume Control/iTunes Volume Control-Prefix.pch";
 				INFOPLIST_FILE = "iTunes Volume Control/iTunes Volume Control-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "Alberti42.${PRODUCT_NAME:rfc1034identifier}";
@@ -669,7 +667,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		656C6C99168A2A0C00ECA482 /* Build configuration list for PBXNativeTarget "iTunes Volume Control test" */ = {
+		656C6C99168A2A0C00ECA482 /* Build configuration list for PBXNativeTarget "iTunes Volume Control" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				656C6C9A168A2A0C00ECA482 /* Debug */,

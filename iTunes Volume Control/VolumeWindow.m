@@ -10,38 +10,59 @@
     self = [super initWithContentRect: contentRect styleMask: NSWindowStyleMaskBorderless backing: bufferingType defer: flag];
     if (!self) return nil;
     
-    [self setOpaque:NO];
-    [self setBackgroundColor: [NSColor clearColor]];
     [self setHasShadow:NO];
+    [self setCanBecomeVisibleWithoutLogin:YES];
+    [self setCollectionBehavior: 0x12];
+    [self setIgnoresMouseEvents: YES];
+    [self setBackgroundColor: [NSColor clearColor]];
+    [self setOpaque:NO];
+    [self setLevel: 0x7d5]; // NSFloatingWindowLevel
     [self orderOut:nil];
     [self setAlphaValue:1];
     
     return self;
 }
 
-//-(void)awakeFromNib
-//{
+- (NSImage *) maskImageWithBounds: (NSRect) bounds
+{
+return [NSImage imageWithSize:bounds.size flipped:YES drawingHandler:^BOOL(NSRect dstRect) {
 
-//
-//    [self setStyleMask:self.styleMask | NSFullSizeContentViewWindowMask];
-//    [self setTitlebarAppearsTransparent:true];
+    NSBezierPath *path = [NSBezierPath bezierPathWithRoundedRect:bounds xRadius:18.0 yRadius:18.0];
+
+    // [path setLineJoinStyle:NSRoundLineJoinStyle];
+    [path fill];
+
+    return YES;
+}];
+}
+
+-(void)awakeFromNib
+{
+    NSRect screenFrame = [[NSScreen mainScreen] frame];
+     
+    [self setFrame:CGRectMake(round((screenFrame.size.width-200)/2)+200,140,200,200) display:NO animate:NO];
     
+    /*
+    NSVisualEffectView* visualEffectView = [[NSVisualEffectView alloc] initWithFrame:NSMakeRect(0, 0, 200, 200)];
+    visualEffectView.material =  0x1a; // NSVisualEffectMaterialLight;
+    visualEffectView.blendingMode = NSVisualEffectBlendingModeBehindWindow;
+    visualEffectView.state = NSVisualEffectStateActive;
+    visualEffectView.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
+    
+    visualEffectView.maskImage = [self maskImageWithBounds:visualEffectView.bounds];
 
     
-//    NSVisualEffectView* visualEffectView = [[NSVisualEffectView alloc] initWithFrame:NSMakeRect(0, 0, 300, 180)];
-//    visualEffectView.material =  NSVisualEffectMaterialLight;
-//    visualEffectView.blendingMode = NSVisualEffectBlendingModeBehindWindow;
-//    visualEffectView.state = NSVisualEffectStateActive;
-//    
-//    [self  setStyleMask:self.styleMask | NSFullSizeContentViewWindowMask];
-//    [self setTitlebarAppearsTransparent:true];
-//    //self.appearance = NSAppearance(named: NSAppearanceNameVibrantDark)
-//    
-//    [[self contentView] addSubview:visualEffectView];
+    [[self contentView] addSubview:visualEffectView positioned:1 relativeTo:0];
+     */
+    
+    // [self setStyleMask:self.styleMask | NSFullSizeContentViewWindowMask];
+    // [self setTitlebarAppearsTransparent:true];
+    
+    //[[self contentView] addConstraints:(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[visualEffectView]-0-|", views: ["visualEffectView":visualEffectView]))];
+    //self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[visualEffectView]-0-|", options: NSLayoutFormatOptions.DirectionLeadingToTrailing, metrics: nil, views: ["visualEffectView":visualEffectView]))
+}
 
-//    [[self contentView] addConstraints:(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[visualEffectView]-0-|", views: ["visualEffectView":visualEffectView]))];
-//     self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[visualEffectView]-0-|", options: NSLayoutFormatOptions.DirectionLeadingToTrailing, metrics: nil, views: ["visualEffectView":visualEffectView]))
-//}
+
 
 
 @end

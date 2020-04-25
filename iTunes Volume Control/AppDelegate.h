@@ -14,6 +14,8 @@
 #import "Spotify.h"
 // #import "AppleRemote.h"
 
+//#define OWN_WINDOW
+
 @class IntroWindowController, AccessibilityDialog, StatusBarItem, PlayerApplication, SystemApplication;
 
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
@@ -41,6 +43,7 @@
     
     double increment;
     
+    Class OSDManager;
     
 @public
     PlayerApplication* iTunes;
@@ -75,6 +78,7 @@
 @property (assign, nonatomic) bool StartAtLogin;
 @property (assign, nonatomic) bool Tapping;
 @property (assign, nonatomic) bool UseAppleCMDModifier;
+@property (assign, nonatomic) bool AppleCMDModifierPressed;
 @property (assign, nonatomic) bool AutomaticUpdates;
 @property (assign, nonatomic) bool hideFromStatusBar;
 @property (assign, nonatomic) bool hideVolumeWindow;

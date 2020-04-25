@@ -22,8 +22,6 @@
 //#import "BezelServices.h"
 #import "OSD.h"
 
-// #define OWN_WINDOW
-
 // #include <dlfcn.h>
 
 //This will handle signals for us, specifically SIGTERM.
@@ -44,10 +42,10 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     NSEvent * sysEvent;
     
     if (type == kCGEventTapDisabledByTimeout) {
-//        NSAlert *alert = [NSAlert alertWithMessageText:@"iTunes Volume Control" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:@"Event Taps Disabled! Re-enabling."];
-//        [alert runModal];
-//
-//        NSLog(@"Event Taps Disabled! Re-enabling");
+        //        NSAlert *alert = [NSAlert alertWithMessageText:@"iTunes Volume Control" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:@"Event Taps Disabled! Re-enabling."];
+        //        [alert runModal];
+        //
+        //        NSLog(@"Event Taps Disabled! Re-enabling");
         [(__bridge AppDelegate *)(refcon) resetEventTap];
         return event;
     }
@@ -57,7 +55,8 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     
     sysEvent = [NSEvent eventWithCGEvent:event];
     // No need to test event type, we know it is NSSystemDefined, becuase that is the same as NX_SYSDEFINED
-    if ([sysEvent subtype] != 8) return event;
+    // if ([sysEvent subtype] != NX_SUBTYPE_AUX_CONTROL_BUTTONS && [sysEvent subtype] != NX_SUBTYPE_AUX_MOUSE_BUTTONS) return event;
+    if ([sysEvent subtype] != NX_SUBTYPE_AUX_CONTROL_BUTTONS) return event;
     
     int keyFlags = ([sysEvent data1] & 0x0000FFFF);
     int keyCode = (([sysEvent data1] & 0xFFFF0000) >> 16);
@@ -67,86 +66,91 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     bool keyIsRepeat = (keyFlags & 0x1);
     //bool musicProgramRunning=[app->musicProgramPnt isRunning];
     
-    // check that whether the Apple CMD modifier has been pressed or not
-    if(((keyModifier&NX_COMMANDMASK)==NX_COMMANDMASK)==[app UseAppleCMDModifier])
+    // store whether Apple CMD modifier has been pressed or not
+    [app setAppleCMDModifierPressed:(keyModifier&NX_COMMANDMASK)==NX_COMMANDMASK];
+    
+    switch( keyCode )
     {
-        switch( keyCode )
-        {
-            case NX_KEYTYPE_MUTE:
-                
-                    if(previousKeyCode!=keyCode && app->timer)
-                    {
-                        [app stopTimer];
+        case NX_KEYTYPE_MUTE:
+            
+            if(previousKeyCode!=keyCode && app->timer)
+            {
+                [app stopTimer];
 #ifdef OWN_WINDOW
-                        if(!app->timerImgSpeaker&&!app->fadeInAnimationReady){
-                            app->timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:app->waitOverlayPanel target:app selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
-                            [[NSRunLoop mainRunLoop] addTimer:app->timerImgSpeaker forMode:NSRunLoopCommonModes];
-                        }
-#endif
-                    }
-                    previousKeyCode=keyCode;
-                    
-                    if( keyState == 1 )
-                    {
-                        muteDown = true;
-                        [[NSNotificationCenter defaultCenter] postNotificationName:@"MuteITunesVolume" object:NULL];
-                    }
-                    else
-                    {
-                        muteDown = false;
-                    }
-                    return NULL;
-                break;
-            case NX_KEYTYPE_SOUND_UP:
-            case NX_KEYTYPE_SOUND_DOWN:
-                if(!muteDown)
-                {
-                    if(previousKeyCode!=keyCode && app->timer)
-                    {
-                        [app stopTimer];
-#ifdef OWN_WINDOW
-                        if(!app->timerImgSpeaker&&!app->fadeInAnimationReady){
-                            app->timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:app->waitOverlayPanel target:app selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
-                            [[NSRunLoop mainRunLoop] addTimer:app->timerImgSpeaker forMode:NSRunLoopCommonModes];
-                        }
-#endif
-                    }
-                    previousKeyCode=keyCode;
-                    
-                    if( keyState == 1 )
-                    {
-                        if( !app->timer )
-                        {
-                            if( keyCode == NX_KEYTYPE_SOUND_UP )
-                            {
-                                [[NSNotificationCenter defaultCenter]
-                                 postNotificationName:(keyIsRepeat?@"IncreaseITunesVolumeRamp":@"IncreaseITunesVolume") object:NULL];
-                            }
-                            else
-                            {
-                                [[NSNotificationCenter defaultCenter]
-                                 postNotificationName:(keyIsRepeat?@"DecreaseITunesVolumeRamp":@"DecreaseITunesVolume") object:NULL];
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if(app->timer)
-                        {
-                            [app stopTimer];
-#ifdef OWN_WINDOW
-                            if(!app->timerImgSpeaker&&!app->fadeInAnimationReady){
-                                app->timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:app->waitOverlayPanel target:app selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
-                                [[NSRunLoop mainRunLoop] addTimer:app->timerImgSpeaker forMode:NSRunLoopCommonModes];
-                            }
-#endif
-                        }
-                    }
-                    return NULL;
+                if(!app->timerImgSpeaker&&!app->fadeInAnimationReady){
+                    app->timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:app->waitOverlayPanel target:app selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
+                    [[NSRunLoop mainRunLoop] addTimer:app->timerImgSpeaker forMode:NSRunLoopCommonModes];
                 }
-                break;
-        }
+#endif
+            }
+            previousKeyCode=keyCode;
+            
+            if( keyState == 1 )
+            {
+                muteDown = true;
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"MuteITunesVolume" object:NULL];
+            }
+            else
+            {
+                muteDown = false;
+            }
+            return NULL;
+            break;
+        case NX_KEYTYPE_SOUND_UP:
+        case NX_KEYTYPE_SOUND_DOWN:
+            //                NSLog(@"Subtype %d",[sysEvent subtype]);
+            //                NSLog(@"keyCode %d",keyCode);
+            //                NSLog(@"keyState %d",keyState);
+            //                NSLog(@"keyIsRepeat %d",keyIsRepeat);
+            
+            if(!muteDown)
+            {
+                if(previousKeyCode!=keyCode && app->timer)
+                {
+                    [app stopTimer];
+#ifdef OWN_WINDOW
+                    if(!app->timerImgSpeaker&&!app->fadeInAnimationReady){
+                        app->timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:app->waitOverlayPanel target:app selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
+                        [[NSRunLoop mainRunLoop] addTimer:app->timerImgSpeaker forMode:NSRunLoopCommonModes];
+                    }
+#endif
+                }
+                previousKeyCode=keyCode;
+                
+                if( keyState == 1 )
+                {
+                    if( !app->timer )
+                    {
+                        if( keyCode == NX_KEYTYPE_SOUND_UP )
+                        {
+                            [[NSNotificationCenter defaultCenter]
+                             postNotificationName:(keyIsRepeat?@"IncreaseITunesVolumeRamp":@"IncreaseITunesVolume") object:NULL];
+                        }
+                        else
+                        {
+                            [[NSNotificationCenter defaultCenter]
+                             postNotificationName:(keyIsRepeat?@"DecreaseITunesVolumeRamp":@"DecreaseITunesVolume") object:NULL];
+                        }
+                    }
+                }
+                else
+                {
+                    if(app->timer)
+                    {
+                        [app stopTimer];
+#ifdef OWN_WINDOW
+                        if(!app->timerImgSpeaker&&!app->fadeInAnimationReady){
+                            app->timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:app->waitOverlayPanel target:app selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
+                            [[NSRunLoop mainRunLoop] addTimer:app->timerImgSpeaker forMode:NSRunLoopCommonModes];
+                        }
+#endif
+                    }
+                }
+                return NULL;
+            }
+            break;
     }
+    
     
     return event;
 }
@@ -229,6 +233,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 
 @end
 
+/*
 #pragma mark - Class extension for NSString
 
 @implementation NSString (NSString_Extended)
@@ -254,6 +259,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 }
 
 @end
+*/
 
 #ifdef OWN_WINDOW
 #pragma mark - Extending NSView
@@ -275,9 +281,9 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
         //[vibrant setMaterial:NSVisualEffectMaterialLight];
         //[vibrant setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
         [vibrant setState:NSVisualEffectStateActive];
-
+        
         [vibrant setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantDark]];
-        [vibrant setMaterial:NSVisualEffectMaterialDark];
+        [vibrant setMaterial:0x1a]; //  NSVisualEffectMaterialDark
         
         [self addSubview:vibrant positioned:NSWindowAbove relativeTo:nil];
         
@@ -301,6 +307,7 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 @synthesize StartAtLogin=_StartAtLogin;
 @synthesize Tapping=_Tapping;
 @synthesize UseAppleCMDModifier=_UseAppleCMDModifier;
+@synthesize AppleCMDModifierPressed=_AppleCMDModifierPressed;
 @synthesize AutomaticUpdates=_AutomaticUpdates;
 @synthesize hideFromStatusBar = _hideFromStatusBar;
 @synthesize hideVolumeWindow = _hideVolumeWindow;
@@ -315,8 +322,8 @@ CGEventRef event_tap_callback(CGEventTapProxy proxy, CGEventType type, CGEventRe
 @synthesize spotifyPerc = _spotifyPerc;
 @synthesize systemPerc = _systemPerc;
 
-@synthesize volumeWindow = _volumeWindow;
 @synthesize statusMenu = _statusMenu;
+@synthesize volumeWindow = _volumeWindow;
 
 #ifdef OWN_WINDOW
 static CFTimeInterval fadeInDuration=0.1;
@@ -327,23 +334,23 @@ static NSTimeInterval volumeRampTimeInterval=0.01;
 static NSTimeInterval statusBarHideDelay=10;
 
 /*
-// El Capitan and probably older systems
-void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1, int arg2, float v, int timeout) = NULL;
-
-- (BOOL)_loadBezelServices
-{
-    // Load BezelServices framework
-    void *handle = dlopen("/System/Library/PrivateFrameworks/BezelServices.framework/Versions/A/BezelServices", RTLD_GLOBAL);
-    if (!handle) {
-        NSLog(@"Error opening framework");
-        return NO;
-    }
-    else {
-        _BSDoGraphicWithMeterAndTimeout = dlsym(handle, "BSDoGraphicWithMeterAndTimeout");
-        return _BSDoGraphicWithMeterAndTimeout != NULL;
-    }
-}
-*/
+ // El Capitan and probably older systems
+ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1, int arg2, float v, int timeout) = NULL;
+ 
+ - (BOOL)_loadBezelServices
+ {
+ // Load BezelServices framework
+ void *handle = dlopen("/System/Library/PrivateFrameworks/BezelServices.framework/Versions/A/BezelServices", RTLD_GLOBAL);
+ if (!handle) {
+ NSLog(@"Error opening framework");
+ return NO;
+ }
+ else {
+ _BSDoGraphicWithMeterAndTimeout = dlsym(handle, "BSDoGraphicWithMeterAndTimeout");
+ return _BSDoGraphicWithMeterAndTimeout != NULL;
+ }
+ }
+ */
 
 -(void) sendMediaKey: (int)key {
     // create and send down key event
@@ -361,54 +368,54 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 
 
 /*
-- (PrivacyConsentState)checkSIPforAppIdentifier:(NSString *)bundleIdentifier promptIfNeeded:(BOOL)promptIfNeeded
-{
-    PrivacyConsentState result;
-    if (@available(macOS 10.14, *)) {
-        AEAddressDesc addressDesc;
-        // We need a C string here, not an NSString
-        const char *bundleIdentifierCString = [bundleIdentifier cStringUsingEncoding:NSUTF8StringEncoding];
-        if( AECreateDesc(typeApplicationBundleID, bundleIdentifierCString, strlen(bundleIdentifierCString), &addressDesc) == noErr )
-        {
-            OSStatus appleScriptPermission = AEDeterminePermissionToAutomateTarget(&addressDesc, typeWildCard, typeWildCard, promptIfNeeded);
-            
-            AEDisposeDesc(&addressDesc);
-            
-            switch (appleScriptPermission) {
-                case errAEEventWouldRequireUserConsent:
-                    NSLog(@"Automation consent not yet granted for %@, would require user consent.", bundleIdentifier);
-                    result = PrivacyConsentStateUnknown;
-                    break;
-                case noErr:
-                    NSLog(@"Automation permitted for %@.", bundleIdentifier);
-                    result = PrivacyConsentStateGranted;
-                    break;
-                case errAEEventNotPermitted:
-                    NSLog(@"Automation of %@ not permitted.", bundleIdentifier);
-                    result = PrivacyConsentStateDenied;
-                    break;
-                case procNotFound:
-                    NSLog(@"%@ not running, automation consent unknown.", bundleIdentifier);
-                    result = PrivacyConsentStateUnknown;
-                    break;
-                default:
-                    NSLog(@"%s switch statement fell through: %@ %d", __PRETTY_FUNCTION__, bundleIdentifier, appleScriptPermission);
-                    result = PrivacyConsentStateUnknown;
-            }
-            return result;
-        }
-        else
-        {
-            NSLog(@"%s error executing AECreateDesc.", __PRETTY_FUNCTION__);
-            return PrivacyConsentStateDenied;
-        }
-    }
-    else {
-        return PrivacyConsentStateGranted;
-    }
-    
-}
-*/
+ - (PrivacyConsentState)checkSIPforAppIdentifier:(NSString *)bundleIdentifier promptIfNeeded:(BOOL)promptIfNeeded
+ {
+ PrivacyConsentState result;
+ if (@available(macOS 10.14, *)) {
+ AEAddressDesc addressDesc;
+ // We need a C string here, not an NSString
+ const char *bundleIdentifierCString = [bundleIdentifier cStringUsingEncoding:NSUTF8StringEncoding];
+ if( AECreateDesc(typeApplicationBundleID, bundleIdentifierCString, strlen(bundleIdentifierCString), &addressDesc) == noErr )
+ {
+ OSStatus appleScriptPermission = AEDeterminePermissionToAutomateTarget(&addressDesc, typeWildCard, typeWildCard, promptIfNeeded);
+ 
+ AEDisposeDesc(&addressDesc);
+ 
+ switch (appleScriptPermission) {
+ case errAEEventWouldRequireUserConsent:
+ NSLog(@"Automation consent not yet granted for %@, would require user consent.", bundleIdentifier);
+ result = PrivacyConsentStateUnknown;
+ break;
+ case noErr:
+ NSLog(@"Automation permitted for %@.", bundleIdentifier);
+ result = PrivacyConsentStateGranted;
+ break;
+ case errAEEventNotPermitted:
+ NSLog(@"Automation of %@ not permitted.", bundleIdentifier);
+ result = PrivacyConsentStateDenied;
+ break;
+ case procNotFound:
+ NSLog(@"%@ not running, automation consent unknown.", bundleIdentifier);
+ result = PrivacyConsentStateUnknown;
+ break;
+ default:
+ NSLog(@"%s switch statement fell through: %@ %d", __PRETTY_FUNCTION__, bundleIdentifier, appleScriptPermission);
+ result = PrivacyConsentStateUnknown;
+ }
+ return result;
+ }
+ else
+ {
+ NSLog(@"%s error executing AECreateDesc.", __PRETTY_FUNCTION__);
+ return PrivacyConsentStateDenied;
+ }
+ }
+ else {
+ return PrivacyConsentStateGranted;
+ }
+ 
+ }
+ */
 
 - (IBAction)terminate:(id)sender
 {
@@ -443,11 +450,6 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     preferences = nil;
     
     [NSApp terminate:nil];
-}
-
-- (BOOL)_loadOSDFramework
-{
-    return [[NSBundle bundleWithPath:@"/System/Library/PrivateFrameworks/OSD.framework"] load];
 }
 
 - (bool) StartAtLogin
@@ -543,7 +545,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 #else
                     URL = LSSharedFileListItemCopyResolvedURL(itemRef, 0, NULL);
 #endif
-
+                    
                     if ( URL ) {
                         if ( CFEqual(URL, (__bridge CFTypeRef)(appURL)) ) // found it
                         {
@@ -607,45 +609,45 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 }
 
 /*
-// Apple remote
-- (void) appleRemoteInit
-{
-    remote = [[AppleRemote alloc] init];
-    [remote setDelegate:self];
-}
-*/
+ // Apple remote
+ - (void) appleRemoteInit
+ {
+ remote = [[AppleRemote alloc] init];
+ [remote setDelegate:self];
+ }
+ */
 
 - (void)playPauseITunes:(NSNotification *)aNotification
 {
     [self sendMediaKey:NX_KEYTYPE_PLAY];
-
-//    id musicPlayerPnt = [self runningPlayer];
-//
-//    // check if iTunes is running (Q1)
-//    [musicPlayerPnt playpause];
+    
+    //    id musicPlayerPnt = [self runningPlayer];
+    //
+    //    // check if iTunes is running (Q1)
+    //    [musicPlayerPnt playpause];
 }
 
 - (void)nextTrackITunes:(NSNotification *)aNotification
 {
     [self sendMediaKey:NX_KEYTYPE_NEXT];
-//    id musicPlayerPnt = [self runningPlayer];
-//
-//    if ([musicPlayerPnt isRunning])
-//    {
-//        [musicPlayerPnt nextTrack];
-//    }
+    //    id musicPlayerPnt = [self runningPlayer];
+    //
+    //    if ([musicPlayerPnt isRunning])
+    //    {
+    //        [musicPlayerPnt nextTrack];
+    //    }
 }
 
 - (void)previousTrackITunes:(NSNotification *)aNotification
 {
     [self sendMediaKey:NX_KEYTYPE_PREVIOUS];
     
-//    id musicPlayerPnt = [self runningPlayer];
-//
-//    if ([musicPlayerPnt isRunning])
-//    {
-//        [musicPlayerPnt previousTrack];
-//    }
+    //    id musicPlayerPnt = [self runningPlayer];
+    //
+    //    if ([musicPlayerPnt isRunning])
+    //    {
+    //        [musicPlayerPnt previousTrack];
+    //    }
 }
 
 - (void)muteITunesVolume:(NSNotification *)aNotification
@@ -664,7 +666,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
             [musicPlayerPnt setCurrentVolume:0];
             
             if(!_hideVolumeWindow)
-                [[NSClassFromString(@"OSDManager") sharedManager] showImage:OSDGraphicSpeakerMute onDisplayID:CGSMainDisplayID() priority:OSDPriorityDefault msecUntilFade:1000 filledChiclets:0 totalChiclets:(unsigned int)100 locked:NO];
+                [[self->OSDManager sharedManager] showImage:OSDGraphicSpeakerMute onDisplayID:CGSMainDisplayID() priority:OSDPriorityDefault msecUntilFade:1000 filledChiclets:0 totalChiclets:(unsigned int)100 locked:NO];
             
             //[self refreshVolumeBar:0];
         }
@@ -674,7 +676,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
             [volumeImageLayer setContents:imgVolOn];
             
             if(!_hideVolumeWindow)
-                [[NSClassFromString(@"OSDManager") sharedManager] showImage:OSDGraphicSpeaker onDisplayID:CGSMainDisplayID() priority:OSDPriorityDefault msecUntilFade:1000 filledChiclets:(unsigned int)[musicPlayerPnt oldVolume] totalChiclets:(unsigned int)100 locked:NO];
+                [[self->OSDManager sharedManager] showImage:OSDGraphicSpeaker onDisplayID:CGSMainDisplayID() priority:OSDPriorityDefault msecUntilFade:1000 filledChiclets:(unsigned int)[musicPlayerPnt oldVolume] totalChiclets:(unsigned int)100 locked:NO];
             
             //[self refreshVolumeBar:oldVolumeSetting];
             [musicPlayerPnt setOldVolume:-1];
@@ -701,9 +703,9 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     if( [[aNotification name] isEqualToString:@"IncreaseITunesVolumeRamp"] )
     {
         timer=[NSTimer scheduledTimerWithTimeInterval:volumeRampTimeInterval*(NSTimeInterval)increment target:self selector:@selector(rampVolumeUp:) userInfo:nil repeats:YES];
-    
+        
         [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
-
+        
         if(timerImgSpeaker) {[timerImgSpeaker invalidate]; timerImgSpeaker=nil;}
     }
     else
@@ -717,7 +719,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 #ifdef OWN_WINDOW
     [self displayVolumeBar];
 #endif
-
+    
     if( [[aNotification name] isEqualToString:@"DecreaseITunesVolumeRamp"] )
     {
         timer=[NSTimer scheduledTimerWithTimeInterval:volumeRampTimeInterval*(NSTimeInterval)increment target:self selector:@selector(rampVolumeDown:) userInfo:nil repeats:YES];
@@ -733,79 +735,79 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 }
 
 /*
-// Apple remote
-- (void) appleRemoteButton: (AppleRemoteEventIdentifier)buttonIdentifier pressedDown: (BOOL) pressedDown clickCount: (unsigned int) count {
-    
-    switch (buttonIdentifier)
-    {
-        case kRemoteButtonVolume_Plus_Hold:
-            if(timer)
-            {
-                [self stopTimer];
-                
-                //                    if(!timerImgSpeaker&&!fadeInAnimationReady) {
-                //                        timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:waitOverlayPanel target:self selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
-                //                        [[NSRunLoop mainRunLoop] addTimer:timerImgSpeaker forMode:NSRunLoopCommonModes];
-                //                    }
-            }
-            else
-            {
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"IncreaseITunesVolumeRamp" object:NULL];
-            }
-            break;
-        case kRemoteButtonVolume_Plus:
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"IncreaseITunesVolume" object:NULL];
-            break;
-            
-        case kRemoteButtonVolume_Minus_Hold:
-            if(timer)
-            {
-                [self stopTimer];
-                
-                //                    if(!timerImgSpeaker&&!fadeInAnimationReady){
-                //                        timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:waitOverlayPanel target:self selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
-                //                        [[NSRunLoop mainRunLoop] addTimer:timerImgSpeaker forMode:NSRunLoopCommonModes];
-                //                    }
-            }
-            else
-            {
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"DecreaseITunesVolumeRamp" object:NULL];
-            }
-            break;
-        case kRemoteButtonVolume_Minus:
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"DecreaseITunesVolume" object:NULL];
-            break;
-            
-        case k2009RemoteButtonFullscreen:
-            break;
-            
-        case k2009RemoteButtonPlay:
-        case kRemoteButtonPlay:
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"PlayPauseITunes" object:NULL];
-            break;
-            
-        case kRemoteButtonLeft_Hold:
-        case kRemoteButtonLeft:
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"PreviousTrackITunes" object:NULL];
-            break;
-            
-        case kRemoteButtonRight_Hold:
-        case kRemoteButtonRight:
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"NextTrackITunes" object:NULL];
-            break;
-            
-        case kRemoteButtonMenu_Hold:
-        case kRemoteButtonMenu:
-            break;
-            
-        case kRemoteButtonPlay_Sleep:
-            break;
-            
-        default:
-            break;
-    }
-}
-*/
+ // Apple remote
+ - (void) appleRemoteButton: (AppleRemoteEventIdentifier)buttonIdentifier pressedDown: (BOOL) pressedDown clickCount: (unsigned int) count {
+ 
+ switch (buttonIdentifier)
+ {
+ case kRemoteButtonVolume_Plus_Hold:
+ if(timer)
+ {
+ [self stopTimer];
+ 
+ //                    if(!timerImgSpeaker&&!fadeInAnimationReady) {
+ //                        timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:waitOverlayPanel target:self selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
+ //                        [[NSRunLoop mainRunLoop] addTimer:timerImgSpeaker forMode:NSRunLoopCommonModes];
+ //                    }
+ }
+ else
+ {
+ [[NSNotificationCenter defaultCenter] postNotificationName:@"IncreaseITunesVolumeRamp" object:NULL];
+ }
+ break;
+ case kRemoteButtonVolume_Plus:
+ [[NSNotificationCenter defaultCenter] postNotificationName:@"IncreaseITunesVolume" object:NULL];
+ break;
+ 
+ case kRemoteButtonVolume_Minus_Hold:
+ if(timer)
+ {
+ [self stopTimer];
+ 
+ //                    if(!timerImgSpeaker&&!fadeInAnimationReady){
+ //                        timerImgSpeaker=[NSTimer scheduledTimerWithTimeInterval:waitOverlayPanel target:self selector:@selector(hideSpeakerImg:) userInfo:nil repeats:NO];
+ //                        [[NSRunLoop mainRunLoop] addTimer:timerImgSpeaker forMode:NSRunLoopCommonModes];
+ //                    }
+ }
+ else
+ {
+ [[NSNotificationCenter defaultCenter] postNotificationName:@"DecreaseITunesVolumeRamp" object:NULL];
+ }
+ break;
+ case kRemoteButtonVolume_Minus:
+ [[NSNotificationCenter defaultCenter] postNotificationName:@"DecreaseITunesVolume" object:NULL];
+ break;
+ 
+ case k2009RemoteButtonFullscreen:
+ break;
+ 
+ case k2009RemoteButtonPlay:
+ case kRemoteButtonPlay:
+ [[NSNotificationCenter defaultCenter] postNotificationName:@"PlayPauseITunes" object:NULL];
+ break;
+ 
+ case kRemoteButtonLeft_Hold:
+ case kRemoteButtonLeft:
+ [[NSNotificationCenter defaultCenter] postNotificationName:@"PreviousTrackITunes" object:NULL];
+ break;
+ 
+ case kRemoteButtonRight_Hold:
+ case kRemoteButtonRight:
+ [[NSNotificationCenter defaultCenter] postNotificationName:@"NextTrackITunes" object:NULL];
+ break;
+ 
+ case kRemoteButtonMenu_Hold:
+ case kRemoteButtonMenu:
+ break;
+ 
+ case kRemoteButtonPlay_Sleep:
+ break;
+ 
+ default:
+ break;
+ }
+ }
+ */
 
 - (id)init
 {
@@ -873,7 +875,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
         {
             osxVersion = 115;
         }
-            
+        
         
     }
     return self;
@@ -882,9 +884,11 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 #ifdef OWN_WINDOW
 -(void)awakeFromNib
 {
+    
     NSRect screenFrame = [[NSScreen mainScreen] frame];
+     
     [_volumeWindow setFrame:(osxVersion<110?  CGRectMake(round((screenFrame.size.width-210)/2),139,210,206) : CGRectMake(round((screenFrame.size.width-200)/2)+200,140,200,200)) display:NO animate:NO];
-
+    
     // NSVisualEffectView* view = [[_volumeWindow contentView] insertVibrancyViewBlendingMode:NSVisualEffectBlendingModeBehindWindow];
     [[_volumeWindow contentView] insertVibrancyViewBlendingMode:NSVisualEffectBlendingModeBehindWindow];
     
@@ -897,7 +901,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     [mainLayer setBackgroundColor:backgroundColor];
     CFRelease(backgroundColor);
     
-    [mainLayer setCornerRadius:16];
+    [mainLayer setCornerRadius:18];
     [mainLayer setShouldRasterize:false];
     [mainLayer setEdgeAntialiasingMask: kCALayerLeftEdge | kCALayerRightEdge | kCALayerBottomEdge | kCALayerTopEdge];
     
@@ -908,7 +912,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     
     NSRect rect = NSZeroRect;
     rect.size = [imgVolOff size];
-
+    
     volumeImageLayer = [CALayer layer];
     [volumeImageLayer setFrame:NSRectToCGRect(rect)];
     [volumeImageLayer setPosition:CGPointMake([volumeView frame].size.width/2, [volumeView frame].size.height/2+12)];
@@ -927,7 +931,6 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     
     [volumeImageLayer addSublayer:iconLayer];
     [mainLayer addSublayer:volumeImageLayer];
-    
     
     [self createVolumeBar];
     
@@ -953,11 +956,15 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     
     [[SUUpdater sharedUpdater] setUpdateCheckInterval:60*60*24*7]; // look for new updates every 7 days
     
+    #ifdef OWN_WINDOW
     [_volumeWindow orderOut:self];
-    [_volumeWindow setLevel:NSFloatingWindowLevel];
+//    [_volumeWindow setLevel:NSFloatingWindowLevel];
+    [_volumeWindow setLevel:0x7d5];
+    #endif
     
     // [self _loadBezelServices]; // El Capitan and probably older systems
-    [self _loadOSDFramework];
+    [[NSBundle bundleWithPath:@"/System/Library/PrivateFrameworks/OSD.framework"] load];
+    self->OSDManager = NSClassFromString(@"OSDManager");
     
     //[self checkSIPforAppIdentifier:@"com.apple.iTunes" promptIfNeeded:YES];
     //[self checkSIPforAppIdentifier:@"com.spotify.client" promptIfNeeded:YES];
@@ -991,8 +998,8 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     
     [self setStartAtLogin:[self StartAtLogin] savePreferences:false];
     
-    //    if([self loadIntroAtStart])
-    //        [self showIntroWindow:nil];
+    // if([self loadIntroAtStart])
+    // [self showIntroWindow:nil];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
@@ -1015,7 +1022,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     
     extern CFStringRef kAXTrustedCheckOptionPrompt __attribute__((weak_import));
     
-
+    
     if( AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)@{(__bridge id)kAXTrustedCheckOptionPrompt: @NO}) && [self createEventTap] )
     {
         [self completeInitialization];
@@ -1138,33 +1145,33 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 
 // Appleremote
 /*
-- (void)setAppleRemoteConnected:(bool)enabled
-{
-    NSMenuItem* menuItem=[_statusMenu itemWithTag:2];
-    [menuItem setState:enabled];
-    
-    if(enabled && _Tapping)
-    {
-        [remote startListening:self];
-    }
-    else
-    {
-        [remote stopListening:self];
-    }
-    
-    [preferences setBool:enabled forKey:@"AppleRemoteConnected"];
-    [preferences synchronize];
-    
-    _AppleRemoteConnected=enabled;
-}
+ - (void)setAppleRemoteConnected:(bool)enabled
+ {
+ NSMenuItem* menuItem=[_statusMenu itemWithTag:2];
+ [menuItem setState:enabled];
+ 
+ if(enabled && _Tapping)
+ {
+ [remote startListening:self];
+ }
+ else
+ {
+ [remote stopListening:self];
+ }
+ 
+ [preferences setBool:enabled forKey:@"AppleRemoteConnected"];
+ [preferences synchronize];
+ 
+ _AppleRemoteConnected=enabled;
+ }
  */
 
 /*
-- (IBAction)toggleAppleRemote:(id)sender
-{
-    [self setAppleRemoteConnected:![self AppleRemoteConnected]];
-}
-*/
+ - (IBAction)toggleAppleRemote:(id)sender
+ {
+ [self setAppleRemoteConnected:![self AppleRemoteConnected]];
+ }
+ */
 
 - (void) setUseAppleCMDModifier:(bool)enabled
 {
@@ -1214,18 +1221,18 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 }
 
 /*
-- (IBAction)showIntroWindow:(id)sender
-{
-    if(!introWindowController)
-    {
-        introWindowController = [[IntroWindowController alloc] initWithWindowNibName:@"IntroWindow"];
-    }
-    
-    [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
-    [introWindowController showWindow:self];
-    [[introWindowController window] makeKeyAndOrderFront:self];
-}
-*/
+ - (IBAction)showIntroWindow:(id)sender
+ {
+ if(!introWindowController)
+ {
+ introWindowController = [[IntroWindowController alloc] initWithWindowNibName:@"IntroWindow"];
+ }
+ 
+ [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
+ [introWindowController showWindow:self];
+ [[introWindowController window] makeKeyAndOrderFront:self];
+ }
+ */
 
 - (IBAction)sliderValueChanged:(NSSliderCell*)slider
 {
@@ -1235,7 +1242,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     
     [preferences setInteger:volumeIncSetting forKey:@"volumeIncrement"];
     [preferences synchronize];
-
+    
 }
 
 - (void) setVolumeInc:(NSInteger)volumeIncSetting
@@ -1279,17 +1286,19 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 
 
 /*
-- (void) displayResolutionChanged: (NSNotification*) note
-{
-    // TODO test with the old operating system and check it is triggered when res is changed
-    NSRect screenFrame = [[NSScreen mainScreen] frame];
-    [_volumeWindow setFrame:(osxVersion<110?  CGRectMake(round((screenFrame.size.width-210)/2),139,210,206) : CGRectMake(round((screenFrame.size.width-200)/2),140,200,200)) display:NO animate:NO];
-}
-*/
+ - (void) displayResolutionChanged: (NSNotification*) note
+ {
+ // TODO test with the old operating system and check it is triggered when res is changed
+ NSRect screenFrame = [[NSScreen mainScreen] frame];
+ [_volumeWindow setFrame:(osxVersion<110?  CGRectMake(round((screenFrame.size.width-210)/2),139,210,206) : CGRectMake(round((screenFrame.size.width-200)/2),140,200,200)) display:NO animate:NO];
+ }
+ */
 
 - (void) receiveWakeNote: (NSNotification*) note
 {
     [self setTapping:[self Tapping]];
+    [_statusBarItemView setAppropriateColorScheme];
+    
     // Apple remote
     // [self setAppleRemoteConnected:[self AppleRemoteConnected]];
 }
@@ -1298,6 +1307,8 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 {
     
 }
+
+#ifdef OWN_WINDOW
 
 - (void) showSpeakerImg:(NSTimer*)theTimer
 {
@@ -1318,6 +1329,8 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     } [CATransaction commit];
 }
 
+#endif
+
 -(void)resetEventTap
 {
     CGEventTapEnable(eventTap, _Tapping);
@@ -1332,18 +1345,24 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
 - (id)runningPlayer
 {
     id musicPlayerPnt = nil;
-    if([_iTunesBtn state] && [iTunes isRunning] && [iTunes playerState] == iTunesEPlSPlaying)
+    
+    if(_AppleCMDModifierPressed == _UseAppleCMDModifier)
     {
-        musicPlayerPnt = iTunes;
+        if([_iTunesBtn state] && [iTunes isRunning] && [iTunes playerState] == iTunesEPlSPlaying)
+        {
+            musicPlayerPnt = iTunes;
+        }
+        else if([_spotifyBtn state] && [spotify isRunning] && [spotify playerState] == SpotifyEPlSPlaying)
+        {
+            musicPlayerPnt = spotify;
+        }
+        else if([_systemBtn state])
+        {
+            musicPlayerPnt = systemAudio;
+        }
     }
-    else if([_spotifyBtn state] && [spotify isRunning] && [spotify playerState] == SpotifyEPlSPlaying)
-    {
-        musicPlayerPnt = spotify;
-    }
-    else if([_systemBtn state])
-    {
+    else
         musicPlayerPnt = systemAudio;
-    }
     
     return musicPlayerPnt;
 }
@@ -1371,19 +1390,19 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
         if (volume>100) volume=100;
         
         /*
-        NSInteger i = 0;
-        double diff1 = abs(100);
-        double diff2;
-        
-        for (NSInteger j = 1; j < numPos; j++ ) {
-            diff2 = fabs(volume - (double)positions[j]);
-            if ( diff2<diff1 )
-            {
-                diff1 = diff2;
-                i = j;
-            }
-        }
-        */
+         NSInteger i = 0;
+         double diff1 = abs(100);
+         double diff2;
+         
+         for (NSInteger j = 1; j < numPos; j++ ) {
+         diff2 = fabs(volume - (double)positions[j]);
+         if ( diff2<diff1 )
+         {
+         diff1 = diff2;
+         i = j;
+         }
+         }
+         */
         
         OSDGraphic image = (volume > 0)? OSDGraphicSpeaker : OSDGraphicSpeakerMute;
         
@@ -1393,7 +1412,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
         //NSLog(@"%d %d",(int)numFullBlks,(int)numQrtsBlks);
         
         if(!_hideVolumeWindow)
-            [[NSClassFromString(@"OSDManager") sharedManager] showImage:image onDisplayID:CGSMainDisplayID() priority:OSDPriorityDefault msecUntilFade:1000 filledChiclets:(unsigned int)(round(((numFullBlks*4+numQrtsBlks)*1.5625)*100)) totalChiclets:(unsigned int)10000 locked:NO];
+            [[self->OSDManager sharedManager] showImage:image onDisplayID:CGSMainDisplayID() priority:OSDPriorityDefault msecUntilFade:1000 filledChiclets:(unsigned int)(round(((numFullBlks*4+numQrtsBlks)*1.5625)*100)) totalChiclets:(unsigned int)10000 locked:NO];
         
         [musicPlayerPnt setCurrentVolume:volume];
         
@@ -1466,21 +1485,21 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
     int i;
     
     /*
-    for(i=0; i<16; i++)
-    {
-        background = [CALayer layer];
-        [background setFrame:CGRectMake(9*i+32, 29.0, 7.0, 9.0)];
-        [background setBackgroundColor:CGColorCreateGenericRGB(0.f, 0.f, 0.f, 0.5f)];
-        
-        [mainLayer addSublayer:background];
-    }
+     for(i=0; i<16; i++)
+     {
+     background = [CALayer layer];
+     [background setFrame:CGRectMake(9*i+32, 29.0, 7.0, 9.0)];
+     [background setBackgroundColor:CGColorCreateGenericRGB(0.f, 0.f, 0.f, 0.5f)];
      
-    */
+     [mainLayer addSublayer:background];
+     }
+     
+     */
     
     background = [CALayer layer];
     [background setFrame:CGRectMake(20.0, 20, 160.0, 8.0)];
     [background setBackgroundColor:CGColorCreateGenericRGB(0.f, 0.f, 0.f, 0.5f)];
-     
+    
     [mainLayer addSublayer:background];
     
     for(i=0; i<16; i++)
@@ -1490,11 +1509,11 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
         [volumeBar[i] setBackgroundColor:CGColorCreateGenericRGB(1.0f, 1.0f, 1.0f, 1.0f)];
         
         /*
-        [volumeBar[i] setShadowOffset:CGSizeMake(-1, -1)];
-        [volumeBar[i] setShadowRadius:1.0];
-        [volumeBar[i] setShadowColor:CGColorCreateGenericRGB(0.f, 0.f, 0.f, 1.0f)];
-        [volumeBar[i] setShadowOpacity:0.5];
-        */
+         [volumeBar[i] setShadowOffset:CGSizeMake(-1, -1)];
+         [volumeBar[i] setShadowRadius:1.0];
+         [volumeBar[i] setShadowColor:CGColorCreateGenericRGB(0.f, 0.f, 0.f, 1.0f)];
+         [volumeBar[i] setShadowOpacity:0.5];
+         */
         
         [volumeBar[i] setHidden:YES];
         
@@ -1528,7 +1547,7 @@ void *(*_BSDoGraphicWithMeterAndTimeout)(CGDirectDisplayID arg0, BSGraphic arg1,
         frame = [volumeBar[i] frame];
         frame.size.width=9;
         [volumeBar[i] setFrame:frame];
-
+        
         [volumeBar[i] setHidden:NO];
     }
     for(NSInteger i=fullRectangles; i<16; i++)
