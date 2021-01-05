@@ -98,4 +98,6 @@ Note: you can download old versions by clicking on the links which appear above 
 Requirements
 ------------
 
-It is required Mac OS X 10.7 (Lion). The app has been tested with Mac OS X 10.7, 10.8.
+The current version requires macOS 10.14 (Mojave) at least. Earlier versions are compatible with older OS:
+* macOS 10.13 High Sierra: [1.6.8](http://quantum-technologies.iap.uni-bonn.de/alberti/iTunesVolumeControl/iTunesVolumeControl-v1.6.8.zip)
+* Mac OS X 10.7 Lion to macos 10.12 Sierra: [1.5.1](http://quantum-technologies.iap.uni-bonn.de/alberti/iTunesVolumeControl/iTunesVolumeControl-v1.5.1.zip)
