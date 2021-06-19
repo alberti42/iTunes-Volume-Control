@@ -23,6 +23,29 @@
     return self;
 }
 
+/*
+- (NSImage *)_cornerMask
+{
+    NSLog(@"triggered");
+    CGFloat radius = 18.0;
+    CGFloat dimension = 300;
+    NSSize size = NSMakeSize(dimension, dimension);
+    NSImage *image = [NSImage imageWithSize:size flipped:NO drawingHandler:^BOOL(NSRect dstRect) {
+        NSBezierPath *bezierPath = [NSBezierPath bezierPathWithRoundedRect:dstRect xRadius:radius yRadius:radius];
+        [[NSColor whiteColor] set];
+        [bezierPath fill];
+        return YES;
+    }];
+    image.capInsets = NSEdgeInsetsMake(radius, radius, radius, radius);
+    image.resizingMode = NSImageResizingModeStretch;
+    return image;
+}
+
+- (NSImage *)cornerMask
+{
+    return [self _cornerMask];
+}
+
 - (NSImage *) maskImageWithBounds: (NSRect) bounds
 {
 return [NSImage imageWithSize:bounds.size flipped:YES drawingHandler:^BOOL(NSRect dstRect) {
@@ -35,25 +58,27 @@ return [NSImage imageWithSize:bounds.size flipped:YES drawingHandler:^BOOL(NSRec
     return YES;
 }];
 }
+*/
 
 -(void)awakeFromNib
 {
+    /*
     NSRect screenFrame = [[NSScreen mainScreen] frame];
      
     [self setFrame:CGRectMake(round((screenFrame.size.width-200)/2)+200,140,200,200) display:NO animate:NO];
     
-    /*
     NSVisualEffectView* visualEffectView = [[NSVisualEffectView alloc] initWithFrame:NSMakeRect(0, 0, 200, 200)];
     visualEffectView.material =  0x1a; // NSVisualEffectMaterialLight;
     visualEffectView.blendingMode = NSVisualEffectBlendingModeBehindWindow;
     visualEffectView.state = NSVisualEffectStateActive;
     visualEffectView.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
     
-    visualEffectView.maskImage = [self maskImageWithBounds:visualEffectView.bounds];
+    visualEffectView.maskImage = [self _cornerMask];
 
     
     [[self contentView] addSubview:visualEffectView positioned:1 relativeTo:0];
      */
+    
     
     // [self setStyleMask:self.styleMask | NSFullSizeContentViewWindowMask];
     // [self setTitlebarAppearsTransparent:true];

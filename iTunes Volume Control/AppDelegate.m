@@ -882,7 +882,7 @@ static NSTimeInterval statusBarHideDelay=10;
 }
 
 #ifdef OWN_WINDOW
--(void)awakeFromNib
+-(void)awakeFromNibb
 {
     
     NSRect screenFrame = [[NSScreen mainScreen] frame];
