@@ -14,13 +14,13 @@
 		6514720422AE9BB900ABB4AE /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6514720322AE9BB900ABB4AE /* MainMenu.xib */; };
 		6514720722AE9CC900ABB4AE /* SystemVolume.m in Sources */ = {isa = PBXBuildFile; fileRef = 6514720622AE9CC900ABB4AE /* SystemVolume.m */; };
 		6514720922AE9CD800ABB4AE /* SystemVolume.scpt in Resources */ = {isa = PBXBuildFile; fileRef = 6514720822AE9CD400ABB4AE /* SystemVolume.scpt */; };
+		65545E5F22AD12C900A4A25F /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65545E5E22AD12C800A4A25F /* Sparkle.framework */; };
+		65545E6122AD12CC00A4A25F /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 65545E5E22AD12C800A4A25F /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		656C6C78168A2A0B00ECA482 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 656C6C77168A2A0B00ECA482 /* main.m */; };
 		656C6C7F168A2A0B00ECA482 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 656C6C7E168A2A0B00ECA482 /* AppDelegate.m */; };
 		656C6CA3168A456900ECA482 /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 656C6CA2168A456900ECA482 /* ScriptingBridge.framework */; };
 		659CCFDE185CAAA7006958AD /* appicon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 659CCFDD185CAAA7006958AD /* appicon.icns */; };
 		65A865B92455E11200A89021 /* VolumeWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 651A7EED168F1F4C00A76288 /* VolumeWindow.m */; };
-		65B88F38267EA0AD00447E4B /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65B88F36267EA0A300447E4B /* Sparkle.framework */; };
-		65B88F39267EA0AD00447E4B /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 65B88F36267EA0A300447E4B /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		65BA5D11235323940059690A /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65BA5D10235323940059690A /* Media.xcassets */; };
 		65C24C01168CBC7E0000BFC2 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 65C24C00168CBC7E0000BFC2 /* Credits.rtf */; };
 		65CC33B81698B3CC0049AF82 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65C24C6B168CEB9D0000BFC2 /* IOKit.framework */; };
@@ -36,7 +36,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				65B88F39267EA0AD00447E4B /* Sparkle.framework in Embed Frameworks */,
+				65545E6122AD12CC00A4A25F /* Sparkle.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -82,6 +82,7 @@
 		653FDD9F185F780000F9795D /* introButtons-next-HL@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "introButtons-next-HL@2x.png"; path = "iTunes Volume Control/Images/introButtons-next-HL@2x.png"; sourceTree = "<group>"; };
 		654DDC61185DD4C00095AA66 /* generate_keys.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = generate_keys.rb; sourceTree = "<group>"; };
 		654DDC62185DD4C00095AA66 /* sign_update.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = sign_update.rb; sourceTree = "<group>"; };
+		65545E5E22AD12C800A4A25F /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = "iTunes Volume Control/Sparkle.framework"; sourceTree = "<group>"; };
 		656C6C67168A2A0B00ECA482 /* iTunes Volume Control.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iTunes Volume Control.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		656C6C6B168A2A0B00ECA482 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		656C6C73168A2A0B00ECA482 /* iTunes Volume Control-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "iTunes Volume Control-Info.plist"; path = "iTunes Volume Control/iTunes Volume Control-Info.plist"; sourceTree = "<group>"; };
@@ -103,7 +104,6 @@
 		659CCFE3185CAACD006958AD /* icon_128x128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_128x128.png; path = "iTunes Volume Control/Images/appicon.iconset/icon_128x128.png"; sourceTree = "<group>"; };
 		65B85972185E389400D8C851 /* iTunes-screenshot.ai */ = {isa = PBXFileReference; lastKnownFileType = text; name = "iTunes-screenshot.ai"; path = "iTunes Volume Control/Images/iTunes-screenshot.ai"; sourceTree = "<group>"; };
 		65B85973185E389400D8C851 /* iTunes-screenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iTunes-screenshot.png"; path = "iTunes Volume Control/Images/iTunes-screenshot.png"; sourceTree = "<group>"; };
-		65B88F36267EA0A300447E4B /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		65BA5D10235323940059690A /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = "iTunes Volume Control/Media.xcassets"; sourceTree = "<group>"; };
 		65C24C00168CBC7E0000BFC2 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; name = Credits.rtf; path = "iTunes Volume Control/Credits.rtf"; sourceTree = "<group>"; };
 		65C24C64168CEB130000BFC2 /* AppleRemote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppleRemote.h; sourceTree = "<group>"; };
@@ -127,7 +127,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				650EBA6F22A59DC2003EB2D5 /* CoreAudio.framework in Frameworks */,
-				65B88F38267EA0AD00447E4B /* Sparkle.framework in Frameworks */,
+				65545E5F22AD12C900A4A25F /* Sparkle.framework in Frameworks */,
 				656C6CA3168A456900ECA482 /* ScriptingBridge.framework in Frameworks */,
 				65CC33B81698B3CC0049AF82 /* IOKit.framework in Frameworks */,
 				65CC33BA1698B3D60049AF82 /* QuartzCore.framework in Frameworks */,
@@ -259,7 +259,7 @@
 		656C6C6A168A2A0B00ECA482 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				65B88F36267EA0A300447E4B /* Sparkle.framework */,
+				65545E5E22AD12C800A4A25F /* Sparkle.framework */,
 				650EBA6E22A59DC2003EB2D5 /* CoreAudio.framework */,
 				651A7EF1168F226300A76288 /* QuartzCore.framework */,
 				65C24C6B168CEB9D0000BFC2 /* IOKit.framework */,
@@ -479,7 +479,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -523,8 +522,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
 			};
 			name = Debug;
 		};
@@ -532,7 +533,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -569,14 +569,15 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
 			};
 			name = Release;
 		};
 		656C6C9A168A2A0C00ECA482 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_ENTITLEMENTS = "iTunes Volume Control/iTunes Volume Control.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -597,12 +598,12 @@
 					"$(PROJECT_DIR)/iTunes\\ Volume\\ Control",
 					"$(PROJECT_DIR)/iTunes\\ Volume\\ Control",
 					"$(PROJECT_DIR)/iTunes\\ Volume\\ Control",
-					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iTunes Volume Control/iTunes Volume Control-Prefix.pch";
 				INFOPLIST_FILE = "iTunes Volume Control/iTunes Volume Control-Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "Alberti42.${PRODUCT_NAME:rfc1034identifier}";
@@ -618,7 +619,6 @@
 		656C6C9B168A2A0C00ECA482 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_ENTITLEMENTS = "iTunes Volume Control/iTunes Volume Control.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -639,12 +639,12 @@
 					"$(PROJECT_DIR)/iTunes\\ Volume\\ Control",
 					"$(PROJECT_DIR)/iTunes\\ Volume\\ Control",
 					"$(PROJECT_DIR)/iTunes\\ Volume\\ Control",
-					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iTunes Volume Control/iTunes Volume Control-Prefix.pch";
 				INFOPLIST_FILE = "iTunes Volume Control/iTunes Volume Control-Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "Alberti42.${PRODUCT_NAME:rfc1034identifier}";
