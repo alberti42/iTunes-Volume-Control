@@ -1,15 +1,20 @@
-iTunes-Volume-Control (compatible with Music app in Catalina)
+iTunes-Volume-Control
 =====================
+
+Project moved to *Volume Control*
+-----------------------------------
+
+The app has changed from *iTunes Volume Control* to simply *Volume Control*. The reason is that iTunes does not exist any longer in recent macOS versions. Also, the app is not restricted to Music, since it also works for Spotify. For recent versions, please check the new app *[Volume Control](https://github.com/alberti42/Volume-Control)*. 
 
 Description
 -----------
 
 * This app allows you to directly control the volume of Apple Music as well as of Spotify using ``volume-up`` and ``volume-down`` hotkeys from your keyboard.
-* <s>It also allows you to control the same iTunes volume by means of your Apple Remote control.</s>
+* <s>It also allows you to control the same Music volume by means of your Apple Remote control.</s>
 * In general, the app is useful to control the volume of AirPlay devices.
 * You can adjust the finesse by which you change the volume.
 * You can disable the heads-up display showing the volume status; this is useful when you are watching movies and you do not want to be distracted by the overlay volume display.
-* Using the volume keys, the volume of the currently playing application (either iTunes or Spotify) is controlled. If neither iTunes nor Spotify are playing music. Then the global volume will be affected by the volume keys.
+* Using the volume keys, the volume of the currently playing application (either Music or Spotify) is controlled. If neither Music nor Spotify are playing music. Then the global volume will be affected by the volume keys.
 * With command key (⌘), you can change the behavior whether you control the volume of the system or of the music player.
 
 ![alt tag](https://raw.github.com/alberti42/iTunes-Volume-Control/master/iTunes%20Volume%20Control/Images/screenshot.png)
@@ -18,8 +23,8 @@ Why do you need this app?
 -------------------------
 
 * The volume of Apple Music (previously iTunes) cannot be directly controlled from the keyboard. Volume keys only affect the global system volume.
-* However, you might desire to directly control Apple Music's volume. This is especially relevant when listening to musing on external speakers like AirPlay devices. The volume level of AirPlay devices depends on iTunes's volume, and not on the global volume, which as a standard behavior, you can set using the volume keys.
-* <s>iTunes does not respond to volume change from your Apple Remote. Again, Apple Remote would only change the system volume settings, leaving unaffected the volume of your AirPlay devices.</s>
+* However, you might desire to directly control Apple Music's volume. This is especially relevant when listening to musing on external speakers like AirPlay devices. The volume level of AirPlay devices depends on Music volume, and not on the global volume, which as a standard behavior, you can set using the volume keys.
+* <s>Music does not respond to volume change from your Apple Remote. Again, Apple Remote would only change the system volume settings, leaving unaffected the volume of your AirPlay devices.</s>
 * Sometimes you might desire to hide the volume heads-up overlay from your screen, especially when watching movies. This app can be configured to hide it.
 
 How to get it installed?
