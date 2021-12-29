@@ -32,7 +32,7 @@ How to get it installed?
 
 It is simple. There is no need of any installation.
 
-* Just download either this [zip file](https://github.com/alberti42/iTunes-Volume-Control/raw/master/iTunes%20Volume%20Control.zip).
+* Just download either this [zip file](https://raw.githubusercontent.com/alberti42/Volume-Control/main/Volume%20Control.zip).
 * Decompress it.
 * Drag the *iTunes Volume Control* app into your *Application* folder, or any other folder of your choice.
 * Run the *iTunes Volume Control* app and a "music note" symbol will appear in your status bar.
@@ -69,6 +69,8 @@ If you have any questions, you can contact me at a.alberti82@gmail.com. If you w
 
 Versions
 --------
+* [1.7.2](http://quantum-technologies.iap.uni-bonn.de/alberti/iTunesVolumeControl/iTunesVolumeControl-v1.7.2.zip): Fixed appearance of icon according to Monterey MacOS style.
+* [1.7.0](http://quantum-technologies.iap.uni-bonn.de/alberti/iTunesVolumeControl/iTunesVolumeControl-v1.7.0.zip): Changed name to Volume Control; compatibility with Big Sur; compiled for universal bundle for Apple M1 and Intel.
 * [1.6.8](http://quantum-technologies.iap.uni-bonn.de/alberti/iTunesVolumeControl/iTunesVolumeControl-v1.6.8.zip): Fixed a bug when switching appearance to dark mode; improved volume control with apple key modifier.
 * [1.6.7](http://quantum-technologies.iap.uni-bonn.de/alberti/iTunesVolumeControl/iTunesVolumeControl-v1.6.7.zip): Improved compatibility with Catalina and new Music app.
 * [1.6.6](http://quantum-technologies.iap.uni-bonn.de/alberti/iTunesVolumeControl/iTunesVolumeControl-v1.6.6.zip): Restored compatibility with MacOS High Sierra and subsequent versions.
