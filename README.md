@@ -1,10 +1,10 @@
 iTunes-Volume-Control
 =====================
 
-Project moved to *Volume Control*
------------------------------------
+:warning: The app moved to *[Volume Control](https://github.com/alberti42/Volume-Control)*
+-------------------------------------------
 
-The app has changed from *iTunes Volume Control* to simply *Volume Control*. The reason is that iTunes does not exist any longer in recent macOS versions. Also, the app is not restricted to Music, since it also works for Spotify. For recent versions, please check the new app *[Volume Control](https://github.com/alberti42/Volume-Control)*. 
+The app has changed from *iTunes Volume Control* to simply *Volume Control*. The reason is that iTunes does no longer exist in recent macOS versions. Also, the app is not restricted to Music, since it also works for Spotify. Please check the new app *[Volume Control](https://github.com/alberti42/Volume-Control)*. 
 
 Description
 -----------
