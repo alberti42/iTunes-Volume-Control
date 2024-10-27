@@ -128,8 +128,8 @@ AudioDeviceID obtainDefaultOutputDevice()
 		return;
 	}
 	
-		//check if the new value is in the correct range - normalize it if not
-	newValue = theVolume > 1.0 ? 1.0 : (theVolume < 0.0 ? 0.0 : theVolume);
+    //check if the new value is in the correct range - normalize it if not
+	newValue = theVolume > 1.0 ? 1.0 : (theVolume <= 0.0 ? 0.0 : theVolume);
 	if (newValue != theVolume) {
 		NSLog(@"Tentative volume (%5.2f) was out of range; reset to %5.2f", theVolume, newValue);
 	}
@@ -137,8 +137,8 @@ AudioDeviceID obtainDefaultOutputDevice()
 	theAddress.mElement = kAudioObjectPropertyElementMaster;
 	theAddress.mScope = kAudioDevicePropertyScopeOutput;
 	
-		//set the selector to mute or not by checking if under threshold and check if a mute command is available
-	if ( (muteValue = (newValue < THRESHOLD)) )
+    //set the selector to mute or not by checking if under threshold and check if a mute command is available
+	if ( (muteValue = (newValue <= THRESHOLD)) )
 	{
 		theAddress.mSelector = kAudioDevicePropertyMute;
 		hasMute = AudioObjectHasProperty(defaultDevID, &theAddress);
