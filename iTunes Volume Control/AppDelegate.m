@@ -1365,6 +1365,23 @@ static NSTimeInterval statusBarHideDelay=10;
     return musicPlayerPnt;
 }
 
+/// Plays the sound that the system plays if the shift key is held while changing volume.
+- (void)playSound
+{
+    static NSSound *sound;
+
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSString *soundPath = @"/System/Library/LoginPlugins/BezelServices.loginPlugin/Contents/Resources/volume.aiff";
+        sound = [[NSSound alloc] initWithContentsOfFile:soundPath byReference:NO];
+    });
+
+    if (sound) {
+        [sound stop];
+        [sound play];
+    }
+}
+
 - (void)changeVol:(bool)increase
 {
     id musicPlayerPnt = [self runningPlayer];
@@ -1424,6 +1441,12 @@ static NSTimeInterval statusBarHideDelay=10;
                 [self setSystemVolume:volume];
         }
         [self refreshVolumeBar:(int)volume];
+
+        // Like the system does, if the Shift key is held down while changing
+        // volume, play a sound to give the user a preview of the new volume.
+        if ([NSEvent modifierFlags] & NSEventModifierFlagShift) {
+            [self playSound];
+        }
     }
 }
 
